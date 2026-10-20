@@ -1,0 +1,101 @@
+{
+  "id": "FD_TC_165",
+  "family": "FD",
+  "summary": "ASL TLV-YYZ-YVR: AC084 completed, MSL WS 3421 YYZ-YVR (WestJet, non-Star OAL) arrived 5h late, OAL data unavailable -> No Determination (redirect to OAL)",
+  "passengers": [
+    {
+      "firstName": "BOAZ",
+      "lastName": "KIMCHI",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "84",
+      "origin": "TLV",
+      "destination": "YYZ",
+      "depLocal": "12:00",
+      "arrLocal": "16:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "WS",
+      "number": "3421",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "18:30",
+      "arrLocal": "20:30",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 300,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "FD-ASL-ND-01",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": 300,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "AC leg (AC 084 TLV->YYZ) = Completed",
+      "OAL leg (WS 3421 YYZ->YVR, WestJet) = Disrupted, arrived late +5h",
+      "MSL = OAL leg (non-Star Alliance)",
+      "OAL disruption data NOT AVAILABLE (no data-sharing agreement)",
+      "Customer redirected to operating OAL"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "Journey from chatbot text: AC 084 TLV->YYZ COMPLETED, WS 3421 YYZ->YVR (WestJet) ARRIVED LATE +5h",
+    "times chosen: AC084 12:00-16:00, WS3421 18:30-20:30 (late arrival 01:30 next day)",
+    "flight date June 11, 2026; flightDaysAgo=10"
+  ],
+  "unsupported": [
+    "WestJet (non-Star OAL) disruption codes/operating times must be absent from the data feed - not expressible by booking data (no data-sharing agreement); redirect-to-OAL is case behaviour"
+  ]
+}

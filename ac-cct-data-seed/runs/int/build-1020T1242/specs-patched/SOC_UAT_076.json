@@ -1,0 +1,85 @@
+{
+ "id": "SOC_UAT_076",
+ "family": "SOC",
+ "summary": "1 adult, AC 085 TLV-YYZ scheduled 16:00-22:00 yesterday, departed 22:00 and arrived 04:00 today (6h late); last leg under 72h ago so ASL SOC is PENDING (72-hour hold)",
+ "passengers": [
+  {
+   "firstName": "SHAI",
+   "lastName": "PELED",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "IL",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "085",
+   "origin": "TLV",
+   "destination": "YYZ",
+   "depLocal": "16:00",
+   "arrLocal": "22:00",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 1,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 360,
+   "depDelayMin": 360,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "ASL",
+  "eligibility": "PENDING",
+  "systemCode": "SoC-ASL-PE-01",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": 360,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Status PENDING / SYSTEM PROCESSING: last leg less than 72h ago; shell case created and placed in polling queue",
+   "Regime: ASL (TLV origin Israel)",
+   "Journey AC 085 TLV->YYZ delayed ~360 min (6 hours) - preliminary",
+   "Disruption code TBD (pending RE evaluation); controllability not applicable",
+   "DDS Response Code SoC-ASL-PE-01 (PENDING); no receipt upload at this stage; after 72h RE retrigger -> DDS evaluation"
+  ],
+  "soc": {
+   "eligibility": null,
+   "entitlements": "none yet - PENDING until 72h window closes"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "Flight was yesterday: flightDaysAgo=1 (test is about the 72h hold)",
+  "eligibility field set to NO_DETERMINATION as the schema has no PENDING value; the real expected state is PENDING (SoC-ASL-PE-01)",
+  "Chatbot journey screen says AC 084 TLV-VDA 5h; prerequisite AC 085 TLV-YYZ 6h used",
+  "Scheduled times as stated (dep 16:00, arr 22:00), actual dep 22:00 / arr 04:00 next day; delay code TBD -> null",
+  "Cabin W (PY), class O",
+  "Residence IL"
+ ],
+ "unsupported": [
+  "Post-72h re-evaluation and deep link are Case Services/chatbot behaviour, not booking data"
+ ],
+ "pinDaysAgo": true
+}

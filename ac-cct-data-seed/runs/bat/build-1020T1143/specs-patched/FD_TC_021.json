@@ -1,0 +1,72 @@
+{
+ "id": "FD_TC_021",
+ "family": "FD",
+ "summary": "Single pax Mathieu Roy, AC 429 YUL-YYZ sched arr 14:00, actual arr 18:00 (+4h), arrival delay code still pending; claim filed 20h after arrival (<72h), DDS data not yet available",
+ "passengers": [
+  {
+   "firstName": "MATHIEU",
+   "lastName": "ROY",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "429",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:40",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 1,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "14"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": null,
+  "ttUi": [
+   "Initially DDS returns PENDING (filed before 72h, data unavailable)",
+   "After data arrives (D+4): DDS returns FD-APPR-EL-01, CAD 400"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "sched arr 14:00 / actual 18:00 derived from 'Arrival was ... 18:00' and 4h delay",
+  "dep 12:40",
+  "delay code left null (text: 'Pending, Controllable'); a controllable code (e.g. 14) would be needed for the final FD-APPR-EL-01 result",
+  "flightDaysAgo 1 because the claim is filed 20h after arrival (arrival less than 72h ago)"
+ ],
+ "unsupported": [
+  "Pending / pre-72h intake state, daily DDS polling and Welcome Back notification are Claims Dashboard/DDS timing behaviour; booking data can only represent a flight that arrived <72h ago with delay code not yet populated"
+ ]
+}

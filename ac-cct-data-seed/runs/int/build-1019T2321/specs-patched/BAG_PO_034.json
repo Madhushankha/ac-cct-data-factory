@@ -1,0 +1,114 @@
+{
+ "id": "BAG_PO_034",
+ "family": "BAG",
+ "summary": "SD-03.8 · BAG-03 · isBagDelivered",
+ "passengers": [
+  {
+   "firstName": "ELIN",
+   "lastName": "SORJAROST",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "9258",
+   "origin": "YVR",
+   "destination": "YYZ",
+   "depLocal": "13:10",
+   "arrLocal": "20:40",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 5,
+ "pinDaysAgo": true,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "64",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "bagPlan": {
+  "shape": "ahl_delivered",
+  "bags": 1,
+  "ahls": 1,
+  "segment": 1,
+  "perPassenger": false,
+  "closedDaysAgo": null,
+  "deliveredHoursAfterSchedArrival": 24,
+  "ahlHoursAfterActualArrival": 2,
+  "ahlNumberSeed": 50981
+ },
+ "expect": {
+  "regime": null,
+  "eligibility": null,
+  "systemCode": null,
+  "delayMin": 240,
+  "cause": "64",
+  "ttUi": [
+   "bag shape ahl_delivered",
+   "old PNR UZB2YZ-2026-08-17 (AC9258 YVR→YYZ 2026-09-25T13:10)"
+  ],
+  "soc": null
+ },
+ "expectBag": {
+  "bagEventShape": "ahl_delivered",
+  "bagEvents": "['BAG_CREATED', 'BAG_ACCEPTED', 'BAG_DELAYED_RECORD_CREATED', 'BAG_DELIVERED_TO_CAROUSEL']",
+  "bagCount": 1,
+  "ahlCount": 1,
+  "isAhlPresent": true,
+  "isClosedAhlPresent": false,
+  "isMultipleOpenAhlPresent": false,
+  "isBagDelivered": true,
+  "isLastCarrierAC": true,
+  "isOal": false,
+  "oldDaysSinceArrival": 5,
+  "closedDaysAgo": null,
+  "deliveredHoursAfterSchedArrival": 24
+ },
+ "requestInputs": {},
+ "source": {
+  "repo": "BAGGAGE_SIT_KIT_20261017",
+  "dataset": "baggage-sit-int-v55",
+  "case_id": "BAG_SIT_SD_03_8",
+  "sd": "SD-03.8",
+  "sp": null,
+  "rule": "BAG-03",
+  "condition": "isBagDelivered",
+  "oldPnrId": "UZB2YZ-2026-08-17",
+  "oldFlights": "AC9258 YVR→YYZ 2026-09-25T13:10",
+  "oldRoute": "YVR-YYZ",
+  "oldExpectedDds": "NOT_ELIGIBLE · FD-BAG-NE-01 · — · 240 min code 64",
+  "seedNotes": [
+   "23:40:59 [index] 21-day window: arrival moved to 2026-09-26 (4 days ago) as the card requires",
+   "23:44:20 [bags] ahl_delivered: 4 event row(s) for 1 bag(s), AHL YVRAC00002, delivered 2026-09-27"
+  ]
+ },
+ "assumed": [
+  "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+  "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+  "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+  "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+ ],
+ "unsupported": []
+}

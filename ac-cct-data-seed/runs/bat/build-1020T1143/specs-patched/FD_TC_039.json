@@ -1,0 +1,89 @@
+{
+ "id": "FD_TC_039",
+ "family": "FD",
+ "summary": "Single pax Francois Beaumont, AC 440 YUL-YYZ sched arr 08:00 arrived 18:00 (+10h), arrival delay code MISSING, first departure delay code 06 (OA own-airline gate/stand unavailability, controllable) -> Fallback=TRUE; APPR Tier 3",
+ "passengers": [
+  {
+   "firstName": "FRANCOIS",
+   "lastName": "BEAUMONT",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "440",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "06:40",
+   "arrLocal": "08:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 600,
+   "depDelayMin": 600,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "depDelayCode": "06"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-09",
+  "amount": 1000,
+  "currency": "CAD",
+  "delayBand": "DELAY_GTE_9_HOURS",
+  "delayMin": 600,
+  "control": "CONTROLLABLE",
+  "cause": "06",
+  "ttUi": [
+   "Promised: AC 440 YUL->YYZ Scheduled Arrival 08:00",
+   "Current: ARRIVED LATE 08:00 -> Actual 18:00, Delay +10H 00M",
+   "History: No booking changes (no VOL or INVOL)",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 440 YUL->YYZ",
+   "Cancellation code: NONE",
+   "First arrival delay code: NULL (MISSING)",
+   "FALLBACK TRIGGERED: arrival code NULL -> using departure code",
+   "First departure delay code: 06 (OA) \"No gate/stand availability due to own airline activity\"",
+   "No additional delay codes on MSL",
+   "Controllability source = first departure delay code (fallback)",
+   "Fallback Flag: TRUE",
+   "APPR causal category: Within carrier control -> CONTROLLABLE",
+   "Delay: +10H 00M CONTROLLABLE",
+   "DDS outcome code: FD-APPR-EL-09",
+   "Flight Compensation: MR FRANCOIS BEAUMONT | ELIGIBLE | DELAY_GTE_9_HOURS (FALLBACK) | CAD 1000.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 06:40; depDelayMin 600",
+  "no Aeroplan; no other delay codes on the segment",
+  "accent dropped: FRANCOIS"
+ ],
+ "unsupported": [
+  "Departure delay code is distinct from the arrival delay code (arrival code NULL -> fallback to first departure delay code, Fallback=TRUE); the schema has no field for it, so it is given as extra key outcomes[].depDelayCode and delayCode is null"
+ ]
+}

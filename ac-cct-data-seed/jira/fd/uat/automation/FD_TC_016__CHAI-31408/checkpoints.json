@@ -1,0 +1,1296 @@
+{
+  "key": "CHAI-31408",
+  "test_id": "FD_TC_016",
+  "title": "Travel Completed | APPR | Group Booking | Claim Self Only | Delay 6-<9 hrs | BAsic Aeroplan Profile",
+  "goal": "Validates an end-to-end flight disruption claim for a passenger traveling under a group booking (12 passengers on PNR) who files a self-only claim. The system detects the group booking identifier, restricts claim processing strictly to the authenticated claimant (Jean-Pierre Martin), and does not expose the other 11 passenger details for privacy. The single domestic leg (Flight AC 301, YUL?YYZ) is delayed 7 hours (6�<9h band) due to controllable documentation/dispatch/system issues (Code 31). APPR applies at Tier 2 compensation ($700 CAD Cash or $840 CAD AC Wallet with +20% bonus). The claimant's Basic Aeroplan profile is linked, both Cash and AC Wallet options are presented, and the customer selects Cash (Interac e-Transfer to Canada). Validates Persona IDV PASS, CyberSource GREEN, full automated case creation, and Claims Dashboard validation reflecting single-claimant group booking resolution.",
+  "summary": {
+    "seed": 16,
+    "chat": 35,
+    "api": 17,
+    "email": 1,
+    "dashboard": 44,
+    "implied": 11,
+    "manual": 17,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Validates an end-to-end flight disruption claim for a passenger traveling under a group booking (12 passengers on PNR) who files a self-only claim. The system detects the group booking identifier, restricts claim processing strictly to the authenticated claimant (Jean-Pierre Martin), and does not expose the other 11 passenger details for privacy. The single domestic leg (Flight AC 301, YUL?YYZ) is delayed 7 hours (6�<9h band) due to controllable documentation/dispatch/system issues (Code 31). APPR applies at Tier 2 compensation ($700 CAD Cash or $840 CAD AC Wallet with +20% bonus). The claimant's Basic Aeroplan profile is linked, both Cash and AC Wallet options are presented, and the customer selects Cash (Interac e-Transfer to Canada). Validates Persona IDV PASS, CyberSource GREEN, full automated case creation, and Claims Dashboard validation reflecting single-claimant group booking resolution.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: TC013 � 12 passengers (Group booking flag: TRUE in PNR / Trip Tracer)",
+      "expected": "PNR: TC013 � 12 passengers (Group booking flag: TRUE in PNR / Trip Tracer)",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Claimant: Jean-Pierre Martin (Adult - Basic Aeroplan Member 9871234567, 1 of 12)",
+      "expected": "Claimant: Jean-Pierre Martin (Adult - Basic Aeroplan Member 9871234567, 1 of 12)",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Journey: 1 leg AC domestic YUL?YYZ (Flight AC 301)",
+      "expected": "Journey: 1 leg AC domestic YUL?YYZ (Flight AC 301)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Scheduled arrival: 14:00",
+      "expected": "Scheduled arrival: 14:00",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Actual arrival: 21:00 (7hr delay � Delay band: 6 to <9 hours)",
+      "expected": "Actual arrival: 21:00 (7hr delay � Delay band: 6 to <9 hours)",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Arrival delay code: 31 (Documentation / Dispatch / System Issue � Controllable)",
+      "expected": "Arrival delay code: 31 (Documentation / Dispatch / System Issue � Controllable)",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Flight status: Arrived (operated)",
+      "expected": "Flight status: Arrived (operated)",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Booking changes: None � no VOL or INVOL",
+      "expected": "Booking changes: None � no VOL or INVOL",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Carrier: AC only",
+      "expected": "Carrier: AC only",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "72hrs: Elapsed (filed D+13)",
+      "expected": "72hrs: Elapsed (filed D+13)",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Time limit: Within 366 days",
+      "expected": "Time limit: Within 366 days",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No duplicate case",
+      "expected": "No duplicate case",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Not employee, not infant",
+      "expected": "Not employee, not infant",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Aeroplan: Linked (9871234567), Basic Member in good standing",
+      "expected": "Aeroplan: Linked (9871234567), Basic Member in good standing",
+      "id": "CP015"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "implied",
+      "step": "CyberSource: Configured to return GREEN",
+      "expected": "CyberSource: Configured to return GREEN",
+      "id": "CP016"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Persona: Configured to return IDV PASS",
+      "expected": "Persona: Configured to return IDV PASS",
+      "id": "CP017"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Country of residence: Canada (CAD)",
+      "expected": "Country of residence: Canada (CAD)",
+      "id": "CP018"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP020"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects \"English\"",
+      "expected": "English",
+      "id": "CP021"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed: \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP022"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks: \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP023"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says: \"Our group flight was delayed 7 hours, there are 12 of us, we want compensation\"",
+      "expected": "Our group flight was delayed 7 hours, there are 12 of us, we want compensation",
+      "id": "CP024"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP026"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP027"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP028"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you. Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.\"",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you. Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP029"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"Jean-Pierre Martin\"",
+      "expected": "Jean-Pierre Martin",
+      "id": "CP030"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Thanks, Jean-Pierre! And, what is your booking reference number?\"",
+      "expected": "Thanks, Jean-Pierre! And, what is your booking reference number?",
+      "id": "CP031"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"TC013\"",
+      "expected": "TC013",
+      "id": "CP032"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC013",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND (Auth Flow 1)",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer data is retrieved",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?\"",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP036"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "* Email: j***@gmail.com * Phone: +1234",
+      "id": "CP037"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: j@gmail.com\"",
+      "expected": "Email: j@gmail.com",
+      "id": "CP038"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"I've sent a verification code to your email, please enter it within 15 minutes of receiving it.\"",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP039"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides OTP code \"847291\"",
+      "expected": "847291",
+      "id": "CP040"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Your verification was successful. Let's proceed to the next step.\"",
+      "expected": "Your verification was successful. Let's proceed to the next step.",
+      "id": "CP042"
+    },
+    {
+      "section": "GROUP BOOKING CHECK & PRIVACY RESTRICTION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the system checks Trip Tracer for group booking identifier",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "GROUP BOOKING CHECK & PRIVACY RESTRICTION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And group booking identifier = PRESENT (12 passengers on booking)",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "GROUP BOOKING CHECK & PRIVACY RESTRICTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"I can see this is a group booking with 12 passengers. For privacy and data protection, you will only be able to claim for yourself. Other travelers on this booking must file their claims individually.\"",
+      "expected": "I can see this is a group booking with 12 passengers. For privacy and data protection, you will only be able to claim for yourself. Other travelers on this booking must file their claims individually.",
+      "id": "CP045"
+    },
+    {
+      "section": "GROUP BOOKING CHECK & PRIVACY RESTRICTION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Understood\"",
+      "expected": "Understood",
+      "id": "CP046"
+    },
+    {
+      "section": "GROUP BOOKING CHECK & PRIVACY RESTRICTION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then passenger selection is skipped (restricted to Jean-Pierre Martin only)",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot retrieves booking details and displays:",
+      "expected": "I found the following journey: * Flight: AC 301 * Route: Montreal (YUL) ? Toronto (YYZ) * Date: January 15, 2026 * Arrival Delay: 7 hours Is this the journey you'd like to check?",
+      "id": "CP048"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP049"
+    },
+    {
+      "section": "SEGMENT & ELIGIBILITY CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: More than 1 segment on selected journey? ? NO (single leg) ? skip GenUC-18",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "SEGMENT & ELIGIBILITY CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot sends request to Case Services for duplicate check ? NO existing case found for Jean-Pierre Martin on this journey",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "SEGMENT & ELIGIBILITY CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks 72-hour rule: Arrival Jan 15, 2026; filing Jan 28, 2026 ? 312 hours (>72 hours) ? PROCEED",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "SEGMENT & ELIGIBILITY CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks APPR filing deadline: 13 days elapsed (within 366 days) ? PROCEED",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Backend DDS executes evaluation for PNR TC013 / Claimant Jean-Pierre Martin:",
+      "expected": "� Regime: APPR Applicable � Delay reason: Code 31 (Documentation / Dispatch / System Issue � Controllable) � Delay duration: 7 hours (Band: 6 to <9 hours ? Tier 2) � Eligibility: ELIGIBLE ($700 CAD for 1 claimant)",
+      "id": "CP054"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[x] Promised Itinerary: Flight AC 301, YUL ? YYZ, Scheduled Arrival: 14:00",
+      "expected": "[x] Promised Itinerary: Flight AC 301, YUL ? YYZ, Scheduled Arrival: 14:00",
+      "id": "CP055"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[x] Current Itinerary: Flight AC 301, YUL ? YYZ, Status: ARRIVED LATE, Scheduled: 14:00 ? Actual: 21:00, Delay: +7H 00M",
+      "expected": "[x] Current Itinerary: Flight AC 301, YUL ? YYZ, Status: ARRIVED LATE, Scheduled: 14:00 ? Actual: 21:00, Delay: +7H 00M",
+      "id": "CP056"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[x] Regime: APPR (1 regime)",
+      "expected": "[x] Regime: APPR (1 regime)",
+      "id": "CP057"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[x] MSL Flight: AC 301 � YUL ? YYZ � Code 31 (\"Delayed due to documentation / flight dispatch issues\")",
+      "expected": "[x] MSL Flight: AC 301 � YUL ? YYZ � Code 31 (\"Delayed due to documentation / flight dispatch issues\")",
+      "id": "CP058"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[x] Delay Classification: +7H 00M � CONTROLLABLE",
+      "expected": "[x] Delay Classification: +7H 00M � CONTROLLABLE",
+      "id": "CP059"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[x] Aeroplan: 9871234567 (Basic Member � linked)",
+      "expected": "[x] Aeroplan: 9871234567 (Basic Member � linked)",
+      "id": "CP060"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[x] Group Booking Indicator: TRUE (12 Pax total, restricted to self-claim)",
+      "expected": "[x] Group Booking Indicator: TRUE (12 Pax total, restricted to self-claim)",
+      "id": "CP061"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MR JEAN-PIERRE MARTIN | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet (+20%) | [expiry date]",
+      "expected": "MR JEAN-PIERRE MARTIN | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet (+20%) | [expiry date]",
+      "id": "CP062"
+    },
+    {
+      "section": "FRAUD SCREENING � CYBERSOURCE",
+      "requirement": "GLOB-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Chatbot sends case details to CyberSource ? Returns GREEN LIGHT (Pass)",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "ELIGIBLE RESULT DISPLAY",
+      "requirement": "FD-05a",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Chatbot displays: \"I've checked your flight details, and flight AC 301 from Montreal (YUL) to Toronto (YYZ) was delayed by about 7 hours due to documentation and scheduling delays (Code 31 - Controllable). Under the Air Passenger Protection Regulations (APPR), you are eligible for compensation of $700 CAD for this delay.\"",
+      "expected": "I've checked your flight details, and flight AC 301 from Montreal (YUL) to Toronto (YYZ) was delayed by about 7 hours due to documentation and scheduling delays (Code 31 - Controllable). Under the Air Passenger Protection Regulations (APPR), you are eligible for compensation of $700 CAD for this delay.",
+      "id": "CP064"
+    },
+    {
+      "section": "CLAIM PAYMENT & AEROPLAN OFFER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Chatbot asks: \"In which country will your reimbursement be deposited?\"",
+      "expected": "In which country will your reimbursement be deposited?",
+      "id": "CP065"
+    },
+    {
+      "section": "IDENTITY VERIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Chatbot displays \"Get verified\" button ? User completes Persona IDV ? Persona returns IDV PASS",
+      "expected": "Get verified",
+      "id": "CP066"
+    },
+    {
+      "section": "CLAIM CONFIRMATION & CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Chatbot displays summary:",
+      "expected": "Please review your compensation details: Deposit Amount: $700 CAD Payment Method: Interac e-Transfer (j***@gmail.com) After submission, you will receive a confirmation email summarizing your eligibility, claim details and next steps that will also include the password required to access the secure payment link, which will be sent in a separate email. Would you like me to submit your claim? Yes Thank you. Your claim has been submitted and will now be processed within the next 15 days. Claim submission successful!",
+      "id": "CP067"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "email",
+      "method": "email",
+      "step": "Adobe triggers notification email to j***@gmail.com containing: Case Reference, compensation amount ($700 CAD Cash � Interac e-Transfer), regulation (APPR), flight details (YUL?YYZ AC 301), disruption reason (Code 31 Documentation / Dispatch), next steps, tracking link.",
+      "expected": "Claims Dashboard Gherkin:",
+      "id": "CP068"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the case has been created for claimant \"Jean-Pierre Martin\" with PNR \"TC013\"",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Case Header Topic/Sub-topic should be \"Travel Disruptions � Delay\" mapped from chatbot intent",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should be able to edit Topic/Sub-topic but cannot switch automated to non-automated",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status should be \"In Review\" or \"Done\"",
+      "expected": "",
+      "id": "CP072"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Created date should be populated",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Last Updated date should be populated",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the SLA countdown should be tracking correctly",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Team assignment should be correct",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no banners should be displayed for identified and authenticated Auth Flow 1 user",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist panel should NOT be greyed out",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Name should be \"Jean-Pierre Martin\"",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Type should be \"Adult\"",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Authentication should be \"Pass\"",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR should be \"TC013\"",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR Creation Date should be populated",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey ID should be populated",
+      "expected": "",
+      "id": "CP084"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Booking Source should be populated",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Booking Office ID should be populated",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Regime should be \"APPR\"",
+      "expected": "",
+      "id": "CP087"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Full Name should be \"Jean-Pierre Martin\"",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Tags should include \"Claimant\", \"Adult\", and \"Group Booking\"",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Email should be \"j***@gmail.com\"",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Phone should be \"+1234\"",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Address should be populated",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Aeroplan should be \"9871234567\" linked and in good standing (Basic Member)",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Tier Status should be \"Basic / Member\"",
+      "expected": "",
+      "id": "CP094"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey should show \"Bound 1: YUL ? YYZ\" with claim filed for this flight",
+      "expected": "",
+      "id": "CP095"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Ancillary Fee section should be present and empty",
+      "expected": "",
+      "id": "CP096"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility and Compensation section should show \"$700 CAD (Cash � Interac e-Transfer)\"",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the AC Wallet option ($840 CAD) should be visible as the offered alternative but NOT selected",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist Panel should auto-appear for FD topic",
+      "expected": "",
+      "id": "CP099"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And DDS should have run automatically with no agent action needed",
+      "expected": "",
+      "id": "CP100"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the eligibility decision should be pre-populated as \"ELIGIBLE\" (APPR, Code 31 Controllable, 7h delay, Tier 2)",
+      "expected": "",
+      "id": "CP101"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Duplicate Check should have run automatically using baseline data \"Jean-Pierre Martin + TC013 + YUL?YYZ + FD\"",
+      "expected": "",
+      "id": "CP102"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the result should be \"No duplicate found\"",
+      "expected": "",
+      "id": "CP103"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no Duplicate Warning Banner should be displayed",
+      "expected": "",
+      "id": "CP104"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Related Cases tab should show no related cases",
+      "expected": "",
+      "id": "CP105"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the CyberSource result should be \"GREEN\"",
+      "expected": "",
+      "id": "CP106"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the case should have proceeded automatically and not be parked in Fraud Queue",
+      "expected": "",
+      "id": "CP107"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the system should have appended the booking record to the case automatically",
+      "expected": "",
+      "id": "CP108"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And Trip Tracer poll should NOT be required",
+      "expected": "",
+      "id": "CP109"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should have used pull case function from My Activities to get this case",
+      "expected": "",
+      "id": "CP110"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the case status should have transitioned from \"Assigned\" to \"In Progress\"",
+      "expected": "",
+      "id": "CP111"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And a case acknowledgement notification should have been sent to the customer",
+      "expected": "",
+      "id": "CP112"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And an eligible notification email should have been sent via Adobe containing $700 CAD Cash and Interac e-Transfer payment method",
+      "expected": "",
+      "id": "CP113"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Agent Notes section should be accessible",
+      "expected": "",
+      "id": "CP114"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Audit Log should record all actions with timestamps",
+      "expected": "",
+      "id": "CP115"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And Customer Communications should show the notification email",
+      "expected": "",
+      "id": "CP116"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the chatbot transcript should be accessible and linked",
+      "expected": "",
+      "id": "CP117"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Attachments tab should be empty",
+      "expected": "",
+      "id": "CP118"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Final Status should be \"Resolved\"",
+      "expected": "",
+      "id": "CP119"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the case should be in read-only mode with no editable Decision Assist fields",
+      "expected": "",
+      "id": "CP120"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should not be able to access Case Search as it is for leads and management only",
+      "expected": "Payment Validation Gherkin:",
+      "id": "CP121"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the customer's country of residence is \"Canada\"",
+      "expected": "",
+      "id": "CP122"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then the currency should be set to \"CAD\"",
+      "expected": "",
+      "id": "CP123"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the customer has Aeroplan \"9871234567\" linked with Basic Member status in good standing",
+      "expected": "",
+      "id": "CP124"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "chat",
+      "step": "And both options should have been offered: Cash ($700 CAD Interac) AND AC Wallet ($840 CAD with 20% top-up)",
+      "expected": "",
+      "id": "CP125"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the customer selected \"Cash\" ? Payment method = Interac e-Transfer",
+      "expected": "",
+      "id": "CP126"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "manual",
+      "step": "And AC Wallet was offered but NOT selected � AC Wallet payout NOT dispatched",
+      "expected": "",
+      "id": "CP127"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Interac email should be collected from the customer (j@gmail.com)",
+      "expected": "",
+      "id": "CP128"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "chat",
+      "step": "And a compensation record should be created with $700 CAD",
+      "expected": "",
+      "id": "CP129"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the record should be picked up by the daily evening batch file",
+      "expected": "",
+      "id": "CP130"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the record should be dispatched to Unifier",
+      "expected": "",
+      "id": "CP131"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "manual",
+      "step": "And Unifier should send an acknowledgement back",
+      "expected": "",
+      "id": "CP132"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the end-of-day report should be received from Interac",
+      "expected": "",
+      "id": "CP133"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the status should be \"Pending\" transitioning to \"Cached\" or \"Rejected\" or \"Expired\"",
+      "expected": "",
+      "id": "CP134"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "manual",
+      "step": "And if the customer does not claim the Interac payment within 35 days the status should be set to \"Expired\"",
+      "expected": "",
+      "id": "CP135"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the Claims Dashboard Compensation tab should show payout details: amount ($700 CAD), payment method (Cash � Interac e-Transfer), status updated via talkback",
+      "expected": "",
+      "id": "CP136"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS generates FD-APPR-EL-01 for single claimant under group booking.",
+      "expected": "DDS generates FD-APPR-EL-01 for single claimant under group booking.",
+      "id": "CP137"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Delay: 7 hours (Tier 2: 6�<9h).",
+      "expected": "Delay: 7 hours (Tier 2: 6�<9h).",
+      "id": "CP138"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Code: 31 (Documentation / Dispatch � Controllable).",
+      "expected": "Code: 31 (Documentation / Dispatch � Controllable).",
+      "id": "CP139"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: APPR.",
+      "expected": "Regime: APPR.",
+      "id": "CP140"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Total Payout: $700 CAD Cash via Interac e-Transfer to j***@gmail.com.",
+      "expected": "Total Payout: $700 CAD Cash via Interac e-Transfer to j***@gmail.com.",
+      "id": "CP141"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Other 11 group passengers remain unexposed and unfiled.",
+      "expected": "Other 11 group passengers remain unexposed and unfiled.",
+      "id": "CP142"
+    }
+  ]
+}

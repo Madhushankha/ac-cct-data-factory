@@ -1,0 +1,3300 @@
+[
+ {
+  "id": "FD_PO_001",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "100",
+       "origin": "YYZ",
+       "destination": "YVR",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "EMILY",
+     "lastName": "THOMPSON",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#100#2026-10-08#YYZ",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-EL-01",
+   "amount": 400.0,
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_002",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8178",
+       "origin": "LHR",
+       "destination": "YYZ",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "BENJAMIN",
+     "lastName": "PATTERSON",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 185
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 210,
+    "depMinutes": 210,
+    "code": "64",
+    "_key": "AC#8178#2026-10-08#LHR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "EU",
+   "systemCode": "FD-EU-EL-01",
+   "amount": 260.0,
+   "currency": "GBP",
+   "delayMin": 210,
+   "control": "CONTROLLABLE",
+   "delayBand": null,
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [
+   "the card's delayBand DELAY_3_TO_LT_6_HOURS is APPR vocabulary on an EU case, so no band is claimed here"
+  ],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)",
+   "delay set to 210 min: the card says 'Delay 3-<4 hrs' and FD-EU-EL-01 is defined as 3 to less than 4 hours; 240 min is exactly 4 h and lands in EL-02 (GBP 520)",
+   "flight AC8178: AC178 on this day already holds a 240-minute leg from earlier runs, and the engine folds the existing leg rather than our 210"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_003",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "216",
+       "origin": "CDG",
+       "destination": "YUL",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "KEITH",
+     "lastName": "AUSTIN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#216#2026-10-08#CDG",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "NOT_ELIGIBLE",
+   "regime": "EU",
+   "systemCode": "FD-EU-NE-01",
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)",
+   "employee travel: builder derives the office from passengers[].employee"
+  ],
+  "passengers": 1,
+  "officeId": "YULAC01ES",
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_004",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "138",
+       "origin": "YYC",
+       "destination": "YOW",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "KENNETH",
+     "lastName": "TORRES",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "42",
+    "_key": "AC#138#2026-10-08#YYC",
+    "arrivalCode": "42"
+   }
+  ],
+  "expect": {
+   "eligibility": "NOT_ELIGIBLE",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-NE-01",
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "42"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)",
+   "employee travel: builder derives the office from passengers[].employee"
+  ],
+  "passengers": 1,
+  "officeId": "YULAC01ES",
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_005",
+  "seeds": [
+   "ZZ6GMP"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "100",
+       "origin": "TLV",
+       "destination": "FRA",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:30",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    },
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "101",
+       "origin": "FRA",
+       "destination": "TLV",
+       "departure": "2026-10-08T18:00",
+       "arrival": "2026-10-08T22:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ELI",
+     "lastName": "NAVON",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -25
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "_key": "AC#100#2026-10-08#TLV"
+   },
+   {
+    "segment": 2,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "71",
+    "_key": "AC#101#2026-10-08#FRA",
+    "arrivalCode": "71"
+   }
+  ],
+  "expect": {
+   "eligibility": "NOT_ELIGIBLE",
+   "regime": "ASL",
+   "systemCode": "FD-ASL-NE-10",
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "UNCONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "71"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)",
+   "the delay is placed on segment 2 of 2: the fixture states it once for the booking",
+   "paxEvent not_travelled on the return: FD-ASL-NE-10 is 'Extraordinary - No travel Return', and a return that arrives means the passenger travelled it",
+   "bounds 1 and 2: NE-10 is \"No travel Return\" while NE-12 is \"No travel Incomplete\"; without bounds the round trip reads as one journey"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_006",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "101",
+       "origin": "YUL",
+       "destination": "YYZ",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "MICHAEL",
+     "lastName": "CHEN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#101#2026-10-08#YUL",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-EL-01",
+   "amount": 400.0,
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_007",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "241",
+       "origin": "FRA",
+       "destination": "YYZ",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ALICE",
+     "lastName": "DUNN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "changes": [
+     {
+      "family": "flight_cancelled_rebooked",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1,
+       "reason": "64",
+       "replacement": {
+        "carrier": "AC",
+        "number": "243",
+        "origin": "FRA",
+        "destination": "YUL",
+        "departure": "2026-10-08T13:30",
+        "arrival": "2026-10-08T18:00"
+       }
+      }
+     },
+     {
+      "family": "rebooking_accepted",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -150
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 30
+      },
+      "params": {
+       "segment": 2
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 185
+      },
+      "params": {
+       "segment": 2
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#241#2026-10-08#FRA",
+    "arrivalCode": "64"
+   },
+   {
+    "carrier": "AC",
+    "number": "243",
+    "origin": "FRA",
+    "destination": "YUL",
+    "depUtc": "2026-10-08T11:30:00Z",
+    "arrUtc": "2026-10-08T22:00:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "code": null,
+    "_key": "AC#243#2026-10-08#FRA",
+    "sisterDest": "YUL",
+    "explicit": true
+   }
+  ],
+  "expect": {
+   "eligibility": "NO_DETERMINATION",
+   "regime": "EU",
+   "systemCode": "FD-EU-ND-03",
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)",
+   "rebooking to a different destination (YYZ -> YUL), accepted: FD-EU-ND-03 is 'New Destination (New contract)', expressed in the corpus (FD_TC_097) as a rebooking whose destination differs",
+   "rebooked arrival 18:00: 240 minutes after the original 14:00, which is the delay the card states"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_008",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "100",
+       "origin": "YUL",
+       "destination": "YYZ",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T12:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ALEX",
+     "lastName": "MORGAN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#100#2026-10-08#YUL",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "PAY",
+   "systemCode": "FD-PAY-BSM-US-01",
+   "amount": 400.0,
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_009",
+  "seeds": [
+   "ZZ6GMP"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "167",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      },
+      {
+       "carrier": "UA",
+       "number": "8536",
+       "origin": "YYZ",
+       "destination": "ORD",
+       "departure": "2026-10-08T18:10",
+       "arrival": "2026-10-08T19:45",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "VIRGINIA",
+     "lastName": "PRICE",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -25
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 2
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 2
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "_key": "AC#167#2026-10-08#YVR"
+   },
+   {
+    "segment": 2,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "UA#8536#2026-10-08#YYZ",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "NO_DETERMINATION",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-ND-02",
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)",
+   "the delay is placed on segment 2 of 2: the fixture states it once for the booking"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_010",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "294",
+       "origin": "TLV",
+       "destination": "YYZ",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ADAM",
+     "lastName": "XU",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#294#2026-10-08#TLV",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "MIXED",
+   "systemCode": "FD-MIXED-ND-01",
+   "amount": 400.0,
+   "currency": "EUR",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_011",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "244",
+       "origin": "CDG",
+       "destination": "YUL",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "LOUIS",
+     "lastName": "WEBB",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#244#2026-10-08#CDG",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "NO_DETERMINATION",
+   "regime": "EU",
+   "systemCode": "FD-EU-ND-06",
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)",
+   "operatingUnknown: the case is OAL data not available"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [
+   1
+  ],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_012",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "100",
+       "origin": "YUL",
+       "destination": "YYZ",
+       "departure": "2026-10-07T10:00",
+       "arrival": "2026-10-07T12:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ALEX",
+     "lastName": "MORGAN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#100#2026-10-07#YUL",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "PAY",
+   "systemCode": "FD-PAY-CHQ-CA-01",
+   "amount": 400.0,
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 11,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_013",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "139",
+       "origin": "YYZ",
+       "destination": "JFK",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "AMANDA",
+     "lastName": "PARKER",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "42",
+    "_key": "AC#139#2026-10-08#YYZ",
+    "arrivalCode": "42"
+   }
+  ],
+  "expect": {
+   "eligibility": "NOT_ELIGIBLE",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-NE-02",
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "42"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)",
+   "employee travel: builder derives the office from passengers[].employee"
+  ],
+  "passengers": 1,
+  "officeId": "YULAC01EC",
+  "oalEmployee": true,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_014",
+  "seeds": [
+   "ZZ6GMP"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "166",
+       "origin": "YYZ",
+       "destination": "JFK",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      },
+      {
+       "carrier": "B6",
+       "number": "1204",
+       "origin": "JFK",
+       "destination": "BOS",
+       "departure": "2026-10-08T18:10",
+       "arrival": "2026-10-08T19:30",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "JONATHAN",
+     "lastName": "SANDERS",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -25
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 2
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": 275
+      },
+      "params": {
+       "segment": 2
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "_key": "AC#166#2026-10-08#YYZ"
+   },
+   {
+    "segment": 2,
+    "kind": "delay",
+    "minutes": 300,
+    "depMinutes": 300,
+    "code": "64",
+    "_key": "B6#1204#2026-10-08#JFK",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "NO_DETERMINATION",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-ND-01",
+   "currency": "CAD",
+   "delayMin": 300,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)",
+   "the delay is placed on segment 2 of 2: the fixture states it once for the booking"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_015",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "245",
+       "origin": "FRA",
+       "destination": "YYZ",
+       "departure": "2026-10-17T10:00",
+       "arrival": "2026-10-17T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "BEVERLY",
+     "lastName": "ARNOLD",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#245#2026-10-17#FRA",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "PENDING",
+   "regime": "EU",
+   "systemCode": "FD-EU-PE-01",
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 1,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)",
+   "pinDaysAgo: arrival must stay within 72h, so the day is not walked back (flightDaysAgo=1)"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_016",
+  "seeds": [
+   "ZZNS8I"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "111",
+       "origin": "YUL",
+       "destination": "YYZ",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "LINDA",
+     "lastName": "THOMAS",
+     "type": "ADT"
+    },
+    {
+     "firstName": "CHARLES",
+     "lastName": "JACKSON",
+     "type": "ADT"
+    },
+    {
+     "firstName": "BARBARA",
+     "lastName": "WHITE",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "56",
+    "_key": "AC#111#2026-10-08#YUL",
+    "arrivalCode": "56"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-EL-01",
+   "amount": 400.0,
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "56"
+  },
+  "daysAgo": 10,
+  "seedNote": "template has 5 passengers for 3",
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)"
+  ],
+  "passengers": 3,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null,
+   null,
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_017",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "102",
+       "origin": "YVR",
+       "destination": "YUL",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "SARAH",
+     "lastName": "WILLIAMS",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "67",
+    "_key": "AC#102#2026-10-08#YVR",
+    "arrivalCode": "67"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-EL-01",
+   "amount": 400.0,
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "67"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_018",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "289",
+       "origin": "YEG",
+       "destination": "YHZ",
+       "departure": "2026-10-08T10:00",
+       "arrival": "2026-10-08T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "NORMA",
+     "lastName": "ZHOU",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#289#2026-10-08#YEG",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "MIXED",
+   "systemCode": "FD-MIXED-EL-03",
+   "amount": 600.0,
+   "currency": "EUR",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_019",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "172",
+       "origin": "YVR",
+       "destination": "YUL",
+       "departure": "2026-10-17T10:00",
+       "arrival": "2026-10-17T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "JUSTIN",
+     "lastName": "HENDERSON",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#172#2026-10-17#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "PENDING",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-PE-01",
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 1,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (gap-doc card)",
+   "pinDaysAgo: arrival must stay within 72h, so the day is not walked back (flightDaysAgo=1)"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_020",
+  "seeds": [
+   "ZZNS8I"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "100",
+       "origin": "YYZ",
+       "destination": "YVR",
+       "departure": "2026-10-07T10:00",
+       "arrival": "2026-10-07T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "OLIVIA",
+     "lastName": "THOMPSON",
+     "type": "ADT"
+    },
+    {
+     "firstName": "NOAH",
+     "lastName": "THOMPSON",
+     "type": "ADT"
+    },
+    {
+     "firstName": "AMARA",
+     "lastName": "THOMPSON",
+     "type": "ADT"
+    },
+    {
+     "firstName": "LUCAS",
+     "lastName": "THOMPSON",
+     "type": "ADT"
+    },
+    {
+     "firstName": "MAYA",
+     "lastName": "THOMPSON",
+     "type": "ADT"
+    },
+    {
+     "firstName": "ETHAN",
+     "lastName": "THOMPSON",
+     "type": "ADT"
+    },
+    {
+     "firstName": "ZARA",
+     "lastName": "THOMPSON",
+     "type": "ADT"
+    },
+    {
+     "firstName": "LIAM",
+     "lastName": "THOMPSON",
+     "type": "ADT"
+    },
+    {
+     "firstName": "NORA",
+     "lastName": "THOMPSON",
+     "type": "ADT"
+    },
+    {
+     "firstName": "OMAR",
+     "lastName": "THOMPSON",
+     "type": "ADT"
+    },
+    {
+     "firstName": "IRIS",
+     "lastName": "THOMPSON",
+     "type": "ADT"
+    },
+    {
+     "firstName": "THEO",
+     "lastName": "THOMPSON",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#100#2026-10-07#YYZ",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-EL-01",
+   "amount": 400.0,
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 11,
+  "seedNote": "no template with 12 passengers; 5 built",
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (dataset manifest only (no gap-doc card))"
+  ],
+  "passengers": 12,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_021",
+  "seeds": [
+   "ZZ6GMP"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "870",
+       "origin": "YYZ",
+       "destination": "FRA",
+       "departure": "2026-10-08T18:00",
+       "arrival": "2026-10-09T07:30",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      },
+      {
+       "carrier": "LH",
+       "number": "1234",
+       "origin": "FRA",
+       "destination": "MUC",
+       "departure": "2026-10-09T11:40",
+       "arrival": "2026-10-09T12:45",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "SOPHIE",
+     "lastName": "MARCHAND",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -25
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 2
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 2
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "_key": "AC#870#2026-10-08#YYZ"
+   },
+   {
+    "segment": 2,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "LH#1234#2026-10-09#FRA",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "NO_DETERMINATION",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-ND-02",
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (dataset manifest only (no gap-doc card))",
+   "the delay is placed on segment 2 of 2: the fixture states it once for the booking"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_022",
+  "seeds": [
+   "ZZ6GMP"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "120",
+       "origin": "YYZ",
+       "destination": "YYC",
+       "departure": "2026-10-08T08:00",
+       "arrival": "2026-10-08T10:20",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      },
+      {
+       "carrier": "WS",
+       "number": "560",
+       "origin": "YYC",
+       "destination": "YVR",
+       "departure": "2026-10-08T14:30",
+       "arrival": "2026-10-08T15:50",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "DANIEL",
+     "lastName": "OKONKWO",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -25
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 2
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 2
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "_key": "AC#120#2026-10-08#YYZ"
+   },
+   {
+    "segment": 2,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "WS#560#2026-10-08#YYC",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "NO_DETERMINATION",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-ND-01",
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (dataset manifest only (no gap-doc card))",
+   "the delay is placed on segment 2 of 2: the fixture states it once for the booking"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_023",
+  "seeds": [
+   "ZZ6GMP"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "BA",
+       "number": "098",
+       "origin": "YYZ",
+       "destination": "LHR",
+       "departure": "2026-10-08T21:00",
+       "arrival": "2026-10-09T09:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      },
+      {
+       "carrier": "BA",
+       "number": "432",
+       "origin": "LHR",
+       "destination": "AMS",
+       "departure": "2026-10-09T13:10",
+       "arrival": "2026-10-09T15:30",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "HELENA",
+     "lastName": "VOSS",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -25
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 2
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 2
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "_key": "BA#98#2026-10-09#YYZ"
+   },
+   {
+    "segment": 2,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "BA#432#2026-10-09#LHR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "NOT_ELIGIBLE",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-NE-05",
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (dataset manifest only (no gap-doc card))",
+   "the delay is placed on segment 2 of 2: the fixture states it once for the booking"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_024",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "100",
+       "origin": "YYZ",
+       "destination": "YVR",
+       "departure": "2026-10-06T10:00",
+       "arrival": "2026-10-06T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "MARCUS",
+     "lastName": "ASHFORD",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#100#2026-10-06#YYZ",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-EL-01",
+   "amount": 400.0,
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (dataset manifest only (no gap-doc card))"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_025",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "100",
+       "origin": "YYZ",
+       "destination": "YVR",
+       "departure": "2026-10-05T10:00",
+       "arrival": "2026-10-05T14:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ELENA",
+     "lastName": "KOVAC",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#100#2026-10-05#YYZ",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-EL-01",
+   "amount": 400.0,
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 13,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (dataset manifest only (no gap-doc card))"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_026",
+  "seeds": [
+   "ZZ6GMP"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "140",
+       "origin": "YYZ",
+       "destination": "LHR",
+       "departure": "2026-10-08T21:35",
+       "arrival": "2026-10-09T09:20",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    },
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "141",
+       "origin": "LHR",
+       "destination": "YYZ",
+       "departure": "2026-10-10T12:10",
+       "arrival": "2026-10-10T15:05",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "PRIYA",
+     "lastName": "RAGHAVAN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -25
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 2
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 2
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "_key": "AC#140#2026-10-09#YYZ"
+   },
+   {
+    "segment": 2,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#141#2026-10-10#LHR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-EL-01",
+   "amount": 400.0,
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (dataset manifest only (no gap-doc card))",
+   "the delay is placed on segment 2 of 2: the fixture states it once for the booking"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "FD_PO_027",
+  "seeds": [
+   "ZZ6GMP"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "140",
+       "origin": "YYZ",
+       "destination": "LHR",
+       "departure": "2026-10-07T21:35",
+       "arrival": "2026-10-08T09:20",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    },
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "141",
+       "origin": "LHR",
+       "destination": "YYZ",
+       "departure": "2026-10-09T12:10",
+       "arrival": "2026-10-09T15:05",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "JONAS",
+     "lastName": "LINDQVIST",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -25
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 2
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 2
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "_key": "AC#140#2026-10-08#YYZ"
+   },
+   {
+    "segment": 2,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#141#2026-10-09#LHR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "eligibility": "ELIGIBLE",
+   "regime": "APPR",
+   "systemCode": "FD-APPR-EL-01",
+   "amount": 400.0,
+   "currency": "CAD",
+   "delayMin": 240,
+   "control": "CONTROLLABLE",
+   "delayBand": "DELAY_3_TO_LT_6_HOURS",
+   "cause": "64"
+  },
+  "daysAgo": 11,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "expectation taken from fd-uat-int-v134 (dataset manifest only (no gap-doc card))",
+   "the delay is placed on segment 2 of 2: the fixture states it once for the booking"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ }
+]

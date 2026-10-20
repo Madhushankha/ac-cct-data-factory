@@ -1,0 +1,121 @@
+{
+ "id": "SOC_UAT_038",
+ "family": "SOC",
+ "summary": "1 adult, LHR-FRA-YYZ on AC 849 + AC 847; both operated; passenger did not board the FRA-YYZ segment (stranded at FRA); SOC segment = seg 2",
+ "passengers": [
+  {
+   "firstName": "JAMES",
+   "lastName": "WILSON",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "GB",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "849",
+   "origin": "LHR",
+   "destination": "FRA",
+   "depLocal": "08:00",
+   "arrLocal": "10:35",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "847",
+   "origin": "FRA",
+   "destination": "YYZ",
+   "depLocal": "14:00",
+   "arrLocal": "16:40",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "SoC-EU-NE-14",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": null,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Trip Not Completed - Passenger stranded at connection",
+   "Multi-segment trip LHR->FRA->YYZ - Segment 2 AC847 FRA->YYZ operated (passenger did not board - missed connection). Passenger stranded at FRA.",
+   "Regime: EU (LHR departure)",
+   "PASSENGERS: 1 - SEGMENTS: 2",
+   "Promised: Seg 1 AC 849 LHR->FRA Dep 08:00 | Seg 2 AC 847 FRA->YYZ Dep 14:00",
+   "Current: Seg 1 AC 849 Status ON TIME | Seg 2 AC 847 Status OPERATED (passenger did not board)",
+   "SOC section present - SOC Segment: AC 847 FRA->YYZ; Flight Status OPERATED (not cancelled - departed without passenger)",
+   "PASSENGER STATUS: NOT_ELIGIBLE",
+   "NOT_ELIGIBLE reason: Connecting flight operated - not cancelled",
+   "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE; DDS code SoC-EU-NE-14"
+  ],
+  "soc": {
+   "eligibility": "NOT_ELIGIBLE",
+   "entitlements": "none (SOC segment AC 847 operated)"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "Arrival times chosen from typical block times (LHR-FRA 10:35, FRA-YYZ 16:40)",
+  "Cabin W (PY), class O",
+  "Residence GB",
+  "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+  "Seg 1 boarded, seg 2 no_show"
+ ],
+ "unsupported": []
+}

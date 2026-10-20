@@ -1,0 +1,95 @@
+{
+ "id": "SOC_UAT_057",
+ "family": "SOC",
+ "summary": "1 adult, AC 084 TLV-VDA 07-Jun 16:00 cancelled, rebooked 90 min later; passenger stayed at origin (TLV); ASL no-travel delay under 2h, not eligible",
+ "passengers": [
+  {
+   "firstName": "SHIRA",
+   "lastName": "PERETZ",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "IL",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "084",
+   "origin": "TLV",
+   "destination": "VDA",
+   "depLocal": "16:00",
+   "arrLocal": "16:50",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 90,
+   "depDelayMin": 90,
+   "delayCode": "64",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "ASL",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "SoC-ASL-NE-09",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_LESS_THAN_2_HOURS",
+  "delayMin": 90,
+  "control": null,
+  "cause": "64",
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Trip Not Completed, Disruption Detected",
+   "Single-segment trip TLV->VDA on AC084 cancelled - rebooked with SOC segment departure delay +1H 30M. Passenger stayed at origin (TLV).",
+   "Regime: ASL (TLV->VDA = Israel->Israel)",
+   "PASSENGERS: 1 - SEGMENTS: 1",
+   "Promised: AC 084 TLV->VDA Sched Dep 07-Jun 16:00",
+   "Current: CANCELLED - Rebooked, SOC Segment Departure Delay +1H 30M",
+   "Geographic Check: TLV->VDA Israel->Israel PASSED",
+   "Departure Delay Code 64 (Flight Crew Shortage) - NOT CHECKED (threshold fails first)",
+   "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_LESS_THAN_2_HOURS",
+   "DDS code SoC-ASL-NE-09"
+  ],
+  "soc": {
+   "eligibility": "NOT_ELIGIBLE",
+   "entitlements": "none (no-travel delay below 2h)"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "Conflicts: prerequisite promised itinerary says AC 085 TLV-YYZ, itinerary/SOC segment/TT say AC 084 TLV-VDA: TLV-VDA used; journey screen says 150 min but prerequisite/TT say 90 min: 90 used",
+  "Rebooked flight AC 084 17:30-18:20 same day (90 min later); cancelCode CREW inferred from delay code 64",
+  "Passenger stayed at origin: paxEvent not_travelled while a rebooking exists",
+  "Arrival 16:50 local VDA (50 min flight)",
+  "Cabin W (PY), class O",
+  "Residence IL",
+  "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+ ],
+ "unsupported": []
+}

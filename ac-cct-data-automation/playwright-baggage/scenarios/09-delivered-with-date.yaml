@@ -1,0 +1,13 @@
+id: delivered-with-date
+title: Bag delivered, with a delivery date -> interim expenses
+booking: { pool: any, pick: next-unused, need: [open, recent], avoid: [partner, waiting, two-bags, two-journeys, cap-spent, duplicate, closed, delivered] }
+first_message: "My bag was delayed. It arrived a few days later and I want to claim what I had to buy in the meantime."
+steps:
+  - notice: "yes"
+  - identify: true
+  - verify: true
+  - journey: one
+  - expect: { step: BAG-03c.S5, any_of: ["been delivered"], buttons: ["Yes, it was delivered!", "No, I still haven't received it!"] }
+  - delivery: { answer: "yes", date: "2026-10-03" }
+  - expect: { step: BAG-05.S2, board: "interim expenses: receipts invitation", any_of: ["receipt", "expenses"] }
+  - stop: end

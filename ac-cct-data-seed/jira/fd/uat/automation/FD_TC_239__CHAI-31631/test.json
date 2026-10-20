@@ -1,0 +1,33 @@
+{
+  "key": "CHAI-31631",
+  "issue_id": "7380558",
+  "test_id": "FD_TC_239",
+  "summary": "FD_TC_239_Eligible FD | Basic Aeroplan | Cash (Interac) selected | Customer REFUSES IDV (Persona) ? manual IDV FAILS ? claim declined and closed | APPR | Controllable (Code 96) | Delay 6 to under 9 hrs | 1 Pax | Single leg | Residence: Canada",
+  "title": "Eligible FD | Basic Aeroplan | Cash (Interac) selected | Customer REFUSES IDV (Persona) ? manual IDV FAILS ? claim declined and closed | APPR | Controllable (Code 96) | Delay 6 to under 9 hrs | 1 Pax | Single leg | Residence: Canada",
+  "status": "New",
+  "priority": "Low",
+  "labels": [],
+  "scenario_type": "scenario",
+  "execution": "CHAI-31809",
+  "synced_at": "2026-10-13T07:02:34Z",
+  "description": "Checks that an eligible claim is never paid without a verified identity, even for a linked Aeroplan member. Flight AC 412 YUL ? YYZ arrived 7 hours late (Code 96, Controllable), and DDS returns FD-APPR-EL-02, CAD 700. The customer lives in Canada and has a Basic Aeroplan profile, so the bot offers Cash CAD 700 (Interac) and AC Wallet CAD 840. The customer picks Cash, and the bot collects the email only. At the payout IDV step the customer declines Persona. The bot says the identity will be checked manually, and the case goes to CR through Manual Handoff with no CyberSource flag. A CR agent sets up a video check using another email address the customer gives. The ID doesn't match the claimant, so the manual IDV fails. The agent rejects the case, an automated decline message is sent and the claim is closed. No compensation record is created, AC Wallet isn't credited and nothing is sent to Unifier.\n\nPrerequisites:\nPNR: ID040 � single passenger S�bastien Lachance (Adult, Basic Aeroplan 9876543210, linked, good standing, not frozen). AC 412 YUL ? YYZ, July 20, 2026. Scheduled arrival 12:00, actual 19:00 (7h delay). Code 96 (Operations Control � Controllable). Travelled, arrived late. No VOL/INVOL changes. AC only. Claim filed Jul 28, 2026 (more than 72h, within 366 days). No duplicate. Not employee, not infant. CyberSource GREEN. Country of residence: Canada. OTP passed. Persona: customer declines consent. mIDV (video): FAIL. CR agent: Sarah Martin.",
+  "goal": "Checks that an eligible claim is never paid without a verified identity, even for a linked Aeroplan member. Flight AC 412 YUL ? YYZ arrived 7 hours late (Code 96, Controllable), and DDS returns FD-APPR-EL-02, CAD 700. The customer lives in Canada and has a Basic Aeroplan profile, so the bot offers Cash CAD 700 (Interac) and AC Wallet CAD 840. The customer picks Cash, and the bot collects the email only. At the payout IDV step the customer declines Persona. The bot says the identity will be checked manually, and the case goes to CR through Manual Handoff with no CyberSource flag. A CR agent sets up a video check using another email address the customer gives. The ID doesn't match the claimant, so the manual IDV fails. The agent rejects the case, an automated decline message is sent and the claim is closed. No compensation record is created, AC Wallet isn't credited and nothing is sent to Unifier.",
+  "prerequisites": "PNR: ID040 � single passenger S�bastien Lachance (Adult, Basic Aeroplan 9876543210, linked, good standing, not frozen). AC 412 YUL ? YYZ, July 20, 2026. Scheduled arrival 12:00, actual 19:00 (7h delay). Code 96 (Operations Control � Controllable). Travelled, arrived late. No VOL/INVOL changes. AC only. Claim filed Jul 28, 2026 (more than 72h, within 366 days). No duplicate. Not employee, not infant. CyberSource GREEN. Country of residence: Canada. OTP passed. Persona: customer declines consent. mIDV (video): FAIL. CR agent: Sarah Martin.",
+  "prerequisite_items": [
+    "PNR: ID040 � single passenger S�bastien Lachance (Adult, Basic Aeroplan 9876543210, linked, good standing, not frozen)",
+    "AC 412 YUL ? YYZ, July 20, 2026",
+    "Scheduled arrival 12:00, actual 19:00 (7h delay)",
+    "Code 96 (Operations Control � Controllable)",
+    "Travelled, arrived late",
+    "No VOL/INVOL changes",
+    "AC only",
+    "Claim filed Jul 28, 2026 (more than 72h, within 366 days)",
+    "No duplicate",
+    "Not employee, not infant",
+    "CyberSource GREEN",
+    "Country of residence: Canada",
+    "OTP passed",
+    "Persona: customer declines consent. mIDV (video): FAIL",
+    "CR agent: Sarah Martin"
+  ]
+}

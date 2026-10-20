@@ -1,0 +1,106 @@
+{
+ "id": "SOC_UAT_061",
+ "family": "SOC",
+ "summary": "1 adult, AC 084 TLV-VDA recorded as operated (not cancelled) 10-Jun 16:00 though the passenger returned to origin; ASL not eligible",
+ "passengers": [
+  {
+   "firstName": "ITAI",
+   "lastName": "LAVI",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "IL",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "084",
+   "origin": "TLV",
+   "destination": "VDA",
+   "depLocal": "16:00",
+   "arrLocal": "16:50",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "9084",
+   "origin": "TLV",
+   "destination": "TLV",
+   "depLocal": "16:20",
+   "arrLocal": "17:50",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded",
+   "changeDaysBeforeDeparture": 0.1
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "ASL",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "SoC-ASL-NE-13",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": null,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Regime: ASL (TLV/Israel domestic - Israel to Israel)",
+   "SOC section present",
+   "Geographic Check: Israel -> Israel PASSED",
+   "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE",
+   "Trip Not Completed - Passenger returned to origin",
+   "Single-segment trip TLV->VDA on AC084 - flight operated (departed and returned to TLV). System records as 'operated' not 'cancelled'.",
+   "PASSENGERS: 1 - SEGMENTS: 1",
+   "Promised: AC 084 TLV->VDA Sched Dep 10-Jun 16:00",
+   "Current: Status OPERATED (departed and returned to origin - not recorded as cancelled)",
+   "Flight Status: OPERATED (not cancelled in system - departed + returned)",
+   "PASSENGER STATUS: NOT_ELIGIBLE | BAND blank",
+   "NOT_ELIGIBLE reason: Flight not recorded as cancelled (dispute relevant, agent may reclassify)",
+   "DDS code SoC-ASL-NE-13"
+  ],
+  "soc": {
+   "eligibility": "NOT_ELIGIBLE",
+   "entitlements": "none (recorded as operated)"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "Arrival 16:50 local VDA",
+  "Cabin W (PY), class O",
+  "Residence IL",
+  "Flight modelled as ontime (system records operated), passenger as not_travelled",
+  "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+ ],
+ "unsupported": [
+  "Departed-then-returned-to-origin while recorded as 'operated' is only approximated by an on-time outcome plus a not_travelled pax event"
+ ]
+}

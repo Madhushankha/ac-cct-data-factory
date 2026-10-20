@@ -1,0 +1,79 @@
+{
+  "id": "FD_TC_174",
+  "family": "FD",
+  "summary": "Mixed regime CDG-YYZ AC871 arrived 4h late, code 42, Aeroplan linked and active: EU 261 EUR 600 selected over APPR CAD 400",
+  "passengers": [
+    {
+      "firstName": "CLAUDETTE",
+      "lastName": "BEAUREGARD",
+      "type": "ADT",
+      "aeroplanNumber": "9123456780",
+      "aeroplanTier": "Basic",
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "871",
+      "origin": "CDG",
+      "destination": "YYZ",
+      "depLocal": "13:30",
+      "arrLocal": "16:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": null,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "MIXED",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "FD-MIXED-EL-03",
+    "amount": 600,
+    "currency": "EUR",
+    "delayBand": null,
+    "delayMin": 240,
+    "control": "CONTROLLABLE",
+    "cause": "42",
+    "ttUi": [
+      "Dual Regime: EU 261 + APPR",
+      "EU 261: ELIGIBLE EUR 600",
+      "APPR: ELIGIBLE CAD 400",
+      "Most Generous: EU 261 EUR 600 (fixed priority)",
+      "MSL FLIGHT: AC 871 CDG->YYZ - 42",
+      "CONTROLLABLE (Code 42)",
+      "Aeroplan: Linked, ACTIVE",
+      "Flight Compensation: MS CLAUDETTE BEAUREGARD | ELIGIBLE | EU261_4_PLUS_HOURS_LONG_HAUL (FIXED PRIORITY) | EUR 600"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "dep 13:30 CDG chosen; scheduled arrival 16:00, actual 20:00 (given)",
+    "Aeroplan \"linked, account active (not frozen)\" but number and tier not given: chose placeholder number 9123456780 and tier Basic",
+    "regime \"MIXED\": selected EU 261 EUR 600 (~CAD 880); APPR CAD 400 secondary; AC Wallet payout with 20% top-up (~CAD 1,056) is payment behaviour, not booking data",
+    "flight date June 2, 2026; flightDaysAgo=10"
+  ],
+  "unsupported": []
+}

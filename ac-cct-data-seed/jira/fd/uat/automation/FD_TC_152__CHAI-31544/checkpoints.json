@@ -1,0 +1,927 @@
+{
+  "key": "CHAI-31544",
+  "test_id": "FD_TC_152",
+  "title": "Eligible | ASL | No Travel Origin | Non-Extraordinary Code | Cash | Single Pax | 1 Leg | No Changes",
+  "goal": "Israel-bound flight (YYZ?TLV, AC-operated) cancelled due to non-extraordinary reason (cancellation code CREW � crew unavailability, controllable). Customer remained at origin (YYZ), did not travel. Under ASL No Travel rules, when MSL is cancelled and disruption is Not Extraordinary, customer is entitled to ILS 3,670 + expenses + pro-rated/full ticket refund.",
+  "summary": {
+    "seed": 12,
+    "chat": 35,
+    "api": 11,
+    "email": 1,
+    "dashboard": 23,
+    "implied": 11,
+    "manual": 7,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Israel-bound flight (YYZ?TLV, AC-operated) cancelled due to non-extraordinary reason (cancellation code CREW � crew unavailability, controllable). Customer remained at origin (YYZ), did not travel. Under ASL No Travel rules, when MSL is cancelled and disruption is Not Extraordinary, customer is entitled to ILS 3,670 + expenses + pro-rated/full ticket refund.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: single passenger Yael Levi (Adult)",
+      "expected": "PNR: single passenger Yael Levi (Adult)",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Journey: 1 leg AC operated, Flight AC 082, YYZ?TLV",
+      "expected": "Journey: 1 leg AC operated, Flight AC 082, YYZ?TLV",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Flight status: CANCELLED",
+      "expected": "Flight status: CANCELLED",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Cancellation code: CREW (Crew unavailability � Not Extraordinary Circumstance / Controllable)",
+      "expected": "Cancellation code: CREW (Crew unavailability � Not Extraordinary Circumstance / Controllable)",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Customer action: Remained at YYZ (origin), did not travel",
+      "expected": "Customer action: Remained at YYZ (origin), did not travel",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No Travel status: Origin",
+      "expected": "No Travel status: Origin",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Fallback: FALSE (cancellation code available)",
+      "expected": "Fallback: FALSE (cancellation code available)",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "MSL: AC 082 YYZ?TLV",
+      "expected": "MSL: AC 082 YYZ?TLV",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Regime: ASL (Israel destination) + APPR (Canadian origin)",
+      "expected": "Regime: ASL (Israel destination) + APPR (Canadian origin)",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Residence: Israel ? ILS ? BSM � Email Payment",
+      "expected": "Residence: Israel ? ILS ? BSM � Email Payment",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Aeroplan: NOT linked ? Cash only",
+      "expected": "Aeroplan: NOT linked ? Cash only",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Result: ELIGIBLE � ILS 3,670 + Expenses + Refund",
+      "expected": "Result: ELIGIBLE � ILS 3,670 + Expenses + Refund",
+      "id": "CP013"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP014"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP015"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP016"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP017"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP018"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Toronto to Tel Aviv was cancelled due to a crew issue and I didn't take any replacement flight. I stayed in Toronto. Can I get compensation?\"",
+      "expected": "My flight from Toronto to Tel Aviv was cancelled due to a crew issue and I didn't take any replacement flight. I stayed in Toronto. Can I get compensation?",
+      "id": "CP019"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP022"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP023"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP024"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP025"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"Yael Levi\"",
+      "expected": "Yael Levi",
+      "id": "CP026"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, Yael! And, what is your booking reference number?",
+      "id": "CP027"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: TC118\"",
+      "expected": "PNR: TC118",
+      "id": "CP028"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC118",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND (Auth Flow 1)",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer data (passenger info, journey details) is revealed to the customer",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "Email: y***@gmail.com Phone: +972***789",
+      "id": "CP032"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: y***@gmail.com\"",
+      "expected": "Email: y***@gmail.com",
+      "id": "CP033"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"518293\" ? CORRECT (attempt 1 of 5)",
+      "expected": "518293",
+      "id": "CP034"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "system",
+      "method": "implied",
+      "step": "\"I found the following journey:",
+      "expected": "Flight: AC 082 Route: Toronto (YYZ) ? Tel Aviv (TLV) Date: June 3, 2026 Status: CANCELLED Is this the journey you'd like to check?\"",
+      "id": "CP035"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP036"
+    },
+    {
+      "section": "REGIME DETERMINATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system determines: Destination = TLV (Israel) ? ASL applies",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "REGIME DETERMINATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system checks: Origin = YYZ (Canada) ? APPR also applies",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "REGIME DETERMINATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And the system checks: Flight CANCELLED ? MSL cancelled ? meets ASL No Travel threshold",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "REGIME DETERMINATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system checks: Customer remained at origin (YYZ) ? No Travel Origin ? Branch A",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the DDS evaluation is done in backend",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS Evaluates and sends to Trip Tracer UI:",
+      "expected": "Trip Tracer UI Validation",
+      "id": "CP042"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the tester opens Trip Tracer UI for PNR: TC118",
+      "expected": "Cancellation � crew unavailability",
+      "id": "CP043"
+    },
+    {
+      "section": "FRAUD SCREENING � CYBERSOURCE",
+      "requirement": "GLOB-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "CyberSource ? GREEN LIGHT",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "ELIGIBLE RESULT",
+      "requirement": "FD-05a",
+      "kind": "system",
+      "method": "implied",
+      "step": "\"I've checked your flight details, and it looks like flight AC 082 from Toronto (YYZ) to Tel Aviv (TLV) on June 3, 2026 was cancelled. Based on ISL regulations, you may be eligible for compensation for this cancellation. I'll guide you through the next steps so we can get your claim submitted and processed as quickly as possible.\"",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "CLAIM PAYMENT: COUNTRY OF RESIDENCE FLOW",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "User selects \"Israel\" ? Currency = ILS",
+      "expected": "Israel",
+      "id": "CP046"
+    },
+    {
+      "section": "CASH vs AC WALLET CHECK",
+      "requirement": "FD-06b",
+      "kind": "system",
+      "method": "implied",
+      "step": "No Aeroplan ? \"You are entitled to receive a ?3,670 ILS compensation.\"",
+      "expected": "? BSM � Email Payment (Israel)",
+      "id": "CP047"
+    },
+    {
+      "section": "PAYMENT METHOD � BSM EMAIL PAYMENT",
+      "requirement": "FD-07",
+      "kind": "idv",
+      "method": "chat",
+      "step": "Email confirmation ? IDV via Persona ? IDV PASS",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "CLAIM AMOUNT CONFIRMATION FLOW",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "\"Deposit Amount: ?3,670 ILS | Payment Method: BSM � Email Payment\" ? User confirms \"Yes\"",
+      "expected": "Deposit Amount: ?3,670 ILS | Payment Method: BSM � Email Payment Yes",
+      "id": "CP049"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "Claim submitted ? Booking auto-appended",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Eligible notification email sent to y***@gmail.com containing: ?3,670 ILS, ASL, YYZ?TLV CANCELLED, No Travel - Origin, cancellation code CREW � not extraordinary",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "\"Thank you for choosing Air Canada.\"",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the case has been created for claimant \"Yael Levi\" with PNR \"TC118\"",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Case Header Topic/Sub-topic should be \"Travel Disruptions � Cancellation\"",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status should be \"In Review\" or \"Done\"",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Created date should be populated",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Last Updated date should be populated",
+      "expected": "",
+      "id": "CP057"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the SLA countdown should be tracking correctly",
+      "expected": "",
+      "id": "CP058"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Name should be \"Yael Levi\"",
+      "expected": "",
+      "id": "CP059"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Authentication should be \"Pass\"",
+      "expected": "",
+      "id": "CP060"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR should be \"TC118\"",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Regime should be \"ASL + APPR\"",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Full Name should be \"Yael Levi\"",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Email should be \"y***@gmail.com\"",
+      "expected": "",
+      "id": "CP064"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Phone should be \"+972***789\"",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey should show \"Bound 1: YYZ ? TLV\" with claim filed as cancelled",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility and Compensation section should be present and populated with compensation \"?3,670 ILS\" as ASL fixed rate for No Travel Origin Not Extraordinary",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Cancellation Code should be \"CREW\" as Not Extraordinary Circumstance",
+      "expected": "",
+      "id": "CP068"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And No Travel should include Compensation at ?3,670 plus Expenses plus pro-rated or full ticket refund",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And DDS should have run automatically",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the eligibility decision should be pre-populated as \"ELIGIBLE\" under ASL with No Travel Origin and Not Extraordinary and cancellation code CREW",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Duplicate Check should have run automatically and the result should be \"No duplicate found\"",
+      "expected": "",
+      "id": "CP072"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the CyberSource result should be \"GREEN\"",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the system should have appended the booking record automatically",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And an eligible notification email should have been sent",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Final Status should be \"Resolved\"",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the case should be in read-only mode",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the customer's country of residence is \"Israel\"",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then the currency should be set to \"ILS\"",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the payment method should be \"BSM � Email Payment\"",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the customer has no Aeroplan linked so only Cash should be offered",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the compensation amount should be \"?3,670\" as ASL fixed rate for No Travel Origin Not Extraordinary with cancellation code CREW",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And this is a No Travel case so compensation plus expenses plus pro-rated or full ticket refund should be processed",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And a PS agent task should be created in Claims Dashboard for the refund",
+      "expected": "",
+      "id": "CP084"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the agent should action the refund in ARD Web and mark it as refunded",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And a compensation record should be created in the backend with GL account and cost center",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And in UAT the batch file should be triggered manually",
+      "expected": "",
+      "id": "CP087"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And Cash should be dispatched to Unifier via HSBC channel for BSM",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And Unifier should send an acknowledgement back",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the end-of-day report should show status \"Pending\" transitioning to \"Cached\" or \"Rejected\" or \"Expired\"",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And currency conversion logging should record ILS amount and CAD equivalent and exchange rate and source and date",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the Claims Dashboard Compensation tab should show \"?3,670 ILS\" with payment method \"Cash\" via \"BSM � Email Payment\" and status updated via talkback",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard should show a refund record with PS agent task status tracked separately",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS returns FD-ASL-EL-05.",
+      "expected": "DDS returns FD-ASL-EL-05.",
+      "id": "CP094"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Tracer: CANCELLED; MSL = AC 082 YYZ?TLV; Cancellation Code = CREW (4-char Netline � Not Extraordinary Circumstance / Controllable); No Travel = Origin (customer remained at YYZ); Fallback = FALSE; ASL (Israel destination) + APPR.",
+      "expected": "Trip Tracer: CANCELLED; MSL = AC 082 YYZ?TLV; Cancellation Code = CREW (4-char Netline � Not Extraordinary Circumstance / Controllable); No Travel = Origin (customer remained at YYZ); Fallback = FALSE; ASL (Israel destination) + APPR.",
+      "id": "CP095"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "ASL No Travel: Branch A (remained at origin) ? MSL cancelled ? Not Extraordinary ? ELIGIBLE.",
+      "expected": "ASL No Travel: Branch A (remained at origin) ? MSL cancelled ? Not Extraordinary ? ELIGIBLE.",
+      "id": "CP096"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Compensation: ILS 3,670 + Expenses + Pro-rated/full ticket refund.",
+      "expected": "Compensation: ILS 3,670 + Expenses + Pro-rated/full ticket refund.",
+      "id": "CP097"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "CyberSource: GREEN.",
+      "expected": "CyberSource: GREEN.",
+      "id": "CP098"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "IDV: PASS.",
+      "expected": "IDV: PASS.",
+      "id": "CP099"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Payment: BSM � Email Payment Israel ILS.",
+      "expected": "Payment: BSM � Email Payment Israel ILS.",
+      "id": "CP100"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Claims Dashboard: ASL EL-05; ELIGIBLE; No Travel = Origin; Not Extraordinary (CREW); ?3,670 ILS; DDS = FD-ASL-EL-05.",
+      "expected": "Claims Dashboard: ASL EL-05; ELIGIBLE; No Travel = Origin; Not Extraordinary (CREW); ?3,670 ILS; DDS = FD-ASL-EL-05.",
+      "id": "CP101"
+    }
+  ]
+}

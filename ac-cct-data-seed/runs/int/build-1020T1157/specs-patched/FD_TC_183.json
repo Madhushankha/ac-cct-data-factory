@@ -1,0 +1,92 @@
+{
+ "id": "FD_TC_183",
+ "family": "FD",
+ "summary": "APPR YUL-YYZ AC405 voluntary change via Contact Center (ADDCOL, no ACNP): promise updates 08:00 -> 11:00, flight on time -> Not Eligible (no delay)",
+ "passengers": [
+  {
+   "firstName": "MARC-ANTOINE",
+   "lastName": "GAGNON",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "405",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "06:40",
+   "arrLocal": "08:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "Y",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [
+  {
+   "seg": 1,
+   "depDeltaMin": 180,
+   "arrDeltaMin": 180,
+   "noticeHours": 360,
+   "changeType": "VOL"
+  }
+ ],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": null,
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": 0,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Promised Itinerary: AC 405 YUL->YYZ scheduled arrival 11:00 (updated by CC VOL)",
+   "Current Itinerary: AC 405 YUL->YYZ ON TIME, actual 11:00",
+   "Change 1: Contact Center (ADDCOL, no ACNP) at D-7 - VOL - arrival 08:00 -> 11:00",
+   "Promise = 11:00 (updated by VOL)",
+   "Delay from promise = 0 hours",
+   "Regime: APPR",
+   "Result: NOT ELIGIBLE (no delay)",
+   "No MSL (no disruption)",
+   "No disruption code",
+   "CRITICAL: ADDCOL alone does NOT determine VOL/INVOL - the ABSENCE of ACNP confirms VOL",
+   "Flight Compensation: MR MARC-ANTOINE GAGNON | NOT ELIGIBLE | NO_DELAY_FROM_PROMISE | $0"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "segments hold the ORIGINAL 14-day schedule; the Pre-Move/VOL change is modelled as a scheduleChange moving the arrival; flight then operates on time against the CHANGED schedule (arrDelayMin 0)",
+  "flight date June 10, 2026 in text; flightDaysAgo=10 (72 hrs elapsed)",
+  "dep time = original arrival minus 1h20 (YUL-YYZ ~1h20 block)",
+  "currency of \"$0\" taken as CAD (APPR)"
+ ],
+ "unsupported": [
+  "PNR history marker ADDCOL with NO ACNP (Air Canada No Pay) marker, which classifies the contact-centre change as VOL - not expressible in scheduleChanges"
+ ]
+}

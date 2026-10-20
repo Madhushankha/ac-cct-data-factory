@@ -1,0 +1,91 @@
+{
+  "id": "SOC_UAT_028",
+  "family": "SOC",
+  "summary": "EU SOC: 1 regular revenue pax on AC 849 LHR-YYZ Jun 3 dep 13:00 actual 14:30 (+90), code 64 controllable; delay below 2 h -> NOT ELIGIBLE (SoC-EU-NE-04)",
+  "passengers": [
+    {
+      "firstName": "OLIVER",
+      "lastName": "WRIGHT",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "849",
+      "origin": "LHR",
+      "destination": "YYZ",
+      "depLocal": "13:00",
+      "arrLocal": "16:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 90,
+      "depDelayMin": 90,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-EU-NE-04",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_LESS_THAN_2_HOURS",
+    "delayMin": 90,
+    "control": "CONTROLLABLE",
+    "cause": "64",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip LHR→YYZ on AC849 delayed +1H 30M",
+      "Regime: EU (LHR departure)",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Promised Itinerary: AC 849 LHR→YYZ Scheduled Dep 03-Jun 13:00",
+      "Current Itinerary: AC 849 LHR→YYZ ARRIVED LATE, Scheduled Dep 13:00 → Actual 14:30, +1H 30M",
+      "SOC section present",
+      "PASSENGER | NOT_ELIGIBLE | DELAY_LESS_THAN_2_HOURS",
+      "NOT_ELIGIBLE reason: Delay below 2-hour threshold"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none; delay 90 min below 2-hour threshold"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "arrival 16:00 EDT (8h block, tz -5h)"
+  ],
+  "unsupported": []
+}

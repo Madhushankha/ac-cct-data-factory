@@ -1,0 +1,88 @@
+{
+ "id": "FD_TC_023",
+ "family": "FD",
+ "summary": "Single pax Philippe Tremblay (Aeroplan Elite 25K 9876543210), AC 430 YUL-YYZ sched arr 10:00 arrived 17:00 (+7h), arrival delay code 99 (upline, controllable), APPR, Cash 700 / AC Wallet 840",
+ "passengers": [
+  {
+   "firstName": "PHILIPPE",
+   "lastName": "TREMBLAY",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "25K",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "430",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 420,
+   "depDelayMin": 420,
+   "delayCode": "99",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-02",
+  "amount": 700,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "CONTROLLABLE",
+  "cause": "99",
+  "ttUi": [
+   "Promised: AC 430 YUL->YYZ Scheduled Arrival 10:00",
+   "Current: ARRIVED LATE 10:00 -> 17:00, Delay +7H 00M",
+   "History: No booking changes (no VOL or INVOL)",
+   "Regime: APPR (1 regime)",
+   "MSL Flight: AC 430 YUL->YYZ Code 99 \"Delayed due to upline controllable carrier issue\"",
+   "Cancellation code: NONE ; Fallback: FALSE",
+   "Delay Classification: +7H 00M CONTROLLABLE DELAY_6_TO_LT_9_HOURS",
+   "Aeroplan: 9876543210 (Elite 25K linked)",
+   "DDS outcome code: FD-APPR-EL-02",
+   "Flight Compensation Assessment: MR PHILIPPE TREMBLAY | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet (+20%)"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 08:40 (text gives only sched arr 10:00)",
+  "depDelayMin 420 (same as arrival delay)",
+  "cabin Y / class T",
+  "residence CA (Canada payout)",
+  "Elite 25K tier from title; Aeroplan active and in good standing (not frozen)"
+ ],
+ "unsupported": [
+  "Upline cause: inbound AC 429 YYZ-YUL arrived late for an AC controllable reason (not on the customer's PNR); only the arrival delay code 99 on the booked segment can be set"
+ ],
+ "loyalty": {
+  "tier": "E25K",
+  "why": "jira prerequisites name Elite 25K"
+ }
+}

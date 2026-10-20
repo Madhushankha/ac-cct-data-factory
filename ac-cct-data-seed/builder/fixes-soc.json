@@ -1,0 +1,1350 @@
+{
+ "rules": [
+  {
+   "id": "R1",
+   "title": "Notice time = ETD message lastUpdate; add outcomes[].reportedHoursBefore",
+   "rule": "Raptor 'informed' time is timeWindowMinutes = planned departure - lastUpdate of the FDM message with legState ETD whose ETD-STD >= 1 min (eds-flight-level-change-identifier steps 16/17 -> FLIGHT_DEPARTURE_DELAY; flight_changes.rs:minutes_before_departure, flight.rs:event_trigger_time). APPR: care.rs separate() drops a delay with window > 720 (12 h). EU/ASL: delay must be at/after promise window start = latest original arrival - 14 d (itinerary.rs Promise::bounded, care.rs in_window). PNR schedule changes, AACC notifications and flight_scheduled do not count. A dropped delay leaves *_delay_disruptions empty -> *_soc_flight false -> NE-03. Converter: for kind=delay set flight.reportedMinutes = (reportedHoursBefore or noticeHours)*60 (default 120); scenario_fdm.flight_messages: ETD at dep - reportedMinutes (not fixed 120) and emit only that one ETD. Use >=13 h for APPR NE-03, >=15 days (use 18+) for EU/ASL NE-03; <12 h (default 2 h) otherwise."
+  },
+  {
+   "id": "R2",
+   "title": "Multi-segment connections must be ONE bound",
+   "rule": "Bounds come from processedPnr.flightItineraries[type=JOURNEY_SERVER_BOUND] position (booking/pnr.rs ~1040). SEEDS (2,1)=ZZ6GMP is a round trip: two bounds of one segment; the builder rewrites only bound 0's endpoints. A stranded leg 2 then forms its own bound (REMAINED_AT_ORIGIN) giving NE-08/EL-01 instead of NE-12/EL-05 and EL-03/EL-06, and the pair of rows NE-03+X. Fix: in scenario_build.build_one post-process every PNR version when plan has one bound with n>1 segments: flightItineraries=[{type:'JOURNEY_SERVER_BOUND',originIataCode:first.origin,destinationIataCode:last.destination,flights:[{flightSegment:{id:'<pnr>-ST-k',ref:'processedPnr.products',type:'product'}} for each seg]}], and use the same ST ids in CM correlation (it used ST-3 for seg 2 while the PNR has ST-2; product ids must match). Or choose a one-way connecting seed."
+  },
+  {
+   "id": "R3",
+   "title": "Cancellation/delay codes must be lookup keys",
+   "rule": "Cancel codes: APPR_cancellation_lookup / EU_ASL_delay_code_controllability_lookup keys (AIRS ARPT RUNW COMM HOLI OPER POSI REPO RTNS EQUI FUEL HDLG ROTA PERF TECH DAMA POLI INDU WEAT CREW). 'ATC' and the default 'CNL'/'WX' map to OTHER -> ND-X01. Default when absent: OPER. Delay codes: APPR SAFETY = 03,43-47,52,69 (41 is UNCONTROLLABLE, 42 CONTROLLABLE); UNCONTROLLABLE 1,2,4,41,51,58,71-77,81-89,93,97,98."
+  },
+  {
+   "id": "R4",
+   "title": "No-travel scenarios: no rebooking object, no boarding",
+   "rule": "A flight_cancelled_rebooked step replaces the SoC segment with the protecting segment, which is not the msl_flight -> soc_flight false -> NE-03 (observed in 033-035,042-046,057-059,069-073). Model 'stayed at origin' as paxEvents not_travelled (no check-in/boarding messages) on the disrupted flight, cancellation or delay as the code needs, and drop spec.rebooking. spec_to_build already skips check-in for not_travelled/no_show. Passenger flown elsewhere = boarded (leg 1) + not_travelled (leg 2)."
+  },
+  {
+   "id": "R5",
+   "title": "SoC code reachability",
+   "rule": "Reason order is first_matching. NE-03 (soc_flight false) precedes NE-09/10/11/14/16; a cancellation makes soc_flight true -> ELIGIBLE (EU/ASL never NOT_ELIGIBLE for it). Hence unreachable: APPR NE-14/NE-16, EU/ASL NE-09..NE-14 (10,12,13,14 not even in lookup), EU/ASL EL-02/EL-05, ND-03 (all), PE-01 (all), NE-06/NE-08 limitation, EU NE-07. Achievable stand-ins: below 2 h non-cancelled no-travel -> NE-04; operated flight, nobody boarded -> NE-03; cancel -> EL-04/06; delay>=180 no-travel -> EL-01/03. Treat the originals as expectation drift to raise with the rule owners."
+  },
+  {
+   "id": "R6",
+   "title": "Employee / OAL employee / loyalty / SSR need PNR fields",
+   "rule": "booking_type from creation.pointOfSale.office.id suffix ES/OT/EP/EE/EC or special keywords STDP/STFD/STFS (eds-booking-type); OAL employee = office ending EC + keyword text starting 'SN-00000'; segments all HK/TK/RR/KL/KK. Keep the flight AC-operated or ND (STAR/OAL carrier) precedes NE-01/02. Tier: loyaltyRequests[].membership.activeTier.code (SE, E, D...; aeroplan_elite_tiers_lookup; Basic 'A*' is not elite). SSR: SPECIAL_SERVICE_REQUEST product code in soc_eligible_ssr_codes_lookup (WCHR...). Add spec fields booking.officeId, booking.specialKeywords[], passengers[].ssr[]; the converter writes them into every PNR version."
+  },
+  {
+   "id": "R7",
+   "title": "OAL handling",
+   "rule": "OAL-only itinerary expecting NE-05: send no FDM delay for the OAL flight (soc_flight false; is_all_oal_itinerary reason precedes NE-03). OAL leg expecting ND-01 needs a non-Star carrier (STAR_carriers_lookup has LH UA TK LX OS TP SK SQ NH AC-partners -> ND-02) with a delay record on that leg."
+  },
+  {
+   "id": "R8",
+   "title": "Regime by geography",
+   "rule": "EU/UK from LHR/CDG/FRA/BRU origin; ASL for any TLV flight; APPR for Canada. Out-of-regime rows show NE-06/NE-07/NE-X01 as 'not applicable' defaults (not a failure)."
+  }
+ ],
+ "perScenario": {
+  "SOC_UAT_001": {
+   "specPatch": {
+    "booking": {
+     "officeId": "YULAC08ES"
+    }
+   },
+   "note": "Office id ending ES makes eds-booking-type EMPLOYEE_CONFIRMED -> NON_REVENUE_AC; appr-soc-eligible falls to step 7 NOT_ELIGIBLE -> reason step 2 NE-01.",
+   "achievableCode": "SoC-APPR-NE-01",
+   "confidence": "high"
+  },
+  "SOC_UAT_025": {
+   "specPatch": {
+    "booking": {
+     "officeId": "YULAC08ES"
+    }
+   },
+   "note": "Same for EU: eu-soc-eligible step 2 needs REVENUE; step 5 NOT_ELIGIBLE -> NE-01.",
+   "achievableCode": "SoC-EU-NE-01",
+   "confidence": "high"
+  },
+  "SOC_UAT_049": {
+   "specPatch": {
+    "booking": {
+     "officeId": "YULAC08ES"
+    }
+   },
+   "note": "Same for ASL.",
+   "achievableCode": "SoC-ASL-NE-01",
+   "confidence": "high"
+  },
+  "SOC_UAT_002": {
+   "specPatch": {
+    "booking": {
+     "officeId": "YULAC08EC",
+     "specialKeywords": [
+      {
+       "code": "STFD",
+       "text": "SN-0000012345"
+      }
+     ]
+    },
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "872",
+      "origin": "FRA",
+      "destination": "YYZ",
+      "depLocal": "10:00",
+      "arrLocal": "13:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+     }
+    ]
+   },
+   "note": "NE-02 needs booking_type NON_REVENUE_OAL: office id ending EC AND a special keyword whose text starts SN-00000 (eds-booking-type steps 1-2, classify_booking mod.rs:1400 'OAL' substring). The flight must stay AC-operated: with LH/LY (STAR/OAL) *-soc-eligible step 6 returns NO_DETERMINATION (ND-02/ND-01) before the NE-02 reason can apply (that is what was observed).",
+   "achievableCode": "SoC-APPR-NE-02",
+   "confidence": "medium"
+  },
+  "SOC_UAT_026": {
+   "specPatch": {
+    "booking": {
+     "officeId": "YULAC08EC",
+     "specialKeywords": [
+      {
+       "code": "STFD",
+       "text": "SN-0000012345"
+      }
+     ]
+    },
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "872",
+      "origin": "FRA",
+      "destination": "YYZ",
+      "depLocal": "10:00",
+      "arrLocal": "13:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+     }
+    ]
+   },
+   "note": "NE-02 needs booking_type NON_REVENUE_OAL: office id ending EC AND a special keyword whose text starts SN-00000 (eds-booking-type steps 1-2, classify_booking mod.rs:1400 'OAL' substring). The flight must stay AC-operated: with LH/LY (STAR/OAL) *-soc-eligible step 6 returns NO_DETERMINATION (ND-02/ND-01) before the NE-02 reason can apply (that is what was observed).",
+   "achievableCode": "SoC-EU-NE-02",
+   "confidence": "medium"
+  },
+  "SOC_UAT_050": {
+   "specPatch": {
+    "booking": {
+     "officeId": "YULAC08EC",
+     "specialKeywords": [
+      {
+       "code": "STFD",
+       "text": "SN-0000012345"
+      }
+     ]
+    },
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "086",
+      "origin": "TLV",
+      "destination": "YYZ",
+      "depLocal": "01:00",
+      "arrLocal": "06:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+     }
+    ]
+   },
+   "note": "NE-02 needs booking_type NON_REVENUE_OAL: office id ending EC AND a special keyword whose text starts SN-00000 (eds-booking-type steps 1-2, classify_booking mod.rs:1400 'OAL' substring). The flight must stay AC-operated: with LH/LY (STAR/OAL) *-soc-eligible step 6 returns NO_DETERMINATION (ND-02/ND-01) before the NE-02 reason can apply (that is what was observed).",
+   "achievableCode": "SoC-ASL-NE-02",
+   "confidence": "medium"
+  },
+  "SOC_UAT_003": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 1080,
+      "depDelayMin": 1080,
+      "delayCode": "67",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null,
+      "reportedHoursBefore": 15
+     }
+    ]
+   },
+   "note": "APPR drops a departure delay whose timeWindowMinutes > 720 (care.rs separate(): appr && d.window>720). window = planned departure minus the ETD message lastUpdate. Put the only ETD message 15 h before departure.",
+   "achievableCode": "SoC-APPR-NE-03",
+   "confidence": "high"
+  },
+  "SOC_UAT_027": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 1080,
+      "depDelayMin": 1080,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null,
+      "reportedHoursBefore": 432
+     }
+    ]
+   },
+   "note": "EU/ASL: delay must be at >= promise window start = latest original arrival - 14 days (itinerary.rs Promise::bounded; care.rs in_window). ETD message 18 days before departure falls outside -> no delay disruption -> eu_soc_flight false -> NE-03. Existing noticeHours is ignored for kind=delay; converter must read it.",
+   "achievableCode": "SoC-EU-NE-03",
+   "confidence": "high"
+  },
+  "SOC_UAT_051": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 1080,
+      "depDelayMin": 1080,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null,
+      "reportedHoursBefore": 480
+     }
+    ]
+   },
+   "note": "As 027, ASL (20 days).",
+   "achievableCode": "SoC-ASL-NE-03",
+   "confidence": "high"
+  },
+  "SOC_UAT_005": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ]
+   },
+   "note": "OAL-only: send NO FDM delay for the OAL flight. No delay disruption -> appr_soc_flight false -> NOT_ELIGIBLE; reason step 4 (is_all_oal_itinerary) comes before NE-03 -> NE-05. A delay on the UA flight makes soc_flight true with STAR carrier -> ND-02 (observed).",
+   "achievableCode": "SoC-APPR-NE-05",
+   "confidence": "medium"
+  },
+  "SOC_UAT_029": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ]
+   },
+   "note": "Same as 005 for EU.",
+   "achievableCode": "SoC-EU-NE-05",
+   "confidence": "medium"
+  },
+  "SOC_UAT_053": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ]
+   },
+   "note": "Same as 005 for ASL.",
+   "achievableCode": "SoC-ASL-NE-05",
+   "confidence": "medium"
+  },
+  "SOC_UAT_006": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "AIRS",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Cancel code must be a key of APPR_cancellation_lookup (AIRS ARPT RUNW COMM HOLI OPER POSI REPO RTNS EQUI FUEL HDLG ROTA PERF TECH DAMA POLI INDU WEAT CREW). 'ATC' -> OTHER -> ND-X01 (observed). AIRS = UNCONTROLLABLE.",
+   "achievableCode": "SoC-APPR-NE-08",
+   "confidence": "high"
+  },
+  "SOC_UAT_023": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": "44",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "passengers": [
+     {
+      "firstName": "CLAIRE",
+      "lastName": "BOUCHER",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false,
+      "ssr": [
+       "WCHR"
+      ]
+     }
+    ]
+   },
+   "note": "APPR_delay_lookup: 41=UNCONTROLLABLE (not safety). SAFETY codes: 03,43-47,52,69. Code 44 => SAFETY -> EL-09 (eligible step 4, reason step 22). SSR optional (passenger_status SSR) but keep.",
+   "achievableCode": "SoC-APPR-EL-09",
+   "confidence": "high"
+  },
+  "SOC_UAT_015": {
+   "specPatch": {
+    "passengers": [
+     {
+      "firstName": "PAUL",
+      "lastName": "ARSENAULT",
+      "type": "ADT",
+      "aeroplanNumber": "9876543210",
+      "aeroplanTier": "SE",
+      "residence": "CA",
+      "employee": false
+     },
+     {
+      "firstName": "MARIE",
+      "lastName": "ARSENAULT",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+     }
+    ]
+   },
+   "note": "Converter drops aeroplanTier. Write processedPnr.loyaltyRequests[].membership.activeTier.code='SE' (and accrual link on traveler 1) in every PNR version; passenger_status AEROPLAN / any_aeroplan_passenger -> EL-07 for the whole PNR. Without it uncontrollable code 77 gives NE-07 (observed).",
+   "achievableCode": "SoC-APPR-EL-07",
+   "confidence": "medium"
+  },
+  "SOC_UAT_044": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Cancel code was 'CNL' (not in EU_ASL_delay_code_controllability_lookup) -> OTHER -> ND-X01. Use OPER (valid in both lookups). No rebooking.",
+   "achievableCode": "SoC-EU-EL-04",
+   "confidence": "high"
+  },
+  "SOC_UAT_071": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "AIRS",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Valid cancel code, no rebooking object (a rebooking replaces the SoC flight with the new segment, which is not the msl_flight -> soc_flight false -> NE-03, observed).",
+   "achievableCode": "SoC-ASL-EL-04",
+   "confidence": "high"
+  },
+  "SOC_UAT_041": {
+   "specPatch": {
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Delay 420 but the passenger flew (check-in/boarding emitted for all pax). Not flown -> ORIGIN/REMAINED_AT_ORIGIN; arrival_delay>=180 -> EL-01 (step 16) instead of EL-07.",
+   "achievableCode": "SoC-EU-EL-01",
+   "confidence": "high"
+  },
+  "SOC_UAT_068": {
+   "specPatch": {
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Same as 041 for ASL.",
+   "achievableCode": "SoC-ASL-EL-01",
+   "confidence": "high"
+  },
+  "SOC_UAT_042": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 480,
+      "depDelayMin": 480,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     },
+     {
+      "seg": 1,
+      "pax": 2,
+      "event": "not_travelled"
+     },
+     {
+      "seg": 1,
+      "pax": 3,
+      "event": "not_travelled"
+     },
+     {
+      "seg": 1,
+      "pax": 4,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "EL-02 (group) is not in SoC_EU_reason_codes_lookup and no rule emits it; EL-01 is the reachable code. Rebooking object removed (see 071).",
+   "achievableCode": "SoC-EU-EL-01",
+   "confidence": "medium"
+  },
+  "SOC_UAT_069": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "WEAT",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     },
+     {
+      "seg": 1,
+      "pax": 2,
+      "event": "not_travelled"
+     },
+     {
+      "seg": 1,
+      "pax": 3,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "EL-02 not emitted by rules; EL-04 reachable (cancel, <180).",
+   "achievableCode": "SoC-ASL-EL-04",
+   "confidence": "medium"
+  },
+  "SOC_UAT_045": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "EL-05 is not in the reason lookup nor produced by any step (engine-limited). Return-to-origin and stay-at-origin share the same codes; model as cancellation, no travel.",
+   "achievableCode": "SoC-EU-EL-04",
+   "confidence": "medium"
+  },
+  "SOC_UAT_072": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "EL-05 is not in the reason lookup nor produced by any step (engine-limited). Return-to-origin and stay-at-origin share the same codes; model as cancellation, no travel.",
+   "achievableCode": "SoC-ASL-EL-04",
+   "confidence": "medium"
+  },
+  "SOC_UAT_008": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 90,
+      "depDelayMin": 90,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "APPR NE-14 is shadowed: a NOT_ELIGIBLE with soc_flight true is always UNCONTROLLABLE (NE-07/08/12 first); with false NE-03/NE-04 first. A cancellation makes soc_flight true -> ELIGIBLE. Achievable: delay 90 not cancelled, no travel -> identifier step 3 below_2h -> NE-04.",
+   "achievableCode": "SoC-APPR-NE-04",
+   "confidence": "medium"
+  },
+  "SOC_UAT_033": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 90,
+      "depDelayMin": 90,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Expected EU NE-09/NE-10 are not reachable (NE-10 not in lookup; NE-09 shadowed by NE-03/NE-04, a cancellation makes the passenger ELIGIBLE). Achievable: delay 90 no cancel, not travelled -> NE-04. Rebooking object removed.",
+   "achievableCode": "SoC-EU-NE-04",
+   "confidence": "medium"
+  },
+  "SOC_UAT_034": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 90,
+      "depDelayMin": 90,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Expected EU NE-09/NE-10 are not reachable (NE-10 not in lookup; NE-09 shadowed by NE-03/NE-04, a cancellation makes the passenger ELIGIBLE). Achievable: delay 90 no cancel, not travelled -> NE-04. Rebooking object removed.",
+   "achievableCode": "SoC-EU-NE-04",
+   "confidence": "medium"
+  },
+  "SOC_UAT_057": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 90,
+      "depDelayMin": 90,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Expected ASL NE-09/NE-10 are not reachable (NE-10 not in lookup; NE-09 shadowed by NE-03/NE-04, a cancellation makes the passenger ELIGIBLE). Achievable: delay 90 no cancel, not travelled -> NE-04. Rebooking object removed.",
+   "achievableCode": "SoC-ASL-NE-04",
+   "confidence": "medium"
+  },
+  "SOC_UAT_058": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 90,
+      "depDelayMin": 90,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Expected ASL NE-09/NE-10 are not reachable (NE-10 not in lookup; NE-09 shadowed by NE-03/NE-04, a cancellation makes the passenger ELIGIBLE). Achievable: delay 90 no cancel, not travelled -> NE-04. Rebooking object removed.",
+   "achievableCode": "SoC-ASL-NE-04",
+   "confidence": "medium"
+  },
+  "SOC_UAT_036": {
+   "specPatch": {
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Flight operated, passenger did not travel, no delay -> *_soc_flight false -> NE-03 (reachable). Expected NE-12/13 not in lookup. no_show vs not_travelled both mean 'no boarding'.",
+   "achievableCode": "SoC-EU-NE-03",
+   "confidence": "medium"
+  },
+  "SOC_UAT_037": {
+   "specPatch": {
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Flight operated, passenger did not travel, no delay -> *_soc_flight false -> NE-03 (reachable). Expected NE-12/13 not in lookup. no_show vs not_travelled both mean 'no boarding'.",
+   "achievableCode": "SoC-EU-NE-03",
+   "confidence": "medium"
+  },
+  "SOC_UAT_060": {
+   "specPatch": {
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Flight operated, passenger did not travel, no delay -> *_soc_flight false -> NE-03 (reachable). Expected NE-12/13 not in lookup. no_show vs not_travelled both mean 'no boarding'.",
+   "achievableCode": "SoC-ASL-NE-03",
+   "confidence": "medium"
+  },
+  "SOC_UAT_061": {
+   "specPatch": {
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Flight operated, passenger did not travel, no delay -> *_soc_flight false -> NE-03 (reachable). Expected NE-12/13 not in lookup. no_show vs not_travelled both mean 'no boarding'.",
+   "achievableCode": "SoC-ASL-NE-03",
+   "confidence": "medium"
+  },
+  "SOC_UAT_007": {
+   "specPatch": {},
+   "note": "Connection built as TWO bounds (round-trip seed): see rule R2. After the converter puts both segments in one bound, bound is INTERMEDIATE and cancellation WEAT -> NE-12.",
+   "achievableCode": "SoC-APPR-NE-12",
+   "confidence": "high"
+  },
+  "SOC_UAT_009": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 90,
+      "depDelayMin": 90,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+     },
+     {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "Needs one-bound itinerary (R2). APPR NE-16 unreachable (see 008); delay 90 on seg 2, stranded -> NE-04.",
+   "achievableCode": "SoC-APPR-NE-04",
+   "confidence": "medium"
+  },
+  "SOC_UAT_014": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "TECH",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": []
+   },
+   "note": "One-bound itinerary (R2) + remove rebooking (the replacement segment is not the msl_flight). TECH = SAFETY, INTERMEDIATE -> EL-05.",
+   "achievableCode": "SoC-APPR-EL-05",
+   "confidence": "high"
+  },
+  "SOC_UAT_010": {
+   "specPatch": {
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "845",
+      "origin": "YYZ",
+      "destination": "FRA",
+      "depLocal": "08:00",
+      "arrLocal": "13:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+     },
+     {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "KL",
+      "number": "1741",
+      "origin": "FRA",
+      "destination": "MUC",
+      "depLocal": "17:00",
+      "arrLocal": "18:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+     }
+    ]
+   },
+   "note": "One bound (R2) and a NON-Star OAL (LH/UA/LY are in STAR_carriers_lookup => ND-02). KL -> soc_flight_operating_carrier OAL -> ND-01. Connection must leave after previous landing (already auto-handled).",
+   "achievableCode": "SoC-APPR-ND-01",
+   "confidence": "medium"
+  },
+  "SOC_UAT_039": {
+   "specPatch": {
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "849",
+      "origin": "LHR",
+      "destination": "FRA",
+      "depLocal": "08:00",
+      "arrLocal": "10:30",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+     },
+     {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "KL",
+      "number": "1741",
+      "origin": "FRA",
+      "destination": "MUC",
+      "depLocal": "14:00",
+      "arrLocal": "15:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+     }
+    ]
+   },
+   "note": "As 010 for EU (LH is STAR => ND-02).",
+   "achievableCode": "SoC-EU-ND-01",
+   "confidence": "medium"
+  },
+  "SOC_UAT_040": {
+   "specPatch": {},
+   "note": "One-bound (R2). STAR carrier UA delay 240 -> ND-02 under EU (EU regime from CDG origin).",
+   "achievableCode": "SoC-EU-ND-02",
+   "confidence": "medium"
+  },
+  "SOC_UAT_063": {
+   "specPatch": {
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "090",
+      "origin": "TLV",
+      "destination": "HFA",
+      "depLocal": "08:00",
+      "arrLocal": "09:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+     },
+     {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "KL",
+      "number": "301",
+      "origin": "HFA",
+      "destination": "VDA",
+      "depLocal": "11:00",
+      "arrLocal": "12:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+     }
+    ]
+   },
+   "note": "One bound (R2); non-Star OAL (LY is not Star so OAL: ok to keep LY301 too). Second bound alone was all-OAL -> NE-05 (observed).",
+   "achievableCode": "SoC-ASL-ND-01",
+   "confidence": "medium"
+  },
+  "SOC_UAT_067": {
+   "specPatch": {},
+   "note": "ND-05 only arises when msl_flight is empty / all-OAL AND eligibility is ND; reason order puts ND-01 first for an OAL carrier. Low confidence: needs one-bound plus no AC/OAG data for the OAL leg.",
+   "achievableCode": "SoC-ASL-ND-05",
+   "confidence": "low"
+  },
+  "SOC_UAT_035": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 90,
+      "depDelayMin": 90,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+     },
+     {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "One bound (R2); EU NE-11 shadowed; delay 90 on stranded leg -> NE-04.",
+   "achievableCode": "SoC-EU-NE-04",
+   "confidence": "medium"
+  },
+  "SOC_UAT_059": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 90,
+      "depDelayMin": 90,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+     },
+     {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "As 035 for ASL.",
+   "achievableCode": "SoC-ASL-NE-04",
+   "confidence": "medium"
+  },
+  "SOC_UAT_038": {
+   "specPatch": {
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+     },
+     {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "One bound (R2); leg 2 operated, passenger absent: no delay record -> soc_flight false -> NE-03 (NE-14 not in lookup).",
+   "achievableCode": "SoC-EU-NE-03",
+   "confidence": "medium"
+  },
+  "SOC_UAT_062": {
+   "specPatch": {
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+     },
+     {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "As 038 for ASL.",
+   "achievableCode": "SoC-ASL-NE-03",
+   "confidence": "medium"
+  },
+  "SOC_UAT_043": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 600,
+      "depDelayMin": 600,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+     },
+     {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "One bound (R2). Stranded at YYZ, seg2 delayed 600 (not cancelled) -> INTERMEDIATE, soc_flight true, delay>=180 -> EL-03 (step 18 precedes the cancellation steps).",
+   "achievableCode": "SoC-EU-EL-03",
+   "confidence": "medium"
+  },
+  "SOC_UAT_070": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 180,
+      "depDelayMin": 180,
+      "delayCode": "05",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+     },
+     {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "As 043 for ASL, delay 180 (>=180 threshold).",
+   "achievableCode": "SoC-ASL-EL-03",
+   "confidence": "medium"
+  },
+  "SOC_UAT_046": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+     },
+     {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "One bound (R2), valid cancel code, no rebooking -> INTERMEDIATE + cancellation, <180 -> EL-06.",
+   "achievableCode": "SoC-EU-EL-06",
+   "confidence": "medium"
+  },
+  "SOC_UAT_073": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "CREW",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+     },
+     {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "As 046 for ASL.",
+   "achievableCode": "SoC-ASL-EL-06",
+   "confidence": "medium"
+  },
+  "SOC_UAT_066": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 360,
+      "depDelayMin": 360,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ]
+   },
+   "note": "No outcome at all gave NE-03 (no delay record). A delay with no code -> disruption type empty -> ND-04.",
+   "achievableCode": "SoC-ASL-ND-04",
+   "confidence": "high"
+  },
+  "SOC_UAT_012": {
+   "specPatch": {},
+   "note": "APPR-ND-03 is in the lookup but no rule sets it; delay without code gives ND-04 (current).",
+   "achievableCode": null,
+   "confidence": "engine-limited"
+  },
+  "SOC_UAT_065": {
+   "specPatch": {},
+   "note": "ASL-ND-03 not emitted; ND-04 is what a codeless delay gives.",
+   "achievableCode": null,
+   "confidence": "engine-limited"
+  },
+  "SOC_UAT_024": {
+   "specPatch": {},
+   "note": "PE-01: DDS runs on BOUND_COMPLETED_72HRS; a <72h bound is not assessed, the pending state is Case Services/chatbot. Not producible; keep spec as is.",
+   "achievableCode": null,
+   "confidence": "engine-limited"
+  },
+  "SOC_UAT_048": {
+   "specPatch": {},
+   "note": "EU PE-01 as 024.",
+   "achievableCode": null,
+   "confidence": "engine-limited"
+  },
+  "SOC_UAT_076": {
+   "specPatch": {},
+   "note": "ASL PE-01 as 024.",
+   "achievableCode": null,
+   "confidence": "engine-limited"
+  },
+  "SOC_UAT_031": {
+   "specPatch": {},
+   "note": "EU-NE-07 is not in SoC_EU_reason_codes_lookup; the engine returns NE-06 (same meaning, 'did not start in EU/UK'). Treat NE-06 as the expected code.",
+   "achievableCode": null,
+   "confidence": "engine-limited"
+  },
+  "SOC_UAT_032": {
+   "specPatch": {},
+   "note": "NE-08 (limitation) is not emitted by any SoC rule; limitation is applied outside DDS (eu-soc-expiration only sets a date). Not producible.",
+   "achievableCode": null,
+   "confidence": "engine-limited"
+  },
+  "SOC_UAT_056": {
+   "specPatch": {},
+   "note": "ASL NE-08 limitation: as 032.",
+   "achievableCode": null,
+   "confidence": "engine-limited"
+  },
+  "SOC_UAT_054": {
+   "specPatch": {},
+   "note": "ASL-NE-06 not in the ASL lookup; ASL applies to any Israel flight (EL-07 observed). Not producible by data.",
+   "achievableCode": null,
+   "confidence": "engine-limited"
+  },
+  "SOC_UAT_055": {
+   "specPatch": {},
+   "note": "ASL-NE-07 is the default for 'ASL not in regime list'; TLV-origin flights are always ASL. Not producible with TLV.",
+   "achievableCode": null,
+   "confidence": "engine-limited"
+  }
+ }
+}

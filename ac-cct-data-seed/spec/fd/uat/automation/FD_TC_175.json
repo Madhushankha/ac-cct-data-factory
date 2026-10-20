@@ -1,0 +1,80 @@
+{
+  "id": "FD_TC_175",
+  "family": "FD",
+  "summary": "Mixed regime YYZ-TLV AC085 arrived 4h late, code 42: APPR CAD 400 eligible, ASL not eligible (below 8h), APPR selected",
+  "passengers": [
+    {
+      "firstName": "NOAM",
+      "lastName": "GOLAN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "85",
+      "origin": "YYZ",
+      "destination": "TLV",
+      "depLocal": "23:00",
+      "arrLocal": "06:00",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": null,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "MIXED",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "FD-MIXED-EL-04",
+    "amount": 400,
+    "currency": "CAD",
+    "delayBand": null,
+    "delayMin": 240,
+    "control": "CONTROLLABLE",
+    "cause": "42",
+    "ttUi": [
+      "Promised Itinerary: AC 085 YYZ->TLV scheduled arrival 06:00",
+      "Current Itinerary: AC 085 YYZ->TLV ARRIVED LATE, actual 10:00, +4H 00M",
+      "Dual Regime: APPR + ASL",
+      "EU 261: NOT APPLICABLE (origin not EU)",
+      "APPR: ELIGIBLE CAD 400",
+      "ASL: NOT ELIGIBLE (4hr delay < 8hr ASL threshold)",
+      "Selected: APPR CAD 400 (only eligible regime)",
+      "MSL FLIGHT: AC 085 YYZ->TLV - 42",
+      "CONTROLLABLE (Code 42)",
+      "Flight Compensation: MR NOAM GOLAN | ELIGIBLE | APPR_3_TO_6_HOURS (ONLY ELIGIBLE REGIME) | CAD 400"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "scheduled arrival 06:00 TLV local (next day) given; dep 23:00 YYZ chosen",
+    "regime \"MIXED\" = APPR + ASL assessed; APPR selected (APPR Tier 1, 3 to <6 hrs)",
+    "flight date June 3, 2026; flightDaysAgo=10"
+  ],
+  "unsupported": []
+}

@@ -1,0 +1,120 @@
+{
+ "id": "SOC_UAT_009",
+ "family": "SOC",
+ "summary": "APPR SOC: 1 revenue pax, 2 segments Jun 7: AC 131 YYZ-YYC operated, AC 132 YYC-YVR 12:00 cancelled (code 42), rebooked with 90 min dep delay; stranded at YYC -> NOT ELIGIBLE, delay below 2 h (SoC-APPR-NE-16)",
+ "passengers": [
+  {
+   "firstName": "RENE",
+   "lastName": "DUBOIS",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "131",
+   "origin": "YYZ",
+   "destination": "YYC",
+   "depLocal": "07:00",
+   "arrLocal": "09:15",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "PY",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "132",
+   "origin": "YYC",
+   "destination": "YVR",
+   "depLocal": "12:00",
+   "arrLocal": "12:30",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "PY",
+   "status": "HX"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "delay",
+   "arrDelayMin": 90,
+   "depDelayMin": 90,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "SoC-APPR-NE-16",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_LESS_THAN_2_HOURS",
+  "delayMin": 90,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Trip Not Completed, Disruption Detected",
+   "Multi-segment domestic trip YYZ\u2192YYC\u2192YVR, Segment 2 AC132 YYC\u2192YVR cancelled, rebooked with SOC segment departure delay +1H 30M; passenger stranded at YYC",
+   "PASSENGERS: 1 SEGMENTS: 2",
+   "Promised: Seg 1 AC 131 YYZ\u2192YYC 07-Jun 07:00 | Seg 2 AC 132 YYC\u2192YVR 07-Jun 12:00",
+   "Current: Seg 1 AC 131 ON TIME | Seg 2 AC 132 CANCELLED, rebooked, SOC Segment Departure Delay +1H 30M",
+   "SOC Segment: AC 132 YYC\u2192YVR, delay 90 min below 2h",
+   "Departure Delay Code: 42 (Scheduled Maintenance), Controllable (irrelevant)",
+   "PASSENGER | NOT_ELIGIBLE | DELAY_LESS_THAN_2_HOURS"
+  ],
+  "soc": {
+   "eligibility": "NOT_ELIGIBLE",
+   "entitlements": "none; no travel (incomplete), delay below 2 h"
+  }
+ },
+ "assumed": [
+  "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+  "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+  "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+  "rebooked flight AC 134 YYC-YVR dep 13:30 arr 14:00 invented; accepted=false because passenger did not reach destination",
+  "cancel code TECH = NetLine equivalent of delay code 42",
+  "residence CA assumed"
+ ],
+ "unsupported": []
+}

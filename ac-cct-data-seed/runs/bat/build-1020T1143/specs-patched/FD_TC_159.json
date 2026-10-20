@@ -1,0 +1,118 @@
+{
+  "id": "FD_TC_159",
+  "family": "FD",
+  "summary": "ASL YYZ-FRA-TLV: AC873 on time, AC9042 FRA-TLV cancelled for weather (WEAT), customer stranded at FRA -> Not Eligible ILS 0 (all regimes)",
+  "passengers": [
+    {
+      "firstName": "TALIA",
+      "lastName": "FRIEDMAN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "873",
+      "origin": "YYZ",
+      "destination": "FRA",
+      "depLocal": "18:30",
+      "arrLocal": "07:50",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "9042",
+      "origin": "FRA",
+      "destination": "TLV",
+      "depLocal": "12:30",
+      "arrLocal": "17:00",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "WEAT",
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    },
+    {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "FD-ASL-NE-12",
+    "amount": 0,
+    "currency": "ILS",
+    "delayBand": null,
+    "delayMin": null,
+    "control": "UNCONTROLLABLE",
+    "cause": "WEAT",
+    "ttUi": [
+      "Segment 1: AC 873 YYZ->FRA COMPLETED (on time)",
+      "Segment 2: AC 9042 FRA->TLV CANCELLED (claim filed)",
+      "Customer Status: NO TRAVEL - INCOMPLETE (stranded at FRA, did not return to YYZ, did not reach TLV)",
+      "History: customer stranded at mid-point FRA; no rebooking accepted; no return to origin",
+      "Regime: ASL (Israel destination TLV)",
+      "MSL FLIGHT: AC 9042 FRA->TLV - WEAT",
+      "Cancellation - severe weather",
+      "EXTRAORDINARY CIRCUMSTANCES (WEAT)",
+      "Disruption Type: CANCELLATION (Leg 2, mid-journey)",
+      "ASL: Extraordinary circumstances -> NOT ELIGIBLE",
+      "Fallback: FALSE",
+      "Flight Compensation: MS TALIA FRIEDMAN | NOT ELIGIBLE | EXTRAORDINARY_CIRCUMSTANCES | 0.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "times chosen: AC873 18:30 YYZ -> 07:50+1 FRA; AC9042 12:30 FRA -> 17:00 TLV next day (chatbot shows both on the same date; overnight leg 1 chosen for realism)",
+    "Also ASL + APPR + potentially EU 261 (FRA = EU) all NE - EU 261 on a FRA-origin cancellation is expected NE too",
+    "flight date May 29, 2026 in text; flightDaysAgo=10",
+    "noticeHours not stated -> null"
+  ],
+  "unsupported": []
+}

@@ -1,0 +1,99 @@
+{
+ "id": "FD_TC_013",
+ "family": "FD",
+ "summary": "Single pax Isabelle Tremblay on AC 423 YUL-YYZ originally arr 10:00; system auto-rebook (REACC, treated as INVOL) arriving 14:30 (+4h30), code 61, APPR Tier 1 $400",
+ "passengers": [
+  {
+   "firstName": "ISABELLE",
+   "lastName": "TREMBLAY",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "423",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 270,
+   "depDelayMin": null,
+   "delayCode": "61",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "423",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "13:10",
+   "arrLocal": "14:30",
+   "dayOffset": 0,
+   "accepted": true,
+   "voluntary": false,
+   "changeDaysBeforeDeparture": 0,
+   "changeType": "REACC",
+   "actualArrLocal": "14:30",
+   "arrDelayMin": 270,
+   "delayCode": "61"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 270,
+  "control": "CONTROLLABLE",
+  "cause": "61",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 423, Route: YUL-YYZ, Scheduled Arrival: 10:00 (14-day mark, REACC = INVOL, doesn't update)",
+   "Current Itinerary - Flight: AC 423, Route: YUL-YYZ, Status: ARRIVED LATE, Scheduled Arrival: 10:00 - Actual: 14:30, Delay: +4H 30M",
+   "History - Change 1: REACC (React auto-rebook by system) - arr 14:30 - classified as INVOL",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 423 - YUL-YYZ - 61",
+   "\"Delayed due to cabin appearance/amenities\"",
+   "Delay: +4H 30M - CONTROLLABLE",
+   "MS ISABELLE TREMBLAY | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00 | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 08:40",
+  "the auto-rebook is modelled as a rebooking onto AC 423 dep 13:10 arr 14:30 (TT shows AC 423 for both promised and current); outcome arrDelayMin 270 is the total delay versus the 14-day promise",
+  "INVOL/VOL history is modelled with optional extra keys (voluntary, changeDaysBeforeDeparture, changeType) not in the base schema"
+ ],
+ "unsupported": [
+  "REACC (system auto-reaccommodation) as a rebooking type is not a base-schema field (added as optional changeType)",
+  "flight date: run uses flightDaysAgo=10 (text: filed D+13)"
+ ]
+}

@@ -1,0 +1,315 @@
+{
+  "key": "CHAI-31612",
+  "test_id": "FD_TC_220",
+  "title": "3rd Party � Travel Agency � User Disputes Rejection",
+  "goal": "Validates system behavior when a Travel Agency disputes the rejection. The system should maintain the rejection or escalate to manual handling depending on implementation.",
+  "summary": {
+    "seed": 2,
+    "chat": 16,
+    "api": 0,
+    "email": 0,
+    "dashboard": 7,
+    "implied": 5,
+    "manual": 2,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Validates system behavior when a Travel Agency disputes the rejection. The system should maintain the rejection or escalate to manual handling depending on implementation.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Third-party caller type: Travel Agency",
+      "expected": "Third-party caller type: Travel Agency",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "User disputes the initial rejection",
+      "expected": "User disputes the initial rejection",
+      "id": "CP003"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP004"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01)",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"I'm calling from a travel agency, my elderly client cannot file the claim themselves and I need to do it for them\"",
+      "expected": "I'm calling from a travel agency, my elderly client cannot file the claim themselves and I need to do it for them",
+      "id": "CP008"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? YES",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot identifies third-party type ? Travel Agency",
+      "expected": "",
+      "id": "CP011"
+    },
+    {
+      "section": "INITIAL REJECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds advising the customer must submit the claim themselves.",
+      "expected": "",
+      "id": "CP012"
+    },
+    {
+      "section": "USER DISPUTES",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds: \"My client is elderly and unable to use the system, I have their authorization to act on their behalf\"",
+      "expected": "",
+      "id": "CP013"
+    },
+    {
+      "section": "SYSTEM RESPONSE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot either: (a) Maintains rejection and reiterates that the customer must submit the claim, OR (b) Escalates to manual handoff by collecting required information (claims company name, ticket number, booking reference, contact info, passenger names, power of attorney/authorization)",
+      "expected": "",
+      "id": "CP014"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Is there anything I can help you with?\"",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP015"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP016"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP017"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the system correctly identifies the third-party type as \"Travel Agency\"",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the initial rejection is displayed advising the customer must submit the claim themselves",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the user disputes the rejection citing the passenger is elderly and unable to use the system",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the system should either maintain the hard rejection and reiterate that the customer must submit the claim themselves OR escalate to manual handoff by collecting required information including claims company name and ticket number and booking reference and contact info and passenger names and power of attorney or authorization",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the actual system behavior should be documented for UAT validation",
+      "expected": "",
+      "id": "CP022"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And if the system maintains rejection then no case should be created and no manual handoff should occur",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And if the system escalates then a case should be created and routed for manual handling",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "Given the Travel Agency submission was either maintained as rejected or escalated to manual handoff after dispute",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no automated payment flow should be triggered regardless of the dispute outcome",
+      "expected": "",
+      "id": "CP026"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence should have been asked during the chatbot flow",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record should have been created automatically",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no batch file should have been dispatched",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no IDV should have been triggered",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no CyberSource fraud screening should have been triggered",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And if the system maintained rejection then no case should exist and no payment is possible",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And if the system escalated to manual handoff then any payment should be determined by the reviewing agent and the Claims Dashboard should show case status as \"Manual Review\" with no payout section until manually resolved",
+      "expected": "",
+      "id": "CP033"
+    }
+  ]
+}

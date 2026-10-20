@@ -1,0 +1,95 @@
+{
+ "id": "FD_TC_031",
+ "family": "FD",
+ "summary": "Single pax Veronique Gagnon; AC 435 YUL-YYZ (sched arr 14:00) cancelled, code 31; accepted rebooking to AC 436 YUL-YHM (sister city) arriving 18:00 (+4h vs original promise); APPR, controllable",
+ "passengers": [
+  {
+   "firstName": "VERONIQUE",
+   "lastName": "GAGNON",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "435",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:40",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": 240,
+   "depDelayMin": null,
+   "delayCode": "31",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "436",
+   "origin": "YUL",
+   "destination": "YHM",
+   "depLocal": "16:30",
+   "arrLocal": "18:00",
+   "dayOffset": 0,
+   "accepted": true
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-04",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "31",
+  "ttUi": [
+   "Promised: AC 435 YUL->YYZ Scheduled Arrival 14:00 at YYZ (original flight CANCELLED)",
+   "Current: AC 436 YUL->YHM (rebooked to sister city), ARRIVED, Actual Arrival 18:00 at YHM",
+   "History: Change 1 INVOL - AC 435 YUL->YYZ cancelled (arrival delay code 31 Aircraft Damage During Ground Handling); customer accepted rebooking to AC 436 YUL->YHM",
+   "Delay Calculation: promise 14:00 at YYZ (AC 435); actual 18:00 at YHM (AC 436, sister city); Delay = 4hrs",
+   "Sister City Check: YHM<->YYZ VALID PAIR (DDS sister city config); accepted as equivalent destination",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 435 YUL->YYZ Arrival delay code 31 \"Cancelled due to aircraft damage during ground handling\"",
+   "Rebooked Flight: AC 436 YUL->YHM (sister city of YYZ)",
+   "Delay: +4H 00M CONTROLLABLE",
+   "Flight Compensation: MS VERONIQUE GAGNON | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "orig dep 12:40 (only arrival 14:00 given)",
+  "rebooked AC 436 dep 16:30 (only arrival 18:00 at YHM given)",
+  "delayCode 31 used as the cause (text calls it the arrival delay code of the cancelled MSL AC 435); cancelCode left null because no NetLine cancel reason is named",
+  "noticeHours null (cancellation notice not stated)",
+  "arrDelayMin 240 = actual arrival at YHM 18:00 minus original promise 14:00 at YYZ",
+  "Accent dropped: VERONIQUE"
+ ],
+ "unsupported": []
+}

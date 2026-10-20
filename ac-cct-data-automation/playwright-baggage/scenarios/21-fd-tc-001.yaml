@@ -1,0 +1,38 @@
+# FD_TC_001 end to end, pinned to its own seeded booking.
+#
+# Unlike 20-fd-appr-eligible, which picks any booking matching the state, this one names the PNR:
+# the point is to drive THIS case -- the one CHAI-31393 describes and the one the engine already
+# agreed with (runs/int/fd-266-int-1019b-all/FD_TC_001.json, agrees=true) -- so the chat's answer can
+# be held against a verdict we have already verified through the two Raptor APIs:
+#
+#   APPR  ELIGIBLE  FD-APPR-EL-01  400.00 CAD   delay 240 min   AC7338 YUL-YYZ
+#   passenger Catherine Brebarqui, PNR ZZXZEG
+#
+# It stops at the payment choice: picking cash or wallet leads to payout country and bank details,
+# which guards.assertAllowed forbids.
+id: fd-tc-001
+title: FD_TC_001 - APPR 4h delay, eligible, 400 CAD (pinned to ZZXZEG)
+tags: [fd, pinned]
+booking: { pnr: ZZXZEG }
+first_message: "My Air Canada flight was delayed by four hours and I would like to claim compensation."
+steps:
+  - notice: "yes"
+  - identify: true
+  - verify: true
+  - journey: one
+  - expect:
+      step: FD-DECISION.eligible
+      board: the eligibility decision for FD_TC_001 (APPR, 4h delay)
+      any_of: ["eligible", "compensation of", "entitled"]
+  - expect:
+      step: FD-OFFER.amount
+      board: the 400 CAD award this case expects
+      any_of: ["400", "\\$400"]
+  - expect:
+      step: FD-OFFER.wallet
+      board: the AC Wallet alternative at 480 CAD (+20%)
+      any_of: ["480", "AC Wallet", "wallet"]
+      optional: true
+      timeout: 15
+  - stop: end
+known: []

@@ -1,0 +1,82 @@
+{
+ "id": "FD_TC_199",
+ "family": "FD",
+ "summary": "Single pax YUL-YYZ AC 437; OPR (INVOL) then airport-agent VOL (no ACNP) to later flight; promise 10:00, actual 17:00 (total +7h, net 5h after -2h positive VOL), code 42",
+ "passengers": [
+  {
+   "firstName": "GABRIEL",
+   "lastName": "LACHANCE",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "437",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 420,
+   "depDelayMin": 420,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "APPR_3_TO_6_HOURS",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 300,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 437 YUL→YYZ Scheduled Arrival 10:00 (14-day mark)",
+   "Current: AC 437 YUL→YYZ ARRIVED LATE, Actual 17:00",
+   "Change 1: OPR (YTOAC00PR) at D-0 INVOL arrival 10:00→15:00 PROMISE NOT UPDATED",
+   "Change 2: Airport Agent (office ID, no ACNP) at D-0 VOL (+ve) arrival 15:00→17:00 POSITIVE DEDUCTION APPLIED",
+   "Promise = 10:00; Total delay = 7hrs; Post-INVOL VOL = +2hrs (DEDUCTED); Net delay = 5hrs",
+   "Regime: APPR",
+   "APPR: Net delay 3-<6h, Controllable -> ELIGIBLE",
+   "MSL FLIGHT: AC 437 YUL→YYZ 42",
+   "CONTROLLABLE (Code 42)",
+   "Flight Compensation: MR GABRIEL LACHANCE | ELIGIBLE | APPR_3_TO_6_HOURS (NET DELAY) | CAD $400"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "PNR name accents dropped (GDS ASCII)",
+  "dep time 08:00 (text gives only arrival)",
+  "arrival modelled as the 10:00 promise; arrDelayMin 420 is the total delay, expected delayMin 300 is the net delay after the positive-VOL deduction"
+ ],
+ "unsupported": [
+  "PNR change-history identifiers/classification (VOL/INVOL tool markers, D-n change timing) cannot be expressed in booking data; segment is modelled at the final promise time and delay measured from it; OPR YTOAC00PR INVOL then airport-agent (no ACNP) positive VOL: the post-INVOL later-flight deduction (net 300 = 420 - 120) is not expressible in booking data"
+ ]
+}

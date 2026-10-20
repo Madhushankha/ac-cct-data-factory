@@ -1,0 +1,109 @@
+{
+ "id": "FD_TC_238",
+ "family": "FD",
+ "summary": "EU+APPR: 2 pax (Lucia claimant Basic Aeroplan, Javier), residence Spain, on AC 837 MAD-YYZ Aug 10, sched arr 15:00 actual 20:00 (+5h / 300 min), arrival code 96 controllable, operating carrier MISSING in Trip Tracer -> DDS NO DETERMINATION EUR 0 (not EUR 600)",
+ "passengers": [
+  {
+   "firstName": "LUC\u00cdA",
+   "lastName": "GARC\u00cdA",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "ES",
+   "employee": false
+  },
+  {
+   "firstName": "JAVIER",
+   "lastName": "GARC\u00cdA",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "ES",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "837",
+   "origin": "MAD",
+   "destination": "YYZ",
+   "depLocal": "13:00",
+   "arrLocal": "15:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK",
+   "operatingCarrier": null,
+   "operatingUnknown": true
+  }
+ ],
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 300,
+   "depDelayMin": null,
+   "delayCode": "96",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 1,
+   "pax": 2,
+   "event": "boarded"
+  }
+ ],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NO_DETERMINATION",
+  "systemCode": null,
+  "amount": 0,
+  "currency": "EUR",
+  "delayBand": null,
+  "delayMin": 300,
+  "control": "CONTROLLABLE",
+  "cause": "96",
+  "ttUi": [
+   "Promised Itinerary: AC 837 MAD\u2192YYZ, Scheduled Arrival 15:00",
+   "Current Itinerary: AC 837 MAD\u2192YYZ ARRIVED LATE 15:00\u219220:00 +5H 00M",
+   "Regimes: EU + APPR (2 regimes)",
+   "MSL: AC 837 MAD\u2192YYZ, Code 96 (Controllable)",
+   "MSL operating carrier: blank / \"Unknown\"; isStarSegment = false; isOalSegment = false",
+   "EU expiry: 2031-08-10",
+   "Aeroplan: 9876543210 (Basic Member, linked, claimant)",
+   "MS LUC\u00cdA GARC\u00cdA | NO DETERMINATION | Carrier unknown | EUR 0.00",
+   "MR JAVIER GARC\u00cdA | NO DETERMINATION | Carrier unknown | EUR 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "cabin Y, booking class T (not stated)",
+  "AC 837 departs 13:00 local MAD (text gives only arrival 15:00 YYZ)",
+  "depDelayMin not stated -> null",
+  "residence ES for both pax (prerequisite: Spain)",
+  "systemCode only given as FD-EU-ND-xx -> null",
+  "regime reported as EU (APPR also applies, Canada arrival)",
+  "flightDaysAgo 10 default (flight Aug 10, claim Aug 20)",
+  "diacritics reconstructed from corrupted text"
+ ],
+ "unsupported": [
+  "Operating carrier must be missing/null in Trip Tracer (schema has no operating-carrier field; extra key operatingCarrier:null added, carrier AC as marketing carrier)",
+  "Customers told on day of travel / no VOL-INVOL: no schedule-change entries expressed (none present)"
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "vouchers": [],
+ "bags": [],
+ "flightDaysAgo": 10
+}

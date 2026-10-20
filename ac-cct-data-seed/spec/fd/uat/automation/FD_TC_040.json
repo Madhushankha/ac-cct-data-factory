@@ -1,0 +1,101 @@
+{
+ "id": "FD_TC_040",
+ "family": "FD",
+ "summary": "Single pax Isabelle Cote; AC 442 YUL-YYZ (sched arr 12:00) delayed, arrival delay code MISSING, first departure delay code 05 (upline, controllable) -> Fallback=TRUE; customer accepted INVOL rebooking to AC 444 YUL-YHM (sister city) arriving 17:00 (+5h vs promise); APPR Tier 1",
+ "passengers": [
+  {
+   "firstName": "ISABELLE",
+   "lastName": "COTE",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "442",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "10:40",
+   "arrLocal": "12:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 300,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "depDelayCode": "05"
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "444",
+   "origin": "YUL",
+   "destination": "YHM",
+   "depLocal": "15:30",
+   "arrLocal": "17:00",
+   "dayOffset": 0,
+   "accepted": true
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-10",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 300,
+  "control": "CONTROLLABLE",
+  "cause": "05",
+  "ttUi": [
+   "Promised: AC 442 YUL->YYZ Scheduled Arrival 12:00 at YYZ (DELAYED)",
+   "Current: AC 444 YUL->YHM (rebooked to sister city), ARRIVED, Actual Arrival 17:00 at YHM",
+   "History: Change 1 INVOL - AC 442 delayed -> customer accepted rebooking to AC 444 YUL->YHM",
+   "Delay Calculation: 17:00 (YHM) - 12:00 (YYZ) = 5 hrs DELAY_3_TO_LT_6_HOURS",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 442 YUL->YYZ",
+   "Cancellation code: NONE",
+   "First arrival delay code: NULL (MISSING)",
+   "First departure delay code: 05 \"Late positioning due to upline (within carrier control)\"",
+   "Controllability source = first departure delay code (fallback)",
+   "Fallback: TRUE",
+   "Sister City: TRUE (YHM<->YYZ, DDS sister city config)",
+   "APPR causal category: Within carrier control -> CONTROLLABLE",
+   "Delay: +5H 00M CONTROLLABLE",
+   "DDS outcome code: FD-APPR-EL-10",
+   "Flight Compensation: MS ISABELLE COTE | ELIGIBLE | DELAY_3_TO_LT_6_HOURS (SISTER CITY + FALLBACK) | CAD 400.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "orig dep 10:40; rebooked dep 15:30 (only arrivals given)",
+  "AC 442 modelled as delayed (not cancelled) with accepted rebooking to AC 444; arrDelayMin 300 = 17:00 at YHM minus 12:00 promise at YYZ; depDelayMin unknown (null)",
+  "no Aeroplan; name accent dropped (COTE)"
+ ],
+ "unsupported": [
+  "Departure delay code is distinct from the arrival delay code (arrival code NULL -> fallback to first departure delay code, Fallback=TRUE); the schema has no field for it, so it is given as extra key outcomes[].depDelayCode and delayCode is null"
+ ]
+}

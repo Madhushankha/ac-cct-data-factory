@@ -1,0 +1,8221 @@
+[
+ {
+  "id": "BAG_PO_001",
+  "seeds": [
+   "ZZ6GMP"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8280",
+       "origin": "YYZ",
+       "destination": "YVR",
+       "departure": "2026-09-14T09:00",
+       "arrival": "2026-09-14T11:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    },
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8281",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "MAYA",
+     "lastName": "RILGILTAV",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -25
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 2
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 2
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "_key": "AC#8280#2026-09-14#YYZ"
+   },
+   {
+    "segment": 2,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8281#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR KOCYNB-2026-08-17 (AC9250 YYZ\u2192YVR 2026-08-26T09:00)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 35,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_002",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "WS",
+       "number": "8262",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ARJUN",
+     "lastName": "ZARSORREN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "WS#8262#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR AVWT1X-2026-08-17 (WS9895 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_003",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "WS",
+       "number": "7624",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "LEILA",
+     "lastName": "MORDENDEN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "WS#7624#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR H5D7JA-2026-08-17 (WS9738 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_004",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7757",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-08-22T13:10",
+       "arrival": "2026-08-22T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "OMAR",
+     "lastName": "OSTWENPAV",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7757#2026-08-22#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR SG0SJA-2026-06-25 (AC9871 YVR\u2192YYZ 2026-08-03T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 58,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_005",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8166",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-08-22T13:10",
+       "arrival": "2026-08-22T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "FREYA",
+     "lastName": "FENMALFEN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8166#2026-08-22#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR DAHEEO-2026-06-25 (AC9280 YVR\u2192YYZ 2026-08-03T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 58,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_006",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8501",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "DIEGO",
+     "lastName": "HOVZARWEN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8501#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR DMS5N1-2026-08-17 (AC9469 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_007",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8022",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "NORA",
+     "lastName": "FENCASHAL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8022#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape no_ahl",
+    "old PNR X26RQJ-2026-08-17 (AC9582 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_008",
+  "seeds": [
+   "ZZ6GMP"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8388",
+       "origin": "YYZ",
+       "destination": "YVR",
+       "departure": "2026-09-14T09:00",
+       "arrival": "2026-09-14T11:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    },
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8389",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "KAI",
+     "lastName": "FENNALKEL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -25
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 2
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 2
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "_key": "AC#8388#2026-09-14#YYZ"
+   },
+   {
+    "segment": 2,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8389#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR K3UFZU-2026-08-17 (AC9727 YYZ\u2192YVR 2026-08-26T09:00)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 35,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_009",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8046",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "LUCA",
+     "lastName": "HOVCASBRE",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8046#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_delivered",
+    "old PNR HXLPJ0-2026-07-29 (AC9606 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_010",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7750",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-08-22T13:10",
+       "arrival": "2026-08-22T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "AMARA",
+     "lastName": "VASVASBRE",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7750#2026-08-22#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR GIZZ1V-2026-06-25 (AC9864 YVR\u2192YYZ 2026-08-03T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 58,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_011",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7496",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-08-22T13:10",
+       "arrival": "2026-08-22T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "JONAS",
+     "lastName": "RENKELQUI",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7496#2026-08-22#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR WYPMCY-2026-06-25 (AC9610 YVR\u2192YYZ 2026-08-03T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 58,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_012",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7783",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-09T13:10",
+       "arrival": "2026-10-09T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "PILAR",
+     "lastName": "DORDENJAR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7783#2026-10-09#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR DYLF8X-2026-08-12 (AC9897 YVR\u2192YYZ 2026-09-20T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_013",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8231",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ESME",
+     "lastName": "DORRILFEN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8231#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR X70XYC-2026-07-29 (AC9864 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_014",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8108",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "NIKO",
+     "lastName": "FENOSTKEL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8108#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR BPIAAQ-2026-07-29 (AC9741 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_015",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8249",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "RANIA",
+     "lastName": "PAVPERDOR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8249#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR BSVTNA-2026-07-29 (AC9809 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_016",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7946",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "BRUNO",
+     "lastName": "TAVRENDEN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7946#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR DZAB9K-2026-07-29 (AC9579 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_017",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7881",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-09T13:10",
+       "arrival": "2026-10-09T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "SOFIA",
+     "lastName": "VOLPAVBAR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7881#2026-10-09#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR A05ILV-2026-08-12 (AC9514 YVR\u2192YYZ 2026-09-20T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_018",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7989",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "IDRIS",
+     "lastName": "KELRILHOV",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7989#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR FLB80I-2026-07-29 (AC9622 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_019",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8540",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ANYA",
+     "lastName": "KORBREPER",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8540#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_delivered",
+    "old PNR NA6SL1-2026-08-17 (AC9100 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_020",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8350",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "MARIT",
+     "lastName": "NEVVASFEN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8350#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR W5SUZU-2026-07-29 (AC9464 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_021",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8109",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-09T13:10",
+       "arrival": "2026-10-09T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "PAVEL",
+     "lastName": "HALJARDOR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8109#2026-10-09#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR T51F3H-2026-08-12 (AC9223 YVR\u2192YYZ 2026-09-20T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_022",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7548",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-09T13:10",
+       "arrival": "2026-10-09T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "TESSA",
+     "lastName": "RENRENKEL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7548#2026-10-09#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR WH0XSP-2026-08-12 (AC9663 YVR\u2192YYZ 2026-09-20T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_023",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8004",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "YUSUF",
+     "lastName": "JARTAVVOL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8004#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR N8Q893-2026-07-29 (AC9118 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_024",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8410",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-16T13:10",
+       "arrival": "2026-10-16T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "SIENA",
+     "lastName": "LUNHOVOST",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8410#2026-10-16#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR VV8U4Z-2026-08-19 (AC9524 YVR\u2192YYZ 2026-09-27T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 3,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility",
+   "sd read out of the condition text (SD-03.24): the case carries sd=null, rule=null"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_025",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8406",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-13T13:10",
+       "arrival": "2026-09-13T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "SIENA",
+     "lastName": "PAVPAVHAL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8406#2026-09-13#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_closed",
+    "old PNR GAG5O8-2026-07-17 (AC9520 YVR\u2192YYZ 2026-08-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 36,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility",
+   "sd read out of the condition text (SD-03.25): the case carries sd=null, rule=null"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_026",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8331",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-06T13:10",
+       "arrival": "2026-10-06T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "SIENA",
+     "lastName": "NEVFENLUN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8331#2026-10-06#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR Q9VYPA-2026-08-09 (AC9445 YVR\u2192YYZ 2026-09-17T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 13,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility",
+   "sd read out of the condition text (SD-03.26): the case carries sd=null, rule=null"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_027",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8422",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-20T13:10",
+       "arrival": "2026-09-20T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "SIENA",
+     "lastName": "TAVKELDOR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8422#2026-09-20#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_closed_delivered",
+    "old PNR FKSVDS-2026-07-24 (AC9536 YVR\u2192YYZ 2026-09-01T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 29,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility",
+   "sd read out of the condition text (SD-03.27): the case carries sd=null, rule=null"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_028",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8349",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-15T13:10",
+       "arrival": "2026-09-15T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "SIENA",
+     "lastName": "BRERILMOR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8349#2026-09-15#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_closed",
+    "old PNR PHZGNT-2026-07-19 (AC9463 YVR\u2192YYZ 2026-08-27T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 34,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility",
+   "sd read out of the condition text (SD-03.28): the case carries sd=null, rule=null"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_029",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "WS",
+       "number": "8096",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "TOBIAS",
+     "lastName": "DENMOROST",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "WS#8096#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR KER3T2-2026-08-17 (WS9210 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_030",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8237",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ZARA",
+     "lastName": "DORKELNAL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8237#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape no_ahl",
+    "old PNR FXEKE9-2026-08-17 (AC9352 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_031",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8524",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "HUGO",
+     "lastName": "RILOSTRIL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8524#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_closed",
+    "old PNR M50F9N-2026-08-17 (AC9197 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "closure time not stated by the old seed: closed 24 h after the AHL opened",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_032",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8007",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "IRIS",
+     "lastName": "RILKORFEN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8007#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_closed",
+    "old PNR CJ5EK8-2026-08-17 (AC9680 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "closure time not stated by the old seed: closed 24 h after the AHL opened",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_033",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7746",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "SAMI",
+     "lastName": "DENPAVZAR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7746#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR VPVOHS-2026-08-17 (AC9860 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_034",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8144",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ELIN",
+     "lastName": "SORJAROST",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8144#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_delivered",
+    "old PNR UZB2YZ-2026-08-17 (AC9258 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_035",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8388",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "RAVI",
+     "lastName": "TULDENVOL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8388#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_delivered",
+    "old PNR N0VL16-2026-08-17 (AC9502 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_036",
+  "seeds": [
+   "ZZ6GMP"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8485",
+       "origin": "YYZ",
+       "destination": "YVR",
+       "departure": "2026-09-14T09:00",
+       "arrival": "2026-09-14T11:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    },
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8486",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "CLARA",
+     "lastName": "MALCASQUI",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -25
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 2
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 2
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "_key": "AC#8485#2026-09-14#YYZ"
+   },
+   {
+    "segment": 2,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8486#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR IHT5WX-2026-08-17 (AC9715 YYZ\u2192YVR 2026-08-26T09:00)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 35,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_037",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7599",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-09T13:10",
+       "arrival": "2026-10-09T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "SVEN",
+     "lastName": "DORCASMAL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7599#2026-10-09#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR J9Z8G8-2026-08-12 (AC9713 YVR\u2192YYZ 2026-09-20T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_038",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8266",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-20T13:10",
+       "arrival": "2026-09-20T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "TARA",
+     "lastName": "CASSORPAV",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8266#2026-09-20#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_delivered",
+    "old PNR KNR6KI-2026-07-24 (AC9380 YVR\u2192YYZ 2026-09-01T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 29,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_039",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8191",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ULRIK",
+     "lastName": "TULWENSOR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8191#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_delivered",
+    "old PNR KSKXZO-2026-08-17 (AC9751 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_040",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8437",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "VERA",
+     "lastName": "OSTDORKOR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8437#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_delivered",
+    "old PNR CG5DJB-2026-08-17 (AC9551 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_041",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7955",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-09T13:10",
+       "arrival": "2026-10-09T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "WILLEM",
+     "lastName": "KELQUIPAV",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7955#2026-10-09#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR OV95SF-2026-08-12 (AC9588 YVR\u2192YYZ 2026-09-20T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_042",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7545",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "XIMENA",
+     "lastName": "PERZARREN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7545#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR SAEAOE-2026-07-29 (AC9659 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_043",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8017",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-09T13:10",
+       "arrival": "2026-10-09T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "YARA",
+     "lastName": "KORMALGIL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8017#2026-10-09#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR LUXBCJ-2026-08-12 (AC9131 YVR\u2192YYZ 2026-09-20T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_044",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7488",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-09T13:10",
+       "arrival": "2026-10-09T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ZEKE",
+     "lastName": "NEVJARVOL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7488#2026-10-09#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR DMTVN0-2026-08-12 (AC9121 YVR\u2192YYZ 2026-09-20T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_045",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8002",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ALMA",
+     "lastName": "HALVASRIL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8002#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_delivered",
+    "old PNR FWAGTE-2026-08-17 (AC9116 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_046",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7759",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "BORIS",
+     "lastName": "BREGILMAL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7759#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_delivered",
+    "old PNR IOR9ZI-2026-08-17 (AC9874 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_047",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7708",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "DMITRI",
+     "lastName": "VASJARZAR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7708#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_delivered",
+    "old PNR MQ9VLE-2026-08-17 (AC9823 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_048",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8378",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "CELIA",
+     "lastName": "DORSORPER",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8378#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR NPAFOY-2026-07-29 (AC9492 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_049",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "WS",
+       "number": "8039",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "AISHA",
+     "lastName": "FENLUNPER",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "WS#8039#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR Q8WG7H-2026-08-17 (WS9153 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_050",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "WS",
+       "number": "8351",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "LARS",
+     "lastName": "QUIVASVOL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "WS#8351#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR N49UOO-2026-08-17 (WS9465 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_051",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8412",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "NADIA",
+     "lastName": "NALSORQUI",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8412#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape no_ahl",
+    "old PNR BBY0VG-2026-08-17 (AC9380 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_052",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8197",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "OTTO",
+     "lastName": "HALDORMAL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8197#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_closed",
+    "old PNR I1DVRS-2026-08-17 (AC9830 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "closure time not stated by the old seed: closed 24 h after the AHL opened",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_053",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8490",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "PRIYA",
+     "lastName": "QUIZARCAS",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8490#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_closed",
+    "old PNR WVX8PB-2026-08-17 (AC9460 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "closure time not stated by the old seed: closed 24 h after the AHL opened",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_054",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8059",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "QUINN",
+     "lastName": "BREKORJAR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8059#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_closed",
+    "old PNR ZXLGPJ-2026-08-17 (AC9619 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "closure time not stated by the old seed: closed 24 h after the AHL opened",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_055",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7870",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ROSA",
+     "lastName": "VASPERDEN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7870#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR FFJPZX-2026-08-17 (AC9430 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_056",
+  "seeds": [
+   "ZZFERC"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8205",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "HELENA",
+     "lastName": "OSTFENCAS",
+     "type": "ADT"
+    },
+    {
+     "firstName": "MARCUS",
+     "lastName": "GILSORLUN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8205#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR PDQ433-2026-07-29 (AC9838 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 2,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null,
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_057",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8614",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "DAVOR",
+     "lastName": "MORHOVHOV",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8614#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR OH89CR-2026-08-17 (AC9584 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_058",
+  "seeds": [
+   "ZZ6GMP"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8335",
+       "origin": "YYZ",
+       "destination": "YVR",
+       "departure": "2026-09-14T09:00",
+       "arrival": "2026-09-14T11:00",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    },
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8336",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ELSA",
+     "lastName": "GILMORREN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -25
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 2
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:2",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 2
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "_key": "AC#8335#2026-09-14#YYZ"
+   },
+   {
+    "segment": 2,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8336#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR JNTJ6I-2026-08-17 (AC9450 YYZ\u2192YVR 2026-08-26T09:00)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 35,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_059",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8785",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "FABIO",
+     "lastName": "RILRENNEV",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8785#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR GVG62B-2026-08-17 (AC9685 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_060",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8390",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "GRETA",
+     "lastName": "RILBREMAL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8390#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR I353DT-2026-08-17 (AC9505 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_061",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8339",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "HAMZA",
+     "lastName": "TAVMORNEV",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8339#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR M7O58Y-2026-08-17 (AC9678 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_062",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8088",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "ILSE",
+     "lastName": "GILCASSOR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8088#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR RLO1IS-2026-08-17 (AC9721 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_063",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7931",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "JAVIER",
+     "lastName": "OSTOSTWEN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7931#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape no_bag",
+    "old PNR QKMT9F-2026-08-17 (AC9491 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_064",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7782",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "KIRA",
+     "lastName": "HALPERGIL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7782#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR D753QN-2026-08-17 (AC9455 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_065",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7913",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-14T13:10",
+       "arrival": "2026-10-14T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "LEO",
+     "lastName": "DORDENTUL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7913#2026-10-14#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR RPRWXT-2026-08-17 (AC9252 YVR\u2192YYZ 2026-09-25T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 5,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_066",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7897",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "MIRIAM",
+     "lastName": "VASNEVDEN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7897#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR ZIZTB5-2026-07-29 (AC9865 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_067",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7699",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "NOOR",
+     "lastName": "LUNKORFEN",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7699#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR Y5818J-2026-07-29 (AC9332 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_068",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7826",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "OSKAR",
+     "lastName": "WENVASPER",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7826#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR T7Q4EQ-2026-07-29 (AC9386 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_069",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8013",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "PAOLA",
+     "lastName": "NEVGILZAR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8013#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR YNKGIO-2026-07-29 (AC9573 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_070",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7790",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "RUBEN",
+     "lastName": "DORBAROST",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7790#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR YKUI0V-2026-07-29 (AC9350 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_071",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "8527",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "SANNE",
+     "lastName": "FENJARVAS",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#8527#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR OVRJ27-2026-07-29 (AC9866 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_072",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7921",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-09-25T13:10",
+       "arrival": "2026-09-25T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "THEO",
+     "lastName": "JARMALJAR",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7921#2026-09-25#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR N3KNVD-2026-07-29 (AC9554 YVR\u2192YYZ 2026-09-06T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ },
+ {
+  "id": "BAG_PO_073",
+  "seeds": [
+   "ZZOKRU"
+  ],
+  "plan": {
+   "bounds": [
+    {
+     "segments": [
+      {
+       "carrier": "AC",
+       "number": "7713",
+       "origin": "YVR",
+       "destination": "YYZ",
+       "departure": "2026-10-06T13:10",
+       "arrival": "2026-10-06T20:40",
+       "cabin": "Y",
+       "bookingClass": "T",
+       "status": "HK"
+      }
+     ]
+    }
+   ],
+   "passengers": [
+    {
+     "firstName": "SIENA",
+     "lastName": "BRETULKEL",
+     "type": "ADT"
+    }
+   ],
+   "booking": {
+    "createdDaysBefore": 30
+   },
+   "phases": {
+    "ticketing": [
+     {
+      "family": "ticket_issued",
+      "at": {
+       "anchor": "ticketing",
+       "offsetMinutes": 0
+      },
+      "params": {}
+     }
+    ],
+    "day_of_flight": [
+     {
+      "family": "check_in",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": -180
+      },
+      "params": {
+       "segment": 1
+      }
+     },
+     {
+      "family": "boarding",
+      "at": {
+       "anchor": "departure:1",
+       "offsetMinutes": 215
+      },
+      "params": {
+       "segment": 1
+      }
+     }
+    ]
+   }
+  },
+  "flights": [
+   {
+    "segment": 1,
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "64",
+    "_key": "AC#7713#2026-10-06#YVR",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": null,
+   "eligibility": null,
+   "systemCode": null,
+   "delayMin": 240,
+   "cause": "64",
+   "ttUi": [
+    "bag shape ahl_open",
+    "old PNR PS3DO5-2026-08-09 (AC9827 YVR\u2192YYZ 2026-09-17T13:10)"
+   ],
+   "soc": null
+  },
+  "daysAgo": 13,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+   "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+   "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+   "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility",
+   "sd read out of the condition text (SD-16.1): the case carries sd=null, rule=null"
+  ],
+  "passengers": 1,
+  "officeId": null,
+  "oalEmployee": false,
+  "stripLoyalty": false,
+  "dbcpSegs": [],
+  "operatingUnknown": [],
+  "tiers": [
+   null
+  ]
+ }
+]

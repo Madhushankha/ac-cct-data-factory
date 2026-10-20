@@ -1,0 +1,90 @@
+{
+  "id": "SOC_UAT_032",
+  "family": "SOC",
+  "summary": "EU SOC: 1 regular revenue pax on AC 835 BRU-YYZ Jan 15 2025 dep 10:00 (+420), code 64; claim filed Jun 8 2026 (509 days > Belgium 365-day limit) -> NOT ELIGIBLE, limitation expired (SoC-EU-NE-08)",
+  "passengers": [
+    {
+      "firstName": "LUC",
+      "lastName": "PEETERS",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "835",
+      "origin": "BRU",
+      "destination": "YYZ",
+      "depLocal": "10:00",
+      "arrLocal": "12:30",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 638,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": 420,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-EU-NE-08",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 420,
+    "control": null,
+    "cause": "64",
+    "ttUi": [
+      "Regime: EU (BRU departure)",
+      "Disruption date 15-Jan-2025, delay +7H 00M (code 64, present in flight data but not evaluated)",
+      "Limitation period Belgium = 365 days; elapsed 509 days (filing Jun 8 2026) -> EXPIRED",
+      "SOC | NOT_ELIGIBLE",
+      "NOT_ELIGIBLE reason: claim outside EU limitation period"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none; claim outside EU limitation period (365 days Belgium)"
+    }
+  },
+  "assumed": [
+    "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "flightDaysAgo 638 = days from 2025-01-15 to run date 2026-10-15 (text's 509 days is measured to a fictitious filing date Jun 8 2026; either way > 365)",
+    "control left null (not evaluated: limitation check fails first)",
+    "arrival 12:30 EST (8h30 block, tz -6h)",
+    "text gives no TT UI validation lines for this case; ttUi reconstructed from prerequisites"
+  ],
+  "unsupported": [
+    "Text states filing date Jun 8 2026; real claim date is the run date so elapsed days differ (638 vs 509), still > 365"
+  ]
+}

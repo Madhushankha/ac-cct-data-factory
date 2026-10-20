@@ -1,0 +1,630 @@
+{
+  "key": "CHAI-31614",
+  "test_id": "FD_TC_222",
+  "title": "3rd Party � Family/Friend � OTP Passed � Claim Allowed (Automated)",
+  "goal": "Validates that when a family member or friend submits a claim on behalf of a passenger and successfully passes OTP authentication, the system allows them to proceed with the claim through the automated flow.",
+  "summary": {
+    "seed": 3,
+    "chat": 31,
+    "api": 0,
+    "email": 0,
+    "dashboard": 15,
+    "implied": 8,
+    "manual": 10,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Validates that when a family member or friend submits a claim on behalf of a passenger and successfully passes OTP authentication, the system allows them to proceed with the claim through the automated flow.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Third-party caller type: Parent/Guardian/Family/Friend",
+      "expected": "Third-party caller type: Parent/Guardian/Family/Friend",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "OTP authentication available",
+      "expected": "OTP authentication available",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Passenger's contact info on file for OTP",
+      "expected": "Passenger's contact info on file for OTP",
+      "id": "CP004"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01)",
+      "expected": "",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP008"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"I'm the parent of a passenger and I need to file a flight disruption claim on their behalf\"",
+      "expected": "I'm the parent of a passenger and I need to file a flight disruption claim on their behalf",
+      "id": "CP009"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? YES",
+      "expected": "",
+      "id": "CP011"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot identifies third-party type ? Parent/Guardian/Family/Friend",
+      "expected": "",
+      "id": "CP012"
+    },
+    {
+      "section": "OTP AUTHENTICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot initiates OTP verification: \"To verify your authorization, we'll send a one-time password to the passenger's registered contact. Please provide the code once received.\"",
+      "expected": "",
+      "id": "CP013"
+    },
+    {
+      "section": "OTP AUTHENTICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system sends OTP to the passenger's registered email/phone",
+      "expected": "",
+      "id": "CP014"
+    },
+    {
+      "section": "OTP AUTHENTICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the correct OTP code",
+      "expected": "",
+      "id": "CP015"
+    },
+    {
+      "section": "OTP PASSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system validates OTP ? PASSED",
+      "expected": "",
+      "id": "CP016"
+    },
+    {
+      "section": "CLAIM PROCEEDS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot allows the third party to proceed with the flight disruption claim through the regular automated regulation tree",
+      "expected": "",
+      "id": "CP017"
+    },
+    {
+      "section": "CLAIM PROCEEDS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system processes the claim as if submitted by the passenger",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Is there anything I can help you with?\"",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP019"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP020"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP021"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the system correctly identifies the third-party as \"Parent/Guardian/Family/Friend\"",
+      "expected": "",
+      "id": "CP022"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And OTP authentication has been initiated",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the user provides the correct OTP code",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the system validates OTP as PASSED",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the claim should proceed through the regular automated regulation tree as if submitted by the passenger",
+      "expected": "",
+      "id": "CP026"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the case should be created and processed automatically",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no manual handoff should be required",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist Panel should auto-appear for FD topic",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And DDS should have run automatically",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the eligibility decision should be pre-populated based on the applicable regime and delay tier",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Duplicate Check should have run automatically and the result should be \"No duplicate found\"",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the CyberSource result should be \"GREEN\"",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the system should have appended the booking record automatically",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And an eligible or not eligible notification email should have been sent via Adobe based on the DDS result",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Audit Log should record the third-party type as \"Family/Friend � OTP Passed\" and all standard case actions",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Final Status should reflect the DDS outcome",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the case should be in read-only mode after resolution",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the third-party type is \"Parent/Guardian/Family/Friend\"",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And OTP authentication has PASSED",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the claim proceeds through the regular automated regulation tree as if submitted by the passenger",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then the payment flow should follow the standard FD compensation process identical to a direct passenger submission",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the country of residence prompt should be displayed to the third-party acting on behalf of the passenger",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the system should determine currency and payment method based on the passenger's country of residence",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And if the passenger's country of residence is \"Canada\" then the currency should be set to \"CAD\" and the payment method should be \"Interac e-Transfer\"",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And if the passenger's country of residence is an EU country then the currency should be set to \"EUR\" or \"GBP\" as applicable and the payment method should be \"BSM � Email Payment\"",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And if the passenger's country of residence is \"Israel\" then the currency should be set to \"ILS\" and the payment method should be \"BSM � Email Payment\"",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Cash vs AC Wallet check should be performed based on whether the passenger has an Aeroplan number linked to the booking",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And if no Aeroplan is linked then only Cash should be offered with no AC Wallet option",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And if Aeroplan is linked and account is active and not frozen then BOTH Cash and AC Wallet with 20% top-up should be offered",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the compensation amount should be determined by the applicable regime and delay tier as per the standard regulation tree",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And for APPR the compensation should be $400 CAD for Tier 1 3 to less than 6hrs or $700 CAD for Tier 2 6 to less than 9hrs or $1,000 CAD for Tier 3 9hrs or more",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And for EU 261 the compensation should follow the distance band and delay thresholds as per standard EU 261 rules",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And for ASL the compensation should follow the ASL fixed rate schedule",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And for dual or triple regime scenarios the fixed priority hierarchy should apply as per standard regime selection rules",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And IDV at Payment should be triggered via Persona and the third-party or passenger should complete IDV and Persona should return IDV PASS",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And a compensation record should be created in the backend with GL account and cost center",
+      "expected": "",
+      "id": "CP057"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And in UAT the batch file should be triggered manually in coordination with the Unifier or SAP team",
+      "expected": "",
+      "id": "CP058"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And if payment method is Interac e-Transfer then Cash should be dispatched to Unifier and Unifier should process the Interac e-Transfer to the confirmed email address",
+      "expected": "",
+      "id": "CP059"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And if payment method is BSM Email Payment then Cash should be dispatched to Unifier via HSBC channel for BSM",
+      "expected": "",
+      "id": "CP060"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And if payment method is AC Wallet then the compensation record should be picked up by the daily evening batch file and dispatched to EIP not Unifier",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And Unifier or EIP should send an acknowledgement back",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the end-of-day report should show status \"Pending\" transitioning to \"Cached\" or \"Rejected\" or \"Expired\" or \"Completed\"",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And if payment method is Interac e-Transfer and unclaimed after 35 days the status should be Expired",
+      "expected": "",
+      "id": "CP064"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And if payment fails a failure notification should be sent to the case and the agent should be flagged",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the Claims Dashboard Compensation tab should show payout details with the correct amount and currency and payment method and status updated via talkback",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the third-party type \"Family/Friend � OTP Passed\" should be logged in the Audit Log but should NOT affect the compensation amount or payment method or processing path",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And if the system erroneously blocks payment or routes to manual handling due to the third-party flag despite OTP PASS this is a P1 defect as OTP pass equals full automation",
+      "expected": "",
+      "id": "CP068"
+    }
+  ]
+}

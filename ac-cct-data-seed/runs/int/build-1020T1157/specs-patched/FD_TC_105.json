@@ -1,0 +1,95 @@
+{
+ "id": "FD_TC_105",
+ "family": "FD",
+ "summary": "Single adult; promise AC506 YUL-YYZ arr 14:00; AC involuntarily rebooked to an EARLIER flight arriving 12:00; customer arrived 12:00 = 2h early, so no delay",
+ "passengers": [
+  {
+   "firstName": "VERONIQUE",
+   "lastName": "GAGNON",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "506",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:45",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "504",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "10:45",
+   "arrLocal": "12:00",
+   "dayOffset": 0,
+   "accepted": true,
+   "voluntary": false,
+   "paxEvent": "boarded",
+   "changeDaysBeforeDeparture": 2
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-27",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": 0,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 506, Route: YUL \u2192 YYZ, Scheduled Arrival: 14:00 (14-day mark; INVOL does NOT update promise when rebook is to earlier flight)",
+   "Current Itinerary - Flight: AC 506, Route: YUL \u2192 YYZ, Status: ARRIVED, Actual Arrival: 12:00",
+   "History - INVOL: AC rebooked customer to earlier flight \u2192 arr 12:00 (earlier than promise 14:00)",
+   "Promise Rule: INVOL to earlier flight \u2192 promise remains at 14-day mark (14:00). INVOL does not update promise.",
+   "Delay = Actual (12:00) - Promise (14:00) = NEGATIVE (arrived 2h EARLY) \u2192 treated as 0h delay",
+   "Regime: APPR (1 regime)",
+   "CRITICAL: Actual < Promise \u2192 no compensable delay. Arriving earlier than promise is not a disruption.",
+   "Flight Compensation: MS VERONIQUE GAGNON | NOT ELIGIBLE | NO_DELAY | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "promised dep 12:45 / rebooked dep 10:45 (text gives only arrivals)",
+  "flight number conflict: prerequisites say AC 424, Trip Tracer lines and chatbot journey say AC 506; AC 506 used for promised AND for the rebooked earlier flight (as in the 'Current Itinerary' line) - builder may need a distinct number for the earlier flight",
+  "Passenger name accents dropped"
+ ],
+ "unsupported": [
+  "rebooking[].voluntary=false is a non-schema extra field (INVOL)"
+ ]
+}

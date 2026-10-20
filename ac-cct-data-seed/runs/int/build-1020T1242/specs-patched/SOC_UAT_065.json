@@ -1,0 +1,89 @@
+{
+  "id": "SOC_UAT_065",
+  "family": "SOC",
+  "summary": "1 adult, AC 084 TLV-VDA 15-May 16:00 departed 22:00 (6h late) but the departure delay code was never populated, even after the 14-day re-trigger; ASL no determination",
+  "passengers": [
+    {
+      "firstName": "NIR",
+      "lastName": "BEN-DAVID",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "IL",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "084",
+      "origin": "TLV",
+      "destination": "VDA",
+      "depLocal": "16:00",
+      "arrLocal": "16:50",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 24,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 360,
+      "depDelayMin": 360,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "SoC-ASL-ND-03",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 360,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip TLV->VDA on AC084 delayed +6H 00M - departure delay code missing after 14-day retrigger",
+      "Regime: ASL (TLV->VDA = Israel->Israel)",
+      "PASSENGERS: 1 - SEGMENTS: 1",
+      "Promised: AC 084 TLV->VDA Sched Dep 15-May 16:00",
+      "Current: ARRIVED LATE, Sched Dep 16:00, Actual 22:00, Delay +6H 00M",
+      "Departure Delay Code: NONE (not populated after 14-day RE retrigger); 14-Day RE Retrigger COMPLETED - code still not populated",
+      "Geographic Check: Israel->Israel PASSED",
+      "PASSENGER STATUS: NO_DETERMINATION | BAND: DELAY_6_HOURS_OR_MORE",
+      "Passenger Claims: NO DETERMINATION - case created for manual review; DDS code SoC-ASL-ND-03"
+    ],
+    "soc": {
+      "eligibility": null,
+      "entitlements": "none - no determination (delay code missing), manual review"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "flightDaysAgo=24 (scenario: disruption May 16, filing Jun 9 = 24 days; test depends on the 14-day re-trigger having elapsed)",
+    "Arrival 16:50 local VDA; arrival delay assumed 360",
+    "Cabin W (PY), class O",
+    "Residence IL",
+    "Chatbot journey screen says actual times unavailable while prerequisite/TT give actual dep 22:00: prerequisite/TT used (delay 360, code absent)"
+  ],
+  "unsupported": [
+    "Delay code absent after 14 days is the absence of an arrival-delay-code feed record; depends on the feed rather than booking data, and the 14-day RE re-trigger itself is a system behaviour"
+  ]
+}

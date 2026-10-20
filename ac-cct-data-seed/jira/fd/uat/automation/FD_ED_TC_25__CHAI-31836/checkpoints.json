@@ -1,0 +1,342 @@
+{
+  "key": "CHAI-31836",
+  "test_id": "FD_ED_TC_25",
+  "title": "Empathy | Threatening Language | Sentiment Detection | Empathy Response | Live Agent Handoff",
+  "goal": "Customer uses threatening or aggressive language during the FD flow. Per call transcript: \"Sentiment analysis should be used primarily for live agent handoff, while empathy may be relevant for case creation.\" System must detect threatening sentiment, respond with empathy, and offer live agent handoff.",
+  "summary": {
+    "seed": 1,
+    "chat": 20,
+    "api": 2,
+    "email": 0,
+    "dashboard": 1,
+    "implied": 11,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Customer uses threatening or aggressive language during the FD flow. Per call transcript: \"Sentiment analysis should be used primarily for live agent handoff, while empathy may be relevant for case creation.\" System must detect threatening sentiment, respond with empathy, and offer live agent handoff.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Sentiment analysis enabled; Live agent handoff available; Customer is mid-flow in FD claim",
+      "expected": "Sentiment analysis enabled; Live agent handoff available; Customer is mid-flow in FD claim",
+      "id": "CP002"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP003"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP004"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight was delayed 5 hours and I'm furious. I need compensation NOW\"",
+      "expected": "My flight was delayed 5 hours and I'm furious. I need compensation NOW",
+      "id": "CP008"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 1",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the sentiment analysis engine evaluates the message:",
+      "expected": "? Message: \"My flight was delayed 5 hours and I'm furious. I need compensation NOW\" ? Sentiment: NEGATIVE (frustrated/angry) ? Threat Level: LOW (angry but not threatening) ? Action: CONTINUE FLOW with empathy acknowledgment",
+      "id": "CP011"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 1",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds with empathy:",
+      "expected": "I completely understand your frustration, and I'm sorry about the delay you experienced. Let me help you check your eligibility for compensation right away.",
+      "id": "CP012"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP013"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP014"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP015"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"Robert Angry\"",
+      "expected": "Robert Angry",
+      "id": "CP016"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, Robert! And, what is your booking reference number?",
+      "id": "CP017"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"TC245\"",
+      "expected": "TC245",
+      "id": "CP018"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC245",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND (Auth Flow 1)",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP021"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: r***@gmail.com � Phone: +1456",
+      "id": "CP022"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: r@gmail.com\"",
+      "expected": "Email: r@gmail.com",
+      "id": "CP023"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP024"
+    },
+    {
+      "section": "THREATENING LANGUAGE � MESSAGE 2",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds: \"This is taking too long! If you don't give me my money I swear I will sue Air Canada and make sure everyone knows how terrible you are. I'll come to your office and make a scene!\"",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 2",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the sentiment analysis engine evaluates the message:",
+      "expected": "? Message: \"...I swear I will sue Air Canada...I'll come to your office and make a scene!\" ? Sentiment: HIGHLY NEGATIVE ? Threat Level: HIGH (threatening language � \"come to your office and make a scene\") ? Keywords Detected: \"sue\", \"come to your office\", \"make a scene\" ? Action: EMPATHY RESPONSE + LIVE AGENT HANDOFF OFFERED",
+      "id": "CP026"
+    },
+    {
+      "section": "EMPATHY RESPONSE",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I hear you, Robert, and I truly understand how frustrating this situation must be. Flight delays are stressful, and I want to make sure you get the help you need. I'm doing my best to process your claim as quickly as possible. If you'd prefer, I can connect you with a live agent who can assist you personally. Would you like to: � Continue with me � I'll keep processing your claim � Speak with a live agent � I'll transfer you to a customer service representative",
+      "id": "CP027"
+    },
+    {
+      "section": "CUSTOMER CHOOSES LIVE AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds \"Connect me to a live agent right now\"",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "LIVE AGENT HANDOFF",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system initiates live agent handoff",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "LIVE AGENT HANDOFF",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system transfers the following context to the live agent:",
+      "expected": "? Customer Name: Robert Angry ? PNR: TC245 ? Journey: [from Trip Tracer data] ? Flow Progress: Identification COMPLETED, Authentication IN PROGRESS (OTP sent, not yet verified) ? Sentiment Flag: HIGH � THREATENING LANGUAGE DETECTED ? Sentiment History: Message 1: NEGATIVE (frustrated) � continued flow Message 2: HIGHLY NEGATIVE (threatening) � handoff triggered ? Transcript: Full conversation history attached",
+      "id": "CP030"
+    },
+    {
+      "section": "LIVE AGENT HANDOFF",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I'm connecting you with a live agent now. I've shared your case details so they can pick up right where we left off. Please hold for a moment.",
+      "id": "CP031"
+    },
+    {
+      "section": "LIVE AGENT CONNECTION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system connects the customer to a live agent",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "LIVE AGENT CONNECTION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the live agent receives:",
+      "expected": "? Customer context (name, PNR, journey) ? Sentiment alert: THREATENING LANGUAGE � HANDLE WITH CARE ? Flow progress (identification done, authentication pending) ? Full conversation transcript",
+      "id": "CP033"
+    },
+    {
+      "section": "LIVE AGENT CONNECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays:",
+      "expected": "You're now connected with [Agent Name]. They have all the details of your case. Thank you for your patience, Robert.",
+      "id": "CP034"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? Message 1 sentiment: NEGATIVE (frustrated) � flow continued with empathy ?",
+      "expected": "? Message 2 sentiment: HIGHLY NEGATIVE (threatening) � handoff offered ? ? Threat keywords detected: \"sue\", \"come to your office\", \"make a scene\" ? ? Empathy response provided: YES ? ? Live agent handoff offered: YES ? ? Customer chose live agent: YES ? ? Context transferred to agent: YES (name, PNR, sentiment flag, transcript) ? ? Sentiment flag visible to agent: YES (\"THREATENING LANGUAGE � HANDLE WITH CARE\") ?",
+      "id": "CP035"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "dashboard",
+      "step": "Negative sentiment detected initially; Empathy response triggered; Escalated threatening language detected; Enhanced empathy response; Live agent handoff offered; Both paths (continue/handoff) functional; Sentiment logged with timestamps; Transcript includes sentiment markers; Dashboard shows sentiment flags for agent/manager visibility",
+      "expected": "Negative sentiment detected initially; Empathy response triggered; Escalated threatening language detected; Enhanced empathy response; Live agent handoff offered; Both paths (continue/handoff) functional; Sentiment logged with timestamps; Transcript includes sentiment markers; Dashboard shows sentiment flags for agent/manager visibility",
+      "id": "CP036"
+    }
+  ]
+}

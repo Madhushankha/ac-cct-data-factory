@@ -1,0 +1,90 @@
+{
+  "id": "SOC_UAT_024",
+  "family": "SOC",
+  "summary": "APPR SOC: 1 regular revenue pax on AC 201 YYZ-YUL flown yesterday ([today-1]) dep 08:00 actual 14:00 (+360); last leg landed < 72 h ago -> PENDING (SoC-APPR-PE-01), shell case, no receipt upload",
+  "passengers": [
+    {
+      "firstName": "OLIVIER",
+      "lastName": "COTE",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "201",
+      "origin": "YYZ",
+      "destination": "YUL",
+      "depLocal": "08:00",
+      "arrLocal": "09:20",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 1,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 360,
+      "depDelayMin": 360,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "PENDING",
+    "systemCode": "SoC-APPR-PE-01",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": 360,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Journey < 72 h old: last leg landed less than 72 hours ago",
+      "DDS Response Code: SoC-APPR-PE-01 (PENDING)",
+      "Shell case created and placed in polling queue; passenger informed of pending status"
+    ],
+    "soc": {
+      "eligibility": null,
+      "entitlements": "none yet; PENDING until 72 h window passes, then RE retrigger -> DDS evaluation"
+    }
+  },
+  "assumed": [
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "flightDaysAgo 1 (text: Dep [today-1]) so the journey is under 72 h old",
+    "arrival 09:20",
+    "delay code and controllability TBD (pending RE evaluation) -> null",
+    "delayBand not stated -> null (360 min would map to DELAY_6_HOURS_OR_MORE once evaluated)",
+    "eligibility 'PENDING' used although outside the schema enum (ELIGIBLE|NOT_ELIGIBLE|NO_DETERMINATION)",
+    "residence CA assumed"
+  ],
+  "unsupported": [
+    "Eligibility value PENDING is not in the schema enum",
+    "Timing: flight must be exactly 'yesterday' relative to the run date (<72 h old); future-dated/moving booking"
+  ]
+}

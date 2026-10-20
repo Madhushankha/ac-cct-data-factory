@@ -1,0 +1,111 @@
+{
+ "id": "SOC_UAT_015",
+ "family": "SOC",
+ "summary": "APPR SOC: 2 adults (Super Elite 50K claimant + companion) in J on AC 301 YYZ-YVR Jun 12 dep 08:00 actual 14:00 (+360), code 77 weather uncontrollable; exception pax skips controllability -> ELIGIBLE (SoC-APPR-EL-07)",
+ "passengers": [
+  {
+   "firstName": "PAUL",
+   "lastName": "ARSENAULT",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "SE",
+   "residence": "CA",
+   "employee": false
+  },
+  {
+   "firstName": "MARIE",
+   "lastName": "ARSENAULT",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "301",
+   "origin": "YYZ",
+   "destination": "YVR",
+   "depLocal": "08:00",
+   "arrLocal": "09:40",
+   "dayOffset": 0,
+   "cabin": "J",
+   "bookingClass": "J",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 360,
+   "depDelayMin": 360,
+   "delayCode": "77",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 1,
+   "pax": 2,
+   "event": "boarded"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "SoC-APPR-EL-07",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_6_HOURS_OR_MORE",
+  "delayMin": 360,
+  "control": "UNCONTROLLABLE",
+  "cause": "77",
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Trip Completed, Disruption Detected",
+   "Single-segment domestic trip YYZ\u2192YVR on AC301 delayed +6H 00M due to weather (uncontrollable but irrelevant for exception pax)",
+   "PASSENGERS: 2 (Super Elite 50K + companion) SEGMENTS: 1",
+   "Class of Booking: J (Business)",
+   "Promised Itinerary: AC 301 YYZ\u2192YVR Scheduled Dep 12-Jun 08:00",
+   "Current Itinerary: AC 301 YYZ\u2192YVR ARRIVED LATE, Scheduled Dep 08:00 \u2192 Actual 14:00, +6H 00M",
+   "Standards of Care (2): 2 passenger rows",
+   "Departure Delay Code: 77 (Weather), Uncontrollable (SKIPPED for exception pax)",
+   "PASSENGER 1 (Adult, Super Elite 50K, Claimant) | ELIGIBLE | DELAY_6_HOURS_OR_MORE | MEAL $30.00 | ACCOMMODATION Rate of day (max $500)",
+   "PASSENGER 2 (Adult, Companion) | ELIGIBLE (exception privilege extended) | same entitlements",
+   "Transportation (PNR-level): $200.00 (1-5 pax shared)",
+   "Hotel: 2 rooms (1 per adult)",
+   "CyberSource: GREEN"
+  ],
+  "soc": {
+   "eligibility": "ELIGIBLE",
+   "entitlements": "both pax eligible; meals $30/pax ($60), hotel rate of day 2 rooms max 3 nights $500 cap, transport $200 shared, communication $30/pax ($60), parking $50, essentials $30/pax ($60)"
+  }
+ },
+ "assumed": [
+  "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+  "cabin J / booking class J (Business)",
+  "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+  "arrival 09:40 (4h40, tz -3h)",
+  "tier 'SE' for 'Super Elite 50K' (the text lists the exception tier as Aeroplan 100K / Star Gold / Super Elite; mapped to schema value SE)",
+  "Aeroplan number 9876543210 assumed; companion has no Aeroplan",
+  "residence CA assumed"
+ ],
+ "unsupported": []
+}

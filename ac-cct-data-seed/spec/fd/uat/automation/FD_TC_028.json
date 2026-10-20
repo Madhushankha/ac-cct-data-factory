@@ -1,0 +1,89 @@
+{
+ "id": "FD_TC_028",
+ "family": "FD",
+ "summary": "Single pax Marc-Andre Lavoie, AC 432 YUL-YYZ; two VOL changes (arr 08:00->10:00->12:00) then INVOL (cancel/rebook) to arr 19:00; promise must be 12:00 (last VOL), actual arr 19:00 (+7h), code 67 cabin crew shortage, APPR",
+ "passengers": [
+  {
+   "firstName": "MARC-ANDRE",
+   "lastName": "LAVOIE",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "432",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "10:40",
+   "arrLocal": "12:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 420,
+   "depDelayMin": 420,
+   "delayCode": "67",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [
+  {
+   "seg": 1,
+   "depDeltaMin": 420,
+   "arrDeltaMin": 420,
+   "noticeHours": 48
+  }
+ ],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-02",
+  "amount": 700,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "CONTROLLABLE",
+  "cause": "67",
+  "ttUi": [
+   "Promised: AC 432 YUL->YYZ Scheduled Arrival 12:00 (last VOL before first INVOL, NOT 14-day mark 08:00)",
+   "Current: ARRIVED LATE 12:00 -> Actual 19:00, Delay +7H 00M",
+   "History: Change 1 (D-12) VOL via Manage My Booking arr 10:00 | Change 2 (D-8) VOL (Call Center per TT line; Manage My Booking per prerequisites) arr 12:00 | Change 3 (D-2) INVOL AC cancelled and rebooked arr 19:00",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 432 YUL->YYZ code 67 \"Delayed due to cabin crew shortage.\"",
+   "Delay: +7H 00M CONTROLLABLE",
+   "Flight Compensation: MR MARC-ANDRE LAVOIE | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00",
+   "CRITICAL: Promise = 12:00 (last VOL), not 10:00 (first VOL) nor 08:00 (14-day mark)"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "Booking modelled as the flight as promised after VOL2 (arr 12:00, dep 10:40 assumed) plus an INVOL schedule change of +420 min with 48h notice (D-2) landing at arr 19:00; actual arrival 19:00",
+  "outcome arrDelayMin 420 is measured vs the 12:00 promise (the last VOL), as the scenario states delay = 19:00 - 12:00",
+  "Original 14-day-mark arrival 08:00 and VOL1 arrival 10:00 only recorded in unsupported history",
+  "depDelayMin 420 (assumed)"
+ ],
+ "unsupported": [
+  "Two earlier VOL changes (D-12 arr 08:00->10:00, D-8 arr 10:00->12:00) with change history entries cannot be expressed by this schema except as notes; only the resulting promise (12:00) and the INVOL are modelled",
+  "VOL channel conflict: prerequisites say both VOLs via Manage My Booking (aircanada.com), the TT history line says Change 2 via Call Center"
+ ]
+}

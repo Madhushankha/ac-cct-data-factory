@@ -1,0 +1,1242 @@
+{
+  "key": "CHAI-31989",
+  "test_id": "SOC_UAT_074",
+  "title": "ASL � Eligible � Transit Delay ?2h",
+  "goal": "Verify ELIGIBLE when customer traveled to destination with transit delay ?2h under ASL. Any disruption type qualifies.",
+  "summary": {
+    "seed": 15,
+    "chat": 46,
+    "api": 21,
+    "email": 1,
+    "dashboard": 26,
+    "implied": 23,
+    "manual": 3,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Verify ELIGIBLE when customer traveled to destination with transit delay ?2h under ASL. Any disruption type qualifies.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Regime: ASL",
+      "expected": "� Regime: ASL",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Itinerary: Single segment � AC 084 TLV?VDA",
+      "expected": "� Itinerary: Single segment � AC 084 TLV?VDA",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� SOC Segment (per SoC Flight Identifier): AC 084 TLV?VDA",
+      "expected": "� SOC Segment (per SoC Flight Identifier): AC 084 TLV?VDA",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Promised Itinerary: AC 084 TLV?VDA, Dep: 22-Jun 16:00",
+      "expected": "� Promised Itinerary: AC 084 TLV?VDA, Dep: 22-Jun 16:00",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Actual Itinerary: AC 084 TLV?VDA, Dep: 22-Jun 23:00",
+      "expected": "� Actual Itinerary: AC 084 TLV?VDA, Dep: 22-Jun 23:00",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Departure Delay: 420 min (7 hours)",
+      "expected": "� Departure Delay: 420 min (7 hours)",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Departure delay code: 77 (Weather) � Uncontrollable � NOT CHECKED under ASL SOC (ASL does not evaluate controllability; code present but irrelevant)",
+      "expected": "� Departure delay code: 77 (Weather) � Uncontrollable � NOT CHECKED under ASL SOC (ASL does not evaluate controllability; code present but irrelevant)",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Controllability: NOT CHECKED � ASL does not evaluate controllability for SOC",
+      "expected": "� Controllability: NOT CHECKED � ASL does not evaluate controllability for SOC",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Passenger Type: Regular",
+      "expected": "� Passenger Type: Regular",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Check Order: 1. Pax Type ? Regular ? ? 2. Transit departure delay check ? ?2h ? ELIGIBLE (no controllability check)",
+      "expected": "� Check Order: 1. Pax Type ? Regular ? ? 2. Transit departure delay check ? ?2h ? ELIGIBLE (no controllability check)",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Note: SAME AS EU � controllability not checked. Under APPR, weather + regular pax = NOT ELIGIBLE (NE-07). Under ASL = ELIGIBLE",
+      "expected": "� Note: SAME AS EU � controllability not checked. Under APPR, weather + regular pax = NOT ELIGIBLE (NE-07). Under ASL = ELIGIBLE",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Geographic Check: Origin = TLV (Israel) ? | Destination = VDA (Israel) ? ? BOTH Israel ? PASSED ?",
+      "expected": "� Geographic Check: Origin = TLV (Israel) ? | Destination = VDA (Israel) ? ? BOTH Israel ? PASSED ?",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� PAX Count: 1 adult / Class: PY / Revenue: YES / ACR: No / Journey: > 72h",
+      "expected": "� PAX Count: 1 adult / Class: PY / Revenue: YES / ACR: No / Journey: > 72h",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Overnight Eligible: YES (delay >360 min)",
+      "expected": "� Overnight Eligible: YES (delay >360 min)",
+      "id": "CP015"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� ENTITLEMENTS (, 1 adult, PY, no ACR): Meals ?110 / Hotel: Rate of day, ?1,800 cap / Transport ?720 / Communication ?110 / Parking ?180 / Essentials ?110",
+      "expected": "� ENTITLEMENTS (, 1 adult, PY, no ACR): Meals ?110 / Hotel: Rate of day, ?1,800 cap / Transport ?720 / Communication ?110 / Parking ?180 / Essentials ?110",
+      "id": "CP016"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP017"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP018"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP020"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP021"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My Air Canada flight from Tel Aviv to Eilat was delayed by about 8 hours because of a crew scheduling issue. I had to buy food, pay for a hotel overnight, and take a taxi. Can I get reimbursed?\"",
+      "expected": "My Air Canada flight from Tel Aviv to Eilat was delayed by about 8 hours because of a crew scheduling issue. I had to buy food, pay for a hotel overnight, and take a taxi. Can I get reimbursed?",
+      "id": "CP022"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies Standards of Care (SoC) intent",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "SOC ENTRY",
+      "requirement": "SoC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays the case opening legal disclaimer (GenUC-24):",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP025"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP026"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP027"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"[First Name] [Last Name]\"",
+      "expected": "[First Name] [Last Name]",
+      "id": "CP028"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, [First Name]! And, what is your booking reference number?",
+      "id": "CP029"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: [PNR Code]\"",
+      "expected": "PNR: [PNR Code]",
+      "id": "CP030"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: [PNR Code]",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP033"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: t***@gmail.com � Phone: +1***789",
+      "id": "CP034"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: t***@gmail.com\"",
+      "expected": "Email: t***@gmail.com",
+      "id": "CP035"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP036"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"546879\"",
+      "expected": "546879",
+      "id": "CP037"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful. Let's proceed to the next step.",
+      "id": "CP039"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if this PNR a group booking ? No",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if there are multiple PAX on PNR? ? No",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot retrieves booking details and displays:",
+      "expected": "I found the following journey: � Flight: AC 084 � Route: Tel Aviv (TLV) ? Eilat (VDA) � Date: June 14, 2026 � Departure Delay: 8 hours Is this the journey you'd like to check?",
+      "id": "CP042"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP043"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if there are more than 1 segment ? No",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot sends request to Case Services for duplicate check",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "And Case Services returns: NO existing case found for this passenger + journey combination",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "72-HOUR CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if it passed the expected Departure time of the last itinerary ? Yes",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "72-HOUR CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks has it been more than 72 hours for all segments in the selected journey ? Yes",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "CLAIM TIME LIMIT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Filing deadline for ASL SOC",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "CLAIM TIME LIMIT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system calculates:",
+      "expected": "� ASL limitation: 1,460 days (4 years) � FIXED � Days elapsed: Within limitation period ? PROCEED",
+      "id": "CP050"
+    },
+    {
+      "section": "CLAIM TIME LIMIT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if there is triage data available? ? Yes",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the DDS evaluation is done in backend",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS Evaluates and sends to Trip Tracer UI:",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PNR: [PNR Code]",
+      "expected": "PNR: [PNR Code]",
+      "id": "CP054"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "TYPE: REVENUE",
+      "expected": "TYPE: REVENUE",
+      "id": "CP055"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Completed, Disruption Detected",
+      "expected": "Trip Completed, Disruption Detected",
+      "id": "CP056"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Single-segment trip TLV?VDA on AC084 was delayed +7H 00M (note: prereqs say 7h/420 min, chatbot says 8h � use prereqs: 7h) due to weather (uncontrollable � NOT CHECKED under ASL)",
+      "expected": "Single-segment trip TLV?VDA on AC084 was delayed +7H 00M (note: prereqs say 7h/420 min, chatbot says 8h � use prereqs: 7h) due to weather (uncontrollable � NOT CHECKED under ASL)",
+      "id": "CP057"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: ASL (TLV?VDA = Israel?Israel)",
+      "expected": "Regime: ASL (TLV?VDA = Israel?Israel)",
+      "id": "CP058"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PASSENGERS: 1 � SEGMENTS: 1",
+      "expected": "PASSENGERS: 1 � SEGMENTS: 1",
+      "id": "CP059"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Promised Itinerary � Flight: AC 084, Route: TLV ? VDA, Scheduled Dep: 22-Jun 16:00",
+      "expected": "Promised Itinerary � Flight: AC 084, Route: TLV ? VDA, Scheduled Dep: 22-Jun 16:00",
+      "id": "CP060"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current Itinerary � Flight: AC 084, Route: TLV ? VDA, Status: ARRIVED LATE, Scheduled Dep: 16:00 ? Actual: 23:00, Delay: +7H 00M",
+      "expected": "Current Itinerary � Flight: AC 084, Route: TLV ? VDA, Status: ARRIVED LATE, Scheduled Dep: 16:00 ? Actual: 23:00, Delay: +7H 00M",
+      "id": "CP061"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "SOC section present",
+      "expected": "SOC section present",
+      "id": "CP062"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Departure Delay Code: 77 (Weather) � NOT CHECKED (ASL does not evaluate controllability)",
+      "expected": "Departure Delay Code: 77 (Weather) � NOT CHECKED (ASL does not evaluate controllability)",
+      "id": "CP063"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Geographic Check: TLV?VDA = Israel?Israel ? PASSED ?",
+      "expected": "Geographic Check: TLV?VDA = Israel?Israel ? PASSED ?",
+      "id": "CP064"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PASSENGER: [Name] | STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL: ?110.00 | ACCOMMODATION: Rate of day (max ?1,800) | GENERAL EXPENSES: Transport ?720 + Comm ?110 + Parking ?180 + Essentials ?110 | EXPIRES: [date]",
+      "expected": "PASSENGER: [Name] | STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL: ?110.00 | ACCOMMODATION: Rate of day (max ?1,800) | GENERAL EXPENSES: Transport ?720 + Comm ?110 + Parking ?180 + Essentials ?110 | EXPIRES: [date]",
+      "id": "CP065"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "CyberSource: GREEN",
+      "expected": "CyberSource: GREEN",
+      "id": "CP066"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Intent: TRAVEL DISRUPTIONS | Sub-Intent: EXPENSES | Status: ELIGIBLE",
+      "expected": "Intent: TRAVEL DISRUPTIONS | Sub-Intent: EXPENSES | Status: ELIGIBLE",
+      "id": "CP067"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Total Approved: ?830.00 ILS (Hotel ?520 + Meals ?95 + Transport ?175 + Comm ?40)",
+      "expected": "Total Approved: ?830.00 ILS (Hotel ?520 + Meals ?95 + Transport ?175 + Comm ?40)",
+      "id": "CP068"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS RESPONSE CODE = SoC-ASL-EL-07",
+      "expected": "DDS RESPONSE CODE = SoC-ASL-EL-07",
+      "id": "CP069"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot checks which airline company is it ? AC",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "FRAUD SCREENING � CYBERSOURCE",
+      "requirement": "GLOB-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system sends case data to CyberSource for fraud screening (behind the scenes)",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "FRAUD SCREENING � CYBERSOURCE",
+      "requirement": "GLOB-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "And CyberSource returns: GREEN (no fraud indicators detected)",
+      "expected": "? PROCEED to eligible flow",
+      "id": "CP072"
+    },
+    {
+      "section": "ELIGIBLE RESULT",
+      "requirement": "SoC-03b",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays: \"Great news! Based on the details of your flight, you are eligible for expense reimbursement. Your flight AC 084 from Tel Aviv to Eilat was delayed by approximately 8 hours due to a crew scheduling issue. Under the applicable Israeli aviation regulations (ASL), you may be reimbursed for reasonable expenses incurred during this disruption.\"",
+      "expected": "Great news! Based on the details of your flight, you are eligible for expense reimbursement. Your flight AC 084 from Tel Aviv to Eilat was delayed by approximately 8 hours due to a crew scheduling issue. Under the applicable Israeli aviation regulations (ASL), you may be reimbursed for reasonable expenses incurred during this disruption.",
+      "id": "CP073"
+    },
+    {
+      "section": "ENTITLEMENT DISPLAY",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays the eligible expense categories based on  delay, 1 adult, PY class, ASL regime:",
+      "expected": "Based on the length of your disruption (8 hours), you may be eligible for reimbursement in the following categories: � Meals: up to ?110.00 � Hotel accommodation: Rate of day (up to 3 nights, ?1,800 maximum) � Ground transportation: up to ?720.00 � Communication: up to ?110.00 � Parking: up to ?180.00 (1 day maximum) � Essential items: up to ?110.00 Please note that all expenses must have been incurred during the disruption period and supported by valid receipts.",
+      "id": "CP074"
+    },
+    {
+      "section": "RECEIPT UPLOAD � WELCOME BACK FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To process your claim, I'll need you to upload your receipts.",
+      "id": "CP075"
+    },
+    {
+      "section": "RECEIPT UPLOAD � WELCOME BACK FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays the receipt upload interface",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "RECEIPT UPLOAD � WELCOME BACK FLOW",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user uploads receipt images:",
+      "expected": "� Receipt 1: Hotel receipt � ?520.00 ILS (1 night) � Receipt 2: Meal receipt � ?95.00 ILS (dinner + breakfast) � Receipt 3: Taxi receipt � ?175.00 ILS (airport to hotel + return) � Receipt 4: Communication � ?40.00 ILS (Wi-Fi + phone calls)",
+      "id": "CP077"
+    },
+    {
+      "section": "RECEIPT READER � OCR VALIDATION",
+      "requirement": "RR-01",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system processes uploaded receipts through OCR (Agentic Receipt Reader)",
+      "expected": "Receipt 1 � Hotel: � Line item: Hotel stay, 1 night � ?520.00 ILS � Within disruption window: YES ? | Rate of day: WITHIN range ? � Nights: 1 ? | Amount: ?520 < ?1,800 cap ? | OCR Result: PASS ? Receipt 2 � Meals: � Line item 1: Dinner � ?55.00 ILS | Line item 2: Breakfast � ?40.00 ILS � Total meals: ?95.00 ILS | Within disruption window: YES ? � Threshold check: ?95 ? ?110 ? | OCR Result: PASS ? Receipt 3 � Transport: � Line item 1: Taxi to hotel � ?95.00 ILS | Line item 2: Taxi to airport � ?80.00 ILS � Total transport: ?175.00 ILS | Within disruption window: YES ? � Threshold check: ?175 ? ?720 ? | OCR Result: PASS ? Receipt 4 � Communication: � Line item 1: Wi-Fi � ?25.00 ILS | Line item 2: Phone calls � ?15.00 ILS � Total communication: ?40.00 ILS | Within disruption window: YES ? � Threshold check: ?40 ? ?110 ? | OCR Result: PASS ?",
+      "id": "CP078"
+    },
+    {
+      "section": "RECEIPT VALIDATION SUMMARY",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "� Total receipts: 4 | Line items: 7 | PASSED: 7 | FLAGGED: 0 | FAILED: 0",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "EXPENSE BREAKDOWN",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "� Hotel: ?520.00 ? | Meals: ?95.00 ? | Transport: ?175.00 ? | Communication: ?40.00 ?",
+      "expected": "� Parking: ?0.00 | Essentials: ?0.00 � TOTAL APPROVED: ?830.00 ILS",
+      "id": "CP080"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system creates a case with all approved line items, receipt images, fraud screening GREEN",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case reference number is provided to the passenger",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your claim has been submitted successfully. Here's a summary: � Case Reference: [Case Number] � Total claim amount: ?830.00 ILS � Categories: Hotel (?520.00), Meals (?95.00), Transport (?175.00), Communication (?40.00) You will receive a confirmation email shortly.",
+      "id": "CP083"
+    },
+    {
+      "section": "NOTIFICATION + CLAIMS PAYMENT FLOW",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers eligible confirmation email",
+      "expected": "",
+      "id": "CP084"
+    },
+    {
+      "section": "NOTIFICATION + CLAIMS PAYMENT FLOW",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system initiates payment processing ? ?830.00 ILS ? country of residence currency",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "NOTIFICATION + CLAIMS PAYMENT FLOW",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot collects payment details and payment is initiated",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Is there anything else I can help you with?\"",
+      "expected": "Is there anything else I can help you with?",
+      "id": "CP087"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP088"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP089"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Scenario: Claims Dashboard validation for SoC-ASL-EL-07 � ASL Eligible Travel Completed Crew Scheduling",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the agent opens the Claims Dashboard for the case",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Topic/Sub-topic is \"Travel Disruptions � Expenses\"",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Status is \"Resolved\"",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Itinerary shows Journey AC 084 TLV ? VDA as the claimed flight",
+      "expected": "",
+      "id": "CP094"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Flight Status is \"DELAYED (8 hours)\"",
+      "expected": "",
+      "id": "CP095"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility section shows Journey = AC 084 TLV ? VDA",
+      "expected": "",
+      "id": "CP096"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Flight Leg at Fault is AC 084",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Operating Carrier is AC",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Disruption Reason is \"Crew Scheduling (Code 41 � IRRELEVANT under ASL)\"",
+      "expected": "",
+      "id": "CP099"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Delay Minutes is 480 min (8 hours)",
+      "expected": "",
+      "id": "CP100"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Travel Status is \"Travelled (delayed Departure)\"",
+      "expected": "",
+      "id": "CP101"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Geographic Check is \"PASSED ? (TLV ? VDA = Israel ? Israel)\"",
+      "expected": "",
+      "id": "CP102"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Controllability is \"NOT CHECKED\"",
+      "expected": "",
+      "id": "CP103"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Overnight Eligible is \"YES\"",
+      "expected": "",
+      "id": "CP104"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the DDS Response Code is \"SoC-ASL-EL-07\"",
+      "expected": "",
+      "id": "CP105"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Fraud Screening is \"CyberSource GREEN\"",
+      "expected": "",
+      "id": "CP106"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility is \"ELIGIBLE\"",
+      "expected": "",
+      "id": "CP107"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And under APPR this would be SoC-APPR-EL-08 (also ELIGIBLE � crew is controllable) and both regimes agree for controllable disruptions",
+      "expected": "",
+      "id": "CP108"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Receipt Validator shows Hotel ?520.00 APPROVED",
+      "expected": "",
+      "id": "CP109"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Receipt Validator shows Meals ?95.00 APPROVED (??110)",
+      "expected": "",
+      "id": "CP110"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Receipt Validator shows Transport ?175.00 APPROVED",
+      "expected": "",
+      "id": "CP111"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Receipt Validator shows Communication ?40.00 APPROVED (??110)",
+      "expected": "",
+      "id": "CP112"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Total Approved is ?830.00 ILS",
+      "expected": "",
+      "id": "CP113"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Items Flagged for Review is 0",
+      "expected": "",
+      "id": "CP114"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Final Status is \"Resolved\"",
+      "expected": "",
+      "id": "CP115"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the case is in read-only mode",
+      "expected": "",
+      "id": "CP116"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Scenario: Payment validation for SoC-ASL-EL-07 � ASL Eligible Travel Completed Crew Scheduling",
+      "expected": "",
+      "id": "CP117"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the case SoC-ASL-EL-07 is determined as ELIGIBLE",
+      "expected": "",
+      "id": "CP118"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then SOC payment is CASH ONLY",
+      "expected": "",
+      "id": "CP119"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the route is AC 084 TLV ? VDA with delay 480 min (8 hrs) for 1 adult PY",
+      "expected": "",
+      "id": "CP120"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And ASL controllability is NOT checked",
+      "expected": "",
+      "id": "CP121"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the entitlements for 1 adult PY no ACR are Meals ?110, Hotel rate of day 3 nights max ?1,800 cap, Transport ?720, Communication ?110, Parking ?180, Essentials ?110",
+      "expected": "",
+      "id": "CP122"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the approved receipts are Hotel ?520 (vs ?1,800 PASS), Meals ?95 (vs ?110 PASS), Taxi ?175 (vs ?720 PASS), Comm ?40 (vs ?110 PASS) totalling ?830.00 ILS",
+      "expected": "",
+      "id": "CP123"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the country of residence determines currency and payment method",
+      "expected": "",
+      "id": "CP124"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And currency conversion logging includes ILS amount, CAD equivalent, exchange rate, source, and date",
+      "expected": "",
+      "id": "CP125"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And ?830 (~$300 CAD) is less than $500 so no approval is needed",
+      "expected": "",
+      "id": "CP126"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the batch file is sent to Unifier and end-of-day report is generated",
+      "expected": "",
+      "id": "CP127"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the Claims Dashboard shows ?830.00 ILS, Cash, payment method, status via talkback",
+      "expected": "",
+      "id": "CP128"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "SoC-ASL-EL-07.",
+      "expected": "SoC-ASL-EL-07.",
+      "id": "CP129"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "ELIGIBLE.",
+      "expected": "ELIGIBLE.",
+      "id": "CP130"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Transit delay ?2h (7 hours,  category).",
+      "expected": "Transit delay ?2h (7 hours,  category).",
+      "id": "CP131"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Controllability NOT checked � same behavior as EU regime.",
+      "expected": "Controllability NOT checked � same behavior as EU regime.",
+      "id": "CP132"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Same weather scenario under APPR with regular pax = NOT ELIGIBLE (NE-07).",
+      "expected": "Same weather scenario under APPR with regular pax = NOT ELIGIBLE (NE-07).",
+      "id": "CP133"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Under ASL = ELIGIBLE regardless of disruption type.",
+      "expected": "Under ASL = ELIGIBLE regardless of disruption type.",
+      "id": "CP134"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Entitlements in ILS.",
+      "expected": "Entitlements in ILS.",
+      "id": "CP135"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Full receipt + case flow.",
+      "expected": "Full receipt + case flow.",
+      "id": "CP136"
+    }
+  ]
+}

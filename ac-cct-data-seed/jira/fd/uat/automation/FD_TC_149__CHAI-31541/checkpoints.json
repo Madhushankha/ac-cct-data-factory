@@ -1,0 +1,540 @@
+{
+  "key": "CHAI-31541",
+  "test_id": "FD_TC_149",
+  "title": "EU 261 | No Determination | OAL Data Not Available | 14-Day Polling Exhausted | Manual Handling",
+  "goal": "EU-originating journey where the disrupted leg is operated by a Star Alliance partner. SOME data has arrived (flight status showing delay) but the disruption codes are missing from the partner's data feed. DDS has partial information � knows THAT the delay occurred but not WHY. Validates that DDS handles partial partner data correctly under EU 261.",
+  "summary": {
+    "seed": 6,
+    "chat": 7,
+    "api": 16,
+    "email": 3,
+    "dashboard": 13,
+    "implied": 8,
+    "manual": 4,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "EU-originating journey where the disrupted leg is operated by a Star Alliance partner. SOME data has arrived (flight status showing delay) but the disruption codes are missing from the partner's data feed. DDS has partial information � knows THAT the delay occurred but not WHY. Validates that DDS handles partial partner data correctly under EU 261.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: Single passenger (Reginald Thornton), 2 legs LHR?FRA?MUC",
+      "expected": "PNR: Single passenger (Reginald Thornton), 2 legs LHR?FRA?MUC",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Leg 1 (LHR?FRA): AC operated, on time",
+      "expected": "Leg 1 (LHR?FRA): AC operated, on time",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Leg 2 (FRA?MUC): Operated by Lufthansa (LH)",
+      "expected": "Leg 2 (FRA?MUC): Operated by Lufthansa (LH)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Lufthansa data received: Flight status = arrived 4hrs late (partial data)",
+      "expected": "Lufthansa data received: Flight status = arrived 4hrs late (partial data)",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Lufthansa data missing: Disruption codes = NULL (not included in data feed)",
+      "expected": "Lufthansa data missing: Disruption codes = NULL (not included in data feed)",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Route context: LHR = UK origin ? EU 261 applies",
+      "expected": "Route context: LHR = UK origin ? EU 261 applies",
+      "id": "CP007"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given a case was previously created for PNR: TC115",
+      "expected": "",
+      "id": "CP008"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case was placed in the System Processing Queue (case previously filed via chatbot, all identification/authentication/journey selection completed)",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And 72 hours have elapsed since last leg arrival",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Rules Engine attempted to retrieve disruption data from OAL (WestJet)",
+      "expected": "",
+      "id": "CP011"
+    },
+    {
+      "section": "OAL DATA RETRIEVAL",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system attempts to retrieve disruption data from WestJet on a scheduled basis",
+      "expected": "Day 1: RE queries OAL data feed ? WestJet data: NOT AVAILABLE ? retry Day 3: RE retries ? WestJet data: NOT AVAILABLE ? retry Day 7: RE retries ? WestJet data: NOT AVAILABLE ? retry Day 10: RE retries ? WestJet data: NOT AVAILABLE ? retry Day 14: RE final retry ? WestJet data: NOT AVAILABLE ? 14-DAY WINDOW EXHAUSTED ? OAL DATA NOT AVAILABLE ? NO DETERMINATION ? ESCALATE TO AGENT",
+      "id": "CP012"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Segment 1: Flight: AC 871, Route: CDG ? YYZ, Status: COMPLETED (on time) � AC operated",
+      "expected": "Segment 1: Flight: AC 871, Route: CDG ? YYZ, Status: COMPLETED (on time) � AC operated",
+      "id": "CP013"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Segment 2: Flight: WS 3421, Route: YYZ ? YOW, Status: ARRIVED LATE, Delay: +4H 00M � WestJet operated (OAL, non-Star Alliance)",
+      "expected": "Segment 2: Flight: WS 3421, Route: YYZ ? YOW, Status: ARRIVED LATE, Delay: +4H 00M � WestJet operated (OAL, non-Star Alliance)",
+      "id": "CP014"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL = Segment 2 (WS 3421 � WestJet, OAL)",
+      "expected": "MSL = Segment 2 (WS 3421 � WestJet, OAL)",
+      "id": "CP015"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: EU 261 (EU origin � CDG)",
+      "expected": "Regime: EU 261 (EU origin � CDG)",
+      "id": "CP016"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL Operating Carrier: WestJet (WS) � NOT Star Alliance (unlike TC_142 where Lufthansa = Star Alliance ? StarQuest)",
+      "expected": "MSL Operating Carrier: WestJet (WS) � NOT Star Alliance (unlike TC_142 where Lufthansa = Star Alliance ? StarQuest)",
+      "id": "CP017"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "OAL Data: NOT AVAILABLE (WestJet does not share disruption codes with AC)",
+      "expected": "OAL Data: NOT AVAILABLE (WestJet does not share disruption codes with AC)",
+      "id": "CP018"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Arrival Code (WS 3421): NULL (OAL data not shared)",
+      "expected": "Arrival Code (WS 3421): NULL (OAL data not shared)",
+      "id": "CP019"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Departure Code (WS 3421): NULL (OAL data not shared)",
+      "expected": "Departure Code (WS 3421): NULL (OAL data not shared)",
+      "id": "CP020"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "14-Day Retry Window: EXHAUSTED",
+      "expected": "14-Day Retry Window: EXHAUSTED",
+      "id": "CP021"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Case Status: System Processing Queue ? 14 days exhausted ? ESCALATED TO AGENT",
+      "expected": "Case Status: System Processing Queue ? 14 days exhausted ? ESCALATED TO AGENT",
+      "id": "CP022"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "NOTE: Differs from ND-02/TC_142 (Star Alliance ? StarQuest immediate). Here, non-Star Alliance OAL ? system polls for 14 days ? then escalates.",
+      "expected": "NOTE: Differs from ND-02/TC_142 (Star Alliance ? StarQuest immediate). Here, non-Star Alliance OAL ? system polls for 14 days ? then escalates.",
+      "id": "CP023"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[PASSENGER] | NO DETERMINATION | OAL_DATA_NOT_AVAILABLE_14_DAYS | PENDING AGENT REVIEW",
+      "expected": "[PASSENGER] | NO DETERMINATION | OAL_DATA_NOT_AVAILABLE_14_DAYS | PENDING AGENT REVIEW",
+      "id": "CP024"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system updates the case status from \"System Processing Queue\" to \"Pending Agent Review\"",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system records: 14-day retry window exhausted, OAL data not available (WestJet WS 3421), non-Star Alliance carrier",
+      "expected": "",
+      "id": "CP026"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case is routed to the manual review agent queue",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "NOTIFICATION � ESCALATION EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "NOTIFICATION � ESCALATION EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a No Determination notification email is sent to the customer's email on file",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "NOTIFICATION � ESCALATION EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains:",
+      "expected": "Update on your Air Canada claim � [Case Reference] Your claim is currently under review by our Customer Relations team. We require additional time to assess your eligibility as this involves coordination with another airline.",
+      "id": "CP030"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the case has been created for PNR \"TC115\" under EU 261 EU origin CDG",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Case Header Topic/Sub-topic should be \"Travel Disruptions � Delay\"",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status should be \"Pending Agent Review\" escalated from System Processing Queue after 14 days",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Last Updated date should be Day 14",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Team assignment should be \"Manual Review Agent Queue\"",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey should show \"Segment 1: CDG ? YYZ\" as completed and AC operated and \"Segment 2: YYZ ? YOW\" arrived late plus 4h and WestJet WS 3421 operated as OAL Non-Star Alliance",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the MSL should be Segment 2 WestJet as non-Star Alliance OAL",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And this should differ from TC142 where Star Alliance results in immediate StarQuest routing whereas here non-Star OAL means system polls for 14 days then escalates",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility and Compensation section should be present and show \"NO DETERMINATION\" with reason \"OAL data not available � WestJet does not share disruption codes with AC; 14-day retry exhausted\"",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And RE should have polled on Days 1, 3, 7, 10, and 14 and all returned WestJet data NOT AVAILABLE",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the 14-Day Retry Window should be exhausted",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the determination should be \"NO DETERMINATION\" escalated to agent",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status History should show Created then System Processing Queue then Day 14 Pending Agent Review escalated due to OAL data not available",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And an escalation email should have been sent to the customer's email on file containing Case Reference and Leg 1 CDG to YYZ AC completed and Leg 2 YYZ to YOW WestJet delayed 4h and status under review and coordination with another airline note",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should not be able to access Case Search as it is for leads and management only",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given no determination was made due to OAL data not available after 14-day retry",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no automated payment flow should be triggered",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the case was created and sent to agent for manual handling",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence should have been asked",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record should have been created automatically",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no batch file should have been dispatched",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And if the agent later determines eligible manual compensation should be created and payment dispatched per type with cash to Unifier and e-credit to EIP",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard should show case status as \"No Determination\" with no payout section until manually resolved",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS returns FD-EU-ND-05.",
+      "expected": "DDS returns FD-EU-ND-05.",
+      "id": "CP054"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Tracer: Leg 1 = Operated (AC); Leg 2 = Arrived 4hrs late (LH, partial data); MSL = Leg 2; Carrier = LH; Flight status = available (4hr delay); Disruption codes = NULL (missing from partner feed); Partial data � delay known but cause unknown.",
+      "expected": "Trip Tracer: Leg 1 = Operated (AC); Leg 2 = Arrived 4hrs late (LH, partial data); MSL = Leg 2; Carrier = LH; Flight status = available (4hr delay); Disruption codes = NULL (missing from partner feed); Partial data � delay known but cause unknown.",
+      "id": "CP055"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "CRITICAL: DDS knows the delay exceeds threshold but cannot determine if cause was controllable or extraordinary without disruption codes.",
+      "expected": "CRITICAL: DDS knows the delay exceeds threshold but cannot determine if cause was controllable or extraordinary without disruption codes.",
+      "id": "CP056"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Partial partner data is insufficient for full determination.",
+      "expected": "Partial partner data is insufficient for full determination.",
+      "id": "CP057"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Claims Dashboard: No Determination; Reason = Partial OAL data (flight status only, no codes); Delay observed = 4hrs; Cause = Unknown; EU 261; DDS = FD-EU-ND-05.",
+      "expected": "Claims Dashboard: No Determination; Reason = Partial OAL data (flight status only, no codes); Delay observed = 4hrs; Cause = Unknown; EU 261; DDS = FD-EU-ND-05.",
+      "id": "CP058"
+    }
+  ]
+}

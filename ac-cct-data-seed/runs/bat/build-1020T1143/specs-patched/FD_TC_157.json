@@ -1,0 +1,80 @@
+{
+  "id": "FD_TC_157",
+  "family": "FD",
+  "summary": "ASL Israel-route AC flight operated but customer denied boarding -> Not Eligible under flight disruption flow (redirect to Customer Relations)",
+  "passengers": [
+    {
+      "firstName": "RIVKA",
+      "lastName": "SHAPIRO",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "82",
+      "origin": "YYZ",
+      "destination": "TLV",
+      "depLocal": "13:00",
+      "arrLocal": "06:00",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "denied_boarding"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "FD-ASL-NE-06",
+    "amount": 0,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": null,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Trip Tracer flag: DENIED BOARDING EVENT = TRUE",
+      "Flight operated but customer was NOT aboard",
+      "Customer redirected to Customer Relations (separate ASL denied-boarding provisions)"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "Text gives only \"Israel route (AC operated)\"; chose AC 082 YYZ-TLV 13:00 -> 06:00+1",
+    "passenger name not given; chose Rivka Shapiro",
+    "flight operated on time (outcome ontime); no delay/cancel code in text",
+    "compensation $0 with no currency stated -> currency null"
+  ],
+  "unsupported": []
+}

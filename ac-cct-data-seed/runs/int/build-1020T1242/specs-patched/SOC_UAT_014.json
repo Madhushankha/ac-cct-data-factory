@@ -1,0 +1,123 @@
+{
+ "id": "SOC_UAT_014",
+ "family": "SOC",
+ "summary": "APPR SOC: 1 revenue business-class (J) pax, Jun 12: AC 701 YYZ-YYC operated, AC 702 YYC-YVR 12:00 cancelled (code 44 safety), stranded at YYC, rebooked next day (840 min) -> ELIGIBLE (SoC-APPR-EL-05)",
+ "passengers": [
+  {
+   "firstName": "SIMON",
+   "lastName": "FORTIN",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "701",
+   "origin": "YYZ",
+   "destination": "YYC",
+   "depLocal": "07:00",
+   "arrLocal": "09:15",
+   "dayOffset": 0,
+   "cabin": "J",
+   "bookingClass": "J",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "702",
+   "origin": "YYC",
+   "destination": "YVR",
+   "depLocal": "12:00",
+   "arrLocal": "12:30",
+   "dayOffset": 0,
+   "cabin": "J",
+   "bookingClass": "J",
+   "status": "HX"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "cancel",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "TECH",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "SoC-APPR-EL-05",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_6_HOURS_OR_MORE",
+  "delayMin": 840,
+  "control": "SAFETY",
+  "cause": "44",
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Trip Not Completed, Disruption Detected",
+   "Multi-segment domestic trip YYZ\u2192YYC\u2192YVR, Segment 2 AC702 YYC\u2192YVR cancelled due to mechanical/safety issue (Code 44); passenger stranded at YYC",
+   "PASSENGERS: 1 SEGMENTS: 2",
+   "Class of Booking: J (Business)",
+   "Promised: Seg 1 AC 701 YYZ\u2192YYC 12-Jun 07:00 | Seg 2 AC 702 YYC\u2192YVR 12-Jun 12:00",
+   "Current: Seg 1 AC 701 ON TIME | Seg 2 AC 702 CANCELLED",
+   "SOC Segment: AC 702 YYC\u2192YVR",
+   "Departure Delay Code: 44 (Spares and Maintenance Equipment), Safety",
+   "PASSENGER | ELIGIBLE | DELAY_6_HOURS_OR_MORE | MEAL $60.00 (J cabin, same CCT rate) | ACCOMMODATION Rate of day (max $500) | GENERAL EXPENSES Transport $200 + Comm $30 + Parking $50 + Essentials $30",
+   "CyberSource: GREEN"
+  ],
+  "soc": {
+   "eligibility": "ELIGIBLE",
+   "entitlements": "J class: meals $60, hotel rate of day max 3 nights $500 cap, transport $200, communication $30, parking $50, essentials $30"
+  }
+ },
+ "assumed": [
+  "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+  "cabin J / booking class J (Business)",
+  "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+  "arrivals 09:15 and 12:30 chosen from block times",
+  "cancel code TECH = NetLine equivalent of delay code 44",
+  "rebooking: AC 702 YYC-YVR next day dep 02:00 (+840 min), arr 02:30, invented (stated only 'rebooked next day' and 840 min); accepted=false because trip not completed / stranded at YYC",
+  "residence CA assumed"
+ ],
+ "unsupported": []
+}

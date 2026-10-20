@@ -1,0 +1,81 @@
+{
+ "id": "FD_ED_TC_10",
+ "family": "FD",
+ "summary": "Normal eligible booking for the tester: single adult LUC GAGNON on AC 452 YUL-YYZ arriving 4h late, code 42 controllable, APPR 3-<6h CAD 400 (the intent-detection / disambiguation behaviour is not booking data)",
+ "passengers": [
+  {
+   "firstName": "LUC",
+   "lastName": "GAGNON",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "452",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "09:15",
+   "arrLocal": "10:35",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 452 YUL->YYZ Scheduled Arrival 10:35",
+   "Current: AC 452 YUL->YYZ ARRIVED LATE, 10:35 -> 14:35, Delay +4H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 452 YUL->YYZ 42 Delayed due to scheduled maintenance - CONTROLLABLE",
+   "Cancellation code: NONE; Fallback: FALSE",
+   "Delay: +4H 00M - CONTROLLABLE",
+   "Flight Compensation: MR LUC GAGNON | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flight number AC 452 YUL-YYZ dep 09:15 arr 10:35 assumed (text gives no flight); realistic domestic APPR flight chosen so the booking has an eligible 240-min controllable delay",
+  "delay code 42 (scheduled maintenance, CONTROLLABLE), 240 min arrival delay, cabin Y class T assumed",
+  "PNR names/ids in the text are labels, not real locators",
+  "scenario tests only the intent-detection layer before identification and names no booking; a normal eligible booking is supplied so the tester has a valid PNR for the 'File a compensation claim' path",
+  "passenger name LUC GAGNON assumed"
+ ],
+ "unsupported": [
+  "ambiguous-intent detection and the disambiguation menu are chatbot behaviour, not booking data"
+ ]
+}

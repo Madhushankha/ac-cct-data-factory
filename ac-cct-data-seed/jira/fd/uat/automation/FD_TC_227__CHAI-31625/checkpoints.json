@@ -1,0 +1,1197 @@
+{
+  "key": "CHAI-31625",
+  "test_id": "FD_TC_227",
+  "title": "Customer replied OUTSIDE 30 days ? reopened and handled as APPEAL | APPR | Controllable (Code 63, late crew boarding / departure procedures) | Delay 6 to under 9 hrs | 1 Pax | 1 Leg | Basic Aeroplan",
+  "goal": "Checks what happens when a customer replies too late to a parked, eligible case. AC 412 YUL ? YYZ arrived 7 hours late for a controllable reason (Code 63, late flight deck crew boarding and departure procedures). DDS returns FD-APPR-EL-02, CAD 700. The customer leaves the chat before the payment step. The agent sends \"Decision Rendered � Action Required\" and parks the case. There's no reply within 30 days, so the case closes. The customer replies on day 35, and the same case must reopen as an Appeal. It must not be handled as a normal customer response or opened as a new case. The agent upholds the decision as Eligible. Basic Aeroplan is linked, so Cash (CAD 700) and AC Wallet (CAD 840) are both offered. The customer is a Canada resident and picks Cash, so payment goes by Interac and only the email is collected.",
+  "summary": {
+    "seed": 18,
+    "chat": 24,
+    "api": 20,
+    "email": 1,
+    "dashboard": 21,
+    "implied": 39,
+    "manual": 7,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Checks what happens when a customer replies too late to a parked, eligible case. AC 412 YUL ? YYZ arrived 7 hours late for a controllable reason (Code 63, late flight deck crew boarding and departure procedures). DDS returns FD-APPR-EL-02, CAD 700. The customer leaves the chat before the payment step. The agent sends \"Decision Rendered � Action Required\" and parks the case. There's no reply within 30 days, so the case closes. The customer replies on day 35, and the same case must reopen as an Appeal. It must not be handled as a normal customer response or opened as a new case. The agent upholds the decision as Eligible. Basic Aeroplan is linked, so Cash (CAD 700) and AC Wallet (CAD 840) are both offered. The customer is a Canada resident and picks Cash, so payment goes by Interac and only the email is collected.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR PK008: one passenger, Julien Gagnon (Adult, Basic Aeroplan member 9876543210, good standing)",
+      "expected": "PNR PK008: one passenger, Julien Gagnon (Adult, Basic Aeroplan member 9876543210, good standing)",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "One AC domestic leg: AC 412 YUL ? YYZ, July 20, 2026",
+      "expected": "One AC domestic leg: AC 412 YUL ? YYZ, July 20, 2026",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Scheduled arrival 12:00, actual 19:00 (7h, 420 min)",
+      "expected": "Scheduled arrival 12:00, actual 19:00 (7h, 420 min)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Cancellation code: NONE",
+      "expected": "Cancellation code: NONE",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Arrival delay code: 63 (FT, late crew boarding / departure procedures, controllable)",
+      "expected": "Arrival delay code: 63 (FT, late crew boarding / departure procedures, controllable)",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Fallback: FALSE",
+      "expected": "Fallback: FALSE",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Travelled, arrived late",
+      "expected": "Travelled, arrived late",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No VOL or INVOL changes",
+      "expected": "No VOL or INVOL changes",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "AC only",
+      "expected": "AC only",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Claim filed July 28, 2026 (more than 72 hrs, within 366 days)",
+      "expected": "Claim filed July 28, 2026 (more than 72 hrs, within 366 days)",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No duplicate",
+      "expected": "No duplicate",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Not an employee, not an infant",
+      "expected": "Not an employee, not an infant",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "implied",
+      "step": "CyberSource GREEN",
+      "expected": "CyberSource GREEN",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Country of residence: Canada",
+      "expected": "Country of residence: Canada",
+      "id": "CP015"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Park start Aug 1, 2026",
+      "expected": "Park start Aug 1, 2026",
+      "id": "CP016"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "30-day window ends Aug 31, 2026",
+      "expected": "30-day window ends Aug 31, 2026",
+      "id": "CP017"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Customer reply Sep 5, 2026 (day 35)",
+      "expected": "Customer reply Sep 5, 2026 (day 35)",
+      "id": "CP018"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Test access: agent and lead in Claims Dashboard, with the ability to trigger or simulate the 30-day expiry in UAT",
+      "expected": "Test access: agent and lead in Claims Dashboard, with the ability to trigger or simulate the 30-day expiry in UAT",
+      "id": "CP019"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Payment: Interac only, email only",
+      "expected": "Payment: Interac only, email only",
+      "id": "CP020"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01): \"Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?\"",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP022"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects \"English\"",
+      "expected": "English",
+      "id": "CP023"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then the privacy alert is displayed",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP025"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Montreal to Toronto was delayed about 7 hours because the crew was late, I'd like to check if I'm eligible for compensation\"",
+      "expected": "My flight from Montreal to Toronto was delayed about 7 hours because the crew was late, I'd like to check if I'm eligible for compensation",
+      "id": "CP026"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks third-party submission ? NO",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot shows the legal disclaimer and the user agrees to start",
+      "expected": "Julien Gagnon PK008 552190 Your verification was successful. Let's proceed to the next step. I found 1 passenger on this booking: Julien Gagnon (Adult - Aeroplan Member). Is this who you'd like to include? Yes Yes",
+      "id": "CP029"
+    },
+    {
+      "section": "DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS checks the cancellation code on MSL ? NONE",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS checks the first arrival delay code on MSL ? 63 (FT) ? no fallback needed",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS classifies 63 (FT) as WITHIN CARRIER CONTROL ? CONTROLLABLE",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS calculates 420 min ? 6 to under 9 hrs ? Tier 2",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS returns ELIGIBLE, FD-APPR-EL-02, CAD 700",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current: AC 412, ARRIVED LATE, 12:00 ? 19:00, Delay +7H 00M",
+      "expected": "Current: AC 412, ARRIVED LATE, 12:00 ? 19:00, Delay +7H 00M",
+      "id": "CP035"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: APPR (1 regime)",
+      "expected": "Regime: APPR (1 regime)",
+      "id": "CP036"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL: AC 412 � YUL ? YYZ � 63 (FT) \"Late crew boarding or departure procedures\"",
+      "expected": "MSL: AC 412 � YUL ? YYZ � 63 (FT) \"Late crew boarding or departure procedures\"",
+      "id": "CP037"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Cancellation code: NONE ; Fallback: FALSE",
+      "expected": "Cancellation code: NONE ; Fallback: FALSE",
+      "id": "CP038"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Delay: +7H 00M � CONTROLLABLE",
+      "expected": "Delay: +7H 00M � CONTROLLABLE",
+      "id": "CP039"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Aeroplan: 9876543210 (Basic � linked)",
+      "expected": "Aeroplan: 9876543210 (Basic � linked)",
+      "id": "CP040"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MR JULIEN GAGNON | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet | [expiry date]",
+      "expected": "MR JULIEN GAGNON | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet | [expiry date]",
+      "id": "CP041"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "CYBERSOURCE (GLOB-05): GREEN",
+      "expected": "CYBERSOURCE (GLOB-05): GREEN",
+      "id": "CP042"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "ELIGIBLE RESULT (FD-05a): chatbot shows the APPR eligible message for AC 412, about 7 hours",
+      "expected": "ELIGIBLE RESULT (FD-05a): chatbot shows the APPR eligible message for AC 412, about 7 hours",
+      "id": "CP043"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "CUSTOMER DROPS OFF: at the country of residence / payment step, the customer closes the chat without choosing a payout or completing IDV",
+      "expected": "CUSTOMER DROPS OFF: at the country of residence / payment step, the customer closes the chat without choosing a payout or completing IDV",
+      "id": "CP044"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the case is created with DDS = ELIGIBLE, CAD 700, and no payment instruction",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And the case is routed to the agent queue to complete payout",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "PART B � AGENT SENDS ACTION REQUIRED AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given the agent pulls the case from My Activities (Assigned ? In Progress)",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "PART B � AGENT SENDS ACTION REQUIRED AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the agent reviews Decision Assist (ELIGIBLE, FD-APPR-EL-02, CAD 700) and confirms the assessment",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "PART B � AGENT SENDS ACTION REQUIRED AND PARKS",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the agent sends \"Decision Rendered � Action Required to Accept Compensation\" with the secure deep link for IDV/payment",
+      "expected": "Decision Rendered � Action Required to Accept Compensation",
+      "id": "CP049"
+    },
+    {
+      "section": "PART B � AGENT SENDS ACTION REQUIRED AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the case status becomes \"Awaiting Customer Info (Compensation)\"",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "PART B � AGENT SENDS ACTION REQUIRED AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the agent parks the case",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "PART B � AGENT SENDS ACTION REQUIRED AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the \"Parked\" banner is displayed",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "PART B � AGENT SENDS ACTION REQUIRED AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the 30-day customer response window starts (Aug 1 ? Aug 31)",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "PART B � AGENT SENDS ACTION REQUIRED AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Audit Log records the notification, the park action, the date and the agent",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "PART C � NO RESPONSE WITHIN 30 DAYS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given no customer response is received by the end of day 30",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "PART C � NO RESPONSE WITHIN 30 DAYS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the case is closed for no response",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "PART C � NO RESPONSE WITHIN 30 DAYS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Parked banner is removed",
+      "expected": "",
+      "id": "CP057"
+    },
+    {
+      "section": "PART C � NO RESPONSE WITHIN 30 DAYS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the \"Case Closed\" banner is displayed",
+      "expected": "",
+      "id": "CP058"
+    },
+    {
+      "section": "PART C � NO RESPONSE WITHIN 30 DAYS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the secure payment link can no longer be used",
+      "expected": "",
+      "id": "CP059"
+    },
+    {
+      "section": "PART C � NO RESPONSE WITHIN 30 DAYS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no compensation record exists",
+      "expected": "",
+      "id": "CP060"
+    },
+    {
+      "section": "PART C � NO RESPONSE WITHIN 30 DAYS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Audit Log records the closure reason (no customer response within 30 days)",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "PART D � CUSTOMER REPLIES ON DAY 35",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given the customer comes back through the chatbot quoting the case reference, 35 days after the park date",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "PART D � CUSTOMER REPLIES ON DAY 35",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system recognises that the reply is outside the 30-day window",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "PART D � CUSTOMER REPLIES ON DAY 35",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system does NOT treat it as a normal \"Customer Response\" on an open case",
+      "expected": "",
+      "id": "CP064"
+    },
+    {
+      "section": "PART D � CUSTOMER REPLIES ON DAY 35",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system does NOT create a new separate FD case for the same passenger and journey",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "PART D � CUSTOMER REPLIES ON DAY 35",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the original case is reopened with case type / source = Appeal",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "PART D � CUSTOMER REPLIES ON DAY 35",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the \"Appeal Pending\" banner is displayed",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "PART D � CUSTOMER REPLIES ON DAY 35",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case status is \"Appeal Review\" (reopened)",
+      "expected": "",
+      "id": "CP068"
+    },
+    {
+      "section": "PART D � CUSTOMER REPLIES ON DAY 35",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the customer's reply is attached to Customer Communications",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "PART D � CUSTOMER REPLIES ON DAY 35",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case is routed to the appeal-handling queue / agent",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "PART D � CUSTOMER REPLIES ON DAY 35",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case history from before the reopen is kept under the same case ID",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "PART D � CUSTOMER REPLIES ON DAY 35",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the SLA restarts for appeal handling",
+      "expected": "",
+      "id": "CP072"
+    },
+    {
+      "section": "PART E � AGENT HANDLES THE APPEAL",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given the agent opens the reopened case from My Activities",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "PART E � AGENT HANDLES THE APPEAL",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "When the agent reviews the original decision, notification, Trip Tracer, coding and prior payments",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "PART E � AGENT HANDLES THE APPEAL",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the agent confirms there is no prior payment for this passenger and journey",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "PART E � AGENT HANDLES THE APPEAL",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And the agent confirms Code 63 and the 7h delay are unchanged in Trip Tracer",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "PART E � AGENT HANDLES THE APPEAL",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the agent confirms the APPR filing limit is still met (claim filed Jul 28, 2026, within 366 days)",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "PART E � AGENT HANDLES THE APPEAL",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the agent keeps the decision as ELIGIBLE, CAD 700 (no override needed)",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "PART E � AGENT HANDLES THE APPEAL",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the agent records an internal note: late customer reply handled as appeal, decision upheld as eligible",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "PART E � AGENT HANDLES THE APPEAL",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the agent sends \"Decision Rendered � Action Required\" again with a new secure link",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the customer opens the new secure link",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then country of residence = Canada ? Currency = CAD",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Aeroplan is checked: Basic Member, good standing",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And both options are offered: Cash CAD 700 via Interac e-Transfer, or AC Wallet CAD 840 (20% bonus)",
+      "expected": "",
+      "id": "CP084"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the customer selects \"Cash\"",
+      "expected": "Cash",
+      "id": "CP085"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And only the Interac email (j***@gmail.com) is confirmed; no other payment details are collected",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Persona IDV runs ? PASS",
+      "expected": "",
+      "id": "CP087"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the claim is submitted ? compensation record CAD 700 is created",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And an eligible notification email is sent via Adobe (Case Reference, CAD 700, Interac, APPR, AC 412 YUL ? YYZ, Code 63)",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given case \"PK008\" for claimant \"Julien Gagnon\" was parked on Aug 1, 2026 awaiting customer compensation action",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no customer response was received within 30 days",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the case should have been closed for no response on Aug 31, 2026",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "When the customer replies on Sep 5, 2026",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the same case should be reopened (no new case ID)",
+      "expected": "",
+      "id": "CP094"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the case type / source should show \"Appeal\"",
+      "expected": "",
+      "id": "CP095"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the \"Appeal Pending\" banner should be displayed",
+      "expected": "",
+      "id": "CP096"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the \"Customer Response\" banner should NOT be shown as a normal in-window response",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the status should be \"Appeal Review\" / \"Reopened\"",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Topic/Sub-topic should remain \"Travel Disruptions � Delay\"",
+      "expected": "",
+      "id": "CP099"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Name should be \"Julien Gagnon\", Claimant Type \"Adult\", Authentication \"Pass\"",
+      "expected": "",
+      "id": "CP100"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR should be \"PK008\" with PNR Creation Date, Journey ID, Booking Source and Booking Office ID populated",
+      "expected": "",
+      "id": "CP101"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Regime should be \"APPR\"",
+      "expected": "",
+      "id": "CP102"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Aeroplan should be \"9876543210\" linked, Tier Status \"Basic / Member\"",
+      "expected": "",
+      "id": "CP103"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey should show \"Bound 1: YUL ? YYZ\" (AC 412, +7H 00M, Code 63)",
+      "expected": "",
+      "id": "CP104"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist panel should show ELIGIBLE, FD-APPR-EL-02, CAD 700",
+      "expected": "",
+      "id": "CP105"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Duplicate Check should show no separate duplicate case created by the late reply",
+      "expected": "",
+      "id": "CP106"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the CyberSource result should be \"GREEN\"",
+      "expected": "",
+      "id": "CP107"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Audit Log should record in order: case created, Action Required sent, parked, 30-day window expired, closed, customer late reply, reopened as appeal, appeal decision upheld, Action Required re-sent, payout completed",
+      "expected": "",
+      "id": "CP108"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And Customer Communications should show both Action Required emails, the customer's late reply and the eligible notification",
+      "expected": "",
+      "id": "CP109"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the chatbot transcripts should be linked",
+      "expected": "",
+      "id": "CP110"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Final Status should be \"Resolved\" after payment",
+      "expected": "",
+      "id": "CP111"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the case should be read-only after resolution",
+      "expected": "",
+      "id": "CP112"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the case was closed with no payment instruction",
+      "expected": "",
+      "id": "CP113"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no compensation record should exist before the appeal",
+      "expected": "",
+      "id": "CP114"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "When the appeal is upheld and the customer completes the new secure link",
+      "expected": "",
+      "id": "CP115"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then country of residence should be \"Canada\" and currency \"CAD\"",
+      "expected": "",
+      "id": "CP116"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And both Cash (CAD 700) and AC Wallet (CAD 840) should be offered",
+      "expected": "",
+      "id": "CP117"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the customer selects \"Cash\" ? Interac e-Transfer",
+      "expected": "",
+      "id": "CP118"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And only the email \"j***@gmail.com\" should be collected",
+      "expected": "",
+      "id": "CP119"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And exactly one compensation record of CAD 700 should be created",
+      "expected": "",
+      "id": "CP120"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And it should be picked up by the daily evening batch file and dispatched to Unifier",
+      "expected": "",
+      "id": "CP121"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And Unifier should acknowledge",
+      "expected": "",
+      "id": "CP122"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the Interac end-of-day status should move Pending ? Cashed / Rejected / Expired",
+      "expected": "",
+      "id": "CP123"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And an unclaimed Interac payment should expire after 35 days",
+      "expected": "",
+      "id": "CP124"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the Compensation tab should show CAD 700, Cash � Interac, status updated via talkback",
+      "expected": "",
+      "id": "CP125"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS returns FD-APPR-EL-02, CAD 700 (APPR, Code 63 controllable, 7h).",
+      "expected": "DDS returns FD-APPR-EL-02, CAD 700 (APPR, Code 63 controllable, 7h).",
+      "id": "CP126"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The case parks, then closes after 30 days with no response.",
+      "expected": "The case parks, then closes after 30 days with no response.",
+      "id": "CP127"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The late reply on day 35 reopens the same case as an Appeal (Appeal Pending, Appeal Review).",
+      "expected": "The late reply on day 35 reopens the same case as an Appeal (Appeal Pending, Appeal Review).",
+      "id": "CP128"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "It isn't a new case and isn't a normal customer response.",
+      "expected": "It isn't a new case and isn't a normal customer response.",
+      "id": "CP129"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The appeal is upheld as Eligible, and the customer is paid CAD 700 cash by Interac (email only).",
+      "expected": "The appeal is upheld as Eligible, and the customer is paid CAD 700 cash by Interac (email only).",
+      "id": "CP130"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "There's one compensation record and a full audit trail.",
+      "expected": "There's one compensation record and a full audit trail.",
+      "id": "CP131"
+    }
+  ]
+}

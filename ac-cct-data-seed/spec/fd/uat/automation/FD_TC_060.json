@@ -1,0 +1,106 @@
+{
+  "id": "FD_TC_060",
+  "family": "FD",
+  "summary": "Single adult, AC 460 YUL-YYZ 10:00-12:00, departed 260 min late, arrived 265 min late; no cancellation code, NO arrival delay code, first departure delay code 73 (WR, weather en route or at alternate); customer did not board and stayed at YUL (No Travel Origin); no rebooking",
+  "passengers": [
+    {
+      "firstName": "NATHALIE",
+      "lastName": "FORTIN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "460",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "10:00",
+      "arrLocal": "12:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 265,
+      "depDelayMin": 260,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null,
+      "depDelayCode": "73",
+      "delayCodeAlpha": "WR"
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "FD-APPR-NE-09",
+    "amount": 0,
+    "currency": "CAD",
+    "delayBand": null,
+    "delayMin": 265,
+    "control": "UNCONTROLLABLE",
+    "cause": "73",
+    "noTravel": "ORIGIN",
+    "fallback": true,
+    "refundEntitlement": "FULL refund (Branch A, outside carrier control)",
+    "expenses": "not applicable",
+    "ttUi": [
+      "Promised Itinerary - Flight: AC 460, Route: YUL->YYZ, Scheduled Departure: 10:00, Scheduled Arrival: 12:00",
+      "Actual Itinerary - Flight: AC 460, Route: YUL->YYZ, Actual Departure: 14:20, Actual Arrival: 16:25, Status: DELAYED (operated)",
+      "Departure delay = 260 min (>=180) ; Arrival delay = 265 min (>=180)",
+      "Customer Status: NO TRAVEL - ORIGIN (not boarded, coupon not flown, remained at YUL)",
+      "History - No rebooking accepted",
+      "Regime: APPR (1 regime)",
+      "MSL FLIGHT: AC 460 - YUL->YYZ (only segment)",
+      "Cancellation code: NONE",
+      "First arrival delay code: NOT AVAILABLE (null/empty)",
+      "First departure delay code: 73 (WR) - \"Weather en route or at alternate\"",
+      "Controllability source = first departure delay code (fallback)",
+      "Fallback: TRUE (arrival delay code not available)",
+      "APPR causal category: Outside carrier control - weather - UNCONTROLLABLE",
+      "Disruption Type: DELAY",
+      "No Travel Branch A (Remained at Origin) + MSL delayed 3+ hours - controllability check - Outside carrier's control",
+      "DDS outcome code: FD-APPR-NE-09",
+      "Compensation outcome: NOT ELIGIBLE",
+      "Ticket refund entitlement: FULL refund (Branch A - outside control)",
+      "Expenses: NOT applicable",
+      "Flight Compensation: MS NATHALIE FORTIN | NOT ELIGIBLE | UNCONTROLLABLE | CAD 0.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "cabin Y and booking class T on every segment (text gives none)",
+    "arrival delay code absent (null); the first DEPARTURE delay code is carried in outcome field depDelayCode (extra key, schema has only the arrival-code field delayCode) and DDS must fall back to it",
+    "two-letter alpha delay code given in text is carried in delayCodeAlpha (extra key)",
+    "actual times: dep 14:20, arr 16:25 as stated in prerequisites (260/265 min late)",
+    "Aeroplan not linked (dashboard check says Not linked)",
+    "flightDaysAgo default 10; text dates (May 28 2026) are labels only",
+    "no-travel status expressed as paxEvents not_travelled on seg 1; expect.noTravel is an extra key"
+  ],
+  "unsupported": []
+}

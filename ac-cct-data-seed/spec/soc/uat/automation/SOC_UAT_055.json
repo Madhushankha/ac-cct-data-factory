@@ -1,0 +1,91 @@
+{
+  "id": "SOC_UAT_055",
+  "family": "SOC",
+  "summary": "1 adult, AC 085 TLV-LHR 7h late (itinerary ends in London, not Israel); ASL geographic destination gate fails",
+  "passengers": [
+    {
+      "firstName": "TAL",
+      "lastName": "SHAPIRA",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "IL",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "085",
+      "origin": "TLV",
+      "destination": "LHR",
+      "depLocal": "08:00",
+      "arrLocal": "11:30",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": 420,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-ASL-NE-07",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 420,
+    "control": null,
+    "cause": "64",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip TLV->LHR on AC085 delayed +7H 00M - destination NOT in Israel (LHR = UK)",
+      "Regime: APPR (system determines - ASL does not apply, AC carrier -> APPR applies)",
+      "PASSENGERS: 1 - SEGMENTS: 1",
+      "Promised: AC 085 TLV->LHR Sched Dep 05-Jun",
+      "Current: ARRIVED LATE, Delay +7H 00M",
+      "Geographic Check (ASL): Origin TLV pass; Destination LHR NOT Israel -> ASL FAIL",
+      "Regime applied: APPR (AC carrier)",
+      "PASSENGER STATUS: depends on regime routing (ELIGIBLE under APPR if controllable / NOT_ELIGIBLE under ASL geographic fail)",
+      "DDS code SoC-ASL-NE-07"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none under ASL (destination gate)"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Regime: prerequisite says APPR, TT says APPR, title/code say ASL NOT_ELIGIBLE; expect.regime set to ASL per code/title (the one under which NE-07 is produced)",
+    "Scheduled departure time not given ('time per prereqs'): 08:00 chosen; arrival 11:30 local LHR; arrival delay assumed 420",
+    "Prerequisite promised itinerary text (AC 084 YYZ-TLV via FRA) contradicts the single segment AC 085 TLV-LHR; single segment used",
+    "Cabin W (PY), class O",
+    "Residence IL",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10.",
+    "Chatbot screen says 8h delay; prerequisite 420 used"
+  ],
+  "unsupported": [
+    "Source is self-contradictory (APPR vs ASL, 'ended at FRA' vs LHR); expected ASL NE-07 may not be reproducible by DDS for an AC TLV-LHR flight"
+  ]
+}

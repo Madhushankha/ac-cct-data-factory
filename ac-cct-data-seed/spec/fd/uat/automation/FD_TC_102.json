@@ -1,0 +1,99 @@
+{
+  "id": "FD_TC_102",
+  "family": "FD",
+  "summary": "Single adult EMILE GAGNON, 2 legs: AC 848 YUL-LHR (AC operated, data complete) then British Airways BA 1234 LHR-EDI (other airline, no flight data ever received from OAG within 14 days); final arrival at EDI unknown",
+  "passengers": [
+    {
+      "firstName": "EMILE",
+      "lastName": "GAGNON",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "848",
+      "origin": "YUL",
+      "destination": "LHR",
+      "depLocal": "21:30",
+      "arrLocal": "09:30",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "BA",
+      "number": "1234",
+      "origin": "LHR",
+      "destination": "EDI",
+      "depLocal": "11:15",
+      "arrLocal": "12:50",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 29,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "FD-APPR-ND-06",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": null,
+    "control": null,
+    "cause": null,
+    "regimeNote": "APPR (Canada departure); EU potentially applicable (LHR) but cannot be assessed",
+    "ttUi": [
+      "Segment 1: Flight: AC 503, Route: YUL->YYZ, Status: COMPLETED, Data: COMPLETE",
+      "Segment 2: Flight: PD 234, Route: YYZ->YVR, Status: DATA NOT AVAILABLE (OAL->OAG feed not received)",
+      "AC Data: Complete for Segment 1",
+      "OAL Data: NOT RECEIVED via OAG for Segment 2",
+      "14-Day Retry Window: Disruption May 17 - Window ended May 31 - EXHAUSTED",
+      "DDS: CANNOT CALCULATE DELAY - OAL DATA MISSING",
+      "Determination: NO DETERMINATION - SENT TO AGENT",
+      "Flight Compensation: MR EMILE GAGNON | NO DETERMINATION | OAL_DATA_NOT_AVAILABLE | PENDING AGENT REVIEW"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "cabin Y and booking class T on every segment (text gives none)",
+    "first name given as \"?mile\" (character lost in source), taken as EMILE",
+    "source conflict: prerequisites/description/expected results = AC 848 YUL-LHR + BA 1234 LHR-EDI (international); journey selection and TT UI lines = AC 503 YUL-YYZ + PD 234 YYZ-YVR. Used the prerequisites; ttUi lines kept verbatim and show the AC 503/PD 234 variant",
+    "all times assumed (text gives none); AC 848 dep 21:30, arr 09:30 next morning; BA 1234 dayOffset 1 11:15-12:50",
+    "flightDaysAgo=29 (disruption May 17, current date June 15; 14-day window ended May 31); prerequisites instead say April 28",
+    "leg 1 outcome assumed on time (text: \"times confirmed\", no delay stated)",
+    "Aeroplan not linked"
+  ],
+  "unsupported": [
+    "BA 1234 has NO outcome row on purpose (OAG feed returned no data for the OAL leg) - the seeder must leave segment 2 without actuals; the OAG feed absence itself is not booking data"
+  ]
+}

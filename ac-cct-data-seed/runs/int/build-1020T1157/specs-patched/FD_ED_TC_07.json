@@ -1,0 +1,83 @@
+{
+ "id": "FD_ED_TC_07",
+ "family": "FD",
+ "summary": "Single pax Laurent Pelletier on AC 422 YUL-YYZ arriving 4h late, code 64 controllable; OTP and IDV fail so DDS is deferred (eligibility pending)",
+ "passengers": [
+  {
+   "firstName": "LAURENT",
+   "lastName": "PELLETIER",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "422",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:40",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": null,
+   "delayCode": "64",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": null,
+  "currency": null,
+  "delayBand": "APPR_3_TO_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "64",
+  "ttUi": [
+   "Passenger: Laurent Pelletier",
+   "OTP: 5/5 INCORRECT",
+   "IDV: FAIL (document quality + face mismatch)",
+   "PNR: TC225",
+   "Journey: YUL-YYZ (AC domestic, DELAYED +4h, 3-<6h band)",
+   "Scheduled Arrival: 14:00, Actual Arrival: 18:00",
+   "Arrival Delay Code: 64 (Flight Crew Shortage - Controllable)",
+   "Regime: APPR (domestic AC operated - confirmed)",
+   "Eligibility: PENDING (DDS deferred - authentication must be resolved first)",
+   "Baseline APPR Tier 1 estimate: $400 CAD (agent reference only)",
+   "DDS: NOT triggered (blocked pending authentication)"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flight number AC 422 (taken from other YUL-YYZ scenarios; text gives no number)",
+  "dep 12:40",
+  "data itself would be eligible APPR 3-<6h $400 but the scenario expects no DDS determination because authentication failed"
+ ],
+ "unsupported": [
+  "authentication failure / DDS deferral is claim-side behaviour; booking data only gives the underlying flight facts"
+ ]
+}

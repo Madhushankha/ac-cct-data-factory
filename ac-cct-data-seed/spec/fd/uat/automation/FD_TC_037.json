@@ -1,0 +1,84 @@
+{
+ "id": "FD_TC_037",
+ "family": "FD",
+ "summary": "Single pax Nathalie Fortin, AC 438 YUL-YYZ sched arr 14:00 arrived 18:00 (+4h), arrival delay code MISSING (null), departure delay code 64 (flight crew shortage, controllable) -> Fallback=TRUE; APPR Tier 1",
+ "passengers": [
+  {
+   "firstName": "NATHALIE",
+   "lastName": "FORTIN",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "438",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:40",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "depDelayCode": "64"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-02",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "64",
+  "ttUi": [
+   "Promised: AC 438 YUL->YYZ Scheduled Arrival 14:00",
+   "Current: ARRIVED LATE 14:00 -> Actual 18:00, Delay +4H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 438 YUL->YYZ ARRIVAL CODE: NULL (MISSING)",
+   "FALLBACK TRIGGERED: arrival code NULL -> using departure code",
+   "Departure delay code: 64 (Flight Crew Shortage)",
+   "Fallback Flag: TRUE",
+   "CONTROLLABLE",
+   "Delay: +4H 00M CONTROLLABLE",
+   "Flight Compensation: MS NATHALIE FORTIN | ELIGIBLE | DELAY_3_TO_LT_6_HOURS (FALLBACK) | CAD 400.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 12:40; depDelayMin 240",
+  "Text conflicts: description says fallback departure code 42, prerequisites/TT line say 64 - 64 used",
+  "Text conflict: expected result says FD-APPR-EL-02 although tier 1 (3-6h) elsewhere is EL-01; recorded verbatim",
+  "No cancellation code (flight operated); no Aeroplan"
+ ],
+ "unsupported": [
+  "Departure delay code is distinct from the arrival delay code (arrival code NULL -> fallback to first departure delay code, Fallback=TRUE); the schema has no field for it, so it is given as extra key outcomes[].depDelayCode and delayCode is null"
+ ]
+}

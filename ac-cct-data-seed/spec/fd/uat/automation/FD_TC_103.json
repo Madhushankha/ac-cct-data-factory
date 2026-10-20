@@ -1,0 +1,78 @@
+{
+ "id": "FD_TC_103",
+ "family": "FD",
+ "summary": "Single adult, AC504 YUL-YYZ sched arr 14:00, arrived 18:00 (+4h), flight was yesterday (inside the 72h DDS window) so DDS must answer Pending",
+ "passengers": [
+  {
+   "firstName": "MARC-ANDRE",
+   "lastName": "LAVOIE",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "504",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:45",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 1,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "PENDING",
+  "systemCode": "FD-APPR-PE-01",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": null,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "DDS returns FD-APPR-PE-01 (Pending): within 72hr processing window",
+   "Trip Tracer data may or may not be available yet (no TT UI validation block in the text)",
+   "After 72 h DDS returns definitive code (EL/NE/ND)"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 12:45 (text gives only arrival 14:00)",
+  "flightDaysAgo=1: flight 'operated yesterday', inside the 72h window (test is about timing)",
+  "eligibility 'PENDING' is not in the schema enum: scenario expects DDS Pending (FD-APPR-PE-01)",
+  "Dialogue says arrival 10:00 on June 15 / 'landed 2 hours ago'; prerequisites (sched 14:00, actual 18:00) used",
+  "Delay code intentionally absent (not yet available in DDS)",
+  "Passenger name accents dropped (MARC-ANDRE) for a PNR-safe name"
+ ],
+ "unsupported": [
+  "Chatbot 72h scheduling / system processing queue / automatic reassessment at 72h are Claims Dashboard behaviour"
+ ]
+}

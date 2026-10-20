@@ -1,0 +1,83 @@
+{
+ "id": "FD_ED_TC_01",
+ "family": "FD",
+ "summary": "Single pax Marc-Andre Bouchard (no Aeroplan) on AC 422 YUL-YYZ arriving 4h late, code 42 controllable, APPR 3-6h $400",
+ "passengers": [
+  {
+   "firstName": "MARC-ANDRE",
+   "lastName": "BOUCHARD",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "422",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": null,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "APPR_3_TO_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 422, Route: YUL-YYZ, Scheduled Arrival: 10:00",
+   "Current Itinerary - Flight: AC 422, Route: YUL-YYZ, Status: ARRIVED LATE, Actual: 14:00, Delay: +4H 00M",
+   "Regime: APPR (Canadian origin - YUL)",
+   "Distance: ~505 km - Short-haul",
+   "MSL FLIGHT: AC 422 - YUL-YYZ - 42",
+   "CONTROLLABLE (Code 42)",
+   "APPR: Delay 3-6h, Controllable, Short-haul - ELIGIBLE",
+   "Compensation: CAD $400",
+   "MR MARC-ANDRE BOUCHARD | ELIGIBLE | APPR_3_TO_6_HOURS | CAD $400"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "departure 08:40 (text gives only scheduled arrival 10:00)",
+  "name accents dropped (MARC-ANDRE) because the source text is mojibake",
+  "cabin Y class T"
+ ],
+ "unsupported": [
+  "3 chained e-ticket numbers (014-1234567890 exchanged, 014-2345678901 exchanged, 014-3456789012 active) and the e-ticket-exchange history shown in Trip Tracer UI cannot be expressed in the booking data",
+  "PNR labels TCED01/TC219 are labels only",
+  "scenario text dates the flight June 1 2026; run uses flightDaysAgo=10"
+ ]
+}

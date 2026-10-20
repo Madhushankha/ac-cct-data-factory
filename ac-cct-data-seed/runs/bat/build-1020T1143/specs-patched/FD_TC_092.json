@@ -1,0 +1,119 @@
+{
+ "id": "FD_TC_092",
+ "family": "FD",
+ "summary": "Three adults (VERONIQUE GAGNON with linked Aeroplan Basic, MARC GAGNON, SOPHIE GAGNON), AC 364 YUL-YYZ arriving scheduled 14:00, actual 15:45 (105 min late, below 3h), arrival delay code 67 (crew transport/hotel/logistics delay, controllable); no booking changes; all 3 NOT ELIGIBLE",
+ "passengers": [
+  {
+   "firstName": "VERONIQUE",
+   "lastName": "GAGNON",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": null,
+   "employee": false
+  },
+  {
+   "firstName": "MARC",
+   "lastName": "GAGNON",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  },
+  {
+   "firstName": "SOPHIE",
+   "lastName": "GAGNON",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "364",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:35",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 105,
+   "depDelayMin": 105,
+   "delayCode": "67",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "depDelayCode": "67"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 1,
+   "pax": 2,
+   "event": "boarded"
+  },
+  {
+   "seg": 1,
+   "pax": 3,
+   "event": "boarded"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-27",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": 105,
+  "control": "CONTROLLABLE",
+  "cause": "67",
+  "fallback": false,
+  "reason": "BELOW_THRESHOLD",
+  "passengersExpected": "all 3 NOT ELIGIBLE, CAD 0",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 364, Route: YUL->YYZ, Scheduled Arrival: 14:00",
+   "Current Itinerary - Flight: AC 364, Route: YUL->YYZ, Status: ARRIVED LATE, Scheduled Arrival: 14:00 - Actual: 15:45, Delay: +1H 45M (105 min)",
+   "Booking Changes: NONE (flight operated, no cancellation, no rebooking)",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 364 - YUL->YYZ - 67",
+   "\"\"Delayed due to crew transport / logistics delay\"\"",
+   "Delay: +1H 45M - CONTROLLABLE",
+   "APPR Gate 8: Delay 1h 45m < 3h - FAILS threshold - NOT ELIGIBLE (all 3 passengers)",
+   "Fallback: FALSE",
+   "Flight Compensation: MS VERONIQUE GAGNON | NOT ELIGIBLE | BELOW_THRESHOLD | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "cabin Y and booking class T on every segment (text gives none)",
+  "YUL-YYZ departure assumed 12:35 so that arrival is 14:00",
+  "departure delay assumed equal to arrival delay (105 min); departure code 67 also assumed",
+  "TT UI Flight Compensation line in the text lists only the claimant; expected results state all 3 passengers are NE-01"
+ ],
+ "unsupported": []
+}

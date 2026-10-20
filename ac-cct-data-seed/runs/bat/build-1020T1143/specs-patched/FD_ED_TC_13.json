@@ -1,0 +1,79 @@
+{
+ "id": "FD_ED_TC_13",
+ "family": "FD",
+ "summary": "Single pax Alexandre Dupont with Aeroplan 1111222233 (account FROZEN) on AC 422 YUL-YYZ arriving 4h late, code 42, APPR 3-6h $400; AC Wallet falls back to Interac",
+ "passengers": [
+  {
+   "firstName": "ALEXANDRE",
+   "lastName": "DUPONT",
+   "type": "ADT",
+   "aeroplanNumber": "1111222233",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "422",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": null,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "APPR_3_TO_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "APPR: Delay 3-6h, Controllable - ELIGIBLE",
+   "Compensation: CAD $400"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 08:40 arr 10:00",
+  "tier Basic (not stated)",
+  "no TT block in text; expectations taken from DDS lines and prerequisites (APPR EL-01)"
+ ],
+ "unsupported": [
+  "flight date June 2 2026 in text; run uses flightDaysAgo=10"
+ ],
+ "loyalty": {
+  "wallet_state": "frozen_l2",
+  "tier": "E50K",
+  "why": "jira: 'Aeroplan account status: FROZEN (fraud hold / compliance issue)' and the expected outcome is AC Wallet falling back to Interac. No level is named, and only level 2 is refused by the payment flow -- frozen_l1 would not produce the fallback this test asserts, so l2 is the only state that makes the case testable."
+ }
+}

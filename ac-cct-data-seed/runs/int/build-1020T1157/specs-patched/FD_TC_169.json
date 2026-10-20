@@ -1,0 +1,80 @@
+{
+ "id": "FD_TC_169",
+ "family": "FD",
+ "summary": "ASL YYZ-TLV AC084, backend MSL data missing (operating times, flight number, all codes NULL), 14-day polling exhausted -> No Determination",
+ "passengers": [
+  {
+   "firstName": "OREN",
+   "lastName": "NAVON",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "IL",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "84",
+   "origin": "YYZ",
+   "destination": "TLV",
+   "depLocal": "23:00",
+   "arrLocal": "16:00",
+   "dayOffset": 1,
+   "cabin": "Y",
+   "bookingClass": "Y",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 23,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "noarrival",
+   "depDelayMin": 60
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "ASL",
+  "eligibility": "NO_DETERMINATION",
+  "systemCode": "FD-ASL-ND-05",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": null,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Promised Itinerary: Flight MISSING (flight number not available in backend), Route YYZ->TLV",
+   "Current Itinerary: Status DISRUPTED (details incomplete)",
+   "Customer Status: Travel Completed (filed after travel)",
+   "Regime: ASL (Israel destination TLV)",
+   "Destination: TLV (Israel)",
+   "MSL DATA: CRITICAL DATA MISSING",
+   "Operating Times: NULL (after 14 days)",
+   "Flight Number: NULL (after 14 days)",
+   "Disruption Code: CANNOT BE ASSESSED (no MSL flight identified)",
+   "14-Day Retry Window: EXHAUSTED",
+   "Case Status: System Processing Queue -> 14 days exhausted -> ESCALATED TO AGENT",
+   "Flight Compensation: [PASSENGER] | NO DETERMINATION | MSL_DATA_MISSING_14_DAYS | PENDING AGENT REVIEW"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flight AC 084 given in Prerequisites; scheduled times dep 23:00 YYZ / arr 16:00 TLV next day chosen (text only says scheduled arrival available)",
+  "flightDaysAgo=23 (flight May 5, filing May 28, 14-day window May 8-May 22 exhausted)",
+  "residence Israel (given)",
+  "APPR also ND (same gap)"
+ ],
+ "unsupported": [
+  "TT/DDS flight-operation data must be absent: actual arrival NULL, operating times NULL, flight number NULL, all codes NULL; 14-day polling history and manual-investigation case state are case-side; no outcome row written"
+ ]
+}

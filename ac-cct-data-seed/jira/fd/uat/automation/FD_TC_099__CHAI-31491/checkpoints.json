@@ -1,0 +1,1314 @@
+{
+  "key": "CHAI-31491",
+  "test_id": "FD_TC_099",
+  "title": "No Determination | Unknown Disruption Code | APPR | Delay 6�9h (7h) | Basic Aeroplan",
+  "goal": "Flight AC 372 YUL?YYZ operated but arrived 7 hours late (6�<9h band observed in ADS/AODB). A disruption code IS logged in the system, but the code is UNKNOWN � it is not recognized or mapped in DDS and cannot be classified as Controllable or Uncontrollable. Passenger holds a Basic Aeroplan profile (9876543210) linked to the booking. Unlike FD-APPR-ND-04 (where ALL codes are NULL/missing and polling occurs), in this scenario a code exists but its type is unclassifiable � DDS immediately returns NO DETERMINATION (FD-APPR-ND-X02) without a 14-day polling window. Chatbot displays the standardized ND-X02 response and case is created automatically for manual review with a 30-day response commitment. Validates: (1) DDS correctly handles an UNKNOWN disruption code distinct from a NULL/missing code, (2) FD-APPR-ND-X02 is returned immediately (no 14-day polling), (3) Chatbot displays the standardized ND-X02 response message, (4) Case is created and routed to manual review without asking customer for confirmation, (5) AC Wallet is NOT offered despite Basic Aeroplan linkage � No Determination cases do not trigger payment flows.",
+  "summary": {
+    "seed": 0,
+    "chat": 41,
+    "api": 23,
+    "email": 3,
+    "dashboard": 44,
+    "implied": 21,
+    "manual": 11,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Flight AC 372 YUL?YYZ operated but arrived 7 hours late (6�<9h band observed in ADS/AODB). A disruption code IS logged in the system, but the code is UNKNOWN � it is not recognized or mapped in DDS and cannot be classified as Controllable or Uncontrollable. Passenger holds a Basic Aeroplan profile (9876543210) linked to the booking. Unlike FD-APPR-ND-04 (where ALL codes are NULL/missing and polling occurs), in this scenario a code exists but its type is unclassifiable � DDS immediately returns NO DETERMINATION (FD-APPR-ND-X02) without a 14-day polling window. Chatbot displays the standardized ND-X02 response and case is created automatically for manual review with a 30-day response commitment. Validates: (1) DDS correctly handles an UNKNOWN disruption code distinct from a NULL/missing code, (2) FD-APPR-ND-X02 is returned immediately (no 14-day polling), (3) Chatbot displays the standardized ND-X02 response message, (4) Case is created and routed to manual review without asking customer for confirmation, (5) AC Wallet is NOT offered despite Basic Aeroplan linkage � No Determination cases do not trigger payment flows.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP002"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP003"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP004"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Montreal to Toronto was delayed about 7 hours and I never got any clear explanation from Air Canada. I'd like to check if I'm eligible for compensation\"",
+      "expected": "My flight from Montreal to Toronto was delayed about 7 hours and I never got any clear explanation from Air Canada. I'd like to check if I'm eligible for compensation",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP008"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP010"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP011"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP012"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP013"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"V�ronique Caron\"",
+      "expected": "V�ronique Caron",
+      "id": "CP014"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, V�ronique! And, what is your booking reference number?",
+      "id": "CP015"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: TC057\"",
+      "expected": "PNR: TC057",
+      "id": "CP016"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC057",
+      "expected": "",
+      "id": "CP017"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND (Auth Flow 1)",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer data (passenger info, journey details) is revealed to the customer",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP020"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: v***@outlook.com � Phone: +1***789",
+      "id": "CP021"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: v***@outlook.com\"",
+      "expected": "Email: v***@outlook.com",
+      "id": "CP022"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP023"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"629481\"",
+      "expected": "629481",
+      "id": "CP024"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful. Let's proceed to the next step.",
+      "id": "CP026"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the system checks Trip Tracer for group booking identifier",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And group booking identifier = NOT PRESENT",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And system proceeds to passenger selection",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks:",
+      "expected": "How many people are on your claim?",
+      "id": "CP030"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays passengers from PNR:",
+      "expected": "I found 1 passenger on this booking: � V�ronique Caron (Adult - Aeroplan Member) Is this who you'd like to include?",
+      "id": "CP031"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP032"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: PAX count on PNR = 1 ? ?9 ? NOT a group booking ? PROCEED",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot retrieves booking details and displays:",
+      "expected": "I found the following journey: � Flight: AC 372 � Route: Montreal (YUL) ? Toronto (YYZ) � Date: May 18, 2026 � Status: ARRIVED LATE � Arrival Delay: 7 hours (observed in flight status � disruption code logged but unrecognized) Is this the journey you'd like to check?",
+      "id": "CP034"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP035"
+    },
+    {
+      "section": "SEGMENT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: More than 1 segment on selected journey? ? NO (single leg) ? skip GenUC-18",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot sends request to Case Services for duplicate check",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "And Case Services returns: NO existing case found for this passenger + journey combination",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "72-HOUR CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Hours since last leg arrival",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "72-HOUR CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system calculates: Arrival was May 18, 2026; current date is June 10, 2026 ? >72 hours ? PROCEED",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "CLAIM TIME LIMIT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Filing deadline for APPR = 366 days from disruption",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "CLAIM TIME LIMIT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system calculates: Disruption May 18, 2026; filing June 10, 2026 ? 23 days ? within 366 days ? PROCEED",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the DDS evaluation is done in backend",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS Evaluates and sends to Trip Tracer UI:",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Promised Itinerary - Flight: AC 372, Route: YUL ? YYZ, Scheduled Arrival: 14:00",
+      "expected": "Promised Itinerary - Flight: AC 372, Route: YUL ? YYZ, Scheduled Arrival: 14:00",
+      "id": "CP045"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current Itinerary - Flight: AC 372, Route: YUL ? YYZ, Status: ARRIVED LATE, Actual Arrival: 21:00, Delay: +7H 00M (6�<9h band observed in ADS/AODB)",
+      "expected": "Current Itinerary - Flight: AC 372, Route: YUL ? YYZ, Status: ARRIVED LATE, Actual Arrival: 21:00, Delay: +7H 00M (6�<9h band observed in ADS/AODB)",
+      "id": "CP046"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Disruption Code: UNKNOWN (code IS logged in system but is not recognized / not mapped in DDS classification table)",
+      "expected": "Disruption Code: UNKNOWN (code IS logged in system but is not recognized / not mapped in DDS classification table)",
+      "id": "CP047"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Departure Code: N/A",
+      "expected": "Departure Code: N/A",
+      "id": "CP048"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Cancellation Code: N/A (flight operated � not cancelled)",
+      "expected": "Cancellation Code: N/A (flight operated � not cancelled)",
+      "id": "CP049"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Aeroplan: 9876543210 (Basic Member � linked)",
+      "expected": "Aeroplan: 9876543210 (Basic Member � linked)",
+      "id": "CP050"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS Gate 6: Is disruption code available?",
+      "expected": "DDS Gate 6: Is disruption code available?",
+      "id": "CP051"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Code IS present ? YES",
+      "expected": "Code IS present ? YES",
+      "id": "CP052"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS Gate 6a: Is disruption code RECOGNIZED / MAPPED?",
+      "expected": "DDS Gate 6a: Is disruption code RECOGNIZED / MAPPED?",
+      "id": "CP053"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Code type = UNKNOWN ? NOT recognized in DDS classification table",
+      "expected": "Code type = UNKNOWN ? NOT recognized in DDS classification table",
+      "id": "CP054"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Cannot determine Controllable / Uncontrollable ? NO DETERMINATION",
+      "expected": "Cannot determine Controllable / Uncontrollable ? NO DETERMINATION",
+      "id": "CP055"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS determines: FD-APPR-ND-X02 � UNKNOWN CODE ? immediate No Determination (no 14-day polling � code exists)",
+      "expected": "DDS determines: FD-APPR-ND-X02 � UNKNOWN CODE ? immediate No Determination (no 14-day polling � code exists)",
+      "id": "CP056"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "14-day polling: NOT triggered (polling only applies when code is NULL/missing � code IS present here, just unknown)",
+      "expected": "14-day polling: NOT triggered (polling only applies when code is NULL/missing � code IS present here, just unknown)",
+      "id": "CP057"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MS V�RONIQUE CARON | NO DETERMINATION | UNKNOWN_CODE | CAD 0.00",
+      "expected": "MS V�RONIQUE CARON | NO DETERMINATION | UNKNOWN_CODE | CAD 0.00",
+      "id": "CP058"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "NOTE: 7h delay (6�<9h band) IS observed � if code is later reclassified as Controllable, APPR Tier 2 ($700 CAD Cash / $840 AC Wallet) would apply. Currently blocked pending manual review.",
+      "expected": "NOTE: 7h delay (6�<9h band) IS observed � if code is later reclassified as Controllable, APPR Tier 2 ($700 CAD Cash / $840 AC Wallet) would apply. Currently blocked pending manual review.",
+      "id": "CP059"
+    },
+    {
+      "section": "FRAUD SCREENING � NOT TRIGGERED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot notes: CyberSource is ONLY called for ELIGIBLE cases",
+      "expected": "",
+      "id": "CP060"
+    },
+    {
+      "section": "FRAUD SCREENING � NOT TRIGGERED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And this case is NO DETERMINATION ? CyberSource NOT invoked",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "AC WALLET CHECK � NOT TRIGGERED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot notes: AC Wallet offer is ONLY triggered for ELIGIBLE cases",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "AC WALLET CHECK � NOT TRIGGERED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And this case is NO DETERMINATION ? AC Wallet NOT offered despite Basic Aeroplan linkage (9876543210)",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "NO DETERMINATION RESULT � UNKNOWN CODE",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays the standardized FD-APPR-ND-X02 response:",
+      "expected": "Based on the information available, we are unable to determine your eligibility at this time. Flight disruptions can involve multiple factors, and the reason for a disruption may change as additional information becomes available. Your claim will be reviewed and we will respond within 30 days. Would you like us to proceed?",
+      "id": "CP064"
+    },
+    {
+      "section": "NO DETERMINATION RESULT � UNKNOWN CODE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system proceeds immediately to CASE CREATION without collecting preferred email or country from the customer",
+      "expected": "NOTE: This is distinct from FD-APPR-ND-04 which includes manual handling flow (GenUC-27). FD-APPR-ND-X02 creates the case automatically after the ND message.",
+      "id": "CP065"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot creates the case and responds:",
+      "expected": "\"Your claim has been submitted. Case Reference: CASE-FD-20260610-054.\" \"Our team will review your case and contact you within 30 days.\"",
+      "id": "CP066"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system appends the booking record to the case automatically",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case is routed to the agent queue for manual investigation",
+      "expected": "",
+      "id": "CP068"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a case acknowledgement email is sent to v***@outlook.com",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains:",
+      "expected": "Based on the information available, we are unable to determine your eligibility at this time. Flight disruptions can involve multiple factors, and the reason for a disruption may change as additional information becomes available. Your claim will be reviewed and we will respond within 30 days.",
+      "id": "CP071"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers:",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP072"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP073"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP074"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the case has been created for claimant \"V�ronique Caron\" with PNR \"TC057\"",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Case Header Topic/Sub-topic should be \"Travel Disruptions � Delay\"",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should be able to edit Topic/Sub-topic but cannot switch automated to non-automated",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status should be \"Forwarded � Manual Review\"",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Created date and Last Updated date should be populated",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the SLA countdown should be tracking against the 30-day response commitment",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Team assignment should be \"Customer Relations (Manual Review)\"",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no banners should be displayed for identified and authenticated Auth Flow 1 user",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Name should be \"V�ronique Caron\"",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Type should be \"Adult\"",
+      "expected": "",
+      "id": "CP084"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Authentication should be \"Pass\"",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR should be \"TC057\"",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR Creation Date, Journey ID, Booking Source and Booking Office ID should be populated",
+      "expected": "",
+      "id": "CP087"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Regime should be \"APPR\"",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Full Name should be \"V�ronique Caron\"",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Tags should include \"Claimant\" and \"Adult\"",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Email should be \"v***@outlook.com\"",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Phone should be \"+1***789\"",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Address and Profile ID should be populated",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Aeroplan should be \"9876543210\" linked and in good standing (Basic Member)",
+      "expected": "",
+      "id": "CP094"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Tier Status should be \"Basic / Member\"",
+      "expected": "",
+      "id": "CP095"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey should show \"Bound 1: YUL ? YYZ\" (AC 372, 14:00 ? 21:00, +7H 00M) with claim filed for this flight",
+      "expected": "",
+      "id": "CP096"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Disruption Code should show \"UNKNOWN � not mapped in DDS\"",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Ancillary Fee section should be present with no expected ancillary fees",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility and Compensation section should show \"NO DETERMINATION � Unknown disruption code � CAD 0\"",
+      "expected": "",
+      "id": "CP099"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no CAD 700 Cash or CAD 840 AC Wallet amount should be shown or stored",
+      "expected": "",
+      "id": "CP100"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist Panel should auto-appear for FD topic",
+      "expected": "",
+      "id": "CP101"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And DDS should have run automatically with no agent action needed",
+      "expected": "",
+      "id": "CP102"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the DDS outcome should be \"FD-APPR-ND-X02\"",
+      "expected": "",
+      "id": "CP103"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist Panel should show the observed delay (7h, 6 to <9h band) for agent reference",
+      "expected": "",
+      "id": "CP104"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist Panel should allow the agent to record a manual eligibility decision",
+      "expected": "",
+      "id": "CP105"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the case should NOT show a 14-day polling status or System Processing Queue entry",
+      "expected": "",
+      "id": "CP106"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Duplicate Check should have run automatically using baseline data \"V�ronique Caron + TC057 + YUL?YYZ + FD\"",
+      "expected": "",
+      "id": "CP107"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the result should be \"No duplicate found\"",
+      "expected": "",
+      "id": "CP108"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no Duplicate Warning Banner should be displayed",
+      "expected": "",
+      "id": "CP109"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Related Cases tab should show no related cases",
+      "expected": "",
+      "id": "CP110"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the CyberSource result should be \"Not triggered\"",
+      "expected": "",
+      "id": "CP111"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Persona IDV status should be \"Not triggered\"",
+      "expected": "",
+      "id": "CP112"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the system should have appended the booking record automatically for identified and authenticated user",
+      "expected": "",
+      "id": "CP113"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And Trip Tracer poll should NOT be required",
+      "expected": "",
+      "id": "CP114"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the case should be available in the manual review queue for an agent to pull from My Activities",
+      "expected": "",
+      "id": "CP115"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And a case acknowledgement email should have been sent via Adobe to \"v***@outlook.com\"",
+      "expected": "",
+      "id": "CP116"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the acknowledgement email should not contain any compensation amount",
+      "expected": "",
+      "id": "CP117"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Agent Notes section should be accessible",
+      "expected": "",
+      "id": "CP118"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Audit Log should record DDS returning FD-APPR-ND-X02, automatic case creation and routing to manual review, with timestamps",
+      "expected": "",
+      "id": "CP119"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Audit Log should record all actions with timestamps and before/after values",
+      "expected": "",
+      "id": "CP120"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And Customer Communications should show the acknowledgement email chronologically",
+      "expected": "",
+      "id": "CP121"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the chatbot transcript should be accessible and linked to the case",
+      "expected": "",
+      "id": "CP122"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the chatbot transcript should show no confirmation prompt and no email or country collection after the ND-X02 message",
+      "expected": "",
+      "id": "CP123"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Attachments tab should be empty",
+      "expected": "",
+      "id": "CP124"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the case should remain open (NOT Resolved and NOT read-only) pending the agent's manual decision",
+      "expected": "",
+      "id": "CP125"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should not be able to access Case Search as it is for leads and management only",
+      "expected": "",
+      "id": "CP126"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the DDS outcome is \"FD-APPR-ND-X02\" (No Determination � Unknown Code)",
+      "expected": "",
+      "id": "CP127"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no payment flow should be triggered",
+      "expected": "",
+      "id": "CP128"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence should have been asked",
+      "expected": "",
+      "id": "CP129"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no Cash offer should have been displayed",
+      "expected": "",
+      "id": "CP130"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no AC Wallet offer should have been displayed despite Basic Aeroplan \"9876543210\" being linked",
+      "expected": "",
+      "id": "CP131"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no Interac email, banking or card details should have been collected",
+      "expected": "",
+      "id": "CP132"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And Persona IDV should NOT have been triggered",
+      "expected": "",
+      "id": "CP133"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record should have been created",
+      "expected": "",
+      "id": "CP134"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no CAD 700 or CAD 840 amount should have been calculated or stored",
+      "expected": "",
+      "id": "CP135"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no record should be picked up by the daily evening batch file",
+      "expected": "",
+      "id": "CP136"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And nothing should be dispatched to Unifier or EIP",
+      "expected": "",
+      "id": "CP137"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard Compensation tab should show no payout and no payment instruction",
+      "expected": "",
+      "id": "CP138"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS returns FD-APPR-ND-X02 straight away.",
+      "expected": "DDS returns FD-APPR-ND-X02 straight away.",
+      "id": "CP139"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Tracer: Promise = 14:00, Actual = 21:00, Delay = 7 hours (6 to under 9 hour band), MSL = Leg 1 (AC 372), no cancellation code, disruption code UNKNOWN (present but not mapped), Gate 9 classification = none, Fallback = not applicable, 14-day polling not triggered, APPR.",
+      "expected": "Trip Tracer: Promise = 14:00, Actual = 21:00, Delay = 7 hours (6 to under 9 hour band), MSL = Leg 1 (AC 372), no cancellation code, disruption code UNKNOWN (present but not mapped), Gate 9 classification = none, Fallback = not applicable, 14-day polling not triggered, APPR.",
+      "id": "CP140"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Compensation: CAD 0.",
+      "expected": "Compensation: CAD 0.",
+      "id": "CP141"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The chatbot shows the standard ND-X02 message, asks for no confirmation, and creates the case for manual review with a 30-day commitment.",
+      "expected": "The chatbot shows the standard ND-X02 message, asks for no confirmation, and creates the case for manual review with a 30-day commitment.",
+      "id": "CP142"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "CyberSource, Persona, Cash, AC Wallet and payment are all not triggered.",
+      "expected": "CyberSource, Persona, Cash, AC Wallet and payment are all not triggered.",
+      "id": "CP143"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "dashboard",
+      "step": "Claims Dashboard: Forwarded � Manual Review, ND-X02, the case stays open for the agent's decision.",
+      "expected": "Claims Dashboard: Forwarded � Manual Review, ND-X02, the case stays open for the agent's decision.",
+      "id": "CP144"
+    }
+  ]
+}

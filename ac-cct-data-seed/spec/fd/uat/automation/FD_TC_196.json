@@ -1,0 +1,82 @@
+{
+ "id": "FD_TC_196",
+ "family": "FD",
+ "summary": "Single pax YUL-YYZ AC 431; INVOL REACC then customer VOL Pre-Move to a later flight; promise 10:00, actual 16:00 (total +6h, net 4h after deducting +2h positive VOL), code 42",
+ "passengers": [
+  {
+   "firstName": "SOPHIE",
+   "lastName": "TREMBLAY",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "431",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 360,
+   "depDelayMin": 360,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "APPR_3_TO_6_HOURS",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 431 YUL→YYZ Scheduled Arrival 10:00 (14-day mark)",
+   "Current: AC 431 YUL→YYZ ARRIVED LATE, Actual 16:00",
+   "Change 1: REACC (MUC1A06AC) at D-3 INVOL arrival 10:00→14:00 PROMISE NOT UPDATED",
+   "Change 2: Pre-Move (RF-PMV / YMQAC0848) at D-2 VOL (+ve) arrival 14:00→16:00 POSITIVE DEDUCTION APPLIED",
+   "Promise = 10:00; Total delay = 6hrs; Post-INVOL VOL = +2hrs (POSITIVE, DEDUCTED); Net delay = 4hrs",
+   "Regime: APPR",
+   "APPR: Net delay 3-<6h, Controllable -> ELIGIBLE",
+   "MSL FLIGHT: AC 431 YUL→YYZ 42",
+   "CONTROLLABLE (Code 42)",
+   "Flight Compensation: MS SOPHIE TREMBLAY | ELIGIBLE | APPR_3_TO_6_HOURS (NET DELAY) | CAD $400"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "PNR name accents dropped (GDS ASCII)",
+  "dep time 08:00 (text gives only arrival)",
+  "arrival modelled as the 10:00 promise; arrDelayMin 360 is the total delay, expected delayMin 240 is the net delay after the positive-VOL deduction"
+ ],
+ "unsupported": [
+  "PNR change-history identifiers/classification (VOL/INVOL tool markers, D-n change timing) cannot be expressed in booking data; segment is modelled at the final promise time and delay measured from it; REACC INVOL (MUC1A06AC) then positive-VOL Pre-Move (RF-PMV/YMQAC0848): the post-INVOL later-flight deduction (net 240 = 360 - 120) is not expressible in booking data"
+ ]
+}

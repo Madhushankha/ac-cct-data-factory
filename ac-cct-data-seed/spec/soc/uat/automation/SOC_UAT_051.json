@@ -1,0 +1,94 @@
+{
+  "id": "SOC_UAT_051",
+  "family": "SOC",
+  "summary": "1 adult, AC 084 TLV-YYZ 20-Jun 16:00 operated 18h late (21-Jun 10:00); passenger was notified 20 days before departure; ASL SOC not eligible (>=14 days notice)",
+  "passengers": [
+    {
+      "firstName": "YAEL",
+      "lastName": "MIZRAHI",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "IL",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "084",
+      "origin": "TLV",
+      "destination": "YYZ",
+      "depLocal": "16:00",
+      "arrLocal": "20:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 1080,
+      "depDelayMin": 1080,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": 480,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [
+    {
+      "seg": 1,
+      "depDeltaMin": 1080,
+      "arrDeltaMin": 1080,
+      "noticeHours": 480
+    }
+  ],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-ASL-NE-03",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 1080,
+    "control": null,
+    "cause": "64",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip TLV->YYZ on AC084 delayed +18H 00M - passenger notified 20 days before departure",
+      "Regime: ASL (TLV departure - Israel)",
+      "PASSENGERS: 1 - SEGMENTS: 1",
+      "Promised: AC 084 TLV->YYZ Sched Dep 20-Jun 16:00",
+      "Current: ARRIVED LATE, Sched Dep 16:00, Actual Dep 21-Jun 10:00, Delay +18H 00M",
+      "Notification: 20 days before departure >= 14 days threshold (ASL, same as EU) -> NOT ELIGIBLE",
+      "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE",
+      "NOT_ELIGIBLE reason: Notified >=14 days before departure (ASL threshold)",
+      "DDS code SoC-ASL-NE-03"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none (notified 14+ days before departure)"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Notification time 20 days = 480 hours modelled as a schedule change of 1080 min with noticeHours 480 (and noticeHours on the outcome)",
+    "Arrival 20:00 local YYZ same day as scheduled departure (sched); arrival delay assumed 1080",
+    "Cabin W (PY), class O",
+    "Residence IL",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "unsupported": []
+}

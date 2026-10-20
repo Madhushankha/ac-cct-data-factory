@@ -1,0 +1,396 @@
+{
+  "key": "CHAI-31829",
+  "test_id": "FD_ED_TC_18",
+  "title": "Claims Dashboard | Dispute Flow | Customer Disagrees with NE Decision | Dispute Case Created",
+  "goal": "Customer receives Not Eligible result, disagrees, and initiates a dispute through the chatbot. System must create a dispute record linked to the original case and route to manual review team.",
+  "summary": {
+    "seed": 1,
+    "chat": 23,
+    "api": 0,
+    "email": 3,
+    "dashboard": 4,
+    "implied": 10,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Customer receives Not Eligible result, disagrees, and initiates a dispute through the chatbot. System must create a dispute record linked to the original case and route to manual review team.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Original case exists: CASE-FD-20260520-050 (Not Eligible, NE-01 uncontrollable � weather); Customer returns to chatbot to dispute",
+      "expected": "Original case exists: CASE-FD-20260520-050 (Not Eligible, NE-01 uncontrollable � weather); Customer returns to chatbot to dispute",
+      "id": "CP002"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP003"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP004"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"I received a decision that I'm not eligible for compensation for my delayed flight but I disagree. The weather was fine when I was at the airport. I want to dispute this decision.\"",
+      "expected": "I received a decision that I'm not eligible for compensation for my delayed flight but I disagree. The weather was fine when I was at the airport. I want to dispute this decision.",
+      "id": "CP008"
+    },
+    {
+      "section": "INTENT DETECTION � DISPUTE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies dispute intent",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "INTENT DETECTION � DISPUTE",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I understand you'd like to dispute a previous decision on your flight disruption claim. I can help you with that. Let me look up your case.",
+      "id": "CP010"
+    },
+    {
+      "section": "CASE LOOKUP",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To find your case, could you please provide your booking reference number (PNR) or case reference number?",
+      "id": "CP011"
+    },
+    {
+      "section": "CASE LOOKUP",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"My case reference is CASE-FD-20260520-050\"",
+      "expected": "My case reference is CASE-FD-20260520-050",
+      "id": "CP012"
+    },
+    {
+      "section": "CASE RETRIEVAL",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system searches Case Services for: CASE-FD-20260520-050",
+      "expected": "",
+      "id": "CP013"
+    },
+    {
+      "section": "CASE RETRIEVAL",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Case Services returns: CASE FOUND",
+      "expected": "? Case Reference: CASE-FD-20260520-050 ? Passenger: Robert Chen ? PNR: TC238 ? Journey: YYZ ? YVR, May 20, 2026 ? Delay: 5 hours ? Regime: APPR ? Decision: NOT ELIGIBLE ? Reason: NE-01 � Uncontrollable (Code 72 � Weather) ? Decision Date: May 25, 2026",
+      "id": "CP014"
+    },
+    {
+      "section": "IDENTITY VERIFICATION FOR DISPUTE",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I found your case. Before we proceed with the dispute, I need to verify your identity. I'll send a verification code to the email or phone number associated with your case.",
+      "id": "CP015"
+    },
+    {
+      "section": "IDENTITY VERIFICATION FOR DISPUTE",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: r***@gmail.com � Phone: +1***789",
+      "id": "CP016"
+    },
+    {
+      "section": "IDENTITY VERIFICATION FOR DISPUTE",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: r***@gmail.com\"",
+      "expected": "Email: r***@gmail.com",
+      "id": "CP017"
+    },
+    {
+      "section": "IDENTITY VERIFICATION FOR DISPUTE",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP018"
+    },
+    {
+      "section": "IDENTITY VERIFICATION FOR DISPUTE",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"739281\"",
+      "expected": "739281",
+      "id": "CP019"
+    },
+    {
+      "section": "IDENTITY VERIFICATION FOR DISPUTE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "IDENTITY VERIFICATION FOR DISPUTE",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful.",
+      "id": "CP021"
+    },
+    {
+      "section": "ORIGINAL DECISION DISPLAY",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Here are the details of your original claim: � Case Reference: CASE-FD-20260520-050 � Flight: AC 103, Toronto (YYZ) ? Vancouver (YVR) � Date: May 20, 2026 � Delay: 5 hours � Decision: Not Eligible � Reason: The delay was determined to be caused by weather conditions (uncontrollable circumstances), which are outside the airline's control under the Canadian Air Passenger Protection Regulations (APPR). You mentioned you'd like to dispute this decision. Could you please tell me why you disagree?",
+      "id": "CP022"
+    },
+    {
+      "section": "DISPUTE REASON COLLECTION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides: \"The weather was perfectly clear at Toronto Pearson when I was at the airport. There was no storm, no snow, nothing. I think the weather code is wrong. I also have photos from the airport showing clear skies.\"",
+      "expected": "The weather was perfectly clear at Toronto Pearson when I was at the airport. There was no storm, no snow, nothing. I think the weather code is wrong. I also have photos from the airport showing clear skies.",
+      "id": "CP023"
+    },
+    {
+      "section": "SUPPORTING EVIDENCE UPLOAD",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thank you for explaining. If you have any supporting evidence (photos, weather reports, screenshots, etc.), you can upload them now. This will help our review team assess your dispute. Accepted formats: PDF, JPG, PNG (max 10MB each).",
+      "id": "CP024"
+    },
+    {
+      "section": "SUPPORTING EVIDENCE UPLOAD",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user uploads:",
+      "expected": "� Airport_Photo_ClearSkies_1.jpg (photo showing clear skies at YYZ) � Airport_Photo_ClearSkies_2.jpg (photo showing departure board with no weather delays)",
+      "id": "CP025"
+    },
+    {
+      "section": "EVIDENCE VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system receives the uploaded files:",
+      "expected": "? File 1: Airport_Photo_ClearSkies_1.jpg � Format: JPG ?, Size: 3.2 MB ? ? File 2: Airport_Photo_ClearSkies_2.jpg � Format: JPG ?, Size: 2.8 MB ?",
+      "id": "CP026"
+    },
+    {
+      "section": "DISPUTE CASE CREATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system creates a DISPUTE RECORD linked to the original case:",
+      "expected": "? Dispute Reference: DISPUTE-CASE-FD-20260520-050-001 ? Linked Original Case: CASE-FD-20260520-050 ? Dispute Reason: Customer disputes weather code � claims clear skies at YYZ at time of departure ? Supporting Evidence: 2 photos uploaded (Airport_Photo_ClearSkies_1.jpg, Airport_Photo_ClearSkies_2.jpg) ? Dispute Status: PENDING REVIEW ? Routing: Dispute Review Team / Manual Review ? Original Decision: Not Eligible (NE-01 � Weather) ? Dispute Filed: June 15, 2026",
+      "id": "CP027"
+    },
+    {
+      "section": "DISPUTE CASE CREATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thank you, Robert. Your dispute has been submitted and linked to your original case. Here are the details: � Dispute Reference: DISPUTE-CASE-FD-20260520-050-001 � Original Case: CASE-FD-20260520-050 � Status: Pending Review � Evidence Uploaded: 2 files Our Dispute Review Team will re-examine your case, including the evidence you've provided. You will receive an update via email once the review is complete. Please allow up to 30 business days for the dispute review process.",
+      "id": "CP028"
+    },
+    {
+      "section": "DISPUTE CASE CREATION",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "And an alert information is displayed: \"Dispute submitted successfully!\"",
+      "expected": "Dispute submitted successfully!",
+      "id": "CP029"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a Dispute Received notification email is sent to r***@gmail.com",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains:",
+      "expected": "Your dispute has been received � DISPUTE-CASE-FD-20260520-050-001",
+      "id": "CP032"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers:",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP033"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP034"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP035"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "When the agent navigates to Claims Dashboard",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the agent searches for the original case",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the dashboard displays:",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "ORIGINAL CASE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "� Case Reference: CASE-FD-20260520-050",
+      "expected": "� Status: Not Eligible ? DISPUTED � Decision: Not Eligible (NE-01 � Weather) � Dispute Flag: YES",
+      "id": "CP039"
+    },
+    {
+      "section": "DISPUTE RECORD",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "� Dispute Reference: DISPUTE-CASE-FD-20260520-050-001",
+      "expected": "� Linked to: CASE-FD-20260520-050 � Status: Pending Review � Filed: June 15, 2026 � Dispute Reason: Customer disputes weather code � claims clear skies at YYZ � Evidence: 2 photos (Airport_Photo_ClearSkies_1.jpg, Airport_Photo_ClearSkies_2.jpg) � Team: Dispute Review Team � SLA: 30 business days",
+      "id": "CP040"
+    },
+    {
+      "section": "DISPUTE FLOW VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? Customer returned to chatbot to dispute: YES ?",
+      "expected": "? Case lookup by case reference: YES ? ? Identity re-verified (OTP): YES ? ? Original decision displayed: YES ? ? Dispute reason collected: YES ? ? Supporting evidence uploaded: YES (2 photos) ? ? Dispute record created and linked to original case: YES ? ? Original case status updated to \"Disputed\": YES ? ? Routed to Dispute Review Team: YES ? ? Customer notified with dispute reference: YES ? ? SLA: 30 business days ?",
+      "id": "CP041"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "dashboard",
+      "step": "Dispute intent detected; Original case retrieved and verified; Re-authentication performed; Dispute record created and linked to original case; Customer statement and documents captured; Routed to dispute review queue; 15-day SLA; Dashboard shows linked dispute with all supporting materials",
+      "expected": "Dispute intent detected; Original case retrieved and verified; Re-authentication performed; Dispute record created and linked to original case; Customer statement and documents captured; Routed to dispute review queue; 15-day SLA; Dashboard shows linked dispute with all supporting materials",
+      "id": "CP042"
+    }
+  ]
+}

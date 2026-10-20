@@ -1,0 +1,88 @@
+# FD_TC_001 on BAT, the same road as 22-fd-tc-001-end-to-end.
+#
+# Same case, same steps, same assertions -- only the booking differs, because the two environments
+# hold different PNRs for the same card:
+#
+#   INT  ZZ5R8J  Catherine Wenfenmal   (fd-266-int-1019c)
+#   BAT  ZZOTRY  Catherine Giljarkor   (fd-266-bat-1019c)   <- this file
+#
+# BAT is the environment where this road is known to work: the same claim was driven by hand on
+# 19 Oct 16:38-16:41 and reached "You're entitled to 400.00 CAD" and the Interac confirmation. The
+# INT attempt stalls at the identity submit with the bot on "Thinking", which is why this exists --
+# the test is the same, so a pass here and a stall there is evidence about the environments rather
+# than about the automation.
+#
+# Run it with:
+#   ALLOW_PAYMENT_PROCEED=1 HEADED=1 CHAT_URL=local WORKERS=1 VIDEO=on AWS_PROFILE=bat-sso \
+#     npx playwright test --project=baggage -g fd-tc-001-bat
+#
+# Note the local chat page is built against INT (its bundle calls chat-dev.ac-cct-int), so for a
+# BAT run point CHAT_URL at the BAT chat instead of using CHAT_URL=local.
+id: fd-tc-001-bat
+title: FD_TC_001 on BAT - APPR 4h delay to a submitted claim, 400 CAD Interac
+tags: [fd, pinned, payment, bat]
+booking: { pnr: ZZOTRY }
+# the only stop kinds the guard knows; naming them is what lets this road pass them, and
+# anything NOT named here is still refused (bank details, manual review, third-party answers)
+allow: [payout-country, payment-proceed]
+first_message: "my flight got disrupted and i want the compensation"
+steps:
+  - expect:
+      step: FD-01.whose-trip
+      board: whose trip the claim is for
+      any_of: ["your own trip", "on behalf of someone"]
+      buttons: ["My own trip", "Someone else's"]
+  - tap: "My own trip"
+  - expect:
+      step: FD-02.notice
+      board: the automated-decision privacy notice
+      any_of: ["fully automated system", "Privacy Notice"]
+  - expect:
+      step: FD-03.start
+      board: the invitation to start
+      any_of: ["Would you like to get started"]
+      buttons: ["Yes", "No"]
+  - tap: "Yes"
+  - identify: true
+  - verify: true
+  - expect:
+      step: FD-04.verified
+      board: the verification result
+      any_of: ["verified"]
+  - expect:
+      step: FD-05.journey
+      board: the flight card for this booking
+      any_of: ["found one journey", "Is this the journey"]
+      buttons: ["Yes, that one", "No, a different one"]
+  - tap: "Yes, that one"
+  - expect:
+      step: FD-06.appr
+      board: the APPR eligibility statement
+      any_of: ["APPR", "may be eligible"]
+  - expect:
+      step: FD-07.country
+      board: the deposit country form
+      any_of: ["in which country will it be deposited"]
+      form: ["Country"]
+  - choose: ["Canada"]
+  - expect:
+      step: FD-08.amount
+      board: the award this case expects
+      any_of: ["400.00 CAD", "entitled to \\*\\*400"]
+  - tap: "Yes, proceed"
+  - expect:
+      step: FD-09.interac
+      board: the Interac e-transfer email confirmation
+      any_of: ["Interac e-transfer", "confirm the email address"]
+      buttons: ["Yes, confirm this email", "Use a different email"]
+  - expect:
+      step: FD-10.payment-email
+      board: the payment email offered, which must be the seeded inbox
+      any_of: ["lahiru@ae-qa1-aircanada.mailinator.com"]
+  - tap: "Yes, confirm this email"
+  - expect:
+      step: FD-11.submitted
+      board: the submission confirmation carrying the case number
+      any_of: ["submitted", "case (number|reference)", "CCD-"]
+  - stop: end
+known: []

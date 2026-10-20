@@ -1,0 +1,92 @@
+{
+ "id": "FD_TC_127",
+ "family": "FD",
+ "summary": "Adult, AC870 CDG-YYZ dep 10:00 sched arr 13:00, rebooked to sister city YTZ and arrived 16:25 (+205 min), no arrival code, departure code 25 fallback: EU261 Rest of Europe EUR 300 sister city",
+ "passengers": [
+  {
+   "firstName": "NOEMIE",
+   "lastName": "GIRARD",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "FR",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "870",
+   "origin": "CDG",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "13:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "divert",
+   "arrDelayMin": 205,
+   "depDelayMin": 205,
+   "divertTo": "YTZ",
+   "depDelayCode": "25",
+   "fallback": true
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-EU-EL-19",
+  "amount": 300,
+  "currency": "EUR",
+  "delayBand": "EU261_TRAVEL_COMPLETED_REST_OF_EUROPE_3_TO_4HR_SISTER_CITY_FALLBACK_CODE",
+  "delayMin": 205,
+  "control": "CONTROLLABLE",
+  "cause": "25",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 870, Route: CDG \u2192 YYZ, Scheduled Departure: 10:00, Scheduled Arrival: 13:00 (local YYZ)",
+   "Current Itinerary - Flight: AC 870, Route: CDG \u2192 YTZ (sister city), Actual Arrival: 16:25 (local YTZ), Status: ARRIVED (DELAYED - SISTER CITY)",
+   "Sister City Match: YTZ = sister city of YYZ (Toronto: YYZ, YTZ treated as equivalent)",
+   "bound_destination_type = SISTER_PROMISED",
+   "Delay at Arrival: 3 hours 25 minutes (205 minutes)",
+   "Delay Band: 180-239 min \u2192 3-<4 hours (DELAY_3_TO_LT_4_HOURS)",
+   "Customer Status: TRAVEL COMPLETED",
+   "Regime: EU 261 (Rest of Europe - CDG origin) + APPR (Canada arrival)",
+   "Origin Region: CDG = Rest of Europe",
+   "MSL FLIGHT: AC 870 - CDG \u2192 YTZ",
+   "Arrival Delay Code: UNAVAILABLE (no arrival code assigned)",
+   "Departure Delay Code: 25 - CONTROLLABLE",
+   "Fallback: TRUE - arrival delay code unavailable \u2192 Rules Engine used first departure delay code (25) (priority: cancellation code \u2192 first arrival delay code \u2192 first departure delay code)",
+   "CONTROLLABLE (Departure code 25)",
+   "Disruption Type: DELAY",
+   "EU 261: Travel Completed, Rest of Europe, 3-<4 hr delay, Controllable (fallback departure code), Sister City = \u20ac300",
+   "APPR: Travel Completed, Controllable, 3-<6 hr delay = $400 CAD",
+   "Most Generous: EU 261 Rest of Europe selected",
+   "Flight Compensation: MS NOEMIE GIRARD | ELIGIBLE | EU261_TRAVEL_COMPLETED_REST_OF_EUROPE_3_TO_4HR_SISTER_CITY_FALLBACK_CODE | EUR 300.00 | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "residence FR (text: France, EUR)",
+  "Aeroplan not linked (cash only)",
+  "Dual regime: APPR $400 CAD (3-<6h) also assessed; EU 261 Rest of Europe selected as most generous",
+  "depDelayMin 0 (text gives only arrival delay)",
+  "delayCode null (arrival code unavailable); departure code in non-schema extras (arrDelayCode/depDelayCode/fallback) on the outcome",
+  "regime 'EU' = EU 261 Rest of Europe",
+  "customer rebooked to YTZ modelled as outcome kind 'divert' with divertTo YTZ; delay measured vs the YYZ promise"
+ ],
+ "unsupported": []
+}

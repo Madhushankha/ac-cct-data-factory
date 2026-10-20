@@ -1,0 +1,91 @@
+{
+ "id": "SOC_UAT_053",
+ "family": "SOC",
+ "summary": "1 adult on an other-airline only itinerary: LY 001 TLV-JFK 01:00 departing 07:00 (6h late); no AC segment; ASL SOC not eligible (redirect to El Al)",
+ "passengers": [
+  {
+   "firstName": "ROTEM",
+   "lastName": "BARAK",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "IL",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "LY",
+   "number": "001",
+   "origin": "TLV",
+   "destination": "JFK",
+   "depLocal": "01:00",
+   "arrLocal": "04:30",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "ASL",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "SoC-ASL-NE-05",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_2_TO_6_HOURS",
+  "delayMin": 360,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Trip Completed, Disruption Detected",
+   "Single-segment trip TLV->JFK on LY001 delayed +6H 00M - OAL operated (El Al)",
+   "Regime: ASL (TLV departure - Israel)",
+   "PASSENGERS: 1 - SEGMENTS: 1",
+   "Promised: LY 001 TLV->JFK Sched Dep 04-Jun 01:00",
+   "Current: ARRIVED LATE, Sched Dep 01:00, Actual 07:00, Delay +6H 00M",
+   "Operating Carrier: LY (El Al - OAL)",
+   "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_2_TO_6_HOURS",
+   "NOT_ELIGIBLE reason: OAL-operated segment - redirect to El Al; no case created",
+   "DDS code SoC-ASL-NE-05"
+  ],
+  "soc": {
+   "eligibility": "NOT_ELIGIBLE",
+   "entitlements": "none (OAL only, redirect to operating carrier)"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "Arrival 04:30 local JFK; arrival delay assumed 360",
+  "Delay code N/A -> null",
+  "Cabin W (PY), class O",
+  "Residence IL",
+  "Chatbot screen says 5h delay; prerequisites 360 min used per TT note",
+  "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10.",
+  "Band DELAY_2_TO_6_HOURS taken from TT although 360 min would normally be the 6h boundary"
+ ],
+ "unsupported": [
+  "Entire itinerary is other-airline (LY); El Al actuals are not in AC feeds and must be injected as flight data for TT to show +6H 00M"
+ ]
+}

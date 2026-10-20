@@ -1,0 +1,90 @@
+{
+ "id": "FD_TC_043",
+ "family": "FD",
+ "summary": "Single pax Helene Bouchard; only leg AC 444 YUL-YYZ (dep 09:00, arr 12:00) cancelled, code FUEL (ANF fuel shortage, controllable); customer stayed at origin YUL, no rebooking accepted -> No Travel Origin; APPR flat CAD 400 plus refund",
+ "passengers": [
+  {
+   "firstName": "HELENE",
+   "lastName": "BOUCHARD",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "444",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "09:00",
+   "arrLocal": "12:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "FUEL",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-13",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": null,
+  "control": "CONTROLLABLE",
+  "cause": "FUEL",
+  "ttUi": [
+   "Promised: AC 444 YUL->YYZ Scheduled Departure 09:00, Scheduled Arrival 12:00",
+   "Current: AC 444 YUL->YYZ Status: CANCELLED",
+   "Customer Status: NO TRAVEL - ORIGIN (customer never departed, declined rebooking)",
+   "History: No rebooking accepted",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 444 YUL->YYZ Cancellation Code: FUEL (ANF) \"Cancellation - Fuel shortage\"",
+   "CONTROLLABLE (FUEL - ANF)",
+   "Disruption Type: CANCELLATION",
+   "APPR No Travel Origin: controllable cancellation = flat CAD 400",
+   "Fallback: FALSE (cancellation code available)",
+   "DDS outcome code: FD-APPR-EL-13",
+   "Flight Compensation: MS HELENE BOUCHARD | ELIGIBLE | NO_TRAVEL_ORIGIN | CAD 400.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "noticeHours null (cancellation notice not stated)",
+  "delayBand null: TT compensation label is NO_TRAVEL_ORIGIN (no delay band)",
+  "flat 400 per APPR No Travel Origin rule (refund of the ticket is separate)"
+ ],
+ "unsupported": [
+  "Ticket refund through a PS agent task in ARD Web (agent workflow, not booking data)"
+ ]
+}

@@ -1,0 +1,81 @@
+{
+ "id": "FD_TC_222",
+ "family": "FD",
+ "summary": "Booking that a parent claims for after passing OTP, running the standard automated flow: adult CLAIRE DESJARDINS (Basic Aeroplan linked) on AC 472 YUL-YYZ arriving 7h late, code 42 controllable, APPR 6-<9h CAD 700",
+ "passengers": [
+  {
+   "firstName": "CLAIRE",
+   "lastName": "DESJARDINS",
+   "type": "ADT",
+   "aeroplanNumber": "9123456780",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "472",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:05",
+   "arrLocal": "09:25",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 20,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 420,
+   "depDelayMin": 420,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-02",
+  "amount": 700,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 472 YUL->YYZ Scheduled Arrival 09:25",
+   "Current: AC 472 YUL->YYZ ARRIVED LATE, 09:25 -> 16:25, Delay +7H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 472 YUL->YYZ 42 Delayed due to scheduled maintenance - CONTROLLABLE",
+   "Cancellation code: NONE; Fallback: FALSE",
+   "Delay: +7H 00M - CONTROLLABLE",
+   "Aeroplan: 9123456780 (Basic - linked)",
+   "Flight Compensation: MS CLAIRE DESJARDINS | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "text gives no passenger, flight or delay; a 7h (420 min) controllable delay (APPR Tier 2, CAD 700) chosen so the automated flow ends in an eligible payout",
+  "AC 472 YUL-YYZ dep 08:05 arr 09:25 assumed; delay code 42; cabin Y class T",
+  "Aeroplan 9123456780 Basic linked, residence CA assumed so the 'Cash vs AC Wallet' check offers both (CAD 700 cash / CAD 840 wallet at +20%); the Aeroplan number must be a valid active TripTracer/Aeroplan fixture on the target environment",
+  "the claimant is the passenger's parent/friend: not expressible in booking data, the passenger's contact info on file for OTP is a fixture concern"
+ ],
+ "unsupported": [
+  "passenger contact info on file for OTP delivery and the third-party caller type are not booking data; claim-side behaviour (chatbot, third-party classification, manual handoff, case creation) is Claims Dashboard / chatbot behaviour, not booking data"
+ ]
+}

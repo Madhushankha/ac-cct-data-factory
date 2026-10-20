@@ -1,0 +1,113 @@
+{
+  "id": "SOC_UAT_040",
+  "family": "SOC",
+  "summary": "1 adult, CDG-ORD on AC 871 on time then ORD-SFO on UA 8765 (Star Alliance partner) delayed 4h; SOC segment is the STAR segment",
+  "passengers": [
+    {
+      "firstName": "LUCAS",
+      "lastName": "MARTIN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "FR",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "871",
+      "origin": "CDG",
+      "destination": "ORD",
+      "depLocal": "08:00",
+      "arrLocal": "09:30",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "UA",
+      "number": "8765",
+      "origin": "ORD",
+      "destination": "SFO",
+      "depLocal": "14:00",
+      "arrLocal": "16:15",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "SoC-EU-ND-02",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_2_TO_6_HOURS",
+    "delayMin": 240,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Trip Completed, Disruption Detected",
+      "Multi-segment trip CDG->ORD->SFO - Segment 1 AC871 on time, Segment 2 UA8765 (STAR) delayed +4H 00M",
+      "Regime: EU (CDG departure)",
+      "PASSENGERS: 1 - SEGMENTS: 2",
+      "Promised: Seg 1 AC 871 CDG->ORD Dep 08:00 | Seg 2 UA 8765 ORD->SFO Dep 14:00",
+      "Current: Seg 1 ON TIME | Seg 2 UA 8765 ARRIVED LATE, Sched Dep 14:00, Actual 18:00, Delay +4H 00M",
+      "SOC section present - SOC Segment UA 8765 ORD->SFO (STAR); Operating Carrier UA (Star Alliance)",
+      "Departure Delay Code: Unknown (STAR - AC has limited data)",
+      "PASSENGER STATUS: NO_DETERMINATION | BAND: DELAY_2_TO_6_HOURS",
+      "Receipt collection: INITIATED",
+      "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NO DETERMINATION, case created for manual review; DDS code SoC-EU-ND-02"
+    ],
+    "soc": {
+      "eligibility": null,
+      "entitlements": "none - no determination (STAR partner), manual review case, receipt collection initiated"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Arrival times chosen (CDG-ORD 09:30, ORD-SFO 16:15)",
+    "Cabin W (PY), class O",
+    "Residence FR",
+    "Arrival delay assumed equal to stated 240 min departure delay",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period)."
+  ],
+  "unsupported": [
+    "UA 8765 actuals (dep 18:00) come from partner data that AC does not hold; must be injected as flight data for TT to show +4H 00M. Delay code intentionally unknown."
+  ]
+}

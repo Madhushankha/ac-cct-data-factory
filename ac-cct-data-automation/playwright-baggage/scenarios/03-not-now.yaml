@@ -1,0 +1,14 @@
+id: not-now
+title: Lost contents -> "No, not now" at readiness
+booking: { pool: any, pick: next-unused, need: [lost], avoid: [partner, waiting, two-bags, two-journeys, cap-spent, duplicate, closed] }
+first_message: "My bag never arrived and I'd like to claim for the contents."
+steps:
+  - notice: "yes"
+  - identify: true
+  - verify: true
+  - journey: one
+  - delivery: "no"
+  - expect: { step: BAG-03e.S2, any_of: ["list the items"], buttons: ["Yes, let's start", "No, not now"] }
+  - readiness: "no"
+  - expect: { step: BAG-03e.S2.no, board: come back later / anything else, any_of: ["come back", "whenever you're ready", "later", "anything else"], no_buttons: ["I confirm"] }
+  - stop: end

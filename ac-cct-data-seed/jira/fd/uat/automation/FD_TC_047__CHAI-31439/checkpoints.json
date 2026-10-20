@@ -1,0 +1,828 @@
+{
+  "key": "CHAI-31439",
+  "test_id": "FD_TC_047",
+  "title": "Travel Completed | APPR / Star Alliance | OAL Cancellation | Code TECH(Aircraft Technical Issue) -DMT (Upline Safety) | Rebooked (6�9h delay) | Single Leg OAL (Star) | Elite 35K",
+  "goal": "Validates an all-OAL itinerary operated by a Star Alliance partner (United Airlines) where the original flight is involuntarily cancelled due to Code TECH(Aircraft Technical Issue) - DMT (Upline Safety) and rebooked onto a later flight, resulting in a 7-hour arrival delay at the final destination DEN (6�<9h delay band). Passenger holds Aeroplan Elite 35K status on an Air Canada issued ticket (014- ticket stock). Validates that: (1) DDS scans all legs and confirms zero AC-operated segments exist on the itinerary, (2) Under APPR, the operating carrier (United Airlines) is responsible for disruption handling rather than the ticketing carrier (Air Canada), (3) Chatbot recognizes the Star Alliance partner and provides a direct redirect/guidance to United Airlines for claim processing, (4) Aeroplan Elite 35K profile status is recognized but does not override operating carrier liability rules, (5) Code TECH and all-OAL operation result in $0 Air Canada direct liability with no automated payout triggered.",
+  "summary": {
+    "seed": 13,
+    "chat": 47,
+    "api": 8,
+    "email": 0,
+    "dashboard": 6,
+    "implied": 14,
+    "manual": 1,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Validates an all-OAL itinerary operated by a Star Alliance partner (United Airlines) where the original flight is involuntarily cancelled due to Code TECH(Aircraft Technical Issue) - DMT (Upline Safety) and rebooked onto a later flight, resulting in a 7-hour arrival delay at the final destination DEN (6�<9h delay band). Passenger holds Aeroplan Elite 35K status on an Air Canada issued ticket (014- ticket stock). Validates that: (1) DDS scans all legs and confirms zero AC-operated segments exist on the itinerary, (2) Under APPR, the operating carrier (United Airlines) is responsible for disruption handling rather than the ticketing carrier (Air Canada), (3) Chatbot recognizes the Star Alliance partner and provides a direct redirect/guidance to United Airlines for claim processing, (4) Aeroplan Elite 35K profile status is recognized but does not override operating carrier liability rules, (5) Code TECH and all-OAL operation result in $0 Air Canada direct liability with no automated payout triggered.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: TC037 � single passenger Richard Clarke (Adult - Aeroplan Elite 35K)",
+      "expected": "PNR: TC037 � single passenger Richard Clarke (Adult - Aeroplan Elite 35K)",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Ticket stock: 014- (Air Canada issued ticket)",
+      "expected": "Ticket stock: 014- (Air Canada issued ticket)",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Journey: 1 leg, Original Flight UA 4521 (AC Codeshare AC 4521), Chicago (ORD) ? Denver (DEN)",
+      "expected": "Journey: 1 leg, Original Flight UA 4521 (AC Codeshare AC 4521), Chicago (ORD) ? Denver (DEN)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Operating carrier: United Airlines (UA � Star Alliance partner) � NOT Air Canada",
+      "expected": "Operating carrier: United Airlines (UA � Star Alliance partner) � NOT Air Canada",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Disruption: Original flight cancelled at D-1 due to Code TECH(Aircraft Technical Issue)[DMT (Upline Safety)]",
+      "expected": "Disruption: Original flight cancelled at D-1 due to Code TECH(Aircraft Technical Issue)[DMT (Upline Safety)]",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Rebooking: INVOL rebooked by UA onto flight UA 4525, scheduled arrival 14:00 ? actual arrival 21:00 (7hr arrival delay at destination DEN, 6�<9h band)",
+      "expected": "Rebooking: INVOL rebooked by UA onto flight UA 4525, scheduled arrival 14:00 ? actual arrival 21:00 (7hr arrival delay at destination DEN, 6�<9h band)",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Cancellation code: TECH(Aircraft Technical Issue)[DMT (Upline Safety � Star Alliance)]",
+      "expected": "Cancellation code: TECH(Aircraft Technical Issue)[DMT (Upline Safety � Star Alliance)]",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "ALL legs on itinerary: OAL operated (zero AC operated segments)",
+      "expected": "ALL legs on itinerary: OAL operated (zero AC operated segments)",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Regime: APPR (Operating carrier rule applies)",
+      "expected": "Regime: APPR (Operating carrier rule applies)",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Aeroplan: Linked (9876543210), Status = Elite 35K, in good standing",
+      "expected": "Aeroplan: Linked (9876543210), Status = Elite 35K, in good standing",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "72hrs: Elapsed (filed D+10)",
+      "expected": "72hrs: Elapsed (filed D+10)",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Time limit: Within 366 days",
+      "expected": "Time limit: Within 366 days",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No duplicate case",
+      "expected": "No duplicate case",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "implied",
+      "step": "CyberSource: NOT invoked (not eligible case)",
+      "expected": "CyberSource: NOT invoked (not eligible case)",
+      "id": "CP015"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "implied",
+      "step": "RDS: No flags",
+      "expected": "RDS: No flags",
+      "id": "CP016"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP017"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP018"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP020"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP021"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My United Airlines flight booked through Air Canada was cancelled and rebooked, and I arrived 7 hours late. I am an Elite 35K member and want to check compensation.\"",
+      "expected": "My United Airlines flight booked through Air Canada was cancelled and rebooked, and I arrived 7 hours late. I am an Elite 35K member and want to check compensation.",
+      "id": "CP022"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP025"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP026"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP027"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP028"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"Richard Clarke\"",
+      "expected": "Richard Clarke",
+      "id": "CP029"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, Richard! And, what is your booking reference number?",
+      "id": "CP030"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: TC037\"",
+      "expected": "PNR: TC037",
+      "id": "CP031"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC037",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND (Auth Flow 1)",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer data (passenger info, journey details) is revealed to the customer",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP035"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: r***@gmail.com � Phone: +1***678",
+      "id": "CP036"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: r***@gmail.com\"",
+      "expected": "Email: r***@gmail.com",
+      "id": "CP037"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP038"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"518293\"",
+      "expected": "518293",
+      "id": "CP039"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful. Let's proceed to the next step.",
+      "id": "CP041"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the system checks Trip Tracer for group booking identifier",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And group booking identifier = NOT PRESENT",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And system proceeds to passenger selection",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks:",
+      "expected": "How many people are on your claim?",
+      "id": "CP045"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays passengers from PNR:",
+      "expected": "I found 1 passenger on this booking: � Richard Clarke (Adult - Aeroplan Elite 35K) Is this who you'd like to include?",
+      "id": "CP046"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP047"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: PAX count on PNR = 1 ? ?9 ? NOT a group booking ? PROCEED",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot retrieves booking details and displays:",
+      "expected": "I found the following journey: � Original Flight: UA 4521 / AC 4521 (Cancelled) � Rebooked Flight: UA 4525 (Operated by United Airlines) � Route: Chicago (ORD) ? Denver (DEN) � Date: May 26, 2026 � Arrival Delay: 7 hours Is this the journey you'd like to check?",
+      "id": "CP049"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP050"
+    },
+    {
+      "section": "SEGMENT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: More than 1 segment on selected journey? ? NO (single leg) ? skip GenUC-18",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "MSL CHECK � ALL OAL",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the system checks MSL for operating carrier on all segments",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "MSL CHECK � ALL OAL",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And MSL returns: ALL segments operated by United Airlines (UA � Star Alliance) ? NO AC-OPERATED LEGS",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "MSL CHECK � ALL OAL",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system determines: ALL OAL ITINERARY ? REDIRECT TO OPERATING AIRLINE (UNITED AIRLINES)",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "OAL REDIRECT RESULT",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays:",
+      "expected": "I�ve reviewed your flight details and noticed that this trip was operated by our United Airlines partner. To complete your claim, I can forward your details to an agent for review. Would you like to proceed?",
+      "id": "CP055"
+    },
+    {
+      "section": "OAL REDIRECT RESULT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP056"
+    },
+    {
+      "section": "OAL REDIRECT RESULT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then chatbot checks whether the user is identified/authenticated ? Yes",
+      "expected": "",
+      "id": "CP057"
+    },
+    {
+      "section": "OAL REDIRECT RESULT",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks: \"Before I send your claim to manual review, please confirm the email address where you�d like to receive further information related to your claim.   Would you like to use r***@gmail.com?\"",
+      "expected": "Before I send your claim to manual review, please confirm the email address where you�d like to receive further information related to your claim.   Would you like to use r***@gmail.com?",
+      "id": "CP058"
+    },
+    {
+      "section": "OAL REDIRECT RESULT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes, confirm this email\"",
+      "expected": "Yes, confirm this email",
+      "id": "CP059"
+    },
+    {
+      "section": "OAL REDIRECT RESULT",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks: \"To route you to the right support team, can you please share your country of residence?\"",
+      "expected": "To route you to the right support team, can you please share your country of residence?",
+      "id": "CP060"
+    },
+    {
+      "section": "OAL REDIRECT RESULT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds:\"Canada\"",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "OAL REDIRECT RESULT",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Perfect, share any additional relevant information to help me process your claim.\"",
+      "expected": "Perfect, share any additional relevant information to help me process your claim.",
+      "id": "CP062"
+    },
+    {
+      "section": "OAL REDIRECT RESULT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user uploads the Ticket",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "OAL REDIRECT RESULT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user clicks on \"Submit\" button",
+      "expected": "Submit",
+      "id": "CP064"
+    },
+    {
+      "section": "OAL REDIRECT RESULT",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Your claim has been submitted you should hear from a team member within [\"30 days\"]\"",
+      "expected": "Your claim has been submitted you should hear from a team member within [ ]",
+      "id": "CP065"
+    },
+    {
+      "section": "OAL REDIRECT RESULT",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed: \"Please note that an ID verification process will be required if you are deemed eligible for payment.\"",
+      "expected": "Please note that an ID verification process will be required if you are deemed eligible for payment.",
+      "id": "CP066"
+    },
+    {
+      "section": "OAL REDIRECT RESULT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the case is sent for manual handoff",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given MSL determined all segments are operated by United Airlines (Star Alliance) for PNR \"TC037\"",
+      "expected": "",
+      "id": "CP068"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the chatbot should have redirected the customer to contact United Airlines directly",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no DDS evaluation should have occurred",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no automated AC payment case should have been created",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the customer profile should record Aeroplan Elite 35K status and ticket stock 014-",
+      "expected": "",
+      "id": "CP072"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And when searching Claims Dashboard by PNR \"TC037\", the system should reflect OAL redirect status or no open AC liability case",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the eligibility result is \"NOT ELIGIBLE / OAL OPERATED\" for Air Canada payout",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no payment flow should be triggered",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence should have been asked",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record should have been created",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no batch file should have been dispatched",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And AC Wallet should NOT be offered as Air Canada was not the operating carrier",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard should show eligibility as \"NOT ELIGIBLE (OAL Operated)\" with no compensation record and no payout section",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS returns FD-APPR-NE-05.",
+      "expected": "DDS returns FD-APPR-NE-05.",
+      "id": "CP081"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Tracer: MSL = Leg 1; Operating carrier = United Airlines (UA � Star Alliance); Cancellation Code = TECH(Aircraft Technical Issue)[DMT (Upline Safety)]; All legs scanned ? ZERO AC-operated segments on entire itinerary; Scheduled Arrival = 14:00; Actual Arrival on UA 4525 = 21:00; Delay = 7hrs (6�<9h band); Ticket stock = 014- (AC issued); Aeroplan Status = Elite 35K.",
+      "expected": "Trip Tracer: MSL = Leg 1; Operating carrier = United Airlines (UA � Star Alliance); Cancellation Code = TECH(Aircraft Technical Issue)[DMT (Upline Safety)]; All legs scanned ? ZERO AC-operated segments on entire itinerary; Scheduled Arrival = 14:00; Actual Arrival on UA 4525 = 21:00; Delay = 7hrs (6�<9h band); Ticket stock = 014- (AC issued); Aeroplan Status = Elite 35K.",
+      "id": "CP082"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Operating Carrier Check: AC operated legs = 0 ? AC has no compensation liability ? NOT ELIGIBLE for AC payout.",
+      "expected": "Operating Carrier Check: AC operated legs = 0 ? AC has no compensation liability ? NOT ELIGIBLE for AC payout.",
+      "id": "CP083"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "CRITICAL: AC ticket stock (014-) and Elite 35K status do NOT make AC responsible for OAL disruptions.",
+      "expected": "CRITICAL: AC ticket stock (014-) and Elite 35K status do NOT make AC responsible for OAL disruptions.",
+      "id": "CP084"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Operating carrier (United Airlines) bears APPR obligation.",
+      "expected": "Operating carrier (United Airlines) bears APPR obligation.",
+      "id": "CP085"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Customer Redirect: System provides helpful guidance directing customer to United Airlines.",
+      "expected": "Customer Redirect: System provides helpful guidance directing customer to United Airlines.",
+      "id": "CP086"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Compensation: $0 (from AC).",
+      "expected": "Compensation: $0 (from AC).",
+      "id": "CP087"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Fraud Screening: NOT INVOKED.",
+      "expected": "Fraud Screening: NOT INVOKED.",
+      "id": "CP088"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "IDV: NOT REQUIRED.",
+      "expected": "IDV: NOT REQUIRED.",
+      "id": "CP089"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Payment: N/A.",
+      "expected": "Payment: N/A.",
+      "id": "CP090"
+    }
+  ]
+}

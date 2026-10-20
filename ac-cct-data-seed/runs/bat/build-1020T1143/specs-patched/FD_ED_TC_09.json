@@ -1,0 +1,75 @@
+{
+ "id": "FD_ED_TC_09",
+ "family": "FD",
+ "summary": "Single pax Maria Garcia on a travel-agency booking (contact email bookings@expedia.com) AC YYZ-CDG arriving 5h late, code 42, EU 261 applicable; auth unresolved so no DDS",
+ "passengers": [
+  {
+   "firstName": "MARIA",
+   "lastName": "GARCIA",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "870",
+   "origin": "YYZ",
+   "destination": "CDG",
+   "depLocal": "19:30",
+   "arrLocal": "08:45",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 300,
+   "depDelayMin": null,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": 300,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Regime: EU 261 (pending - not yet assessed)",
+   "Journey: YYZ-CDG, delayed 5h"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flight AC 870 dep 19:30 YYZ, arrival 08:45 CDG (the arrival is on the next calendar day; text gives only route and 5h delay)",
+  "residence null"
+ ],
+ "unsupported": [
+  "travel-agency contact email on PNR (bookings@expedia.com) and customer personal email cannot be expressed in this booking spec",
+  "NOA upload / manual handling is claim-side behaviour",
+  "scenario states no DDS result (deferred until authentication resolved)"
+ ]
+}

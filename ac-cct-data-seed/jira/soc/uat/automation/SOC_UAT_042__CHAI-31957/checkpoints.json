@@ -1,0 +1,1782 @@
+{
+  "key": "CHAI-31957",
+  "test_id": "SOC_UAT_042",
+  "title": "EU � Eligible � No Travel Return � Delay ?2h",
+  "goal": "Verify ELIGIBLE when customer returned to origin,  delay ?2h, EU.",
+  "summary": {
+    "seed": 25,
+    "chat": 70,
+    "api": 21,
+    "email": 4,
+    "dashboard": 47,
+    "implied": 25,
+    "manual": 3,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Verify ELIGIBLE when customer returned to origin,  delay ?2h, EU.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Regime: EU",
+      "expected": "Regime: EU",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Carrier: AC (AC 850 CDG?YUL)",
+      "expected": "Carrier: AC (AC 850 CDG?YUL)",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Promised Itinerary: AC 850 CDG?YUL, Dep: 19-Jun 09:00, Arr: 19-Jun 13:00",
+      "expected": "Promised Itinerary: AC 850 CDG?YUL, Dep: 19-Jun 09:00, Arr: 19-Jun 13:00",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Actual Itinerary: Flight diverted back to CDG. Rebooked 8 hours later",
+      "expected": "Actual Itinerary: Flight diverted back to CDG. Rebooked 8 hours later",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Delay Length: 480 min (8 hours)",
+      "expected": "Delay Length: 480 min (8 hours)",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Controllability: NOT CHECKED",
+      "expected": "Controllability: NOT CHECKED",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "EU does not evaluate controllability for SOC",
+      "expected": "EU does not evaluate controllability for SOC",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Departure delay code: 72 (ATC",
+      "expected": "Departure delay code: 72 (ATC",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "IRRELEVANT under EU SOC)",
+      "expected": "IRRELEVANT under EU SOC)",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Passenger Type: Regular",
+      "expected": "Passenger Type: Regular",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Check Order: 1. Pax Type ? Regular ? ? 2. No-travel delay check ? ?2h ? ELIGIBLE",
+      "expected": "Check Order: 1. Pax Type ? Regular ? ? 2. No-travel delay check ? ?2h ? ELIGIBLE",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PAX Count: 2 adults, 2 children",
+      "expected": "PAX Count: 2 adults, 2 children",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Class of Booking: PY",
+      "expected": "Class of Booking: PY",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Revenue Booking: YES",
+      "expected": "Revenue Booking: YES",
+      "id": "CP015"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "ACR Issued: Hotel: No, Transport: No, Meal: No",
+      "expected": "ACR Issued: Hotel: No, Transport: No, Meal: No",
+      "id": "CP016"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Journey Completed: > 72h ENTITLEMENTS (, 2 adults + 2 children, PY, no ACR):",
+      "expected": "Journey Completed: > 72h ENTITLEMENTS (, 2 adults + 2 children, PY, no ACR):",
+      "id": "CP017"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Meals: $30/pax",
+      "expected": "Meals: $30/pax",
+      "id": "CP018"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "4 = $120",
+      "expected": "4 = $120",
+      "id": "CP019"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Hotel: Rate of day, 2 rooms (per adult), 3 nights max, $500 cap (if overnight)",
+      "expected": "Hotel: Rate of day, 2 rooms (per adult), 3 nights max, $500 cap (if overnight)",
+      "id": "CP020"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Transport: $200 (1-5 pax)",
+      "expected": "Transport: $200 (1-5 pax)",
+      "id": "CP021"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Communication: $30/pax",
+      "expected": "Communication: $30/pax",
+      "id": "CP022"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "4 = $120",
+      "expected": "4 = $120",
+      "id": "CP023"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Parking: $50, 1 day max",
+      "expected": "Parking: $50, 1 day max",
+      "id": "CP024"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Essentials: $30/pax",
+      "expected": "Essentials: $30/pax",
+      "id": "CP025"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "4 = $120",
+      "expected": "4 = $120",
+      "id": "CP026"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP028"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP030"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP031"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Paris to Toronto was cancelled and I never made it to my destination. I was stuck at the airport for about 18 hours. I had to buy meals, pay for a hotel, and take a taxi. Can I get reimbursed for what I spent?\"",
+      "expected": "My flight from Paris to Toronto was cancelled and I never made it to my destination. I was stuck at the airport for about 18 hours. I had to buy meals, pay for a hotel, and take a taxi. Can I get reimbursed for what I spent?",
+      "id": "CP032"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies Standards of Care (SoC) intent",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "SOC ENTRY",
+      "requirement": "SoC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays the case opening legal disclaimer (GenUC-24):",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP035"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP036"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP037"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"[First Name] [Last Name]\"",
+      "expected": "[First Name] [Last Name]",
+      "id": "CP038"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, [First Name]! And, what is your booking reference number?",
+      "id": "CP039"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: [PNR Code]\"",
+      "expected": "PNR: [PNR Code]",
+      "id": "CP040"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: [PNR Code]",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP043"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: t***@gmail.com � Phone: +1***789",
+      "id": "CP044"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: t***@gmail.com\"",
+      "expected": "Email: t***@gmail.com",
+      "id": "CP045"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP046"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"546879\"",
+      "expected": "546879",
+      "id": "CP047"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful. Let's proceed to the next step.",
+      "id": "CP049"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if this PNR a group booking ? No",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if there are multiple PAX on PNR? ? No",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot retrieves booking details and displays:",
+      "expected": "I found the following journey: � Flight: AC 871 � Route: Paris (CDG) ? Toronto (YYZ) � Date: June 11, 2026 � Status: CANCELLED Is this the journey you'd like to check?",
+      "id": "CP052"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP053"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if there are more than 1 segment ? No",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot sends request to Case Services for duplicate check",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "And Case Services returns: NO existing case found for this passenger + journey combination",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "72-HOUR CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if it passed the expected Departure time of the last itinerary ? Yes",
+      "expected": "",
+      "id": "CP057"
+    },
+    {
+      "section": "72-HOUR CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks has it been more than 72 hours for all segments in the selected journey ? Yes",
+      "expected": "",
+      "id": "CP058"
+    },
+    {
+      "section": "CLAIM TIME LIMIT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Filing deadline for EU SOC per departing country",
+      "expected": "",
+      "id": "CP059"
+    },
+    {
+      "section": "CLAIM TIME LIMIT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system calculates:",
+      "expected": "� Departing country: France ? Limitation = 1,825 days (5 years) � Days elapsed: Within limitation period ? PROCEED",
+      "id": "CP060"
+    },
+    {
+      "section": "CLAIM TIME LIMIT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if there is triage data available? ? Yes",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the DDS evaluation is done in backend",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS Evaluates and sends to Trip Tracer UI:",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PNR: [PNR Code]",
+      "expected": "PNR: [PNR Code]",
+      "id": "CP064"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "TYPE: REVENUE",
+      "expected": "TYPE: REVENUE",
+      "id": "CP065"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Not Completed, Disruption Detected",
+      "expected": "Trip Not Completed, Disruption Detected",
+      "id": "CP066"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Single-segment trip CDG?YYZ on AC871 was cancelled � passenger stayed at origin (CDG) for 18 hours",
+      "expected": "Single-segment trip CDG?YYZ on AC871 was cancelled � passenger stayed at origin (CDG) for 18 hours",
+      "id": "CP067"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: EU (CDG departure)",
+      "expected": "Regime: EU (CDG departure)",
+      "id": "CP068"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PASSENGERS: 1 � SEGMENTS: 1",
+      "expected": "PASSENGERS: 1 � SEGMENTS: 1",
+      "id": "CP069"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Promised Itinerary � Flight: AC 871, Route: CDG ? YYZ, Scheduled Dep: 19-Jun 09:00",
+      "expected": "Promised Itinerary � Flight: AC 871, Route: CDG ? YYZ, Scheduled Dep: 19-Jun 09:00",
+      "id": "CP070"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current Itinerary � Flight: AC 871, Route: CDG ? YYZ, Status: CANCELLED",
+      "expected": "Current Itinerary � Flight: AC 871, Route: CDG ? YYZ, Status: CANCELLED",
+      "id": "CP071"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "SOC section present",
+      "expected": "SOC section present",
+      "id": "CP072"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Departure Delay Code: 77 (Weather) � NOT CHECKED (EU does not evaluate controllability)",
+      "expected": "Departure Delay Code: 77 (Weather) � NOT CHECKED (EU does not evaluate controllability)",
+      "id": "CP073"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Cancellation: YES ? | SOC Segment Delay to rebooking: 1080 min (18h) ? ?2h ?",
+      "expected": "Cancellation: YES ? | SOC Segment Delay to rebooking: 1080 min (18h) ? ?2h ?",
+      "id": "CP074"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PASSENGER: [Name] | STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL: �60.00 | ACCOMMODATION: Rate of day (max �500) | GENERAL EXPENSES: Transport �200 + Comm �30 + Parking �50 + Essentials �30 | EXPIRES: [date]",
+      "expected": "PASSENGER: [Name] | STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL: �60.00 | ACCOMMODATION: Rate of day (max �500) | GENERAL EXPENSES: Transport �200 + Comm �30 + Parking �50 + Essentials �30 | EXPIRES: [date]",
+      "id": "CP075"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "CyberSource: GREEN",
+      "expected": "CyberSource: GREEN",
+      "id": "CP076"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Intent: TRAVEL DISRUPTIONS | Sub-Intent: EXPENSES | Status: ELIGIBLE",
+      "expected": "Intent: TRAVEL DISRUPTIONS | Sub-Intent: EXPENSES | Status: ELIGIBLE",
+      "id": "CP077"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Total Approved: �320.00 EUR (Hotel �175 + Meals �52 + Transport �65 + Essentials �28)",
+      "expected": "Total Approved: �320.00 EUR (Hotel �175 + Meals �52 + Transport �65 + Essentials �28)",
+      "id": "CP078"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS RESPONSE CODE = SoC-EU-EL-02",
+      "expected": "DDS RESPONSE CODE = SoC-EU-EL-02",
+      "id": "CP079"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot checks which airline company is it ? AC",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "FRAUD SCREENING � CYBERSOURCE",
+      "requirement": "GLOB-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system sends case data to CyberSource for fraud screening (behind the scenes)",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "FRAUD SCREENING � CYBERSOURCE",
+      "requirement": "GLOB-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "And CyberSource returns: GREEN (no fraud indicators detected)",
+      "expected": "? PROCEED to eligible flow",
+      "id": "CP082"
+    },
+    {
+      "section": "ELIGIBLE RESULT",
+      "requirement": "SoC-03b",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays: \"Great news! Based on the details of your flight, you are eligible for expense reimbursement. Your flight AC 871 from Paris to Toronto was cancelled and you were unable to travel for approximately 18 hours. Under the applicable EU regulations (EC 261/2004), you may be reimbursed for reasonable expenses incurred during this disruption.\"",
+      "expected": "Great news! Based on the details of your flight, you are eligible for expense reimbursement. Your flight AC 871 from Paris to Toronto was cancelled and you were unable to travel for approximately 18 hours. Under the applicable EU regulations (EC 261/2004), you may be reimbursed for reasonable expenses incurred during this disruption.",
+      "id": "CP083"
+    },
+    {
+      "section": "ENTITLEMENT DISPLAY",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays the eligible expense categories based on  delay, 1 adult, PY class, EU regime:",
+      "expected": "Based on the length of your disruption (18 hours), you may be eligible for reimbursement in the following categories: � Meals: up to �60.00 � Hotel accommodation: Rate of day (up to 3 nights, �500 maximum) � Ground transportation: up to �200.00 � Communication: up to �30.00 � Parking: up to �50.00 (1 day maximum) � Essential items: up to �30.00 Please note that all expenses must have been incurred during the disruption period and supported by valid receipts.",
+      "id": "CP084"
+    },
+    {
+      "section": "RECEIPT UPLOAD � WELCOME BACK FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To process your claim, I'll need you to upload your receipts. Please upload photos or scans of your receipts for any expenses you incurred during the disruption.",
+      "id": "CP085"
+    },
+    {
+      "section": "RECEIPT UPLOAD � WELCOME BACK FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays the receipt upload interface",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "RECEIPT UPLOAD � WELCOME BACK FLOW",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user uploads receipt images:",
+      "expected": "� Receipt 1: Hotel receipt � �175.00 EUR (1 night near CDG) � Receipt 2: Meal receipt � �52.00 EUR (dinner + breakfast + lunch) � Receipt 3: Taxi receipt � �65.00 EUR (airport to hotel + hotel to airport) � Receipt 4: Essential items � �28.00 EUR (toiletries)",
+      "id": "CP087"
+    },
+    {
+      "section": "RECEIPT READER � OCR VALIDATION",
+      "requirement": "RR-01",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system processes uploaded receipts through OCR (Agentic Receipt Reader)",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "RECEIPT READER � OCR VALIDATION",
+      "requirement": "RR-01",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the OCR engine extracts line items from each receipt:",
+      "expected": "Receipt 1 � Hotel: � Line item: Hotel stay, 1 night � �175.00 EUR � Date: June 11, 2026 � Category: Hotel � Within disruption window: YES ? � Rate of day comparison: �175 vs rate of day (CDG area) ? WITHIN range ? � Nights: 1 (within 3-night max) ? � Amount: �175 < �500 cap ? � OCR Result: PASS ? Receipt 2 � Meals: � Line item 1: Dinner � �25.00 EUR � Line item 2: Breakfast � �15.00 EUR � Line item 3: Lunch � �12.00 EUR � Total meals: �52.00 EUR � Date: June 11-12, 2026 � Category: Meals � Within disruption window: YES ? � Threshold check: �52 ? �60 ( meal entitlement) ? � OCR Result: PASS ? Receipt 3 � Transport: � Line item 1: Taxi airport?hotel � �35.00 EUR � Line item 2: Taxi hotel?airport � �30.00 EUR � Total transport: �65.00 EUR � Date: June 11-12, 2026 � Category: Transport � Within disruption window: YES ? � Threshold check: �65 ? �200 ? � OCR Result: PASS ? Receipt 4 � Essentials: � Line item: Toiletry kit � �28.00 EUR � Date: June 11, 2026 � Category: Essentials � Within disruption window: YES ? � Threshold check: �28 ? �30 ? � OCR Result: PASS ?",
+      "id": "CP089"
+    },
+    {
+      "section": "RECEIPT VALIDATION SUMMARY",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system displays the OCR validation summary:",
+      "expected": "� Total receipts processed: 4 � Total line items extracted: 6 � Items PASSED: 6 � Items FLAGGED for agent review: 0 � Items FAILED: 0",
+      "id": "CP090"
+    },
+    {
+      "section": "EXPENSE BREAKDOWN",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "� Hotel: �175.00 ?",
+      "expected": "� Meals: �52.00 ? � Transport: �65.00 ? � Communication: �0.00 (no receipt submitted) � Parking: �0.00 (no receipt submitted) � Essentials: �28.00 ? � TOTAL APPROVED: �320.00 EUR",
+      "id": "CP091"
+    },
+    {
+      "section": "CLAIM PAYMENT: COUNTRY OF RESIDENCE FLOW",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system initiates payment processing",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "CLAIM PAYMENT: COUNTRY OF RESIDENCE FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks:",
+      "expected": "Thank you for confirming. In which country will your reimbursement be deposited?",
+      "id": "CP093"
+    },
+    {
+      "section": "CLAIM PAYMENT: COUNTRY OF RESIDENCE FLOW",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Germany\"",
+      "expected": "Germany",
+      "id": "CP094"
+    },
+    {
+      "section": "CLAIM PAYMENT: COUNTRY OF RESIDENCE FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Thank you for confirming. Based on the information provided, here is the total reimbursement you are eligible for:",
+      "expected": "� Hotel: �160.00 � Meals: �48.00 � Transport: �55.00 � Total: �263.00 EUR\"",
+      "id": "CP095"
+    },
+    {
+      "section": "CLAIM PAYMENT: COUNTRY OF RESIDENCE FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"I am able to proceed to payment now. Please note that once you confirm, your reimbursement amount will be finalized. Would you like to proceed?\"",
+      "expected": "I am able to proceed to payment now. Please note that once you confirm, your reimbursement amount will be finalized. Would you like to proceed?",
+      "id": "CP096"
+    },
+    {
+      "section": "CLAIM PAYMENT: COUNTRY OF RESIDENCE FLOW",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And user responds: \"Yes\"",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "CLAIM PAYMENT: COUNTRY OF RESIDENCE FLOW",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system determines:",
+      "expected": "� Country = Germany � Currency = EUR � Payment Method = BSM � Email Payment (EUR) � Processing Channel = HSBC � Payout currency conversion = Not required (EUR ? EUR)",
+      "id": "CP098"
+    },
+    {
+      "section": "BSM OFFER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Before we move forward, please confirm the email address where you'd like to receive your payment and all updates about this case. Would you like to use t***@gmail.com? Please note that only one email address can be used for this reimbursement and it can't be changed once confirmed.",
+      "id": "CP099"
+    },
+    {
+      "section": "BSM OFFER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Yes, confirm this email � Use a different email",
+      "id": "CP100"
+    },
+    {
+      "section": "BSM OFFER",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Yes, confirm this email\"",
+      "expected": "Yes, confirm this email",
+      "id": "CP101"
+    },
+    {
+      "section": "BSM OFFER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks: \"Great, can you please confirm that we have the right phone number on the file +1***789?\"",
+      "expected": "Great, can you please confirm that we have the right phone number on the file +1***789?",
+      "id": "CP102"
+    },
+    {
+      "section": "BSM OFFER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Yes, confirm this phone number � Use a different phone number",
+      "id": "CP103"
+    },
+    {
+      "section": "BSM OFFER",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Yes, confirm this phone number\"",
+      "expected": "Yes, confirm this phone number",
+      "id": "CP104"
+    },
+    {
+      "section": "BSM OFFER",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "Then system checks if IDV has been done already ? No",
+      "expected": "",
+      "id": "CP105"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Before we process your payment, we need to verify your identity. You will receive a separate link to complete identity verification through our secure partner.",
+      "id": "CP106"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the chatbot sends Persona IDV link to the customer",
+      "expected": "",
+      "id": "CP107"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the customer opens the Persona link",
+      "expected": "",
+      "id": "CP108"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the customer completes identity verification via Persona",
+      "expected": "",
+      "id": "CP109"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Persona returns: IDV PASS",
+      "expected": "",
+      "id": "CP110"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your identity has been verified successfully. Let's proceed to finalize your claim.",
+      "id": "CP111"
+    },
+    {
+      "section": "CLAIM AMOUNT CONFIRMATION FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please review your compensation details:",
+      "expected": "Deposit Amount: �263.00 EUR Payment Method: t***@gmail.com After submission, you will receive a confirmation email summarizing your eligibility, claim details and next steps that will also include the password required to access the secure payment link, which will be sent in a separate email Would you like me to submit your claim?\"",
+      "id": "CP112"
+    },
+    {
+      "section": "CLAIM AMOUNT CONFIRMATION FLOW",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "And an alert information is displayed: \"Please note that the payment details cannot be changed after submission.\"",
+      "expected": "Please note that the payment details cannot be changed after submission.",
+      "id": "CP113"
+    },
+    {
+      "section": "CLAIM AMOUNT CONFIRMATION FLOW",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "When the user provides: \"Yes\"",
+      "expected": "Yes",
+      "id": "CP114"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system creates a case in Case Services",
+      "expected": "",
+      "id": "CP115"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the case includes:",
+      "expected": "� DDS response code: SoC-EU-EL-03 � Eligibility: ELIGIBLE � Regime: EU (EC 261/2004) � Departure country: Germany � All approved line items with amounts � Receipt images attached � Fraud screening result: GREEN � Country of residence: Germany | Currency: EUR � Payment method: BSM � Email Payment (EUR) via HSBC | Payment email: t***@gmail.com | Phone: +1***789 � IDV: Persona PASS",
+      "id": "CP116"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case reference number is provided to the passenger",
+      "expected": "",
+      "id": "CP117"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your claim has been submitted successfully. Here's a summary: � Case Reference: [Case Number] � Total claim amount: �263.00 EUR � Categories: Hotel (�160.00), Meals (�48.00), Transport (�55.00) You will receive a confirmation email shortly with your case details and next steps.",
+      "id": "CP118"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe",
+      "expected": "",
+      "id": "CP119"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And an eligible confirmation email is sent to the passenger at t***@gmail.com",
+      "expected": "",
+      "id": "CP120"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email includes:",
+      "expected": "� Case reference number � Claim summary with approved amounts (EUR) � Next steps for payment � Password required to access the secure payment link",
+      "id": "CP121"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a separate email containing the secure BSM payment link is sent to t***@gmail.com",
+      "expected": "",
+      "id": "CP122"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Is there anything else I can help you with?\"",
+      "expected": "Is there anything else I can help you with?",
+      "id": "CP123"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP124"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP125"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Scenario: Claims Dashboard validation for SoC-EU-EL-02 � EU Eligible No Travel Stayed at Origin Cancelled",
+      "expected": "",
+      "id": "CP126"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the agent opens the Claims Dashboard for the case",
+      "expected": "",
+      "id": "CP127"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Topic/Sub-topic is \"Travel Disruptions � Expenses\"",
+      "expected": "",
+      "id": "CP128"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Status is \"Resolved\"",
+      "expected": "",
+      "id": "CP129"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Created date and Last Updated date are populated",
+      "expected": "",
+      "id": "CP130"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the SLA countdown is tracking correctly",
+      "expected": "",
+      "id": "CP131"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Name is populated",
+      "expected": "",
+      "id": "CP132"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Type is \"Regular\"",
+      "expected": "",
+      "id": "CP133"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Authentication is \"Pass\"",
+      "expected": "",
+      "id": "CP134"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR is populated",
+      "expected": "",
+      "id": "CP135"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Regime is \"EU (EC 261/2004)\"",
+      "expected": "",
+      "id": "CP136"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Full Name is populated",
+      "expected": "",
+      "id": "CP137"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Tags include \"Claimant\" and \"Adult\"",
+      "expected": "",
+      "id": "CP138"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Itinerary shows Journey AC 871 CDG ? YYZ as the claimed flight",
+      "expected": "",
+      "id": "CP139"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Flight Status is \"CANCELLED\"",
+      "expected": "",
+      "id": "CP140"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility section shows Journey = AC 871 CDG ? YYZ",
+      "expected": "",
+      "id": "CP141"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Flight Leg at Fault is AC 871",
+      "expected": "",
+      "id": "CP142"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Operating Carrier is AC",
+      "expected": "",
+      "id": "CP143"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Disruption Reason is \"Weather (Code 77 � IRRELEVANT under EU)\"",
+      "expected": "",
+      "id": "CP144"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Delay Minutes is 1080 min (18 hours)",
+      "expected": "",
+      "id": "CP145"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Travel Status is \"No Travel � Stayed at Origin (CDG)\"",
+      "expected": "",
+      "id": "CP146"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Passenger Type is \"Regular\"",
+      "expected": "",
+      "id": "CP147"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Geographic Check is \"PASSED ? (CDG = France, EU origin)\"",
+      "expected": "",
+      "id": "CP148"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Controllability is \"NOT CHECKED (EU regime)\"",
+      "expected": "",
+      "id": "CP149"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Cancellation Check is \"CANCELLED ?\"",
+      "expected": "",
+      "id": "CP150"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Departure Delay is \"?2h (18 hours) ?\"",
+      "expected": "",
+      "id": "CP151"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the DDS Response Code is \"SoC-EU-EL-02\"",
+      "expected": "",
+      "id": "CP152"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Fraud Screening is \"CyberSource GREEN\"",
+      "expected": "",
+      "id": "CP153"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility is \"ELIGIBLE\"",
+      "expected": "",
+      "id": "CP154"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the same scenario under APPR would be SoC-APPR-NE-08 (NOT ELIGIBLE � weather is uncontrollable)",
+      "expected": "",
+      "id": "CP155"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Receipt Validator shows Hotel �175.00 APPROVED",
+      "expected": "",
+      "id": "CP156"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Receipt Validator shows Meals �52.00 APPROVED (dinner �25 + breakfast �15 + lunch �12, ?�60)",
+      "expected": "",
+      "id": "CP157"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Receipt Validator shows Transport �65.00 APPROVED (?�200)",
+      "expected": "",
+      "id": "CP158"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Receipt Validator shows Communication �0.00 No receipt",
+      "expected": "",
+      "id": "CP159"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Receipt Validator shows Parking �0.00 No receipt",
+      "expected": "",
+      "id": "CP160"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Receipt Validator shows Essentials �28.00 APPROVED (?�30)",
+      "expected": "",
+      "id": "CP161"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Total Approved is �320.00 EUR",
+      "expected": "",
+      "id": "CP162"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Items Flagged for Review is 0",
+      "expected": "",
+      "id": "CP163"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Duplicate Check result is \"No duplicate found\"",
+      "expected": "",
+      "id": "CP164"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And CyberSource result is \"GREEN\"",
+      "expected": "",
+      "id": "CP165"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Country of Residence is \"Germany\" with Currency \"EUR\"",
+      "expected": "",
+      "id": "CP166"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Payment Method is \"BSM � Email Payment (EUR)\" with Processing Channel \"HSBC\"",
+      "expected": "",
+      "id": "CP167"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Payment Email is \"t***@gmail.com\" (confirmed, locked)",
+      "expected": "",
+      "id": "CP168"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Phone is confirmed as \"+1***789\"",
+      "expected": "",
+      "id": "CP169"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no bank details / IBAN are stored on the case",
+      "expected": "",
+      "id": "CP170"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the IDV result is \"Persona PASS (at Payment)\"",
+      "expected": "",
+      "id": "CP171"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the eligible confirmation email (with password) and secure payment link email were sent to \"t***@gmail.com\"",
+      "expected": "",
+      "id": "CP172"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Final Status is \"Resolved\"",
+      "expected": "",
+      "id": "CP173"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the case is in read-only mode",
+      "expected": "",
+      "id": "CP174"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Scenario: Payment validation for SoC-EU-EL-03 � EU Eligible Diverted Return to Origin � BSM HSBC EUR",
+      "expected": "",
+      "id": "CP175"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the case SoC-EU-EL-03 is determined as ELIGIBLE",
+      "expected": "",
+      "id": "CP176"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then SOC payment is CASH ONLY",
+      "expected": "",
+      "id": "CP177"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And AC Wallet / e-credit is NOT offered",
+      "expected": "",
+      "id": "CP178"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the route is AC 837 FRA ? YYZ (diverted back to FRA) with delay 840 min (14 hrs) for 1 adult",
+      "expected": "",
+      "id": "CP179"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the approved receipts are Hotel �160, Meals �48, Taxi �55 totalling �263.00 EUR",
+      "expected": "",
+      "id": "CP180"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the country of residence is Germany with currency EUR",
+      "expected": "",
+      "id": "CP181"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the payment method is BSM � Email Payment (EUR) processed via HSBC",
+      "expected": "",
+      "id": "CP182"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And only the customer's email t***@gmail.com and phone confirmation are collected (no bank details)",
+      "expected": "",
+      "id": "CP183"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the payment email cannot be changed after confirmation",
+      "expected": "",
+      "id": "CP184"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And Persona IDV returned PASS before claim submission",
+      "expected": "",
+      "id": "CP185"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no payout currency conversion is applied (EUR ? EUR)",
+      "expected": "",
+      "id": "CP186"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no approval is needed",
+      "expected": "",
+      "id": "CP187"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Comp Status is \"Sent for issuance\"",
+      "expected": "",
+      "id": "CP188"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And the Claims Dashboard shows �263.00 EUR, Cash, BSM (HSBC), t***@gmail.com, status via talkback",
+      "expected": "",
+      "id": "CP189"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "SoC-EU-EL-02.",
+      "expected": "SoC-EU-EL-02.",
+      "id": "CP190"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "ELIGIBLE.",
+      "expected": "ELIGIBLE.",
+      "id": "CP191"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "No travel (return), delay ?2h.",
+      "expected": "No travel (return), delay ?2h.",
+      "id": "CP192"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Controllability NOT checked.",
+      "expected": "Controllability NOT checked.",
+      "id": "CP193"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Hotel: 2 rooms (per adult).",
+      "expected": "Hotel: 2 rooms (per adult).",
+      "id": "CP194"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Entitlements per  for 4 passengers.",
+      "expected": "Entitlements per  for 4 passengers.",
+      "id": "CP195"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Full receipt + case flow.",
+      "expected": "Full receipt + case flow.",
+      "id": "CP196"
+    }
+  ]
+}

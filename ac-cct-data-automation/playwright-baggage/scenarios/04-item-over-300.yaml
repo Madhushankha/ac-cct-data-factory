@@ -1,0 +1,19 @@
+id: item-over-300
+title: One item over 300 CAD -> proof of ownership -> "I don't have the receipt" -> GenUC-27
+booking: { pool: any, pick: next-unused, need: [lost], avoid: [partner, waiting, two-bags, two-journeys, cap-spent, duplicate, closed] }
+first_message: "My bag is lost and I want to claim for what was inside it."
+steps:
+  - notice: "yes"
+  - identify: true
+  - verify: true
+  - journey: one
+  - delivery: "no"
+  - readiness: "yes"
+  - contents: { category: Clothing, cad: true, item: "Jacket / Coat", qty: 1, amount: 450 }
+  - confirm: true
+  - expect: { step: BAG-06.S20, layout: success, text: "submission was successful", before: "proof of ownership|receipt" }
+  - expect: { step: BAG-06.S22, board: proof of ownership for items over 300 CAD, any_of: ["proof of ownership", "receipt"], buttons: ["Upload receipts"] }
+  - say: "I don't have the receipt"
+  - expect: { step: GenUC-27, board: "manual review: first question (email)", any_of: ["email address"], form: ["Email address*"] }
+  - stop: manual-review
+known: [I-02, I-07]

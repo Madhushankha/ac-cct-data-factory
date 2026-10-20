@@ -1,0 +1,83 @@
+{
+  "id": "SOC_UAT_048",
+  "family": "SOC",
+  "summary": "1 adult, AC 848 LHR-YYZ 11:00 departed 17:00 (6h late) yesterday; last leg landed under 72h ago, so SOC is PENDING (72-hour hold)",
+  "passengers": [
+    {
+      "firstName": "GRACE",
+      "lastName": "HOLLAND",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "GB",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "848",
+      "origin": "LHR",
+      "destination": "YYZ",
+      "depLocal": "11:00",
+      "arrLocal": "14:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 1,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 360,
+      "depDelayMin": 360,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "SoC-EU-PE-01",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": 360,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Status PENDING / SYSTEM PROCESSING: last leg less than 72h ago",
+      "Regime: EU (preliminary - LHR is UK origin, subject to confirmation)",
+      "Journey AC 848 LHR->YYZ, Flight Status DELAYED (6 hours - preliminary), delay ~360 min",
+      "Disruption code TBD (pending 72-hour data completion); Controllability not applicable under EU",
+      "DDS Response Code SoC-EU-PE-01 (PENDING), shell case in polling queue, no receipt upload"
+    ],
+    "soc": {
+      "eligibility": null,
+      "entitlements": "none yet - PENDING; re-evaluated after 72h (EU: delay >= 2h would then be eligible)"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Flight departed yesterday: flightDaysAgo=1 (test is about being inside 72h)",
+    "eligibility field set to NO_DETERMINATION as the schema has no PENDING value; real expected state is PENDING (SoC-EU-PE-01)",
+    "Arrival 14:00 local; arrival delay assumed 360",
+    "Delay code 'TBD' -> null",
+    "Cabin W (PY), class O"
+  ],
+  "unsupported": [
+    "Post-72h re-evaluation, deep link email and Welcome Back flow are Case Services/chatbot behaviour, not booking data"
+  ]
+}

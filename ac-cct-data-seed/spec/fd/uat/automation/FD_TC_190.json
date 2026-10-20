@@ -1,0 +1,81 @@
+{
+ "id": "FD_TC_190",
+ "family": "FD",
+ "summary": "Single pax YUL-YYZ AC 429; promise arrival 10:00 kept (agent change with ACNP = INVOL); actual 16:00 (+6h), code 42",
+ "passengers": [
+  {
+   "firstName": "GENEVIEVE",
+   "lastName": "ROY",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "429",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 360,
+   "depDelayMin": 360,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "APPR_6_TO_9_HOURS",
+  "amount": 700,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 360,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 429 YUL→YYZ Scheduled Arrival 10:00 (14-day mark, NOT updated by Agent+ACNP)",
+   "Current: AC 429 YUL→YYZ ARRIVED LATE, Actual 16:00, Delay +6H 00M",
+   "Change History: Change 1: Agent with ACNP (SK ACNP) at D-1 INVOL arrival 10:00→16:00",
+   "Promise = 10:00; Delay from promise = 6 hours",
+   "Regime: APPR",
+   "APPR: Delay 6-<9h, Controllable -> ELIGIBLE",
+   "MSL FLIGHT: AC 429 YUL→YYZ 42",
+   "CONTROLLABLE (Code 42)",
+   "ACNP presence is the key differentiator (WITH ACNP = INVOL, WITHOUT = VOL)",
+   "Flight Compensation: MS GENEVIEVE ROY | ELIGIBLE | APPR_6_TO_9_HOURS | CAD $700"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "PNR name accents dropped (GDS ASCII)",
+  "dep time 08:00 (text gives only arrival)"
+ ],
+ "unsupported": [
+  "PNR change-history identifiers/classification (VOL/INVOL tool markers, D-n change timing) cannot be expressed in booking data; segment is modelled at the final promise time and delay measured from it; SK ACNP / CX ACNP marker in PNR history"
+ ]
+}

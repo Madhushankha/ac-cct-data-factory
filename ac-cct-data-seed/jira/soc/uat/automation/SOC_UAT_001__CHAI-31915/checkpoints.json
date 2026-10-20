@@ -1,0 +1,1170 @@
+{
+  "key": "CHAI-31915",
+  "test_id": "SOC_UAT_001",
+  "title": "APPR � Not Eligible � Employee Booking AC",
+  "goal": "Verify that when a customer has an AC employee standby/confirmed booking, the system returns NOT ELIGIBLE under APPR for Standards of Care and displays the appropriate ineligibility messaging.",
+  "summary": {
+    "seed": 19,
+    "chat": 35,
+    "api": 14,
+    "email": 0,
+    "dashboard": 50,
+    "implied": 3,
+    "manual": 6,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Verify that when a customer has an AC employee standby/confirmed booking, the system returns NOT ELIGIBLE under APPR for Standards of Care and displays the appropriate ineligibility messaging.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Regime: APPR",
+      "expected": "� Regime: APPR",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Itinerary: Single segment � AC 101 YYZ?YUL",
+      "expected": "� Itinerary: Single segment � AC 101 YYZ?YUL",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� SOC Segment (per SoC Flight Identifier): AC 101 YYZ?YUL",
+      "expected": "� SOC Segment (per SoC Flight Identifier): AC 101 YYZ?YUL",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Promised Itinerary: AC 101 YYZ?YUL, Dep: 01-Jun 08:00",
+      "expected": "� Promised Itinerary: AC 101 YYZ?YUL, Dep: 01-Jun 08:00",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Actual Itinerary: AC 101 YYZ?YUL, Dep: 01-Jun 14:00",
+      "expected": "� Actual Itinerary: AC 101 YYZ?YUL, Dep: 01-Jun 14:00",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Departure Delay: 360 min (6 hours)",
+      "expected": "� Departure Delay: 360 min (6 hours)",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Departure delay code: 64 (Flight Crew Shortage) � Controllable",
+      "expected": "� Departure delay code: 64 (Flight Crew Shortage) � Controllable",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Controllability: Controllable (Code 64)",
+      "expected": "� Controllability: Controllable (Code 64)",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Passenger Type: Employee (AC) � office suffix ES/OT/EP/EE/EC",
+      "expected": "� Passenger Type: Employee (AC) � office suffix ES/OT/EP/EE/EC",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Check Order: 1. Pax Type ? Employee ? NOT ELIGIBLE (no further checks)",
+      "expected": "� Check Order: 1. Pax Type ? Employee ? NOT ELIGIBLE (no further checks)",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� PAX Count: 1 adult",
+      "expected": "� PAX Count: 1 adult",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Class of Booking: PY",
+      "expected": "� Class of Booking: PY",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Revenue Booking: NO � Employee booking",
+      "expected": "� Revenue Booking: NO � Employee booking",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� ACR Issued: N/A",
+      "expected": "� ACR Issued: N/A",
+      "id": "CP015"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Journey Completed: > 72h",
+      "expected": "� Journey Completed: > 72h",
+      "id": "CP016"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Employee Flow: Employee is NOT blocked upfront. Goes through OTP authentication first, then receives \"Not Eligible\" response",
+      "expected": "� Employee Flow: Employee is NOT blocked upfront. Goes through OTP authentication first, then receives \"Not Eligible\" response",
+      "id": "CP017"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Dispute Path: If disputed ? case created ? sent to manual handling",
+      "expected": "� Dispute Path: If disputed ? case created ? sent to manual handling",
+      "id": "CP018"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Policy: Not eligible under CCT (decided by Mohammed). Eligible for baggage claims only",
+      "expected": "� Policy: Not eligible under CCT (decided by Mohammed). Eligible for baggage claims only",
+      "id": "CP019"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Note on Exception Pax: If this were a J cabin exception/priority customer, a meal entitlement at J cabin rate would apply � but employee check overrides all exception pax logic first",
+      "expected": "� Note on Exception Pax: If this were a J cabin exception/priority customer, a meal entitlement at J cabin rate would apply � but employee check overrides all exception pax logic first",
+      "id": "CP020"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP022"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP024"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP025"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight was delayed for several hours and I had to buy food at the airport and book a hotel for the night. Can I get reimbursed for what I spent?\"",
+      "expected": "My flight was delayed for several hours and I had to buy food at the airport and book a hotel for the night. Can I get reimbursed for what I spent?",
+      "id": "CP026"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies Standards of Care (SoC) intent",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "SOC ENTRY",
+      "requirement": "SoC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays the case opening legal disclaimer (GenUC-24):",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd liketo be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP029"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP030"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP031"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"[First Name] [Last Name]\"",
+      "expected": "[First Name] [Last Name]",
+      "id": "CP032"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, [First Name]! And, what is your booking reference number?",
+      "id": "CP033"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: [PNR Code]\"",
+      "expected": "PNR: [PNR Code]",
+      "id": "CP034"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: [PNR Code]",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP037"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: t***@gmail.com � Phone: +1***789",
+      "id": "CP038"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: t***@gmail.com\"",
+      "expected": "Email: t***@gmail.com",
+      "id": "CP039"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP040"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"546879\"",
+      "expected": "546879",
+      "id": "CP041"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful. Let's proceed to the next step.",
+      "id": "CP043"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PNR: [PNR Code]",
+      "expected": "PNR: [PNR Code]",
+      "id": "CP044"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "TYPE: EMPLOYEE (non-revenue)",
+      "expected": "TYPE: EMPLOYEE (non-revenue)",
+      "id": "CP045"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Completed, Disruption Detected",
+      "expected": "Trip Completed, Disruption Detected",
+      "id": "CP046"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Single-segment domestic trip YYZ?YUL on AC101 was delayed +6H 00M due to crew / FDP exceedance (controllable)",
+      "expected": "Single-segment domestic trip YYZ?YUL on AC101 was delayed +6H 00M due to crew / FDP exceedance (controllable)",
+      "id": "CP047"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PASSENGERS: 1 � SEGMENTS: 1",
+      "expected": "PASSENGERS: 1 � SEGMENTS: 1",
+      "id": "CP048"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Promised Itinerary � Flight: AC 101, Route: YYZ ? YUL, Scheduled Dep: 01-Jun 08:00",
+      "expected": "Promised Itinerary � Flight: AC 101, Route: YYZ ? YUL, Scheduled Dep: 01-Jun 08:00",
+      "id": "CP049"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current Itinerary � Flight: AC 101, Route: YYZ ? YUL, Status: ARRIVED LATE, Scheduled Dep: 08:00 ? Actual: 14:00, Delay: +6H 00M",
+      "expected": "Current Itinerary � Flight: AC 101, Route: YYZ ? YUL, Status: ARRIVED LATE, Scheduled Dep: 08:00 ? Actual: 14:00, Delay: +6H 00M",
+      "id": "CP050"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "SOC section present",
+      "expected": "SOC section present",
+      "id": "CP051"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PASSENGER: [First Name] [Last Name] | STATUS: NOT_ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL: � | ACCOMMODATION: � | GENERAL EXPENSES: � | EXPIRES: �",
+      "expected": "PASSENGER: [First Name] [Last Name] | STATUS: NOT_ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL: � | ACCOMMODATION: � | GENERAL EXPENSES: � | EXPIRES: �",
+      "id": "CP052"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "NOT_ELIGIBLE reason: Employee booking",
+      "expected": "NOT_ELIGIBLE reason: Employee booking",
+      "id": "CP053"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Passenger Claims section present",
+      "expected": "Passenger Claims section present",
+      "id": "CP054"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Intent: TRAVEL DISRUPTIONS | Sub-Intent: EXPENSES | Status: NOT ELIGIBLE (or no claim row if case not created)",
+      "expected": "Intent: TRAVEL DISRUPTIONS | Sub-Intent: EXPENSES | Status: NOT ELIGIBLE (or no claim row if case not created)",
+      "id": "CP055"
+    },
+    {
+      "section": "NOT ELIGIBLE RESULT",
+      "requirement": "SoC-03b",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays: \"I've reviewed the details of your flight. Unfortunately, your booking is classified as an employee booking, which does not qualify for Standards of Care expense reimbursement under the applicable regulations.\"",
+      "expected": "I've reviewed the details of your flight. Unfortunately, your booking is classified as an employee booking, which does not qualify for Standards of Care expense reimbursement under the applicable regulations.",
+      "id": "CP056"
+    },
+    {
+      "section": "DISPUTE OPTION",
+      "requirement": "GenUC-15",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Do you agree with this assessment, or would you like to dispute it?\"",
+      "expected": "Do you agree with this assessment, or would you like to dispute it?",
+      "id": "CP057"
+    },
+    {
+      "section": "DISPUTE OPTION",
+      "requirement": "GenUC-15",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Agree\"",
+      "expected": "Agree",
+      "id": "CP058"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Is there anything else I can help you with?\"",
+      "expected": "Is there anything else I can help you with?",
+      "id": "CP059"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP060"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Scenario: Claims Dashboard validation for SoC-APPR-NE-01 � AC Employee Not Eligible",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the agent opens the Claims Dashboard for the case",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Topic/Sub-topic is \"Travel Disruptions � Expenses\"",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent can edit Topic/Sub-topic but cannot switch between automated and non-automated",
+      "expected": "",
+      "id": "CP064"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Status is \"Closed � Not Eligible\"",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Created date is populated",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Last Updated date is populated",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the SLA countdown is tracking correctly",
+      "expected": "",
+      "id": "CP068"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Team assignment is correct",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no banners are displayed (identified + authenticated, Auth Flow 1)",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist panel is NOT greyed out",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Name is populated",
+      "expected": "",
+      "id": "CP072"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Type is \"Adult\"",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Authentication is \"Pass\"",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR is populated",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR Creation Date is populated",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey ID is populated",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Booking Source is populated",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Booking Office ID is populated",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Regime is \"APPR\"",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Full Name is populated",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Tags include \"Claimant\", \"Adult\", and \"AC Employee\"",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Email is \"t***@gmail.com\"",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Phone is \"+1***789\"",
+      "expected": "",
+      "id": "CP084"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Address is populated",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Tier Status is populated",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Itinerary shows Journey AC 101 YYZ ? YUL as the claimed flight",
+      "expected": "",
+      "id": "CP087"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Ancillary Fee section is present with no entries",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility section shows Journey = AC 101 YYZ ? YUL",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Flight Leg at Fault is AC 101",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Operating Carrier is AC",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Disruption Reason is \"Flight Crew Shortage (Code 64)\"",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Delay Minutes is 360 min (6 hours)",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Travel Status is \"Travel Completed\"",
+      "expected": "",
+      "id": "CP094"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Passenger Type is \"Employee (AC)\" with office suffix ES/OT/EP/EE/EC",
+      "expected": "",
+      "id": "CP095"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Controllability is \"Controllable (Code 64)\" but employee check overrides before controllability is evaluated",
+      "expected": "",
+      "id": "CP096"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Denied Boarding is \"No\"",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Class of Booking is \"PY\"",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Revenue Booking is \"NO � Employee booking\"",
+      "expected": "",
+      "id": "CP099"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the DDS Response Code is \"SoC-APPR-NE-01\"",
+      "expected": "",
+      "id": "CP100"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Check Order is: 1. Pax Type ? Employee ? NOT ELIGIBLE (no further checks)",
+      "expected": "",
+      "id": "CP101"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the employee is NOT blocked upfront � goes through OTP authentication first, then receives Not Eligible response",
+      "expected": "",
+      "id": "CP102"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Receipt Validator SOC Expense Line Items is \"N/A (not reached � not eligible)\"",
+      "expected": "",
+      "id": "CP103"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Applicable Regimes SOC Amount is \"N/A\"",
+      "expected": "",
+      "id": "CP104"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Duplicate Check result is \"No duplicate found\"",
+      "expected": "",
+      "id": "CP105"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And CyberSource is NOT triggered",
+      "expected": "",
+      "id": "CP106"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Booking Auto-Append shows the system appended the booking record automatically",
+      "expected": "",
+      "id": "CP107"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Dispute option is offered (GenUC-15)",
+      "expected": "",
+      "id": "CP108"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the user selected \"Agree\"",
+      "expected": "",
+      "id": "CP109"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Not Eligible notification is sent",
+      "expected": "",
+      "id": "CP110"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the notification email contains employee booking ineligibility and regulation reference (APPR)",
+      "expected": "",
+      "id": "CP111"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility on Claims Dashboard is \"NOT ELIGIBLE\" with no compensation record and no payout section",
+      "expected": "",
+      "id": "CP112"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Final Status is \"Closed � Not Eligible\"",
+      "expected": "",
+      "id": "CP113"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the case is in read-only mode",
+      "expected": "",
+      "id": "CP114"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent cannot access Case Search (leads/management only)",
+      "expected": "",
+      "id": "CP115"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Scenario: Payment validation for SoC-APPR-NE-01 � AC Employee Not Eligible",
+      "expected": "",
+      "id": "CP116"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the case SoC-APPR-NE-01 is determined as NOT ELIGIBLE",
+      "expected": "",
+      "id": "CP117"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no payment flow is triggered",
+      "expected": "",
+      "id": "CP118"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence is asked",
+      "expected": "",
+      "id": "CP119"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record is created",
+      "expected": "",
+      "id": "CP120"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no batch file is dispatched",
+      "expected": "",
+      "id": "CP121"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no receipt upload is triggered (SOC receipts only triggered for eligible cases)",
+      "expected": "",
+      "id": "CP122"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard shows Eligibility = \"NOT ELIGIBLE\" with no compensation record and no payout section",
+      "expected": "",
+      "id": "CP123"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "System correctly identifies employee booking AFTER OTP authentication (not blocked at entry).",
+      "expected": "System correctly identifies employee booking AFTER OTP authentication (not blocked at entry).",
+      "id": "CP124"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Returns SoC-APPR-NE-01.",
+      "expected": "Returns SoC-APPR-NE-01.",
+      "id": "CP125"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Displays NOT ELIGIBLE.",
+      "expected": "Displays NOT ELIGIBLE.",
+      "id": "CP126"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Offers dispute option � if disputed, case created and sent to manual handling.",
+      "expected": "Offers dispute option � if disputed, case created and sent to manual handling.",
+      "id": "CP127"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "No receipt upload triggered.",
+      "expected": "No receipt upload triggered.",
+      "id": "CP128"
+    }
+  ]
+}

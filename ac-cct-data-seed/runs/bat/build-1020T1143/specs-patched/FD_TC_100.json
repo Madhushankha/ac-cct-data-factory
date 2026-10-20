@@ -1,0 +1,95 @@
+{
+ "id": "FD_TC_100",
+ "family": "FD",
+ "summary": "Single adult VERONIQUE CARON (linked Aeroplan Basic, residence Canada), AC 865 LHR-YUL (UK departure) arriving scheduled 14:00, actual 19:00 (300 min late, 4+ hour band); a disruption code is logged but UNKNOWN (unmapped for both UK/EU and APPR); regimes EU(UK) + APPR",
+ "passengers": [
+  {
+   "firstName": "VERONIQUE",
+   "lastName": "CARON",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "865",
+   "origin": "LHR",
+   "destination": "YUL",
+   "depLocal": "11:15",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 300,
+   "depDelayMin": 300,
+   "delayCode": "UNKNOWN",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "depDelayCode": "UNKNOWN"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NO_DETERMINATION",
+  "systemCode": "ND-X02",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": 300,
+  "control": null,
+  "cause": "UNKNOWN",
+  "amountsShown": "GBP 0 (EU/UK), CAD 0 (APPR)",
+  "caseSla": "30-day SLA, Forwarded - Manual Review",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 865, Route: LHR->YUL, Scheduled Arrival: 14:00",
+   "Current Itinerary - Flight: AC 865, Route: LHR->YUL, Status: ARRIVED LATE, Actual Arrival: 19:00, Delay: +5H 00M (4+ hours band seen in ADS/AODB)",
+   "Regime: EU (UK) + APPR (2 regimes)",
+   "Disruption Code: UNKNOWN (logged but not mapped in the DDS controllability table)",
+   "Departure Code: N/A",
+   "Cancellation Code: N/A (flight operated)",
+   "Aeroplan: 9876543210 (Basic Member - linked)",
+   "DDS Gate: Is disruption code available? - YES (code present)",
+   "DDS Gate: Is disruption code recognized / mapped? - NO / EU/UK controllability (Controllable / Uncontrollable) - cannot be decided / APPR controllability - cannot be decided",
+   "DDS decides: No Determination - UNKNOWN CODE - straight away (no 14-day re-check)",
+   "14-day re-check: NOT triggered (it only applies when the code is NULL/missing)",
+   "Flight Compensation: MS VERONIQUE CARON | NO DETERMINATION | UNKNOWN_CODE | GBP 0.00 (EU/UK) | CAD 0.00 (APPR)"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "cabin Y and booking class T on every segment (text gives none)",
+  "the literal unknown code value is not given: placeholder \"UNKNOWN\" used; must be unmapped in both regimes' classification tables",
+  "LHR departure 11:15 local assumed so arrival is 14:00 Montreal time; times in the text are arrival only",
+  "departure delay assumed equal to arrival delay (300 min)",
+  "delay band for the EU/UK branch is stated only as \"4+ hours\", so delayBand left null",
+  "systemCode \"ND-X02\" as written in the text (no FD-APPR prefix given for the UK branch)",
+  "flightDaysAgo default 10 (<2190-day UK limit, no timing element)"
+ ],
+ "unsupported": []
+}

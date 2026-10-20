@@ -1,0 +1,92 @@
+{
+  "id": "FD_TC_099",
+  "family": "FD",
+  "summary": "Single adult VERONIQUE CARON (linked Aeroplan Basic), AC 372 YUL-YYZ arriving scheduled 14:00, actual 21:00 (420 min late, 6-<9h band); a disruption code IS logged but UNKNOWN (not mapped in DDS classification table); no cancellation code",
+  "passengers": [
+    {
+      "firstName": "VERONIQUE",
+      "lastName": "CARON",
+      "type": "ADT",
+      "aeroplanNumber": "9876543210",
+      "aeroplanTier": "Basic",
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "372",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "12:35",
+      "arrLocal": "14:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": 420,
+      "delayCode": "UNKNOWN",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null,
+      "depDelayCode": "UNKNOWN"
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "FD-APPR-ND-X02",
+    "amount": 0,
+    "currency": "CAD",
+    "delayBand": "DELAY_6_TO_LT_9_HOURS",
+    "delayMin": 420,
+    "control": null,
+    "cause": "UNKNOWN",
+    "gate9Classification": "none",
+    "caseSla": "30-day commitment, Forwarded - Manual Review",
+    "ttUi": [
+      "Promised Itinerary - Flight: AC 372, Route: YUL->YYZ, Scheduled Arrival: 14:00",
+      "Current Itinerary - Flight: AC 372, Route: YUL->YYZ, Status: ARRIVED LATE, Actual Arrival: 21:00, Delay: +7H 00M (6-<9h band observed in ADS/AODB)",
+      "Disruption Code: UNKNOWN (code IS logged in system but is not recognized / not mapped in DDS classification table)",
+      "Departure Code: N/A",
+      "Cancellation Code: N/A (flight operated - not cancelled)",
+      "Aeroplan: 9876543210 (Basic Member - linked)",
+      "DDS Gate 6: Is disruption code available? / Code IS present - YES",
+      "DDS Gate 6a: Is disruption code RECOGNIZED / MAPPED? / Code type = UNKNOWN - NOT recognized in DDS classification table / Cannot determine Controllable / Uncontrollable - NO DETERMINATION",
+      "DDS determines: FD-APPR-ND-X02 - UNKNOWN CODE - immediate No Determination (no 14-day polling - code exists)",
+      "14-day polling: NOT triggered (polling only applies when code is NULL/missing - code IS present here, just unknown)",
+      "Flight Compensation: MS VERONIQUE CARON | NO DETERMINATION | UNKNOWN_CODE | CAD 0.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "cabin Y and booking class T on every segment (text gives none)",
+    "the literal unknown code value is not given: placeholder \"UNKNOWN\" used; the seed must use a code value that is present in the feed but absent from the DDS controllability/classification table",
+    "departure code assumed to be the same unknown code (departure delay 420 assumed equal to arrival)",
+    "departure 12:35 assumed",
+    "flightDaysAgo default 10 (no timing element; 14-day polling must NOT be triggered)"
+  ],
+  "unsupported": []
+}

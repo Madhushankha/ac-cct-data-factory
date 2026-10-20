@@ -1,0 +1,1281 @@
+{
+ "perScenario": {
+  "FD_TC_102": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "nodata"
+     }
+    ]
+   },
+   "note": "BA1234 status never received (scenario): no flight status sent"
+  },
+  "FD_TC_170": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "nodata"
+     }
+    ]
+   },
+   "note": "LH694 OAG data never received (scenario): no flight status sent"
+  },
+  "SOC_UAT_067": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "nodata"
+     }
+    ]
+   },
+   "note": "LY301 operating data unavailable (scenario): no flight status sent"
+  },
+  "FD_TC_112": {
+   "specPatch": {
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "870",
+      "origin": "CDG",
+      "destination": "YYZ",
+      "depLocal": "10:00",
+      "arrLocal": "14:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+     }
+    ],
+    "expect": {
+     "systemCode": "FD-EU-EL-16"
+    }
+   },
+   "note": "text: AC870 CDG-YYZ (spec had LHR: UK regime, GBP)"
+  },
+  "FD_TC_237": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": 420,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "WXX",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "expect": {
+     "cause": "WXX"
+    }
+   },
+   "note": "text: cancel code WXX under investigation -> OTHER -> no determination (an earlier patch mapped it to OPER)"
+  },
+  "SOC_UAT_003": {
+   "specPatch": {
+    "scheduleChanges": [],
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 1080,
+      "depDelayMin": 1080,
+      "delayCode": "67",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null,
+      "reportedHoursBefore": 15
+     }
+    ]
+   },
+   "note": "text: customer informed 15 h before departure of a 1080-min delay; built as an FDM delay reported 15 h before (SoC reads the informed time from it)"
+  },
+  "FD_TC_139": {
+   "specPatch": {
+    "rebooking": [],
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime"
+     }
+    ],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "denied_boarding",
+      "voluntary": true
+     }
+    ],
+    "expect": {
+     "delayMin": null
+    }
+   },
+   "note": "voluntary DB on the original flight (NE-05); a passenger who did not travel reports the MSL's own delay (keep TripTracer semantics)"
+  },
+  "FD_TC_052": {
+   "specPatch": {
+    "expect": {
+     "regime": "APPR",
+     "eligibility": "NOT_ELIGIBLE",
+     "systemCode": "FD-APPR-NE-07",
+     "amount": 0,
+     "currency": "CAD",
+     "delayBand": "DELAY_6_TO_LT_9_HOURS",
+     "delayMin": 420,
+     "control": "CONTROLLABLE",
+     "cause": "64",
+     "ttUi": [
+      "Travel date = May 1, 2025; Filing date = June 15, 2026; Days elapsed = 420; APPR limitation = 366 days; LIMITATION EXCEEDED by 54 days",
+      "Arrival delay code = 64 (Flight Crew Shortage - Controllable); Delay = 7h (6 to <9h band); Scheduled arrival = 14:00; Actual arrival = 21:00",
+      "Time Limit Check: 420 days > 366 days -> OUTSIDE LIMITATION -> NOT ELIGIBLE",
+      "MSL FLIGHT: AC 331 YUL->YYZ code 64",
+      "Aeroplan: Basic Member (9876543210) recognized - AC Wallet NOT offered"
+     ],
+     "soc": null
+    }
+   },
+   "note": "C4 implemented: the 366-day limit is NE-07 in DDS"
+  },
+  "FD_TC_094": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 360,
+      "depDelayMin": 360,
+      "delayCode": "43",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null,
+      "depDelayCode": "43"
+     }
+    ],
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "496",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "10:35",
+      "arrLocal": "12:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+     }
+    ],
+    "expect": {
+     "cause": "43"
+    },
+    "_note": "expect systemCode FD-APPR-NE-29 / control SAFETY / NOT_ELIGIBLE / delayMin 360 stay unchanged"
+   },
+   "note": "audit-A TEXT_INCONSISTENT"
+  },
+  "FD_TC_049": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-27"
+    }
+   },
+   "note": "audit TT_DIFFERS (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_TC_089": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-27"
+    }
+   },
+   "note": "audit TT_DIFFERS (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_TC_090": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-27"
+    }
+   },
+   "note": "audit TT_DIFFERS (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_TC_091": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-27"
+    }
+   },
+   "note": "audit TT_DIFFERS (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_TC_092": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-27"
+    }
+   },
+   "note": "audit TT_DIFFERS (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_TC_050": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-28"
+    }
+   },
+   "note": "audit TT_DIFFERS (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_TC_108": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-ND-04"
+    }
+   },
+   "note": "audit TT_DIFFERS (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_TC_179": {
+   "specPatch": {
+    "expect": {
+     "regime": "APPR",
+     "eligibility": "ELIGIBLE",
+     "systemCode": "FD-APPR-EL-02",
+     "amount": 700,
+     "currency": "CAD",
+     "delayBand": "DELAY_6_TO_LT_9_HOURS",
+     "delayMin": 420,
+     "control": "CONTROLLABLE",
+     "cause": "15",
+     "note": "TT-side assertion only (needs R1 single-bound fix); duplicate/closed status is Case Services"
+    }
+   },
+   "note": "audit TEXT_INCONSISTENT (keep TripTracer codes)"
+  },
+  "FD_TC_210": {
+   "specPatch": {
+    "dbcpSegs": [
+     2
+    ],
+    "expect": {
+     "eligibility": "NOT_ELIGIBLE",
+     "systemCode": "FD-APPR-NE-06",
+     "amount": null,
+     "currency": null,
+     "delayBand": null,
+     "delayMin": null
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": "97",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null,
+      "codeOnly": true
+     }
+    ]
+   },
+   "note": "proposal C10: DENIED BOARDING keyword on the PAL-operated segment; PAL populated code 97 on the denied-boarding flight PB205 (scenario: \"PAL coding: Code 97 PRESENT\")"
+  },
+  "FD_TC_016": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-EL-02"
+    }
+   },
+   "note": "audit TEXT_INCONSISTENT (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_ED_TC_08": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-EL-02"
+    }
+   },
+   "note": "audit TEXT_INCONSISTENT (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_TC_037": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-EL-07"
+    }
+   },
+   "note": "audit TEXT_INCONSISTENT (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_ED_TC_27": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-EU-EL-14"
+    }
+   },
+   "note": "audit TEXT_INCONSISTENT (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_TC_208": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-EL-13",
+     "delayBand": "NO_TRAVEL",
+     "amount": 400,
+     "currency": "CAD",
+     "eligibility": "ELIGIBLE",
+     "note": "TripTracer side only; payout/refund path is the Claims/Refund flow"
+    }
+   },
+   "note": "audit TEXT_INCONSISTENT (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "SOC_UAT_055": {
+   "specPatch": {
+    "expect": {
+     "regime": "ASL",
+     "eligibility": "NOT_ELIGIBLE",
+     "systemCode": "SoC-ASL-NE-07"
+    },
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "84",
+      "origin": "YYZ",
+      "destination": "FRA",
+      "depLocal": "08:00",
+      "arrLocal": "11:30",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+     }
+    ]
+   },
+   "note": "audit TEXT_INCONSISTENT (keep TripTracer codes)"
+  },
+  "FD_TC_007": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-EL-02"
+    },
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "replacesAlsoSeg": 2,
+      "carrier": "AC",
+      "number": "425",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "15:40",
+      "arrLocal": "17:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "voluntary": false,
+      "changeDaysBeforeDeparture": 3
+     },
+     {
+      "replacesSeg": 1,
+      "replacesAlsoSeg": 2,
+      "carrier": "AC",
+      "number": "427",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "17:40",
+      "arrLocal": "19:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "voluntary": true,
+      "changeDaysBeforeDeparture": 1,
+      "actualArrLocal": "19:00",
+      "paxEvent": "boarded",
+      "arrivalDelayMinutes": 120
+     }
+    ]
+   },
+   "note": "audit DATA_FIXABLE (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_TC_176": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "delayCode": "41"
+     }
+    ],
+    "expect": {
+     "regime": "EU",
+     "eligibility": "ELIGIBLE",
+     "systemCode": "FD-EU-EL-02",
+     "amount": 520,
+     "currency": "GBP",
+     "delayBand": "DELAY_GTE_4_HOURS",
+     "delayMin": 240,
+     "control": "CONTROLLABLE",
+     "cause": "41",
+     "note": "APPR row should read FD-APPR-NE-28 NOT_ELIGIBLE; alternative divergent codes 58, 93, 97"
+    }
+   },
+   "note": "audit DATA_FIXABLE (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_TC_236": {
+   "specPatch": {
+    "expect": {
+     "eligibility": "NO_DETERMINATION",
+     "systemCode": "FD-APPR-ND-01",
+     "amount": null,
+     "currency": null,
+     "cause": null,
+     "control": null,
+     "delayMin": null
+    },
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "412",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "08:45",
+      "arrLocal": "10:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+     },
+     {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "7650",
+      "origin": "YYZ",
+      "destination": "YQB",
+      "depLocal": "12:40",
+      "arrLocal": "14:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK",
+      "operatingCarrier": null,
+      "operating": {
+       "carrier": "ZZ",
+       "number": "7650"
+      }
+     }
+    ]
+   },
+   "note": "audit DATA_FIXABLE (Jason 2026-10-15: keep TripTracer codes, correct labels)"
+  },
+  "FD_TC_010": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "cancelCode": "OPER",
+      "noticeHours": 24
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "431",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "10:40",
+      "arrLocal": "12:00",
+      "dayOffset": 0,
+      "accepted": false,
+      "changeDaysBeforeDeparture": 1
+     },
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "433",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "12:40",
+      "arrLocal": "14:00",
+      "dayOffset": 0,
+      "voluntary": true,
+      "changeDaysBeforeDeparture": 0.9,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "note": "text: AC cancels (INVOL), customer self-rebooks via the tool (SELFREACC) arriving 14:00; promise stays at the 14-day mark"
+  },
+  "FD_TC_006": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "425",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "11:40",
+      "arrLocal": "13:00",
+      "dayOffset": 0,
+      "voluntary": true,
+      "changeDaysBeforeDeparture": 10
+     },
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "8201",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "21:00",
+      "arrLocal": "22:30",
+      "dayOffset": 0,
+      "accepted": true,
+      "voluntary": false,
+      "changeDaysBeforeDeparture": 3,
+      "paxEvent": "boarded"
+     }
+    ],
+    "expect": {
+     "systemCode": "FD-APPR-EL-03",
+     "amount": 1000,
+     "delayBand": "DELAY_GTE_9_HOURS",
+     "delayMin": 570
+    }
+   },
+   "note": "text: VOL to AC425 arr 13:00 at D-10 (the promise), INVOL at D-3 to arrive 22:30 (+9h30, Delay 9h+ -> EL-03); the 2-leg YUL-YOW-YYZ split is built as one replacement (the builder has no one-to-many)"
+  },
+  "FD_TC_162": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-ASL-NE-23"
+    }
+   },
+   "note": "audit TT_DIFFERS (keep TripTracer codes)"
+  },
+  "FD_TC_105": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "504",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "10:45",
+      "arrLocal": "12:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "voluntary": false,
+      "paxEvent": "boarded",
+      "changeDaysBeforeDeparture": 2
+     }
+    ]
+   },
+   "note": "replacement is an earlier flight: its own number (two AC506 on one day share a flight key)"
+  },
+  "FD_TC_147": {
+   "specPatch": {
+    "expect": {
+     "cause": "CREW"
+    }
+   },
+   "note": "text cancel code '42' is not a cancellation code; TripTracer reports the NetLine code sent (CREW)"
+  },
+  "FD_TC_103": {
+   "specPatch": {
+    "flightDaysAgo": 1,
+    "pinDaysAgo": true,
+    "expect": {
+     "eligibility": "PENDING"
+    }
+   },
+   "note": "PE-01: assessed within the 72 h pending window after arrival"
+  },
+  "FD_TC_150": {
+   "specPatch": {
+    "flightDaysAgo": 1,
+    "pinDaysAgo": true,
+    "expect": {
+     "eligibility": "PENDING"
+    }
+   },
+   "note": "PE-01: assessed within the 72 h pending window after arrival"
+  },
+  "FD_TC_171": {
+   "specPatch": {
+    "flightDaysAgo": 1,
+    "pinDaysAgo": true,
+    "expect": {
+     "eligibility": "PENDING"
+    }
+   },
+   "note": "PE-01: assessed within the 72 h pending window after arrival"
+  },
+  "SOC_UAT_024": {
+   "specPatch": {
+    "flightDaysAgo": 1,
+    "pinDaysAgo": true,
+    "expect": {
+     "eligibility": "PENDING"
+    }
+   },
+   "note": "PE-01: assessed within the 72 h pending window after arrival"
+  },
+  "SOC_UAT_048": {
+   "specPatch": {
+    "flightDaysAgo": 1,
+    "pinDaysAgo": true,
+    "expect": {
+     "eligibility": "PENDING"
+    }
+   },
+   "note": "PE-01: assessed within the 72 h pending window after arrival"
+  },
+  "SOC_UAT_076": {
+   "specPatch": {
+    "flightDaysAgo": 1,
+    "pinDaysAgo": true,
+    "expect": {
+     "eligibility": "PENDING"
+    }
+   },
+   "note": "PE-01: assessed within the 72 h pending window after arrival"
+  },
+  "FD_TC_101": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "noarrival",
+      "depDelayMin": 60
+     }
+    ]
+   },
+   "note": "ND-05: the MSL departed but its actual arrival is never reported"
+  },
+  "FD_TC_148": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "noarrival",
+      "depDelayMin": 60
+     }
+    ]
+   },
+   "note": "ND-05: the MSL departed but its actual arrival is never reported"
+  },
+  "FD_TC_169": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "noarrival",
+      "depDelayMin": 60
+     }
+    ]
+   },
+   "note": "ND-05: the MSL departed but its actual arrival is never reported"
+  },
+  "FD_TC_088": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "TECH",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 2,
+      "carrier": "AC",
+      "number": "486",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "18:25",
+      "arrLocal": "20:30",
+      "dayOffset": 0,
+      "accepted": false
+     }
+    ],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+     },
+     {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ],
+    "expect": {
+     "systemCode": "FD-APPR-NE-18",
+     "control": "SAFETY"
+    }
+   },
+   "note": "C2 implemented: built as the real cancellation the text describes; TECH is SAFETY in APPR_cancellation_lookup (keep TripTracer codes): NE-18"
+  },
+  "FD_TC_142": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": 120,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": "CREW",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "873",
+      "origin": "CDG",
+      "destination": "YYZ",
+      "depLocal": "12:00",
+      "arrLocal": "15:00",
+      "dayOffset": 0,
+      "accepted": false
+     }
+    ],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "C2 implemented: built as the real cancellation the text describes"
+  },
+  "FD_TC_143": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": 120,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": "CREW",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 2,
+      "carrier": "AC",
+      "number": "123",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "17:30",
+      "arrLocal": "19:50",
+      "dayOffset": 0,
+      "accepted": false
+     }
+    ],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+     },
+     {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "C2 implemented: built as the real cancellation the text describes"
+  },
+  "FD_TC_160": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "CREW",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "86",
+      "origin": "YYZ",
+      "destination": "TLV",
+      "depLocal": "01:00",
+      "arrLocal": "18:00",
+      "dayOffset": 1,
+      "accepted": false
+     }
+    ],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "C2 implemented: built as the real cancellation the text describes"
+  },
+  "FD_TC_161": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "CREW",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 2,
+      "carrier": "AC",
+      "number": "9044",
+      "origin": "FRA",
+      "destination": "TLV",
+      "depLocal": "14:30",
+      "arrLocal": "19:00",
+      "dayOffset": 1,
+      "accepted": false
+     }
+    ],
+    "paxEvents": [
+     {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+     },
+     {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+     }
+    ]
+   },
+   "note": "C2 implemented: built as the real cancellation the text describes"
+  },
+  "FD_TC_172": {
+   "specPatch": {
+    "stripLoyalty": true
+   },
+   "note": "no Aeroplan in the scenario: strip the seed-inherited loyalty membership (it selects MIXED EL-03)"
+  },
+  "FD_TC_173": {
+   "specPatch": {
+    "stripLoyalty": true
+   },
+   "note": "no Aeroplan in the scenario: strip the seed-inherited loyalty membership (it selects MIXED EL-03)"
+  },
+  "SOC_UAT_034": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "9871",
+      "origin": "CDG",
+      "destination": "CDG",
+      "depLocal": "11:20",
+      "arrLocal": "12:50",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded",
+      "changeDaysBeforeDeparture": 0.1
+     }
+    ],
+    "paxEvents": []
+   },
+   "note": "returned to origin: the passenger flew the diverted-back leg (its own segment ending at the origin), so Raptor reads RETURNED_TO_ORIGIN"
+  },
+  "SOC_UAT_037": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "9871",
+      "origin": "CDG",
+      "destination": "CDG",
+      "depLocal": "14:20",
+      "arrLocal": "15:50",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded",
+      "changeDaysBeforeDeparture": 0.1
+     }
+    ],
+    "paxEvents": []
+   },
+   "note": "returned to origin: the passenger flew the diverted-back leg (its own segment ending at the origin), so Raptor reads RETURNED_TO_ORIGIN"
+  },
+  "SOC_UAT_042": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "9850",
+      "origin": "CDG",
+      "destination": "CDG",
+      "depLocal": "09:20",
+      "arrLocal": "10:50",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded",
+      "changeDaysBeforeDeparture": 0.1,
+      "arrDelayMin": 480,
+      "delayCode": "64"
+     }
+    ],
+    "paxEvents": []
+   },
+   "note": "returned to origin: the passenger flew the diverted-back leg (its own segment ending at the origin), so Raptor reads RETURNED_TO_ORIGIN; the return to origin arrived 480 min late (EL-02 needs >= 120)"
+  },
+  "SOC_UAT_045": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "9856",
+      "origin": "CDG",
+      "destination": "CDG",
+      "depLocal": "14:20",
+      "arrLocal": "15:50",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded",
+      "changeDaysBeforeDeparture": 0.1
+     }
+    ],
+    "paxEvents": []
+   },
+   "note": "returned to origin: the passenger flew the diverted-back leg (its own segment ending at the origin), so Raptor reads RETURNED_TO_ORIGIN"
+  },
+  "SOC_UAT_058": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "9084",
+      "origin": "TLV",
+      "destination": "TLV",
+      "depLocal": "16:20",
+      "arrLocal": "17:50",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded",
+      "changeDaysBeforeDeparture": 0.1
+     }
+    ],
+    "paxEvents": []
+   },
+   "note": "returned to origin: the passenger flew the diverted-back leg (its own segment ending at the origin), so Raptor reads RETURNED_TO_ORIGIN"
+  },
+  "SOC_UAT_061": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "9084",
+      "origin": "TLV",
+      "destination": "TLV",
+      "depLocal": "16:20",
+      "arrLocal": "17:50",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded",
+      "changeDaysBeforeDeparture": 0.1
+     }
+    ],
+    "paxEvents": []
+   },
+   "note": "returned to origin: the passenger flew the diverted-back leg (its own segment ending at the origin), so Raptor reads RETURNED_TO_ORIGIN"
+  },
+  "SOC_UAT_072": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "9084",
+      "origin": "TLV",
+      "destination": "TLV",
+      "depLocal": "21:20",
+      "arrLocal": "22:50",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded",
+      "changeDaysBeforeDeparture": 0.1
+     }
+    ],
+    "paxEvents": []
+   },
+   "note": "returned to origin: the passenger flew the diverted-back leg (its own segment ending at the origin), so Raptor reads RETURNED_TO_ORIGIN"
+  },
+  "SOC_UAT_066": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "scheduleonly",
+      "arrDelayMin": 360,
+      "depDelayMin": 360,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "7184",
+      "origin": "TLV",
+      "destination": "VDA",
+      "depLocal": "21:00",
+      "arrLocal": "21:50",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+     }
+    ]
+   },
+   "note": "operating data missing (no flight status) per scenario: ND-04; own flight number (AC 7184) so no other scenario's actuals for the shared flight reach it; schedule (SKD) only: flight known, operating times missing"
+  },
+  "FD_TC_163": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 120,
+      "depDelayMin": null,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 90,
+      "depDelayMin": null,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ]
+   },
+   "note": "leg 2's delay carries the controllable code 42 the scenario states"
+  },
+  "FD_TC_238": {
+   "specPatch": {
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "837",
+      "origin": "MAD",
+      "destination": "YYZ",
+      "depLocal": "13:00",
+      "arrLocal": "15:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK",
+      "operatingCarrier": null,
+      "operatingUnknown": true
+     }
+    ]
+   },
+   "note": "MSL operating carrier absent from the booking (C6)"
+  },
+  "SOC_UAT_069": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "9084",
+      "origin": "TLV",
+      "destination": "TLV",
+      "depLocal": "21:20",
+      "arrLocal": "22:50",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded",
+      "changeDaysBeforeDeparture": 0.1,
+      "arrDelayMin": 1080,
+      "delayCode": "77"
+     }
+    ],
+    "paxEvents": [],
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 1080,
+      "depDelayMin": 1080,
+      "delayCode": "77",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ]
+   },
+   "note": "returned to origin after the cancellation, ~18 h late (EL-02)"
+  },
+  "FD_TC_178": {
+   "specPatch": {
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "871",
+      "origin": "CDG",
+      "destination": "YYZ",
+      "depLocal": "13:30",
+      "arrLocal": "16:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+     },
+     {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "8085",
+      "origin": "YYZ",
+      "destination": "TLV",
+      "depLocal": "23:00",
+      "arrLocal": "16:00",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+     }
+    ]
+   },
+   "note": "proposal C11: the YYZ-TLV leg is a flight listed in ASL_regulatory_data_missing_lookup (AC#8085)"
+  },
+  "SOC_UAT_031": {
+   "specPatch": {
+    "booking": {
+     "officeId": "LONAC08AA"
+    }
+   },
+   "note": "proposal C12: UK point of sale -> UK application (NE-07)"
+  }
+ }
+}

@@ -1,0 +1,16 @@
+# Smoke: delayed bag -> notice -> identity form -> the OTP channel choice. Stops BEFORE a code is
+# requested, so it costs no OTP and does not mark the booking used.
+id: smoke-identify
+title: Delayed bag -> identity -> OTP channel offered (no code requested)
+tags: [smoke]
+booking: { pool: any, pick: any, need: [open, recent], avoid: [partner, waiting, two-bags, two-journeys, duplicate] }
+first_message: "My checked bag didn't arrive and I want to follow it up."
+steps:
+  - notice: yes
+  - identify: true
+  - expect:
+      step: GenUC-08.channel
+      board: choose where to send the code
+      any_of: ["verification code", "send (you )?a code", "where should we send", "how would you like"]
+      optional: true
+  - stop: end

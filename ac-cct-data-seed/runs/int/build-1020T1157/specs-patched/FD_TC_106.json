@@ -1,0 +1,64 @@
+{
+ "id": "FD_TC_106",
+ "family": "FD",
+ "summary": "Single adult, AC YUL-YYZ whose flight date is in the FUTURE (2 days from today); nothing has happened yet - claim must be rejected before DDS",
+ "passengers": [
+  {
+   "firstName": "PHILIPPE",
+   "lastName": "TREMBLAY",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "427",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:45",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": -2,
+ "outcomes": [],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": null,
+  "systemCode": null,
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": null,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "No Trip Tracer UI validation block in the text",
+   "DDS NOT INVOKED; no case created; no Claims Dashboard entry"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flightDaysAgo=-2: flight May 22, current date May 20 in the text (negative = future)",
+  "flight number AC 427 from prerequisites (chatbot journey shows AC 507 on May 21 / May 18)",
+  "times 12:45 / 14:00 not in text (both assumed)",
+  "no outcomes: flight has not operated; no DDS result expected"
+ ],
+ "unsupported": [
+  "Future-dated booking: DDS/Trip Tracer produce nothing; the rejection (pre-travel check) is chatbot behaviour"
+ ]
+}

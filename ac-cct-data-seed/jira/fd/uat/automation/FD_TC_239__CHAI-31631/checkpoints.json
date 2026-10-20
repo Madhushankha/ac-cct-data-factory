@@ -1,0 +1,1305 @@
+{
+  "key": "CHAI-31631",
+  "test_id": "FD_TC_239",
+  "title": "Eligible FD | Basic Aeroplan | Cash (Interac) selected | Customer REFUSES IDV (Persona) ? manual IDV FAILS ? claim declined and closed | APPR | Controllable (Code 96) | Delay 6 to under 9 hrs | 1 Pax | Single leg | Residence: Canada",
+  "goal": "Checks that an eligible claim is never paid without a verified identity, even for a linked Aeroplan member. Flight AC 412 YUL ? YYZ arrived 7 hours late (Code 96, Controllable), and DDS returns FD-APPR-EL-02, CAD 700. The customer lives in Canada and has a Basic Aeroplan profile, so the bot offers Cash CAD 700 (Interac) and AC Wallet CAD 840. The customer picks Cash, and the bot collects the email only. At the payout IDV step the customer declines Persona. The bot says the identity will be checked manually, and the case goes to CR through Manual Handoff with no CyberSource flag. A CR agent sets up a video check using another email address the customer gives. The ID doesn't match the claimant, so the manual IDV fails. The agent rejects the case, an automated decline message is sent and the claim is closed. No compensation record is created, AC Wallet isn't credited and nothing is sent to Unifier.",
+  "summary": {
+    "seed": 14,
+    "chat": 49,
+    "api": 8,
+    "email": 3,
+    "dashboard": 0,
+    "implied": 66,
+    "manual": 2,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Checks that an eligible claim is never paid without a verified identity, even for a linked Aeroplan member. Flight AC 412 YUL ? YYZ arrived 7 hours late (Code 96, Controllable), and DDS returns FD-APPR-EL-02, CAD 700. The customer lives in Canada and has a Basic Aeroplan profile, so the bot offers Cash CAD 700 (Interac) and AC Wallet CAD 840. The customer picks Cash, and the bot collects the email only. At the payout IDV step the customer declines Persona. The bot says the identity will be checked manually, and the case goes to CR through Manual Handoff with no CyberSource flag. A CR agent sets up a video check using another email address the customer gives. The ID doesn't match the claimant, so the manual IDV fails. The agent rejects the case, an automated decline message is sent and the claim is closed. No compensation record is created, AC Wallet isn't credited and nothing is sent to Unifier.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: ID040 � single passenger S�bastien Lachance (Adult, Basic Aeroplan 9876543210, linked, good standing, not frozen)",
+      "expected": "PNR: ID040 � single passenger S�bastien Lachance (Adult, Basic Aeroplan 9876543210, linked, good standing, not frozen)",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "AC 412 YUL ? YYZ, July 20, 2026",
+      "expected": "AC 412 YUL ? YYZ, July 20, 2026",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Scheduled arrival 12:00, actual 19:00 (7h delay)",
+      "expected": "Scheduled arrival 12:00, actual 19:00 (7h delay)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Code 96 (Operations Control � Controllable)",
+      "expected": "Code 96 (Operations Control � Controllable)",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Travelled, arrived late",
+      "expected": "Travelled, arrived late",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No VOL/INVOL changes",
+      "expected": "No VOL/INVOL changes",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "AC only",
+      "expected": "AC only",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Claim filed Jul 28, 2026 (more than 72h, within 366 days)",
+      "expected": "Claim filed Jul 28, 2026 (more than 72h, within 366 days)",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No duplicate",
+      "expected": "No duplicate",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Not employee, not infant",
+      "expected": "Not employee, not infant",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "implied",
+      "step": "CyberSource GREEN",
+      "expected": "CyberSource GREEN",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Country of residence: Canada",
+      "expected": "Country of residence: Canada",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "OTP passed",
+      "expected": "OTP passed",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Persona: customer declines consent. mIDV (video): FAIL",
+      "expected": "Persona: customer declines consent. mIDV (video): FAIL",
+      "id": "CP015"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "CR agent: Sarah Martin",
+      "expected": "CR agent: Sarah Martin",
+      "id": "CP016"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP017"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01): \"Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?\"",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP018"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects \"English\"",
+      "expected": "English",
+      "id": "CP019"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then the privacy alert is displayed: \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP020"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP021"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Montreal to Toronto was delayed about 7 hours, I'd like to check if I'm eligible for compensation\"",
+      "expected": "My flight from Montreal to Toronto was delayed about 7 hours, I'd like to check if I'm eligible for compensation",
+      "id": "CP022"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then third-party check ? NO",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP025"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot shows the automated decision-making disclaimer ? user agrees to start",
+      "expected": "",
+      "id": "CP026"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "User provides \"S�bastien Lachance\" and PNR \"ID040\" ? Trip Tracer PNR FOUND (Auth Flow 1)",
+      "expected": "S�bastien Lachance ID040",
+      "id": "CP027"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "User selects Email s***@gmail.com ? OTP \"275806\" ? CORRECT (attempt 1 of 5) ? \"Your verification was successful. Let's proceed to the next step.\"",
+      "expected": "275806 Your verification was successful. Let's proceed to the next step.",
+      "id": "CP028"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "And no UMNR / YP flag on the PNR",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "PASSENGER & JOURNEY SELECTION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Group booking identifier = NOT PRESENT",
+      "expected": "\"I found 1 passenger on this booking: S�bastien Lachance (Adult - Aeroplan Member). Is this who you'd like to include?\" ? \"Yes\" AC 412, YUL ? YYZ, July 20, 2026, Arrival Delay 7 hours ? \"Yes\"",
+      "id": "CP030"
+    },
+    {
+      "section": "CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Single leg ? skip GenUC-18; duplicate check ? none; 72-hour check ? PROCEED; APPR limit ? 8 days (within 366 days) ? PROCEED",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "DDS EVALUATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "APPR; Code 96 Controllable; 420 min ? 6 to under 9 hrs; ELIGIBLE; FD-APPR-EL-02; CAD 700",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "ID040",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current: ARRIVED LATE, 12:00 ? 19:00, +7H 00M",
+      "expected": "Current: ARRIVED LATE, 12:00 ? 19:00, +7H 00M",
+      "id": "CP033"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "ID040",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: APPR (1 regime)",
+      "expected": "Regime: APPR (1 regime)",
+      "id": "CP034"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "ID040",
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL: AC 412 � YUL ? YYZ � 96 \"Delayed due to operations control\" � CONTROLLABLE",
+      "expected": "MSL: AC 412 � YUL ? YYZ � 96 \"Delayed due to operations control\" � CONTROLLABLE",
+      "id": "CP035"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "ID040",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Aeroplan: 9876543210 (Basic Member � linked)",
+      "expected": "Aeroplan: 9876543210 (Basic Member � linked)",
+      "id": "CP036"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "ID040",
+      "kind": "verdict",
+      "method": "api",
+      "step": "MR S�BASTIEN LACHANCE | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet",
+      "expected": "MR S�BASTIEN LACHANCE | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet",
+      "id": "CP037"
+    },
+    {
+      "section": "ELIGIBLE RESULT",
+      "requirement": "FD-05a",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Chatbot shows the APPR eligible message for AC 412 (about 7 hours)",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "CLAIM PAYMENT � COUNTRY & FRAUD",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Chatbot asks: \"In which country will your reimbursement be deposited?\" ? user selects \"Canada\" ? currency CAD",
+      "expected": "In which country will your reimbursement be deposited? Canada",
+      "id": "CP039"
+    },
+    {
+      "section": "AEROPLAN / AC WALLET OFFER",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "System checks Aeroplan: 9876543210, Basic Member, good standing ? both options offered",
+      "expected": "Chatbot: \"Since you are an Aeroplan member, you can choose to either receive: * Cash: CAD $700 sent via Interac e-Transfer, takes 5 to 10 business days to process. * AC Wallet: CAD $840 (including a 20% bonus) added to your AC Wallet immediately with no expiry. How would you like to receive your funds?\" User selects \"Cash\"",
+      "id": "CP040"
+    },
+    {
+      "section": "AEROPLAN / AC WALLET OFFER",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And AC Wallet is recorded as offered but not selected",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "PAYMENT METHOD ROUTING",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Country = Canada ? Interac",
+      "expected": "Chatbot: \"Your payment will be made through Interac e-Transfer. Before we move forward, please confirm the email address where you'd like to receive your payment related information. Would you like to use s***@gmail.com? Please note that only one email address can be used for this compensation/reimbursement and it can't be changed once confirmed.\" User: \"Yes, use this email\"",
+      "id": "CP042"
+    },
+    {
+      "section": "PAYMENT METHOD ROUTING",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no address, bank, card or Transit/Institution details are asked for",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "PAYOUT IDV � CUSTOMER DECLINES",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "System checks \"Completed IDV?\" ? NO",
+      "expected": "Completed IDV?",
+      "id": "CP044"
+    },
+    {
+      "section": "PAYOUT IDV � CUSTOMER DECLINES",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "Then IDV context = Payment",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "PAYOUT IDV � CUSTOMER DECLINES",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the customer's consent is recorded as NOT given",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "PAYOUT IDV � CUSTOMER DECLINES",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the chatbot tells the customer that someone will contact them to verify their identity manually, and that they will get an email with next steps",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "PAYOUT IDV � CUSTOMER DECLINES",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Claim Amount Confirmation (GenUC-20b) is NOT shown",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "PAYOUT IDV � CUSTOMER DECLINES",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the claim is NOT submitted for payment",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "PAYOUT IDV � CUSTOMER DECLINES",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the bot does NOT offer to switch to AC Wallet to skip IDV",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "PAYOUT IDV � CUSTOMER DECLINES",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And NO CyberSource flag is raised",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "PAYOUT IDV � CUSTOMER DECLINES",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case is routed to Manual Handoff via Case Services (queue: CR)",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "PAYOUT IDV � CUSTOMER DECLINES",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot offers \"Is there anything I can help you with?\" ? user \"No\" ? \"Thank you for choosing Air Canada.\"",
+      "expected": "Is there anything I can help you with? No Thank you for choosing Air Canada.",
+      "id": "CP053"
+    },
+    {
+      "section": "NOTIFICATION � MANUAL VERIFICATION NEXT STEPS",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "An email is sent to s***@gmail.com with the case reference (CASE-FD-20260728-040) and the next steps for manual identity verification",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "NOTIFICATION � MANUAL VERIFICATION NEXT STEPS",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email does NOT confirm a payment, payment date or AC Wallet credit",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "PART B � CR AGENT SCHEDULES mIDV",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given Sarah Martin pulls the case from My Activities ? Assigned ? In Progress",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "PART B � CR AGENT SCHEDULES mIDV",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then Decision Assist shows ELIGIBLE, FD-APPR-EL-02, CAD 700",
+      "expected": "",
+      "id": "CP057"
+    },
+    {
+      "section": "PART B � CR AGENT SCHEDULES mIDV",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the payout selection shows Cash (Interac); AC Wallet CAD 840 offered but not selected",
+      "expected": "",
+      "id": "CP058"
+    },
+    {
+      "section": "PART B � CR AGENT SCHEDULES mIDV",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the IDV status shows \"Not consented (payout)\"",
+      "expected": "Not consented (payout)",
+      "id": "CP059"
+    },
+    {
+      "section": "PART B � CR AGENT SCHEDULES mIDV",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And a banner or tag shows that payout is blocked until identity is verified",
+      "expected": "",
+      "id": "CP060"
+    },
+    {
+      "section": "PART B � CR AGENT SCHEDULES mIDV",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah schedules video verification and sends the invitation to the other email address the customer gave",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "PART B � CR AGENT SCHEDULES mIDV",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the invitation is logged in Customer Communications",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "PART B � CR AGENT SCHEDULES mIDV",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the case status is \"Awaiting Customer Info\" (manual IDV)",
+      "expected": "Awaiting Customer Info",
+      "id": "CP063"
+    },
+    {
+      "section": "PART C � mIDV FAILS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given the customer joins the video call",
+      "expected": "",
+      "id": "CP064"
+    },
+    {
+      "section": "PART C � mIDV FAILS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah compares the government ID shown with the claimant (S�bastien Lachance), the booking and the Aeroplan profile",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "PART C � mIDV FAILS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the name or photo on the ID doesn't match the claimant",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "PART C � mIDV FAILS",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Sarah records the mIDV result = FAIL (Not Verified)",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "PART C � mIDV FAILS",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the IDV result is saved to the case and can't be edited",
+      "expected": "",
+      "id": "CP068"
+    },
+    {
+      "section": "PART C � mIDV FAILS",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Sarah writes a short, factual internal note, with no personal details beyond what's needed",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "PART C � mIDV FAILS",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the case is flagged or visible in the Fraud failed-IDV view (to confirm)",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah rejects the case",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then an automated message tells the customer the claim was declined",
+      "expected": "",
+      "id": "CP072"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the message does NOT disclose itinerary details, the fraud check or the internal reason",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no secure payment link is sent",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no AC Wallet credit is made to 9876543210",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case status becomes Closed",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Decision Assist and payment fields become read-only",
+      "expected": "Claims Dashboard Gherkin:",
+      "id": "CP077"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Given case \"CASE-FD-20260728-040\" for claimant \"S�bastien Lachance\" (PNR \"ID040\") has DDS \"ELIGIBLE\", \"FD-APPR-EL-02\", \"CAD 700\"",
+      "expected": "CASE-FD-20260728-040 S�bastien Lachance ID040 ELIGIBLE FD-APPR-EL-02 CAD 700",
+      "id": "CP078"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the customer has Basic Aeroplan \"9876543210\" linked and in good standing",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the customer selected \"Cash\" over AC Wallet",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the customer declined consent for payout IDV in the chatbot",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the case should be routed to Manual Handoff in the CR queue",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no CyberSource flag should be raised for the consent refusal",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the IDV status should show \"Not consented (payout)\"",
+      "expected": "Not consented (payout)",
+      "id": "CP084"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the payout should be blocked",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Topic/Sub-topic should be \"Travel Disruptions � Delays\"",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the agent should be able to edit Topic/Sub-topic but cannot switch automated to non-automated",
+      "expected": "",
+      "id": "CP087"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Created and Last Updated dates should be populated",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the SLA countdown should be tracking correctly",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Claimant should be \"S�bastien Lachance\", Adult, Authentication \"Pass (OTP)\"",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the PNR should be \"ID040\" with Creation Date, Journey ID, Booking Source and Office ID populated",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And the Regime should be \"APPR\"",
+      "expected": "APPR",
+      "id": "CP092"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Tags should include \"Claimant\" and \"Adult\"",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Email should be \"s***@gmail.com\"",
+      "expected": "",
+      "id": "CP094"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Aeroplan should be \"9876543210\" linked, Tier Status \"Basic / Member\"",
+      "expected": "",
+      "id": "CP095"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Journey should show \"Bound 1: YUL ? YYZ\" (AC 412, +7H 00M, Code 96)",
+      "expected": "",
+      "id": "CP096"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Ancillary Fee section should be present and empty",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Eligibility and Compensation section should show \"ELIGIBLE � CAD 700 � Cash (Interac)\" with no payment issued",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And AC Wallet CAD 840 should show as offered but not selected",
+      "expected": "",
+      "id": "CP099"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Duplicate Check should show \"No duplicate found\"",
+      "expected": "",
+      "id": "CP100"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the CyberSource result should be \"GREEN\"",
+      "expected": "",
+      "id": "CP101"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the CR agent schedules video verification using another email address",
+      "expected": "",
+      "id": "CP102"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the invitation should be logged in Customer Communications",
+      "expected": "",
+      "id": "CP103"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the status should be \"Awaiting Customer Info\"",
+      "expected": "",
+      "id": "CP104"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "When the agent records the mIDV result as \"FAIL\"",
+      "expected": "FAIL",
+      "id": "CP105"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "Then the IDV result should be saved and not editable",
+      "expected": "",
+      "id": "CP106"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no passenger, Aeroplan or flight fields should be updated automatically from the failed verification",
+      "expected": "",
+      "id": "CP107"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And any related notes should be free text only",
+      "expected": "",
+      "id": "CP108"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the agent rejects the case",
+      "expected": "",
+      "id": "CP109"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then an automated \"claim declined\" message should be sent to the customer",
+      "expected": "",
+      "id": "CP110"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the message should not disclose itinerary or fraud details",
+      "expected": "",
+      "id": "CP111"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no payment link should be sent",
+      "expected": "",
+      "id": "CP112"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case status should be \"Closed\"",
+      "expected": "",
+      "id": "CP113"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the Audit Log should record in order: created, DDS Eligible, CyberSource GREEN, Cash selected (AC Wallet offered), Interac email confirmed, IDV consent declined, Manual Handoff to CR, Assigned, In Progress, mIDV scheduled, mIDV FAIL, rejection, decline message sent, Closed, with actor and timestamp",
+      "expected": "",
+      "id": "CP114"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the chatbot transcript should be linked",
+      "expected": "",
+      "id": "CP115"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case should be read-only after closure",
+      "expected": "",
+      "id": "CP116"
+    },
+    {
+      "section": "PART D � CLAIM DECLINED AND CLOSED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the agent should not be able to access Case Search as it is for leads and management only",
+      "expected": "Payment Validation Gherkin:",
+      "id": "CP117"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the customer's country of residence is \"Canada\"",
+      "expected": "",
+      "id": "CP118"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the customer has Basic Aeroplan \"9876543210\" linked in good standing",
+      "expected": "",
+      "id": "CP119"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then both Cash (CAD 700) and AC Wallet (CAD 840) should be offered",
+      "expected": "",
+      "id": "CP120"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "When the customer selects \"Cash\"",
+      "expected": "",
+      "id": "CP121"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then the currency should be \"CAD\" and the payment method \"Interac e-Transfer\"",
+      "expected": "",
+      "id": "CP122"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And only the email \"s***@gmail.com\" should be collected",
+      "expected": "",
+      "id": "CP123"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no address, bank, card or Transit/Institution details should be collected",
+      "expected": "",
+      "id": "CP124"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "When the customer declines payout IDV",
+      "expected": "",
+      "id": "CP125"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then the claim should not be submitted for payment",
+      "expected": "",
+      "id": "CP126"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record should be created",
+      "expected": "",
+      "id": "CP127"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "When the manual IDV fails and the case is closed",
+      "expected": "",
+      "id": "CP128"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no compensation record should exist",
+      "expected": "",
+      "id": "CP129"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And nothing should be picked up by the evening batch file",
+      "expected": "",
+      "id": "CP130"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And nothing should be sent to Unifier or EIP",
+      "expected": "",
+      "id": "CP131"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no Interac transfer should be issued or show a status",
+      "expected": "",
+      "id": "CP132"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no AC Wallet credit should be made to account 9876543210",
+      "expected": "",
+      "id": "CP133"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Compensation tab should show \"Eligible CAD 700 � not paid (identity not verified)\"",
+      "expected": "",
+      "id": "CP134"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS FD-APPR-EL-02, ELIGIBLE, CAD 700.",
+      "expected": "DDS FD-APPR-EL-02, ELIGIBLE, CAD 700.",
+      "id": "CP135"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "CyberSource GREEN.",
+      "expected": "CyberSource GREEN.",
+      "id": "CP136"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Basic Aeroplan linked, so Cash CAD 700 and AC Wallet CAD 840 are both offered.",
+      "expected": "Basic Aeroplan linked, so Cash CAD 700 and AC Wallet CAD 840 are both offered.",
+      "id": "CP137"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The customer picks Cash ? Interac, email only.",
+      "expected": "The customer picks Cash ? Interac, email only.",
+      "id": "CP138"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The customer declines Persona IDV at payout, so the claim isn't submitted.",
+      "expected": "The customer declines Persona IDV at payout, so the claim isn't submitted.",
+      "id": "CP139"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The case goes to CR through Manual Handoff with no CyberSource flag.",
+      "expected": "The case goes to CR through Manual Handoff with no CyberSource flag.",
+      "id": "CP140"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The CR video check fails, and the result is saved and can't be changed.",
+      "expected": "The CR video check fails, and the result is saved and can't be changed.",
+      "id": "CP141"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The agent rejects the case, an automated decline message is sent and the claim is closed.",
+      "expected": "The agent rejects the case, an automated decline message is sent and the claim is closed.",
+      "id": "CP142"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "No compensation record, no AC Wallet credit, no batch pickup, no Unifier or EIP dispatch, no Interac transfer.",
+      "expected": "No compensation record, no AC Wallet credit, no batch pickup, no Unifier or EIP dispatch, no Interac transfer.",
+      "id": "CP143"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+ "id": "FD_TC_137",
+ "family": "FD",
+ "summary": "Partner-airline (OAL, Lufthansa) employee on a staff booking, AC871 CDG-YYZ sched arr 13:00, arrived 17:00 (+4h), code 42 controllable: OAL-employee exclusion makes it Not Eligible under every regime",
+ "passengers": [
+  {
+   "firstName": "HANS",
+   "lastName": "MUELLER",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": true,
+   "employeeAirline": "LH"
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "871",
+   "origin": "CDG",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "13:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-EU-NE-02",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 871, Route: CDG → YYZ, Scheduled Arrival: 13:00",
+   "Current Itinerary - Flight: AC 871, Route: CDG → YYZ, Status: ARRIVED LATE, Actual: 17:00, Delay: +4H 00M",
+   "Passenger: OAL EMPLOYEE (OAL employee booking identifier present)",
+   "Regime: EU 261 (EU origin - CDG) - BUT employee exclusion applies",
+   "MSL FLIGHT: AC 871 - CDG → YYZ - 42 - CONTROLLABLE",
+   "Employee Check: OAL EMPLOYEE → NOT ELIGIBLE (overrides all other checks)",
+   "Flight Compensation: MR HANS MUELLER | NOT ELIGIBLE | EMPLOYEE_OAL | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "conflict inside the text: prerequisites say AC 850 LHR-YYZ sched arr 16:00 / actual 20:00 (EU-UK + APPR); Trip Tracer lines, chatbot journey use AC 871 CDG-YYZ 13:00 / 17:00 - Trip Tracer lines used (same +4h delay)",
+  "dep 10:00 CDG (as sibling AC871 scenarios)",
+  "partner airline Lufthansa (LH) taken from Expected Results 'OAL Employee (Lufthansa)'; carried as non-schema extra pax.employeeAirline",
+  "Expected Results: other regimes also NE (APPR NE employee, ASL NE employee)"
+ ],
+ "unsupported": [
+  "OAL-employee booking identifier: schema employee flag is boolean only (employeeAirline is a non-schema extra); booking-level staff-travel identifier"
+ ]
+}

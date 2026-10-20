@@ -1,0 +1,95 @@
+{
+  "id": "SOC_UAT_025",
+  "family": "SOC",
+  "summary": "EU SOC: 1 AC employee (non-revenue) pax on AC 849 LHR-YYZ Jun 1 19:00, actual Jun 2 01:00 (+360), code 41; employee check first -> NOT ELIGIBLE (SoC-EU-NE-01)",
+  "passengers": [
+    {
+      "firstName": "JAMES",
+      "lastName": "HARRIS",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": true
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "849",
+      "origin": "LHR",
+      "destination": "YYZ",
+      "depLocal": "19:00",
+      "arrLocal": "22:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 360,
+      "depDelayMin": 360,
+      "delayCode": "41",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-EU-NE-01",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 360,
+    "control": null,
+    "cause": "41",
+    "ttUi": [
+      "TYPE: EMPLOYEE (non-revenue)",
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip LHR→YYZ on AC849 delayed +6H 00M",
+      "Regime: EU (LHR departure)",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Promised Itinerary: AC 849 LHR→YYZ Scheduled Dep 01-Jun 19:00",
+      "Current Itinerary: AC 849 LHR→YYZ ARRIVED LATE, Scheduled Dep 19:00 → Actual 02-Jun 01:00, +6H 00M",
+      "SOC section present",
+      "PASSENGER | NOT_ELIGIBLE | DELAY_6_HOURS_OR_MORE | MEAL — | ACCOMMODATION — | GENERAL EXPENSES — | EXPIRES —",
+      "NOT_ELIGIBLE reason: Employee booking (AC)"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none; AC employee booking"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "arrival 22:00 EDT same day (8h block, tz -5h), actual delay moves it past midnight",
+    "delay code 41 present but not evaluated (employee not eligible regardless) so control=null",
+    "residence null (LHR origin; not stated)"
+  ],
+  "unsupported": [
+    "Non-revenue ticket type / employee office suffix not expressible beyond employee=true"
+  ]
+}

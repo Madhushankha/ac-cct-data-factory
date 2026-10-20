@@ -1,0 +1,522 @@
+{
+  "key": "CHAI-31820",
+  "test_id": "FD_ED_TC_09",
+  "title": "Authentication | Travel Agency Booking | OTP to Agency Email | NOA Upload | Manual Handling",
+  "goal": "Customer booked through a travel agency (Expedia). The email on file is the agency's email, not the customer's. OTP is sent to agency email but customer doesn't have access. Customer uploads a Notice of Authorization (NOA) from the agency. Case sent for manual handling with NOA attached.",
+  "summary": {
+    "seed": 1,
+    "chat": 32,
+    "api": 6,
+    "email": 3,
+    "dashboard": 3,
+    "implied": 10,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Customer booked through a travel agency (Expedia). The email on file is the agency's email, not the customer's. OTP is sent to agency email but customer doesn't have access. Customer uploads a Notice of Authorization (NOA) from the agency. Case sent for manual handling with NOA attached.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: TCED08 booked via travel agency (Expedia); Contact email on PNR: bookings@expedia.com (agency email); Customer's personal email: maria.garcia@email.com; 1 leg AC (YYZ?CDG); Delay 5 hrs; Code 42; EU applicable",
+      "expected": "PNR: TCED08 booked via travel agency (Expedia); Contact email on PNR: bookings@expedia.com (agency email); Customer's personal email: maria.garcia@email.com; 1 leg AC (YYZ?CDG); Delay 5 hrs; Code 42; EU applicable",
+      "id": "CP002"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP003"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP004"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Toronto to Paris was delayed 5 hours due to a crew issue. I booked through Expedia. Can I get compensation?\"",
+      "expected": "My flight from Toronto to Paris was delayed 5 hours due to a crew issue. I booked through Expedia. Can I get compensation?",
+      "id": "CP008"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO (customer is the traveller, just booked via agency)",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP011"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP012"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP013"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP014"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"Maria Garcia\"",
+      "expected": "Maria Garcia",
+      "id": "CP015"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, Maria! And, what is your booking reference number?",
+      "id": "CP016"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: TC227\"",
+      "expected": "PNR: TC227",
+      "id": "CP017"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC227",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND (Auth Flow 1)",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer data is revealed � BOOKING SOURCE: TRAVEL AGENCY (Expedia)",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer identifies: Contact email on PNR = bookings@expedia.com (agency email, NOT customer's personal email)",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer data (passenger info, journey details) is revealed to the customer",
+      "expected": "",
+      "id": "CP022"
+    },
+    {
+      "section": "AUTHENTICATION � OTP TO AGENCY EMAIL",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP023"
+    },
+    {
+      "section": "AUTHENTICATION � OTP TO AGENCY EMAIL",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: b***@expedia.com � Phone: (none on file) NOTE: The only email on file is the travel agency's email (bookings@expedia.com). No customer personal email or phone is on the PNR.",
+      "id": "CP024"
+    },
+    {
+      "section": "AUTHENTICATION � OTP TO AGENCY EMAIL",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: b***@expedia.com\"",
+      "expected": "Email: b***@expedia.com",
+      "id": "CP025"
+    },
+    {
+      "section": "AUTHENTICATION � OTP TO AGENCY EMAIL",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP026"
+    },
+    {
+      "section": "OTP SENT TO AGENCY EMAIL � CUSTOMER CANNOT ACCESS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds: \"I don't have access to that email � that's my travel agency's email, not mine. I booked through Expedia.\"",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "OTP ACCESS ISSUE DETECTED",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I understand. Since the email on file belongs to your travel agency, you may not have access to the verification code. Let me offer you an alternative way to verify your identity.",
+      "id": "CP028"
+    },
+    {
+      "section": "ALTERNATIVE VERIFICATION � NOA UPLOAD PATH",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Since you booked through a travel agency, we can verify your identity if you provide a Notice of Authorization (NOA) from your travel agency. This is a document from Expedia confirming that you are the authorized traveller on this booking. You can also provide: � A copy of your government-issued photo ID � Your booking confirmation from Expedia showing your name Would you like to upload these documents?",
+      "id": "CP029"
+    },
+    {
+      "section": "ALTERNATIVE VERIFICATION � NOA UPLOAD PATH",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Yes, I have an NOA from Expedia\"",
+      "expected": "Yes, I have an NOA from Expedia",
+      "id": "CP030"
+    },
+    {
+      "section": "NOA UPLOAD",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Please upload your Notice of Authorization (NOA) from Expedia. Accepted formats: PDF, JPG, PNG (max 10MB).",
+      "id": "CP031"
+    },
+    {
+      "section": "NOA UPLOAD",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user uploads: NOA_Expedia_TC227.pdf",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "NOA VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system receives the uploaded NOA document",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "NOA VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system checks:",
+      "expected": "? File format: PDF ? ? File size: 2.3 MB ? (under 10MB limit) ? Document type: NOA (Notice of Authorization) ? ? Content readable: YES ? NOTE: NOA content validation (verifying agency letterhead, matching PNR, matching passenger name) is done MANUALLY by an agent � the system cannot auto-validate NOA content.",
+      "id": "CP034"
+    },
+    {
+      "section": "NOA VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system determines: NOA UPLOADED � REQUIRES MANUAL VALIDATION ? CASE SENT FOR MANUAL HANDLING",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "NOA UPLOADED � MANUAL HANDLING",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thank you for uploading your Notice of Authorization. Since your booking was made through a travel agency, your claim will need to be reviewed by our team to verify the authorization. I'll create a case with all the information you've provided, including the NOA document.",
+      "id": "CP036"
+    },
+    {
+      "section": "ADDITIONAL CONTACT INFORMATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Since the email on file belongs to your travel agency, could you please provide your personal email address so we can contact you directly about your claim?",
+      "id": "CP037"
+    },
+    {
+      "section": "ADDITIONAL CONTACT INFORMATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides: \"maria.garcia@email.com\"",
+      "expected": "maria.garcia@email.com",
+      "id": "CP038"
+    },
+    {
+      "section": "ADDITIONAL CONTACT INFORMATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot confirms: \"Thank you. We'll use maria.garcia@email.com to contact you about your claim.\"",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "ADDITIONAL CONTACT INFORMATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Could you also provide a phone number where we can reach you?",
+      "id": "CP040"
+    },
+    {
+      "section": "ADDITIONAL CONTACT INFORMATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides: \"+1-426-555-7890\"",
+      "expected": "+1-426-555-7890",
+      "id": "CP041"
+    },
+    {
+      "section": "ADDITIONAL CONTACT INFORMATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot confirms: \"Thank you.\"",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "CASE CREATION � MANUAL HANDLING",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system creates a case with status: PENDING MANUAL HANDLING (Travel Agency Booking + NOA Verification)",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "CASE CREATION � MANUAL HANDLING",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the case contains:",
+      "expected": "� PNR: TC227 � Passenger: Maria Garcia � Booking Source: Travel Agency (Expedia) � Contact Email on PNR: bookings@expedia.com (agency) � Customer Personal Email: maria.garcia@email.com (provided by customer) � Customer Phone: +1-426-555-7890 (provided by customer) � Journey: YYZ?CDG, delayed 5h � Authentication Status: PENDING (OTP not completed � agency email; NOA uploaded for manual verification) � NOA Document: NOA_Expedia_TC227.pdf (attached) � Case Status: Pending Manual Handling � Routing: Customer Relations / Travel Agency Verification Team",
+      "id": "CP044"
+    },
+    {
+      "section": "CASE CREATION � MANUAL HANDLING",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your case has been created and forwarded to our Customer Relations team. Your case reference number is [CASE-REF]. A team member will review your Notice of Authorization and contact you at maria.garcia@email.com within 15 business days to process your claim.",
+      "id": "CP045"
+    },
+    {
+      "section": "CASE CREATION � MANUAL HANDLING",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "And an alert information is displayed: \"Case created for manual review.\"",
+      "expected": "Case created for manual review.",
+      "id": "CP046"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a Manual Handling notification email is sent to maria.garcia@email.com (customer's personal email)",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains:",
+      "expected": "Your Air Canada claim has been received � [CASE-REF] Your claim has been received. Since your booking was made through a travel agency, our team will review your Notice of Authorization and process your claim.",
+      "id": "CP049"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers:",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP050"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP051"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP052"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "When the agent navigates to Claims Dashboard",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the agent searches for the case by PNR",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the dashboard displays:",
+      "expected": "� Case Title: \"Travel Disruptions � Delay (Travel Agency)\" � Status: Pending Manual Handling � Created: � Last updated at � SLA � Team: Customer Relations / Travel Agency Verification CASE OVERVIEW � Claimant Name: Maria Garcia � Claimant Type: Passenger (booked via travel agency) � Booking Source: Travel Agency (Expedia) � Authentication Status: PENDING (NOA uploaded, awaiting manual verification) � OTP: NOT COMPLETED (agency email � customer no access) � NOA: UPLOADED (NOA_Expedia_TC227.pdf) � PNR: TC227 � PNR Contact Email: bookings@expedia.com (agency) � Customer Personal Email: maria.garcia@email.com � Customer Phone: +1-426-555-7890 � Journey: YYZ ? CDG (DELAYED +5h) � Regime: EU 261 (pending � not yet assessed) � Eligibility: PENDING (authentication required first) PASSENGER INFORMATION � Full Name: Maria Garcia � Tags: Claimant, Adult, Travel Agency Booking � Email: maria.garcia@email.com (personal) � Phone: +1-426-555-7890 ITINERARY � Journey: Bound 1: YYZ ? CDG (DELAYED +5h) (Claim filed for this flight) ATTACHMENTS � NOA_Expedia_TC227.pdf (Notice of Authorization from Expedia) ANCILLARY FEE ELIGIBILITY AND COMPENSATION � Status: PENDING (authentication required � NOA manual verification)",
+      "id": "CP055"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Travel agency booking identified; OTP options show agency email only; Customer reports no access; NOA upload option offered; NOA document attached to case; Customer's personal contact info captured; Case routed to manual NOA verification; DDS not triggered until auth resolved",
+      "expected": "Travel agency booking identified; OTP options show agency email only; Customer reports no access; NOA upload option offered; NOA document attached to case; Customer's personal contact info captured; Case routed to manual NOA verification; DDS not triggered until auth resolved",
+      "id": "CP056"
+    }
+  ]
+}

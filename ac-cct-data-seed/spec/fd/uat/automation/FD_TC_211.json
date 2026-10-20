@@ -1,0 +1,81 @@
+{
+ "id": "FD_TC_211",
+ "family": "FD",
+ "summary": "Domestic Canada booking for the rejection path: adult JEAN-PIERRE MARTIN on AC 456 YUL-YYZ arriving 4h late, code 42 controllable, APPR CAD 400 (a claims company cannot claim for disruption in Canada)",
+ "passengers": [
+  {
+   "firstName": "JEAN-PIERRE",
+   "lastName": "MARTIN",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "456",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "11:20",
+   "arrLocal": "12:40",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 12,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 456 YUL->YYZ Scheduled Arrival 12:40",
+   "Current: AC 456 YUL->YYZ ARRIVED LATE, 12:40 -> 16:40, Delay +4H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 456 YUL->YYZ 42 Delayed due to scheduled maintenance - CONTROLLABLE",
+   "Cancellation code: NONE; Fallback: FALSE",
+   "Delay: +4H 00M - CONTROLLABLE",
+   "Flight Compensation: MR JEAN-PIERRE MARTIN | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flight number AC 456 YUL-YYZ dep 11:20 arr 12:40 assumed (text gives no flight); realistic domestic APPR flight chosen so the booking has an eligible 240-min controllable delay",
+  "delay code 42 (scheduled maintenance, CONTROLLABLE), 240 min arrival delay, cabin Y class T assumed",
+  "PNR names/ids in the text are labels, not real locators",
+  "text gives only the passenger name (Jean-Pierre Martin) and country of origin Canada; a domestic APPR flight (240 min, code 42) chosen",
+  "case number CLM-98765 does not exist in Case Services (nothing to create)"
+ ],
+ "unsupported": [
+  "claim-side behaviour (chatbot, third-party classification, manual handoff, case creation) is Claims Dashboard / chatbot behaviour, not booking data; the claim-opened flag and the case number lookup are not booking data"
+ ]
+}

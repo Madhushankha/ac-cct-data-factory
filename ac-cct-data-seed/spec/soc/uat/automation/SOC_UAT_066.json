@@ -1,0 +1,79 @@
+{
+  "id": "SOC_UAT_066",
+  "family": "SOC",
+  "summary": "1 adult, AC 084 TLV-VDA scheduled 16-May 21:00 with no operating data (no actual times) even after the 14-day re-trigger; ASL no determination",
+  "passengers": [
+    {
+      "firstName": "TOMER",
+      "lastName": "AZULAY",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "IL",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "084",
+      "origin": "TLV",
+      "destination": "VDA",
+      "depLocal": "21:00",
+      "arrLocal": "21:50",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 24,
+  "outcomes": [],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "SoC-ASL-ND-04",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": null,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Disruption Suspected - Operating data missing",
+      "Single-segment trip TLV->VDA on AC084 - actual departure/arrival times NOT available after 14-day retrigger",
+      "Regime: ASL (TLV->VDA = Israel->Israel)",
+      "PASSENGERS: 1 - SEGMENTS: 1",
+      "Promised: AC 084 TLV->VDA Sched Dep 16-May 21:00",
+      "Current: Status DATA UNAVAILABLE - actual departure/arrival times not populated",
+      "Operating Data: MISSING; 14-Day RE Retrigger COMPLETED - data still not populated; Delay Calculation: IMPOSSIBLE",
+      "Geographic Check: Israel->Israel PASSED",
+      "PASSENGER STATUS: NO_DETERMINATION | BAND: blank (cannot calculate)",
+      "Passenger Claims: NO DETERMINATION - case created for manual review; DDS code SoC-ASL-ND-04"
+    ],
+    "soc": {
+      "eligibility": null,
+      "entitlements": "none - no determination (operating data missing), manual review"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "flightDaysAgo=24 (scenario: disruption May 16, filing Jun 9 = 24 days; test depends on the 14-day re-trigger having elapsed)",
+    "No outcome record at all: the flight has only scheduled times (no actuals)",
+    "Arrival 21:50 local VDA (scheduled)",
+    "Cabin W (PY), class O",
+    "Residence IL"
+  ],
+  "unsupported": [
+    "'No actual times available' is the absence of any operational record for the flight; whether TripTracer/DDS will treat a flight with no outcome as DATA UNAVAILABLE depends on the flight feed, not on the booking",
+    "14-day RE re-trigger is a system behaviour"
+  ]
+}

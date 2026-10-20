@@ -1,0 +1,135 @@
+{
+  "id": "FD_TC_069",
+  "family": "FD",
+  "summary": "Single adult, AC 466 YUL-YYZ on time then AC 467 YYZ-YVR 11:00-13:05 departing 14:40 (220 late) arriving 16:50 (225 late), first arrival and departure delay code 86 (AG, immigration, customs, health); customer stranded at YYZ, did not board leg 2 (No Travel Incomplete); no rebooking",
+  "passengers": [
+    {
+      "firstName": "MARC-ANDRE",
+      "lastName": "LAVOIE",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "466",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "08:30",
+      "arrLocal": "09:55",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "467",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "11:00",
+      "arrLocal": "13:05",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 225,
+      "depDelayMin": 220,
+      "delayCode": "86",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null,
+      "depDelayCode": "86",
+      "delayCodeAlpha": "AG"
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    },
+    {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "FD-APPR-NE-12",
+    "amount": 0,
+    "currency": "CAD",
+    "delayBand": null,
+    "delayMin": 225,
+    "control": "UNCONTROLLABLE",
+    "cause": "86",
+    "noTravel": "INCOMPLETE",
+    "strandedAt": "YYZ",
+    "fallback": false,
+    "refundEntitlement": "pro-rated / full refund of unused portion",
+    "expenses": "not applicable",
+    "ttUi": [
+      "Segment 1: Flight: AC 466, Route: YUL->YYZ, Status: COMPLETED (on time, no delay codes)",
+      "Segment 2: Flight: AC 467, Route: YYZ->YVR, Scheduled: 11:00 - 13:05, Actual: 14:40 - 16:50, Status: DELAYED (operated) (claim filed)",
+      "Segment 2 departure delay = 220 min (>=180) ; arrival delay = 225 min (>=180)",
+      "Customer Status: NO TRAVEL - INCOMPLETE (started journey, stranded at connection YYZ, Leg 2 coupon not flown)",
+      "History - No rebooking accepted for connecting segment",
+      "Regime: APPR (1 regime)",
+      "MSL FLIGHT: AC 467 - YYZ->YVR (Leg 2)",
+      "Cancellation code: NONE",
+      "First arrival delay code: 86 (AG) - \"Immigration, customs, health\"",
+      "First departure delay code: 86 (AG)",
+      "Controllability source = first arrival delay code (no cancellation code)",
+      "Fallback: FALSE (arrival delay code available)",
+      "APPR causal category: Outside carrier control - security - UNCONTROLLABLE",
+      "Disruption Type: DELAY (mid-journey)",
+      "No Travel Branch B (Did not remain at origin - intermediate travel) + MSL delayed 3+ hours - controllability check - Outside carrier's control",
+      "DDS outcome code: FD-APPR-NE-12",
+      "Compensation outcome: NOT ELIGIBLE",
+      "Ticket refund entitlement: PRO-RATED / FULL refund of unused portion (Branch B - outside control)",
+      "Expenses: NOT applicable",
+      "Flight Compensation: MR MARC-ANDRE LAVOIE | NOT ELIGIBLE | UNCONTROLLABLE | CAD 0.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "cabin Y and booking class T on every segment (text gives none)",
+    "leg 1 AC 466 times 08:30-09:55 assumed (text gives none; chosen to connect to leg 2)",
+    "two-letter alpha delay code given in text is carried in delayCodeAlpha (extra key)",
+    "Aeroplan not linked",
+    "stranded at connection YYZ: paxEvents boarded on seg 1, not_travelled on seg 2",
+    "category per TT UI: security"
+  ],
+  "unsupported": []
+}

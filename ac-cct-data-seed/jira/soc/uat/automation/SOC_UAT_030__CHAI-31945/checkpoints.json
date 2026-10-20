@@ -1,0 +1,1152 @@
+{
+  "key": "CHAI-31945",
+  "test_id": "SOC_UAT_030",
+  "title": "EU � Not Eligible � Itinerary Did Not Start in EU",
+  "goal": "Verify NOT ELIGIBLE when itinerary origin is outside EU.",
+  "summary": {
+    "seed": 15,
+    "chat": 39,
+    "api": 20,
+    "email": 0,
+    "dashboard": 33,
+    "implied": 15,
+    "manual": 3,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Verify NOT ELIGIBLE when itinerary origin is outside EU.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Regime: APPR",
+      "expected": "� Regime: APPR",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Itinerary: Single segment � AC 848 YYZ?LHR",
+      "expected": "� Itinerary: Single segment � AC 848 YYZ?LHR",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� SOC Segment (per SoC Flight Identifier): AC 848 YYZ?LHR",
+      "expected": "� SOC Segment (per SoC Flight Identifier): AC 848 YYZ?LHR",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Promised Itinerary: AC 848 YYZ?LHR, Dep: 05-Jun 19:00",
+      "expected": "� Promised Itinerary: AC 848 YYZ?LHR, Dep: 05-Jun 19:00",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Actual Itinerary: AC 848 YYZ?LHR, Dep: 06-Jun 01:00",
+      "expected": "� Actual Itinerary: AC 848 YYZ?LHR, Dep: 06-Jun 01:00",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Departure Delay: 360 min (6 hours) / Delay Category:",
+      "expected": "� Departure Delay: 360 min (6 hours) / Delay Category:",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Departure delay code: 64 (Crew Shortage) � Controllable",
+      "expected": "� Departure delay code: 64 (Crew Shortage) � Controllable",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Passenger Type: Regular",
+      "expected": "� Passenger Type: Regular",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Check Order: 1. Geographic origin check ? YYZ (Canada) ? NOT in EU ? NOT ELIGIBLE under EU",
+      "expected": "� Check Order: 1. Geographic origin check ? YYZ (Canada) ? NOT in EU ? NOT ELIGIBLE under EU",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� CRITICAL REGIME DIFFERENCES � GEOGRAPHIC CHECKS:",
+      "expected": "� CRITICAL REGIME DIFFERENCES � GEOGRAPHIC CHECKS:",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "- APPR: NO geographic origin check � applies to all Canadian airline flights",
+      "expected": "- APPR: NO geographic origin check � applies to all Canadian airline flights",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "- EU: Flight must DEPART FROM EU/EEA/UK airport (origin check ONLY)",
+      "expected": "- EU: Flight must DEPART FROM EU/EEA/UK airport (origin check ONLY)",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "- ASL: Flight must involve Israel (to/from TLV, SDV, ETH, EIY)",
+      "expected": "- ASL: Flight must involve Israel (to/from TLV, SDV, ETH, EIY)",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� NOTE: This itinerary WOULD be eligible under APPR (Canadian departure, AC flight, controllable delay ?2h). System should route to APPR instead",
+      "expected": "� NOTE: This itinerary WOULD be eligible under APPR (Canadian departure, AC flight, controllable delay ?2h). System should route to APPR instead",
+      "id": "CP015"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� PAX Count: 1 adult / Class: PY / Revenue: YES / Journey: > 72h",
+      "expected": "� PAX Count: 1 adult / Class: PY / Revenue: YES / Journey: > 72h",
+      "id": "CP016"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP017"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP018"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP020"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP021"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Toronto to London was delayed by about 8 hours. I had to buy food and pay for a hotel overnight at the airport. Can I get reimbursed?\"",
+      "expected": "My flight from Toronto to London was delayed by about 8 hours. I had to buy food and pay for a hotel overnight at the airport. Can I get reimbursed?",
+      "id": "CP022"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies Standards of Care (SoC) intent",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "SOC ENTRY",
+      "requirement": "SoC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays the case opening legal disclaimer (GenUC-24):",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP025"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP026"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP027"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"[First Name] [Last Name]\"",
+      "expected": "[First Name] [Last Name]",
+      "id": "CP028"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, [First Name]! And, what is your booking reference number?",
+      "id": "CP029"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: [PNR Code]\"",
+      "expected": "PNR: [PNR Code]",
+      "id": "CP030"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: [PNR Code]",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP033"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: t***@gmail.com � Phone: +1***789",
+      "id": "CP034"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: t***@gmail.com\"",
+      "expected": "Email: t***@gmail.com",
+      "id": "CP035"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP036"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"546879\"",
+      "expected": "546879",
+      "id": "CP037"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful. Let's proceed to the next step.",
+      "id": "CP039"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if this PNR a group booking ? No",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if there are multiple PAX on PNR? ? No",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot retrieves booking details and displays:",
+      "expected": "I found the following journey: � Flight: AC 848 � Route: Toronto (YYZ) ? London Heathrow (LHR) � Date: June 4, 2026 � Departure Delay: 8 hours Is this the journey you'd like to check?",
+      "id": "CP042"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP043"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if there are more than 1 segment ? No",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot sends request to Case Services for duplicate check",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "And Case Services returns: NO existing case found for this passenger + journey combination",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "72-HOUR CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if it passed the expected Departure time of the last itinerary ? Yes",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "72-HOUR CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks has it been more than 72 hours for all segments in the selected journey ? Yes",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "CLAIM TIME LIMIT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Filing deadline for EU SOC per departing country",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "CLAIM TIME LIMIT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system calculates:",
+      "expected": "� Departing country: Canada ? Limitation = 730 days (2 years) NOTE: Canada is listed in the EU limitation table under \"2 years\" category � Days elapsed: Within limitation period ? PROCEED",
+      "id": "CP050"
+    },
+    {
+      "section": "CLAIM TIME LIMIT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if there is triage data available? ? Yes",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the DDS evaluation is done in backend",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS Evaluates and sends to Trip Tracer UI:",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PNR: [PNR Code]",
+      "expected": "PNR: [PNR Code]",
+      "id": "CP054"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "TYPE: REVENUE",
+      "expected": "TYPE: REVENUE",
+      "id": "CP055"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Completed, Disruption Detected",
+      "expected": "Trip Completed, Disruption Detected",
+      "id": "CP056"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Single-segment trip YYZ?LHR on AC848 was delayed +6H 00M � origin NOT in EU (YYZ = Canada)",
+      "expected": "Single-segment trip YYZ?LHR on AC848 was delayed +6H 00M � origin NOT in EU (YYZ = Canada)",
+      "id": "CP057"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: APPR (system determines � EU does not apply to non-EU departures)",
+      "expected": "Regime: APPR (system determines � EU does not apply to non-EU departures)",
+      "id": "CP058"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PASSENGERS: 1 � SEGMENTS: 1",
+      "expected": "PASSENGERS: 1 � SEGMENTS: 1",
+      "id": "CP059"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Promised Itinerary � Flight: AC 848, Route: YYZ ? LHR, Scheduled Dep: 05-Jun 19:00",
+      "expected": "Promised Itinerary � Flight: AC 848, Route: YYZ ? LHR, Scheduled Dep: 05-Jun 19:00",
+      "id": "CP060"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current Itinerary � Flight: AC 848, Route: YYZ ? LHR, Status: ARRIVED LATE, Scheduled Dep: 19:00 ? Actual: 06-Jun 01:00, Delay: +6H 00M",
+      "expected": "Current Itinerary � Flight: AC 848, Route: YYZ ? LHR, Status: ARRIVED LATE, Scheduled Dep: 19:00 ? Actual: 06-Jun 01:00, Delay: +6H 00M",
+      "id": "CP061"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "SOC section present",
+      "expected": "SOC section present",
+      "id": "CP062"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Geographic Check: Origin = YYZ (Canada) � NOT EU/EEA/UK ? EU regime does NOT apply",
+      "expected": "Geographic Check: Origin = YYZ (Canada) � NOT EU/EEA/UK ? EU regime does NOT apply",
+      "id": "CP063"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime applied: APPR (system routes to applicable regime)",
+      "expected": "Regime applied: APPR (system routes to applicable regime)",
+      "id": "CP064"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Departure Delay Code: 64 (Crew Shortage) � Controllable",
+      "expected": "Departure Delay Code: 64 (Crew Shortage) � Controllable",
+      "id": "CP065"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PASSENGER: [Name] | STATUS: ELIGIBLE (under APPR � controllable, ?2h) or NOT_ELIGIBLE (if evaluated under EU only � geographic fail) � depends on system routing",
+      "expected": "PASSENGER: [Name] | STATUS: ELIGIBLE (under APPR � controllable, ?2h) or NOT_ELIGIBLE (if evaluated under EU only � geographic fail) � depends on system routing",
+      "id": "CP066"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "NOTE: Test validates EU geographic gate specifically. If system correctly routes to APPR, passenger would be ELIGIBLE under APPR.",
+      "expected": "NOTE: Test validates EU geographic gate specifically. If system correctly routes to APPR, passenger would be ELIGIBLE under APPR.",
+      "id": "CP067"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATIONS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Intent: TRAVEL DISRUPTIONS | Sub-Intent: EXPENSES | Status: depends on regime routing (ELIGIBLE under APPR / NOT ELIGIBLE under EU)",
+      "expected": "Intent: TRAVEL DISRUPTIONS | Sub-Intent: EXPENSES | Status: depends on regime routing (ELIGIBLE under APPR / NOT ELIGIBLE under EU)",
+      "id": "CP068"
+    },
+    {
+      "section": "GEOGRAPHIC ORIGIN CHECK � THIS IS THE KEY TEST",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "� EU regime geographic check:",
+      "expected": "- Origin airport: YYZ (Toronto, Canada) - Origin country: CANADA - Is Canada an EU/EEA member state? ? NO - Is Canada the United Kingdom? ? NO - EU regulation 261/2004 requires flight to DEPART FROM an EU/EEA/UK airport - YYZ is NOT in the EU/EEA/UK - Result: ITINERARY DID NOT START IN EU ? NOT ELIGIBLE",
+      "id": "CP069"
+    },
+    {
+      "section": "CRITICAL REGIME DIFFERENCES � GEOGRAPHIC CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "- APPR: NO geographic origin check � applies to all Canadian airline flights",
+      "expected": "- EU: Flight must DEPART FROM EU/EEA/UK airport (origin check ONLY) - ASL: Flight must DEPART FROM AND ARRIVE IN Israel (BOTH origin + destination) NOTE: Even though the flight ARRIVES at LHR (EU/UK), under EU261 the regulation only applies to flights departing FROM the EU on non-EU carriers, or to/from EU on EU carriers. Since AC is a non-EU carrier and the flight departs from Canada, EU261 does NOT apply. NOTE: This itinerary WOULD be eligible under APPR (Canadian departure, AC flight, controllable delay ?2h). The system should route to APPR regime instead. However, this test case specifically validates the EU regime geographic gate � confirming that if the system attempts to evaluate under EU, it correctly rejects. � All further EU checks SKIPPED because geographic gate failed: ? Controllability check � SKIPPED (EU doesn't check anyway) ? Notification check � SKIPPED ? No-travel check � SKIPPED DDS RESPONSE CODE = SoC-EU-NE-06",
+      "id": "CP070"
+    },
+    {
+      "section": "CRITICAL REGIME DIFFERENCES � GEOGRAPHIC CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks which airline company is it ? AC",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "NOT ELIGIBLE RESULT",
+      "requirement": "SoC-03b",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays: \"I've reviewed the details of your flight. Your flight AC 848 departed from Toronto (Canada), which is outside the European Union. Under EU Regulation 261/2004, expense reimbursement is only available for flights departing from an EU/EEA or UK airport when operated by a non-EU carrier. Since your flight did not depart from within the EU, your claim is not eligible under EU regulations. However, your flight may be eligible under Canadian regulations (APPR). Would you like us to check your eligibility under APPR instead?\"",
+      "expected": "I've reviewed the details of your flight. Your flight AC 848 departed from Toronto (Canada), which is outside the European Union. Under EU Regulation 261/2004, expense reimbursement is only available for flights departing from an EU/EEA or UK airport when operated by a non-EU carrier. Since your flight did not depart from within the EU, your claim is not eligible under EU regulations. However, your flight may be eligible under Canadian regulations (APPR). Would you like us to check your eligibility under APPR instead?",
+      "id": "CP072"
+    },
+    {
+      "section": "DISPUTE OPTION",
+      "requirement": "GenUC-15",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Do you agree with this assessment, or would you like to dispute it?\"",
+      "expected": "Do you agree with this assessment, or would you like to dispute it?",
+      "id": "CP073"
+    },
+    {
+      "section": "DISPUTE OPTION",
+      "requirement": "GenUC-15",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Agree\"",
+      "expected": "Agree",
+      "id": "CP074"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Is there anything else I can help you with?\"",
+      "expected": "Is there anything else I can help you with?",
+      "id": "CP075"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP076"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP077"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Scenario: Claims Dashboard validation for SoC-EU-NE-06 � Geographic Gate Failed Not Eligible",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the agent opens the Claims Dashboard for the case",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Topic/Sub-topic is \"Travel Disruptions � Expenses\"",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Status is \"Closed � Not Eligible\"",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Created date and Last Updated date are populated",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the SLA countdown is tracking correctly",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Name is populated",
+      "expected": "",
+      "id": "CP084"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Type is \"Regular\"",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Authentication is \"Pass\"",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR is populated",
+      "expected": "",
+      "id": "CP087"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Regime is \"APPR\"",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Full Name is populated",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Tags include \"Claimant\" and \"Adult\"",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Itinerary shows Journey AC 848 YYZ ? LHR as the claimed flight",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Flight Status is \"DELAYED (8 hours)\"",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility section shows Journey = AC 848 YYZ ? LHR",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Flight Leg at Fault is AC 848",
+      "expected": "",
+      "id": "CP094"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Operating Carrier is AC",
+      "expected": "",
+      "id": "CP095"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Disruption Reason is \"N/A (not evaluated � geographic check failed)\"",
+      "expected": "",
+      "id": "CP096"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Delay Minutes is 480 min (8 hours)",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Travel Status is \"Travelled (delayed)\"",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Passenger Type is \"Regular\"",
+      "expected": "",
+      "id": "CP099"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Geographic Origin Check is \"FAILED\"",
+      "expected": "",
+      "id": "CP100"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Origin is \"YYZ (Toronto, Canada) � NOT EU/EEA/UK\"",
+      "expected": "",
+      "id": "CP101"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Destination is \"LHR (London, UK) � EU/UK ? (but origin is what matters for non-EU carriers)\"",
+      "expected": "",
+      "id": "CP102"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Controllability is \"NOT EVALUATED (geographic gate failed first)\"",
+      "expected": "",
+      "id": "CP103"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the DDS Response Code is \"SoC-EU-NE-06\"",
+      "expected": "",
+      "id": "CP104"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Regime Note is \"May be eligible under APPR instead\"",
+      "expected": "",
+      "id": "CP105"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Receipt Validator SOC Expense Line Items is \"N/A (not reached)\"",
+      "expected": "",
+      "id": "CP106"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Duplicate Check result is \"No duplicate found\"",
+      "expected": "",
+      "id": "CP107"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And CyberSource is NOT triggered",
+      "expected": "",
+      "id": "CP108"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Dispute option is offered (GenUC-15)",
+      "expected": "",
+      "id": "CP109"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the user selected \"Agree\"",
+      "expected": "",
+      "id": "CP110"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Final Status is \"Closed � Not Eligible\"",
+      "expected": "",
+      "id": "CP111"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the case is in read-only mode",
+      "expected": "",
+      "id": "CP112"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Scenario: Payment validation for SoC-EU-NE-06 � Geographic Gate Failed Not Eligible",
+      "expected": "",
+      "id": "CP113"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the case SoC-EU-NE-06 is determined as NOT ELIGIBLE",
+      "expected": "",
+      "id": "CP114"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no payment flow is triggered",
+      "expected": "",
+      "id": "CP115"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence is asked",
+      "expected": "",
+      "id": "CP116"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record is created",
+      "expected": "",
+      "id": "CP117"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no batch file is dispatched",
+      "expected": "",
+      "id": "CP118"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no receipt upload is triggered (SOC receipts only triggered for eligible cases)",
+      "expected": "",
+      "id": "CP119"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard shows Eligibility = \"NOT ELIGIBLE\" with no compensation record and no payout section",
+      "expected": "",
+      "id": "CP120"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "SoC-EU-NE-06.",
+      "expected": "SoC-EU-NE-06.",
+      "id": "CP121"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "NOT ELIGIBLE.",
+      "expected": "NOT ELIGIBLE.",
+      "id": "CP122"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Itinerary originated from YYZ (Canada), not from EU.",
+      "expected": "Itinerary originated from YYZ (Canada), not from EU.",
+      "id": "CP123"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "EU regime requires EU origin.",
+      "expected": "EU regime requires EU origin.",
+      "id": "CP124"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "No receipt upload.",
+      "expected": "No receipt upload.",
+      "id": "CP125"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "No case creation.",
+      "expected": "No case creation.",
+      "id": "CP126"
+    }
+  ]
+}

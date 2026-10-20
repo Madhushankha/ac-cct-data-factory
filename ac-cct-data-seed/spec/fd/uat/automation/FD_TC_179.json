@@ -1,0 +1,103 @@
+{
+  "id": "FD_TC_179",
+  "family": "FD",
+  "summary": "Duplicate claim: ORD-DEN-YYZ AC8452 on time, AC8204 DEN-YYZ arrived 7h late (code 15 boarding), Basic Aeroplan; second claim blocked as duplicate of a paid case",
+  "passengers": [
+    {
+      "firstName": "CATHERINE",
+      "lastName": "BOUCHARD",
+      "type": "ADT",
+      "aeroplanNumber": "9876543210",
+      "aeroplanTier": "Basic",
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "8452",
+      "origin": "ORD",
+      "destination": "DEN",
+      "depLocal": "08:00",
+      "arrLocal": "09:30",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "8204",
+      "origin": "DEN",
+      "destination": "YYZ",
+      "depLocal": "12:00",
+      "arrLocal": "17:20",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": null,
+      "delayCode": "15",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "FD-DUP-NE-01",
+    "amount": 0,
+    "currency": "CAD",
+    "delayBand": "DELAY_6_TO_LT_9_HOURS",
+    "delayMin": 420,
+    "control": "CONTROLLABLE",
+    "cause": "15",
+    "ttUi": [
+      "Journey ORD->DEN (AC 8452) COMPLETED, DEN->YYZ (AC 8204) ARRIVED LATE, +7 hours at final destination",
+      "Disruption reason: Gate Boarding Delay (Code 15), controllable",
+      "Duplicate match: EXACT (PNR + passenger + multi-leg journey + date)",
+      "Original case CASE-FD-20260501-153 retrieved; original payout $700 CAD cash / $840 CAD AC Wallet",
+      "Second claim blocked; Closed - Not Eligible (Duplicate); compensation $0",
+      "Aeroplan 9876543210 linked, Basic member"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "times chosen: AC8452 ORD 08:00 -> DEN 09:30; AC8204 DEN 12:00 -> YYZ 17:20 (scheduled; 7h late arrival 00:20 next day)",
+    "regime APPR (Canada arrival); Canadian disrupted leg, delay band 6 to <9 hours is stated in the text",
+    "Aeroplan number 9876543210 and tier Basic are given in the text",
+    "flight date May 1, 2026; flightDaysAgo=10"
+  ],
+  "unsupported": [
+    "The original paid case CASE-FD-20260501-153 (prior claim / payout record) that makes the second claim a duplicate is case-side state, not booking data - a first claim must be filed/paid first, then a second claim attempted"
+  ]
+}

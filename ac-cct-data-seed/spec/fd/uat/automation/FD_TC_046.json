@@ -1,0 +1,81 @@
+{
+ "id": "FD_TC_046",
+ "family": "FD",
+ "summary": "Partner-airline (OAL) employee Thomas Bennett on staff booking, AC 455 YUL-YYZ sched arr 14:00 arrived 18:00 (+4h), code 42 controllable; OAL employee flag makes it NOT ELIGIBLE (CAD 0)",
+ "passengers": [
+  {
+   "firstName": "THOMAS",
+   "lastName": "BENNETT",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": true
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "455",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:40",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-02",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 455 YUL->YYZ Scheduled Arrival 14:00",
+   "Current: ARRIVED LATE 14:00 -> Actual 18:00, Delay +4H 00M",
+   "Regime: APPR (1 regime)",
+   "Passenger Flag: OAL EMPLOYEE (partner airline)",
+   "MSL FLIGHT: AC 455 YUL->YYZ 42 \"Delayed due to scheduled maintenance\"",
+   "Delay: +4H 00M CONTROLLABLE",
+   "DDS Gate: EMPLOYEE CHECK -> NOT ELIGIBLE (short-circuited before delay/controllability gates)",
+   "Flight Compensation: MR THOMAS BENNETT | NOT ELIGIBLE | OAL EMPLOYEE | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 12:40; depDelayMin 240",
+  "name THOMAS BENNETT (chatbot and TT lines); prerequisites say Thomas Weber",
+  "flight AC 455 (journey display and TT); prerequisites/expected mention AC 327",
+  "employee=true used for the OAL employee flag; the partner airline (Lufthansa per dashboard text) is not expressible"
+ ],
+ "unsupported": [
+  "Distinction between AC employee and OAL (partner airline, Lufthansa) employee booking flag: passenger.employee is a single boolean, so FD-APPR-NE-02 (OAL) vs NE-01 (AC) cannot be selected by the booking data alone"
+ ]
+}

@@ -1,0 +1,91 @@
+{
+ "id": "SOC_UAT_049",
+ "family": "SOC",
+ "summary": "1 AC employee (non-revenue) on AC 084 TLV-YYZ 21:00 departing 03:00 next day (6h late), code 64; ASL SOC not eligible (employee booking)",
+ "passengers": [
+  {
+   "firstName": "DAVID",
+   "lastName": "LEVI",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "IL",
+   "employee": true
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "084",
+   "origin": "TLV",
+   "destination": "YYZ",
+   "depLocal": "21:00",
+   "arrLocal": "01:00",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 360,
+   "depDelayMin": 360,
+   "delayCode": "64",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "ASL",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "SoC-ASL-NE-01",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_6_HOURS_OR_MORE",
+  "delayMin": 360,
+  "control": null,
+  "cause": "64",
+  "ttUi": [
+   "TYPE: EMPLOYEE (non-revenue)",
+   "Trip Completed, Disruption Detected",
+   "Single-segment trip TLV->YYZ on AC084 delayed +6H 00M",
+   "Regime: ASL (TLV departure - Israel)",
+   "PASSENGERS: 1 - SEGMENTS: 1",
+   "Promised: AC 084 TLV->YYZ Sched Dep 01-Jun 21:00",
+   "Current: ARRIVED LATE, Sched Dep 21:00, Actual 02-Jun 03:00, Delay +6H 00M",
+   "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | no meal/accommodation/expenses",
+   "NOT_ELIGIBLE reason: Employee booking (AC)",
+   "Passenger Claims: NOT ELIGIBLE; DDS code SoC-ASL-NE-01"
+  ],
+  "soc": {
+   "eligibility": "NOT_ELIGIBLE",
+   "entitlements": "none (employee booking)"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen; employee=true (AC employee)",
+  "Arrival 01:00 local YYZ next day (dayOffset 1 for arrival is not modelled: arrLocal 01:00 means next calendar day)",
+  "Cabin W (PY); booking class O although a real employee ticket uses a staff fare/office suffix",
+  "Arrival delay assumed equal to 360 min departure delay",
+  "Residence IL",
+  "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+ ],
+ "unsupported": [
+  "Employee/non-revenue ticketing (office suffix ES/OT/EP/EE/EC, revenue=NO) is only expressed by the employee flag; TT 'TYPE: EMPLOYEE (non-revenue)' depends on how the ticket data is built"
+ ],
+ "booking": {
+  "officeId": "YULAC08ES"
+ }
+}

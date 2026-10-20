@@ -1,0 +1,22 @@
+id: lost-expenses-upload
+title: Lost contents + expenses -> contents -> upload -> payment
+booking: { pool: any, pick: next-unused, need: [lost], avoid: [partner, waiting, two-bags, two-journeys, cap-spent, duplicate, closed] }
+first_message: "My bag is lost and I want to claim for what was inside it. I also bought toiletries while I waited."
+steps:
+  - notice: yes
+  - identify: true
+  - verify: true
+  - journey: one
+  - expect: { step: BAG-03c.S5, board: '"Has your bag been delivered?"', any_of: ["been delivered", "received (it|your bag)"], buttons: ["Yes, it was delivered!", "No, I still haven't received it!"] }
+  - delivery: "no"
+  - expect: { step: BAG-03e.S2, board: list the items in your bag, any_of: ["list the items", "items in your bag"], box: "Before you begin", buttons: ["Yes, let's start", "No, not now"] }
+  - readiness: "yes"
+  - contents: { category: [Clothing, "Toiletries & Personal Care"], cad: true, items: [ { item: Shirt, qty: 1, amount: 80 } ] }
+  - expect: { step: BAG-06.S18, board: summary of items and values, any_of: ["items and values"], buttons: ["I confirm", "Something needs changing"] }
+  - confirm: true
+  - expect: { step: BAG-06.S20, board: '"Thank you, your submission was successful."', text: "submission was successful", layout: success, before: "receipt|proof of ownership" }
+  - expect: { step: BAG-08.S7, board: receipts invitation, any_of: ["receipt", "proof"], buttons: ["Upload receipts"] }
+  - upload: [receipts/clothing-receipt.pdf, receipts/toiletries-receipt.pdf]
+  - expect: { step: RR-01, board: receipts received, any_of: ["received", "thank you", "got your"] }
+  - stop: payout-country
+known: [I-14]

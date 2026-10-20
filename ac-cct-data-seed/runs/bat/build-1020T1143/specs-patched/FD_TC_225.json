@@ -1,0 +1,80 @@
+{
+ "id": "FD_TC_225",
+ "family": "FD",
+ "summary": "Policyholder's booking: adult GERALD PRESTON on AC 478 YYZ-YUL arriving 4h late, code 42 controllable, APPR CAD 400 (an insurer tries to claim without a POA and is denied)",
+ "passengers": [
+  {
+   "firstName": "GERALD",
+   "lastName": "PRESTON",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "478",
+   "origin": "YYZ",
+   "destination": "YUL",
+   "depLocal": "09:40",
+   "arrLocal": "11:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 24,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 478 YYZ->YUL Scheduled Arrival 11:00",
+   "Current: AC 478 YYZ->YUL ARRIVED LATE, 11:00 -> 15:00, Delay +4H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 478 YYZ->YUL 42 Delayed due to scheduled maintenance - CONTROLLABLE",
+   "Cancellation code: NONE; Fallback: FALSE",
+   "Delay: +4H 00M - CONTROLLABLE",
+   "Flight Compensation: MR GERALD PRESTON | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flight number AC 478 YYZ-YUL dep 09:40 arr 11:00 assumed (text gives no flight); realistic domestic APPR flight chosen so the booking has an eligible 240-min controllable delay",
+  "delay code 42 (scheduled maintenance, CONTROLLABLE), 240 min arrival delay, cabin Y class T assumed",
+  "PNR names/ids in the text are labels, not real locators",
+  "text gives no passenger name or flight; policyholder named GERALD PRESTON; domestic APPR flight chosen"
+ ],
+ "unsupported": [
+  "claim-side behaviour (chatbot, third-party classification, manual handoff, case creation) is Claims Dashboard / chatbot behaviour, not booking data; the denial for missing documentation is not booking data"
+ ]
+}

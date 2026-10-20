@@ -1,0 +1,46 @@
+# FD (flight disruption compensation), APPR, eligible, 400 CAD cash with the AC Wallet alternative.
+#
+# The first FD scenario in this suite: the eleven before it are all baggage roads, so the 264 verified
+# FD bookings this project seeds had nothing here that could consume them. No new step kinds were
+# needed -- notice, identify, verify, journey, expect and stop already describe this road.
+#
+# The booking is picked by what it IS, never by locator: `el-01` is the engine's own code for an
+# eligible APPR delay of 3 to 6 hours, and `wallet-open` means the passenger has an Aeroplan account
+# that can take the +20% wallet offer. A reseed rewrites the pool and this scenario still picks a
+# booking that matches.
+#
+# It stops at the payment choice. Selecting cash or wallet leads to payout country and bank details,
+# which guards.assertAllowed forbids outright -- so the road is driven to the decision, the amount and
+# the offer, and no further.
+id: fd-appr-eligible
+title: APPR delay 3-6h -> eligible -> 400 CAD with the AC Wallet alternative
+tags: [fd]
+# `wallet-open` is deliberately NOT required: in the INT pools the 35 wallet bookings and the 18
+# el-01 bookings do not overlap, so asking for both selects nothing. The wallet expectation below is
+# optional for the same reason -- its absence is reported, it does not fail the road.
+booking: { pool: any, pick: next-unused, need: [fd, appr, eligible, el-01], avoid: [duplicate, cancelled] }
+first_message: "My Air Canada flight was delayed by more than four hours and I would like to claim compensation."
+steps:
+  - notice: "yes"
+  - identify: true
+  - verify: true
+  - journey: one
+  # the decision itself: meaning, not wording -- the bot's phrasing changes, the verdict must not
+  - expect:
+      step: FD-DECISION.eligible
+      board: the eligibility decision for an APPR 3-6 hour delay
+      any_of: ["eligible", "compensation of", "entitled"]
+  # the award and the wallet alternative: 400 CAD cash, 480 CAD as wallet credit (+20%)
+  - expect:
+      step: FD-OFFER.amount
+      board: the compensation amount and the AC Wallet option
+      any_of: ["400", "\\$400"]
+  - expect:
+      step: FD-OFFER.wallet
+      board: the AC Wallet offer at 480 CAD, 20 per cent above the cash amount
+      any_of: ["480", "AC Wallet", "wallet"]
+      optional: true
+      timeout: 15
+  # stop before any payment selection: the next screen asks for payout country and bank details
+  - stop: end
+known: []

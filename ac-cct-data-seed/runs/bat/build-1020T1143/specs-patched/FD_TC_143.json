@@ -1,0 +1,131 @@
+{
+ "id": "FD_TC_143",
+ "family": "FD",
+ "summary": "Adult, EU mainland origin, two legs: AC871 CDG-YYZ flown on time, AC121 YYZ-YVR CANCELLED (CREW, controllable); re-routing delay only 2h and customer stranded at YYZ: below the 3h EU261 threshold, Not Eligible",
+ "passengers": [
+  {
+   "firstName": "DAMIEN",
+   "lastName": "LEROY",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "FR",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "871",
+   "origin": "CDG",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "13:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "121",
+   "origin": "YYZ",
+   "destination": "YVR",
+   "depLocal": "15:30",
+   "arrLocal": "17:50",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "cancel",
+   "arrDelayMin": 120,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": "CREW",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 2,
+   "carrier": "AC",
+   "number": "123",
+   "origin": "YYZ",
+   "destination": "YVR",
+   "depLocal": "17:30",
+   "arrLocal": "19:50",
+   "dayOffset": 0,
+   "accepted": false
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-EU-NE-15",
+  "amount": 0,
+  "currency": "EUR",
+  "delayBand": "DELAY_BELOW_3_HOURS",
+  "delayMin": 120,
+  "control": "CONTROLLABLE",
+  "cause": "CREW",
+  "ttUi": [
+   "Segment 1: Flight: AC 871, Route: CDG \u2192 YYZ, Status: COMPLETED (on time)",
+   "Segment 2: Flight: AC 121, Route: YYZ \u2192 YVR, Status: CANCELLED (claim filed)",
+   "Cancellation Code on Leg 2: CREW - 4-character Netline code",
+   "\"Cancellation - crew unavailability\"",
+   "CONTROLLABLE (CREW in Controllable list)",
+   "MSL Delay on Leg 2 (re-routing): 2H 00M \u2192 BELOW 3-HOUR EU 261 THRESHOLD (Gate 8)",
+   "Customer Status: NO TRAVEL - INCOMPLETE (stranded at YYZ - did not return to CDG, did not reach YVR)",
+   "History - Customer stranded at mid-point YYZ; no rebooking; no return to origin",
+   "Regime: EU 261 (EU Mainland - CDG origin)",
+   "EU 261 Threshold: Arrival delay must be \u2265 3 hours \u2192 2h < 3h \u2192 NOT ELIGIBLE",
+   "Fallback: FALSE (cancellation code CREW available)",
+   "Flight Compensation: MR DAMIEN LEROY | NOT ELIGIBLE | DELAY_BELOW_3_HOURS | EUR 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "times not in text: leg 1 CDG 10:00 - YYZ 13:00, leg 2 YYZ 15:30 - YVR 17:50",
+  "delayMin 120 = re-routing delay on leg 2; the 2h-later alternative is assumed AC 123 YYZ-YVR dep 17:30 arr 19:50, not accepted",
+  "residence FR (EUR)",
+  "noticeHours not stated (null)",
+  "paxEvents: boarded leg 1, not_travelled leg 2 (stranded at YYZ)"
+ ],
+ "unsupported": []
+}

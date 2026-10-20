@@ -1,0 +1,74 @@
+{
+  "id": "FD_TC_148",
+  "family": "FD",
+  "summary": "EU 261 CDG-YYZ AC879, backend MSL data missing (operating times, flight number, all codes NULL), 14-day polling exhausted -> No Determination",
+  "passengers": [
+    {
+      "firstName": "FRANCOIS",
+      "lastName": "GIRARD",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "879",
+      "origin": "CDG",
+      "destination": "YYZ",
+      "depLocal": "13:30",
+      "arrLocal": "16:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 23,
+  "outcomes": [],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "FD-EU-ND-05",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": null,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Promised Itinerary: Flight MISSING (flight number not available in backend), Route CDG->YYZ",
+      "Current Itinerary: Status DISRUPTED (details incomplete)",
+      "Customer Status: Travel Completed",
+      "Regime: EU 261 (EU origin CDG)",
+      "MSL DATA: CRITICAL DATA MISSING",
+      "Operating Times: NULL (after 14 days)",
+      "Flight Number: NULL (after 14 days)",
+      "Disruption Code: CANNOT BE ASSESSED (no MSL flight identified)",
+      "14-Day Retry Window: EXHAUSTED",
+      "Case Status: System Processing Queue -> 14 days exhausted -> ESCALATED TO AGENT",
+      "Flight Compensation: [PASSENGER] | NO DETERMINATION | MSL_DATA_MISSING_14_DAYS | PENDING AGENT REVIEW"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "flight AC 879 given in Prerequisites (TT UI says number is NULL); booking carries it, flight data is what must be absent",
+    "dep 13:30 / scheduled arrival 16:00 chosen (text only says scheduled arrival available)",
+    "flightDaysAgo=23: text flight May 5, filing May 28 (23 days post-disruption; 14-day polling window already exhausted)"
+  ],
+  "unsupported": [
+    "TT/DDS flight-operation data for the segment must be absent: actual arrival NULL, operating times NULL, flight number NULL, arrival/departure/cancellation codes all NULL",
+    "14-day polling history (polls on days 1,3,7,10,14 all returning missing) and System Processing Queue -> Pending Agent Review status are case-side state, not booking data",
+    "No outcome row written because no disruption outcome is known"
+  ]
+}

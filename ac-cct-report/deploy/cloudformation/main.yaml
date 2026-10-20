@@ -1,0 +1,321 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  CCT Report Viewer — ECS Fargate web service behind an INTERNAL ALB.
+  Read-only Flask app that serves test-execution reports from S3
+  (s3://<S3Bucket>/runs/<env>/<flow>/<run-id>/...). Mirrors the
+  ac-cct-rule-engine-platform deploy: reuses the shared ask-ac-int IAM
+  roles (the SSO role cannot create IAM roles — org SCP), creates its own
+  SGs / ALB / target group / cluster / service / log group. The only
+  viewer-specific extra (S3 read on the reports bucket) is granted by a
+  bucket policy applied in infrastructure_deploy.sh, not here.
+
+# ==============================================================================
+# Parameters
+# ==============================================================================
+Parameters:
+  Environment:
+    Type: String
+    Default: int
+    AllowedValues: [int, crt, bat, preprod, prod]
+
+  ContainerImage:
+    Type: String
+    Description: ECR image URI (e.g. 982081066747.dkr.ecr.ca-central-1.amazonaws.com/cct-report-viewer:latest)
+
+  ContainerCpu:
+    Type: Number
+    Default: 256
+    AllowedValues: [256, 512, 1024, 2048]
+
+  ContainerMemory:
+    Type: Number
+    Default: 512
+    AllowedValues: [512, 1024, 2048]
+
+  DesiredCount:
+    Type: Number
+    Default: 1
+    MinValue: 1
+    MaxValue: 4
+
+  # Networking
+  ExistingVpcId:
+    Type: String
+    Description: VPC ID where ECS tasks + ALB run
+
+  SubnetIds:
+    Type: CommaDelimitedList
+    Description: Private subnet IDs (comma-separated) for the tasks and the internal ALB
+
+  # Ingress CIDR allowed to reach the internal ALB (corp network / VPN range)
+  AllowedCidr:
+    Type: String
+    Default: 10.0.0.0/8
+
+  # IAM Roles — reuse existing (SSO role lacks iam:CreateRole; org SCP p-w8p5eioi)
+  ExistingExecutionRoleArn:
+    Type: String
+    Description: ARN of an existing ECS task execution role
+
+  ExistingTaskRoleArn:
+    Type: String
+    Description: ARN of an existing ECS task role (must be granted S3 read on the reports bucket)
+
+  # App config (viewer env vars)
+  S3Bucket:
+    Type: String
+    Default: cct-qa-artifacts-int
+  RunsPrefix:
+    Type: String
+    Default: runs
+    Description: Top-level prefix holding the runs (layout is <RunsPrefix>/<env>/<flow>/<run>/)
+  MappingPrefix:
+    Type: String
+    Default: mappings
+    Description: Prefix the viewer writes the test-case -> Jira-issue mapping under (one JSON per flow)
+  AuthMode:
+    Type: String
+    Default: basic
+    AllowedValues: [basic, saml]
+    Description: 'saml = AC SSO via the shared broker; basic = local username/password form login'
+  DevAuth:
+    Type: String
+    Default: ''
+    NoEcho: true
+    Description: user:pass for basic auth mode (ignored when AuthMode=saml). Set via deploy/.env.<env>, never defaulted here.
+  AuthServiceUrl:
+    Type: String
+    Default: https://ac-cct-int.cloud.aircanada.com
+    Description: The shared AC auth broker (runs the Microsoft SAML flow)
+  AppName:
+    Type: String
+    Default: cct-report-viewer
+    Description: This app's name registered with the broker (used in /login/<AppName>)
+  FlaskSecret:
+    Type: String
+    NoEcho: true
+    Description: Stable random string for the Flask session cookie
+
+  # ── Jira / Xray (the two Jira dashboards + the bug button) ──────────────────
+  # Leave JiraEmail/JiraApiToken empty to ship with the Jira views disabled — the app degrades to
+  # the S3 report browser and the Jira tabs report 'not configured' rather than erroring.
+  JiraBaseUrl:
+    Type: String
+    Default: https://aircanada.atlassian.net
+  JiraProject:
+    Type: String
+    Default: CHAI
+  JiraEmail:
+    Type: String
+    Default: ''
+  JiraApiToken:
+    Type: String
+    NoEcho: true
+    Default: ''
+  XrayBaseUrl:
+    Type: String
+    Default: https://xray.cloud.getxray.app
+  XrayClientId:
+    Type: String
+    NoEcho: true
+    Default: ''
+  XrayClientSecret:
+    Type: String
+    NoEcho: true
+    Default: ''
+  JiraWrite:
+    Type: String
+    Default: '0'
+    AllowedValues: ['0', '1']
+    Description: '1 = the bug create/update button may write to Jira; 0 = read-only dashboards'
+
+Conditions:
+  IsProduction: !Or
+    - !Equals [!Ref Environment, prod]
+    - !Equals [!Ref Environment, preprod]
+
+# ==============================================================================
+# Resources
+# ==============================================================================
+Resources:
+
+  # ── Security groups ─────────────────────────────────────────────────────────
+  AlbSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub 'cct-report-viewer-alb-sg-${Environment}'
+      GroupDescription: !Sub 'CCT Report Viewer internal ALB - ${Environment}'
+      VpcId: !Ref ExistingVpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: !Ref AllowedCidr
+          Description: HTTP from corp network / VPN
+      Tags:
+        - { Key: Name, Value: !Sub 'cct-report-viewer-alb-sg-${Environment}' }
+        - { Key: Environment, Value: !Ref Environment }
+
+  ServiceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub 'cct-report-viewer-svc-sg-${Environment}'
+      GroupDescription: !Sub 'CCT Report Viewer Fargate tasks - ${Environment}'
+      VpcId: !Ref ExistingVpcId
+      SecurityGroupEgress:
+        - IpProtocol: '-1'
+          CidrIp: 0.0.0.0/0
+          Description: Allow all outbound (S3, STS)
+      Tags:
+        - { Key: Name, Value: !Sub 'cct-report-viewer-svc-sg-${Environment}' }
+        - { Key: Environment, Value: !Ref Environment }
+
+  ServiceIngressFromAlb:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref ServiceSecurityGroup
+      IpProtocol: tcp
+      FromPort: 8080
+      ToPort: 8080
+      SourceSecurityGroupId: !Ref AlbSecurityGroup
+      Description: App port from the ALB only
+
+  # ── CloudWatch log group ────────────────────────────────────────────────────
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/ecs/cct-report-viewer-${Environment}'
+      RetentionInDays: !If [IsProduction, 30, 7]
+
+  # ── Internal ALB + target group + listener ──────────────────────────────────
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: !Sub 'cct-report-viewer-${Environment}-alb'
+      Scheme: internal
+      Type: application
+      Subnets: !Ref SubnetIds
+      SecurityGroups: [!Ref AlbSecurityGroup]
+      Tags:
+        - { Key: Environment, Value: !Ref Environment }
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: !Sub 'cct-report-viewer-${Environment}-tg'
+      VpcId: !Ref ExistingVpcId
+      Protocol: HTTP
+      Port: 8080
+      TargetType: ip
+      HealthCheckProtocol: HTTP
+      HealthCheckPath: /healthz
+      HealthCheckIntervalSeconds: 30
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 3
+      Matcher: { HttpCode: '200' }
+
+  Listener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref LoadBalancer
+      Protocol: HTTP
+      Port: 80
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+
+  # ── ECS cluster ─────────────────────────────────────────────────────────────
+  ECSCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Sub 'cct-report-viewer-cluster-${Environment}'
+      CapacityProviders: [FARGATE, FARGATE_SPOT]
+      DefaultCapacityProviderStrategy:
+        - { CapacityProvider: FARGATE, Weight: 1 }
+
+  # ── Task definition ─────────────────────────────────────────────────────────
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: !Sub 'cct-report-viewer-${Environment}-fargate-task'
+      NetworkMode: awsvpc
+      RequiresCompatibilities: [FARGATE]
+      Cpu: !Ref ContainerCpu
+      Memory: !Ref ContainerMemory
+      ExecutionRoleArn: !Ref ExistingExecutionRoleArn
+      TaskRoleArn: !Ref ExistingTaskRoleArn
+      RuntimePlatform:
+        OperatingSystemFamily: LINUX
+        CpuArchitecture: X86_64
+      ContainerDefinitions:
+        - Name: viewer
+          Image: !Ref ContainerImage
+          Essential: true
+          PortMappings:
+            - { ContainerPort: 8080, Protocol: tcp }
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref LogGroup
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: viewer
+          Environment:
+            - { Name: TZ, Value: UTC }
+            - { Name: AWS_REGION, Value: !Ref AWS::Region }
+            - { Name: S3_BUCKET, Value: !Ref S3Bucket }
+            - { Name: RUNS_PREFIX, Value: !Ref RunsPrefix }
+            - { Name: AUTH_MODE, Value: !Ref AuthMode }
+            - { Name: DEV_AUTH, Value: !Ref DevAuth }
+            - { Name: AUTH_SERVICE_URL, Value: !Ref AuthServiceUrl }
+            - { Name: APP_NAME, Value: !Ref AppName }
+            - { Name: FLASK_SECRET, Value: !Ref FlaskSecret }
+            - { Name: JIRA_BASE_URL, Value: !Ref JiraBaseUrl }
+            - { Name: JIRA_PROJECT, Value: !Ref JiraProject }
+            - { Name: JIRA_EMAIL, Value: !Ref JiraEmail }
+            - { Name: JIRA_API_TOKEN, Value: !Ref JiraApiToken }
+            - { Name: XRAY_BASE_URL, Value: !Ref XrayBaseUrl }
+            - { Name: XRAY_CLIENT_ID, Value: !Ref XrayClientId }
+            - { Name: XRAY_CLIENT_SECRET, Value: !Ref XrayClientSecret }
+            - { Name: JIRA_WRITE, Value: !Ref JiraWrite }
+            - { Name: MAPPING_PREFIX, Value: !Ref MappingPrefix }
+
+  # ── ECS service ─────────────────────────────────────────────────────────────
+  ECSService:
+    Type: AWS::ECS::Service
+    DependsOn: Listener
+    Properties:
+      ServiceName: !Sub 'cct-report-viewer-${Environment}-service'
+      Cluster: !Ref ECSCluster
+      TaskDefinition: !Ref TaskDefinition
+      DesiredCount: !Ref DesiredCount
+      LaunchType: FARGATE
+      HealthCheckGracePeriodSeconds: 90
+      LoadBalancers:
+        - TargetGroupArn: !Ref TargetGroup
+          ContainerName: viewer
+          ContainerPort: 8080
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          Subnets: !Ref SubnetIds
+          SecurityGroups: [!Ref ServiceSecurityGroup]
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 100
+        DeploymentCircuitBreaker: { Enable: true, Rollback: true }
+
+# ==============================================================================
+# Outputs
+# ==============================================================================
+Outputs:
+  ViewerURL:
+    Description: Internal URL for the viewer (corp network / VPN)
+    Value: !Sub 'http://${LoadBalancer.DNSName}'
+  LoadBalancerDNS:
+    Value: !GetAtt LoadBalancer.DNSName
+  ECSClusterName:
+    Value: !Ref ECSCluster
+  ECSServiceName:
+    Value: !GetAtt ECSService.Name
+  LogGroupName:
+    Value: !Ref LogGroup

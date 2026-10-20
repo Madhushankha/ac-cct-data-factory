@@ -1,0 +1,107 @@
+{
+  "id": "SOC_UAT_033",
+  "family": "SOC",
+  "summary": "EU SOC: 1 regular revenue pax on AC 849 LHR-YYZ Jun 7 09:00 cancelled (code 64), rebooked with 90 min dep delay; stayed at origin LHR -> NOT ELIGIBLE, below 2 h no-travel threshold (SoC-EU-NE-09)",
+  "passengers": [
+    {
+      "firstName": "HARRY",
+      "lastName": "EVANS",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "849",
+      "origin": "LHR",
+      "destination": "YYZ",
+      "depLocal": "09:00",
+      "arrLocal": "12:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HX"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": 90,
+      "delayCode": "64",
+      "cancelCode": "CREW",
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [
+    {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "851",
+      "origin": "LHR",
+      "destination": "YYZ",
+      "depLocal": "10:30",
+      "arrLocal": "13:30",
+      "dayOffset": 0,
+      "accepted": false
+    }
+  ],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-EU-NE-09",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_LESS_THAN_2_HOURS",
+    "delayMin": 90,
+    "control": "CONTROLLABLE",
+    "cause": "64",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Not Completed, Disruption Detected",
+      "Single-segment trip LHR→YYZ on AC849 cancelled, rebooked with SOC segment departure delay +1H 30M; passenger stayed at origin (LHR)",
+      "Regime: EU (LHR departure)",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Promised Itinerary: AC 849 LHR→YYZ Scheduled Dep 07-Jun 09:00",
+      "Current Itinerary: AC 849 LHR→YYZ CANCELLED, rebooked, SOC Segment Departure Delay +1H 30M",
+      "SOC Segment Departure Delay: 90 min, below 2h threshold",
+      "Departure Delay Code: 64 (Flight Crew Shortage), Controllable (not checked under EU)",
+      "PASSENGER | NOT_ELIGIBLE | DELAY_LESS_THAN_2_HOURS"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none; no travel (origin), delay below 2 h"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "delay 90 min per prerequisites/TT lines (Expected Results says 150 min: text inconsistency)",
+    "rebooked AC 851 LHR-YYZ dep 10:30 arr 13:30 invented; accepted=false (stayed at origin)",
+    "cancel code CREW = NetLine equivalent of code 64",
+    "arrival 12:00 EDT (8h block)"
+  ],
+  "unsupported": [
+    "Text states 90 min and 150 min; spec uses 90"
+  ]
+}

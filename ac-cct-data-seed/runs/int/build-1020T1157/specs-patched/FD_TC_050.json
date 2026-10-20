@@ -1,0 +1,95 @@
+{
+ "id": "FD_TC_050",
+ "family": "FD",
+ "summary": "Single pax Dominique Arsenault (Basic Aeroplan 9876543210); AC 435 YUL-YYZ dep 08:00 arr 10:00 cancelled WXX (weather, uncontrollable); reprotected on renumbered AC 445 same 08:00 dep, same 10:00 arrival (0h delay) -> NOT ELIGIBLE CAD 0",
+ "passengers": [
+  {
+   "firstName": "DOMINIQUE",
+   "lastName": "ARSENAULT",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "435",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": 0,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "WEAT",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "445",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-28",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": "UNCONTROLLABLE_CANCELLATION_NO_DELAY",
+  "delayMin": 0,
+  "control": "UNCONTROLLABLE",
+  "cause": "WEAT",
+  "ttUi": [
+   "Promised: AC 435 YUL->YYZ Scheduled Departure 08:00, Scheduled Arrival 10:00 (CANCELLED - WXX Weather)",
+   "History: Change 1 INVOL - AC 435 CANCELLED (WXX Weather - Uncontrollable); reprotected onto renumbered flight AC 445 YUL->YYZ",
+   "Current: AC 445 (Renumbered) YUL->YYZ, ARRIVED ON TIME, Scheduled Departure 08:00 (SAME), Actual Arrival 10:00 (SAME)",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 435 YUL->YYZ WXX (Weather - Uncontrollable)",
+   "Reprotected Flight: AC 445 Departed 08:00 (SAME) Arrived 10:00",
+   "Delay Calculation: original promise 10:00; reprotected actual 10:00; Delay = 0H 00M",
+   "DDS Gate 3: WXX = Uncontrollable -> Cancellation Entitlement NOT triggered -> FAILS",
+   "DDS Gate 8: 0h < 3h -> Delay Entitlement NOT triggered -> FAILS (moot)",
+   "Fallback: FALSE",
+   "Sister City: FALSE",
+   "Flight Compensation: MS DOMINIQUE ARSENAULT | NOT ELIGIBLE | UNCONTROLLABLE_CANCELLATION_NO_DELAY | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "noticeHours null (not stated)",
+  "delayBand carries the TT compensation label (no delay band applies)",
+  "Aeroplan Basic 9876543210 active, good standing"
+ ],
+ "unsupported": []
+}

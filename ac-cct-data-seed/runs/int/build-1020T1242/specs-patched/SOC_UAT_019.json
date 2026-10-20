@@ -1,0 +1,121 @@
+{
+  "id": "SOC_UAT_019",
+  "family": "SOC",
+  "summary": "APPR SOC: 3 adults on AC 301 YYZ-YVR Jun 15 dep 08:00 actual 15:00 (+420), code 68 crew controllable; elderly (>=65) Basic Aeroplan booker + 2 regular non-members -> ELIGIBLE (SoC-APPR-EL-08); meal CAD 65 + hotel CAD 320 below caps, Interac payout",
+  "passengers": [
+    {
+      "firstName": "ROGER",
+      "lastName": "DESJARDINS",
+      "type": "SRC",
+      "aeroplanNumber": "9876543210",
+      "aeroplanTier": "Basic",
+      "residence": "CA",
+      "employee": false
+    },
+    {
+      "firstName": "LOUISE",
+      "lastName": "DESJARDINS",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    },
+    {
+      "firstName": "DENIS",
+      "lastName": "DESJARDINS",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "301",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "08:00",
+      "arrLocal": "09:40",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": 420,
+      "delayCode": "68",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    },
+    {
+      "seg": 1,
+      "pax": 2,
+      "event": "boarded"
+    },
+    {
+      "seg": 1,
+      "pax": 3,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "SoC-APPR-EL-08",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 420,
+    "control": "CONTROLLABLE",
+    "cause": "68",
+    "ttUi": [
+      "Single-segment domestic trip YYZ→YVR on AC301 delayed +7H 00M (Flight Crew Shortage / Scheduling, controllable)",
+      "Promised Itinerary: AC 301 YYZ→YVR Scheduled Dep 15-Jun 08:00",
+      "Current Itinerary: AC 301 YYZ→YVR ARRIVED LATE, Scheduled Dep 08:00 → Actual 15:00, +7H 00M",
+      "Departure Delay Code: 68 (Flight Crew Shortage / Scheduling), Controllable",
+      "PASSENGER(S) | ELIGIBLE | DELAY_6_HOURS_OR_MORE (overnight eligible)",
+      "CyberSource: GREEN"
+    ],
+    "soc": {
+      "eligibility": "ELIGIBLE",
+      "entitlements": "hotel rate of day max 3 nights $500 cap per room, meals $90, transport $200, communication $90, parking $50, essentials $90; submitted meal CAD 65 + accommodation CAD 320 = CAD 385 auto-approved via Interac"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "arrival 09:40",
+    "Aeroplan numbers invented where members are stated",
+    "residence CA assumed (Interac payout for Canada)",
+    "TT UI lines reconstructed from the DDS evaluation block (text has no explicit Trip Tracer UI validation list for this case)",
+    "pax 1 typed SRC (senior) for 'Elderly Adult (Age >= 65)'"
+  ],
+  "unsupported": [
+    "Date of birth / age (>= 65) of pax 1 cannot be expressed in the passenger schema",
+    "Receipt and payout steps are Claims Dashboard / chatbot behaviour"
+  ]
+}

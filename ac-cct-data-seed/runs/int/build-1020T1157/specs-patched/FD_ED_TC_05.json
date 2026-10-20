@@ -1,0 +1,83 @@
+{
+ "id": "FD_ED_TC_05",
+ "family": "FD",
+ "summary": "Single pax Isabelle Fournier, Basic Aeroplan 9876543210, AC 422 YUL-YYZ arriving 7h late, code 67 controllable, APPR 6-<9h $700 cash / $840 AC wallet",
+ "passengers": [
+  {
+   "firstName": "ISABELLE",
+   "lastName": "FOURNIER",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "422",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 420,
+   "depDelayMin": null,
+   "delayCode": "67",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": null,
+  "amount": 700,
+  "currency": "CAD",
+  "delayBand": "APPR_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "CONTROLLABLE",
+  "cause": "67",
+  "ttUi": [
+   "Authentication Method: IDV (Persona PASS) after OTP 5x failure",
+   "Promised Itinerary - Flight: AC 422, Route: YUL-YYZ, Scheduled Arrival: 10:00",
+   "Current Itinerary - Flight: AC 422, Route: YUL-YYZ, Status: ARRIVED LATE, Actual: 17:00, Delay: +7H 00M (6-<9h band)",
+   "Regime: APPR (Canadian origin - YUL)",
+   "Distance: ~505 km - Short-haul",
+   "MSL FLIGHT: AC 422 - YUL-YYZ - 67",
+   "CONTROLLABLE (Code 67 - Crew Transport / Hotel / Logistics Delay)",
+   "APPR: Delay 6-9h, Controllable - ELIGIBLE (Tier 2)",
+   "Aeroplan: 9876543210 (Basic Member - linked)",
+   "MS ISABELLE FOURNIER | ELIGIBLE | APPR_6_TO_LT_9_HOURS | CAD $700 Cash / CAD $840 AC Wallet (+20%) | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 08:40",
+  "systemCode not stated in text (APPR Tier 2 eligible)",
+  "amount 700 is the cash value; AC wallet 840"
+ ],
+ "unsupported": [
+  "OTP 5x failure / 24h lockout / Persona IDV pass are auth-flow behaviour, not booking data",
+  "scenario text dates flight June 1 2026; run uses flightDaysAgo=10"
+ ]
+}

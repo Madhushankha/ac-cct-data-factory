@@ -1,0 +1,80 @@
+{
+  "id": "FD_TC_155",
+  "family": "FD",
+  "summary": "ASL TLV-YYZ AC084 OAL-employee booking, 4h late, code 42 -> Not Eligible (universal employee exclusion)",
+  "passengers": [
+    {
+      "firstName": "YONATAN",
+      "lastName": "WEISS",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": true
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "84",
+      "origin": "TLV",
+      "destination": "YYZ",
+      "depLocal": "12:00",
+      "arrLocal": "16:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": null,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "FD-ASL-NE-02",
+    "amount": 0,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": 240,
+    "control": "CONTROLLABLE",
+    "cause": "42",
+    "ttUi": [
+      "Promised Itinerary: AC 084 TLV->YYZ scheduled arrival 16:00",
+      "Current Itinerary: AC 084 TLV->YYZ ARRIVED LATE, actual 20:00, +4H 00M",
+      "Passenger: OAL EMPLOYEE (OAL employee booking identifier present)",
+      "Regime: ASL (Israel origin TLV) - BUT employee exclusion applies",
+      "MSL FLIGHT: AC 084 TLV->YYZ - 42 - CONTROLLABLE",
+      "Employee Check: OAL EMPLOYEE -> NOT ELIGIBLE (overrides all other checks)",
+      "Flight Compensation: MR YONATAN WEISS | NOT ELIGIBLE | EMPLOYEE_OAL | 0.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "dep 12:00 TLV chosen (text gives scheduled arrival 16:00)",
+    "flight date June 1, 2026 in text; replaced by flightDaysAgo=10",
+    "Also APPR=NE (Employee), EU=NE (Employee)",
+    "currency not stated for 0.00 / \"$0\" -> null"
+  ],
+  "unsupported": [
+    "Schema has only a boolean \"employee\"; the OAL-employee (vs AC-employee) distinction (EMPLOYEE_OAL, OAL employee booking identifier) cannot be expressed - employee=true set, builder must supply the OAL-employee marker if it exists"
+  ]
+}

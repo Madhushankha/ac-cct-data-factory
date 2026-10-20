@@ -1,0 +1,954 @@
+{
+  "key": "CHAI-31623",
+  "test_id": "FD_TC_237",
+  "title": "FD | Cancellation coded UNCONTROLLABLE (WXX Weather) but controllability under determination / disputed ? MANUAL (No Determination) | APPR | Rebooked, arrived late (+7h) | 2 Pax | Single leg | Domestic (CA) | Basic Aeroplan (claimant)",
+  "goal": "Checks that DDS doesn't automatically decline a weather cancellation while the coding is still being reviewed. Flight AC 305 YUL ? YVR is cancelled on the day of travel. Both passengers are rebooked on AC 311 and arrive 7 hours later than promised. The cancelled flight has cancellation code WXX (Weather, uncontrollable). It also carries an open coding review (code 00 / IU \"Under Investigation\"), so controllability is disputed. DDS returns NO DETERMINATION with CAD 0 for both passengers. It does not return Not Eligible (FD-APPR-NE-28) and does not decline in the chat. The chatbot shows the standard No Determination message and creates one case for both passengers, sent to manual review with a 30-day commitment. There is no CyberSource check, no Cash or AC Wallet offer, no IDV and no payment.",
+  "summary": {
+    "seed": 14,
+    "chat": 18,
+    "api": 13,
+    "email": 2,
+    "dashboard": 34,
+    "implied": 15,
+    "manual": 7,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Checks that DDS doesn't automatically decline a weather cancellation while the coding is still being reviewed. Flight AC 305 YUL ? YVR is cancelled on the day of travel. Both passengers are rebooked on AC 311 and arrive 7 hours later than promised. The cancelled flight has cancellation code WXX (Weather, uncontrollable). It also carries an open coding review (code 00 / IU \"Under Investigation\"), so controllability is disputed. DDS returns NO DETERMINATION with CAD 0 for both passengers. It does not return Not Eligible (FD-APPR-NE-28) and does not decline in the chat. The chatbot shows the standard No Determination message and creates one case for both passengers, sent to manual review with a 30-day commitment. There is no CyberSource check, no Cash or AC Wallet offer, no IDV and no payment.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: UD002 � 2 passengers: Marie-�ve Tremblay (Adult - Claimant, Basic Aeroplan 9876543210, good standing), Luc Tremblay (Adult)",
+      "expected": "PNR: UD002 � 2 passengers: Marie-�ve Tremblay (Adult - Claimant, Basic Aeroplan 9876543210, good standing), Luc Tremblay (Adult)",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Promised (14-day itinerary): AC 305 YUL ? YVR, Aug 5, 2026, departing 08:00, arriving 10:30 local",
+      "expected": "Promised (14-day itinerary): AC 305 YUL ? YVR, Aug 5, 2026, departing 08:00, arriving 10:30 local",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Change: INVOL on Aug 5, AC 305 cancelled (customers told on the day)",
+      "expected": "Change: INVOL on Aug 5, AC 305 cancelled (customers told on the day)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Actual: AC 311 YUL ? YVR, Aug 5, arriving 17:30 local, both boarded (coupons flown)",
+      "expected": "Actual: AC 311 YUL ? YVR, Aug 5, arriving 17:30 local, both boarded (coupons flown)",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Delay at arrival: 7h (420 min)",
+      "expected": "Delay at arrival: 7h (420 min)",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "AC 305 cancellation code: WXX (Weather)",
+      "expected": "AC 305 cancellation code: WXX (Weather)",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Coding status: under review, code 00 / IU \"Under Investigation\" also logged",
+      "expected": "Coding status: under review, code 00 / IU \"Under Investigation\" also logged",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No voluntary changes (VOL)",
+      "expected": "No voluntary changes (VOL)",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "AC only",
+      "expected": "AC only",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Not a group booking",
+      "expected": "Not a group booking",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Claim filed Aug 14, 2026 (more than 72h, within 366 days)",
+      "expected": "Claim filed Aug 14, 2026 (more than 72h, within 366 days)",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No duplicate",
+      "expected": "No duplicate",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Not employee, not infant",
+      "expected": "Not employee, not infant",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Country of residence: Canada",
+      "expected": "Country of residence: Canada",
+      "id": "CP015"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP016"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01): \"Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?\"",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP017"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects \"English\"",
+      "expected": "English",
+      "id": "CP018"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then the privacy alert is displayed: \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP019"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP020"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"Our flight from Montreal to Vancouver was cancelled and they said it was the weather, but the weather was fine. We were put on a later flight and arrived about 7 hours late. I'd like to check if my husband and I are eligible for compensation\"",
+      "expected": "Our flight from Montreal to Vancouver was cancelled and they said it was the weather, but the weather was fine. We were put on a later flight and arrived about 7 hours late. I'd like to check if my husband and I are eligible for compensation",
+      "id": "CP021"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP022"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then third-party check ? NO",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP024"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot shows the automated decision-making disclaimer ? user agrees to start",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "User provides \"Marie-�ve Tremblay\" and PNR \"UD002\" ? Trip Tracer PNR FOUND (Auth Flow 1)",
+      "expected": "Marie-�ve Tremblay UD002",
+      "id": "CP026"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "User selects Email m***@gmail.com ? OTP \"482091\" ? CORRECT (attempt 1 of 5) ? \"Your verification was successful. Let's proceed to the next step.\"",
+      "expected": "482091 Your verification was successful. Let's proceed to the next step.",
+      "id": "CP027"
+    },
+    {
+      "section": "GROUP BOOKING CHECK & PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "system",
+      "method": "implied",
+      "step": "Group booking identifier = NOT PRESENT",
+      "expected": "\"I found 2 passengers on this booking: Marie-�ve Tremblay (Adult - Aeroplan Member), Luc Tremblay (Adult). Would you like to include all passengers in this claim?\" ? \"Yes, include both\" ? PAX count 2 ? 9 or fewer ? PROCEED",
+      "id": "CP028"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Chatbot displays: Original flight AC 305 Montreal (YUL) ? Vancouver (YVR), Aug 5, 2026 (Cancelled); rebooked on AC 311; Arrival Delay 7 hours ? user \"Yes\"",
+      "expected": "Yes",
+      "id": "CP029"
+    },
+    {
+      "section": "SEGMENT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "More than 1 segment on the selected journey ? NO (single leg) ? skip GenUC-18",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "DUPLICATE, 72-HOUR AND TIME LIMIT CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Duplicate check ? no existing case for either passenger",
+      "expected": "72-hour check ? more than 72 hours ? PROCEED APPR limit ? 9 days (within 366 days) ? PROCEED",
+      "id": "CP031"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Gate 1: not employee, not infant ? PROCEED (both)",
+      "expected": "Gate 2: first INVOL = AC 305 cancellation; no earlier VOL ? promised itinerary = 14-day itinerary (AC 305, arriving 10:30) Gate 3: both boarded AC 311 and reached YVR ? TRAVELLED Gate 4: MSL = AC 305 (single leg, not boarded, first/only segment) Gate 5: MSL operating carrier = AC ? PROCEED Gate 6: not denied boarding Gate 7: expiry = Aug 6, 2027 (366 days) Gate 8: delay = 17:30 ? 10:30 = 420 min (no VOL minutes) ? 3+ hours ? PROCEED Gate 9: MSL cancellation code WXX (Weather ? Uncontrollable) BUT coding under review (00 / IU Under Investigation logged) ? controllability disputed ? cannot decide Result for each passenger: NO_DETERMINATION | FD-APPR-ND-xx | reason \"Controllability under determination\" | CAD 0",
+      "id": "CP032"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS does NOT return FD-APPR-NE-28 (uncontrollable Not Eligible)",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current Itinerary: AC 305 CANCELLED (INVOL); AC 311 YUL ? YVR, arrived 17:30",
+      "expected": "Current Itinerary: AC 305 CANCELLED (INVOL); AC 311 YUL ? YVR, arrived 17:30",
+      "id": "CP034"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Delay: +7H 00M",
+      "expected": "Delay: +7H 00M",
+      "id": "CP035"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: APPR (1 regime)",
+      "expected": "Regime: APPR (1 regime)",
+      "id": "CP036"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL Flight: AC 305 � YUL ? YVR � Cancellation code WXX \"Cancelled due to weather\"",
+      "expected": "MSL Flight: AC 305 � YUL ? YVR � Cancellation code WXX \"Cancelled due to weather\"",
+      "id": "CP037"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Coding flag: 00 / IU \"Under Investigation\" (controllability under review)",
+      "expected": "Coding flag: 00 / IU \"Under Investigation\" (controllability under review)",
+      "id": "CP038"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Controllability: UNDER DETERMINATION (not Uncontrollable, not Controllable)",
+      "expected": "Controllability: UNDER DETERMINATION (not Uncontrollable, not Controllable)",
+      "id": "CP039"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Aeroplan: 9876543210 (Basic Member � linked, claimant)",
+      "expected": "Aeroplan: 9876543210 (Basic Member � linked, claimant)",
+      "id": "CP040"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MS MARIE-�VE TREMBLAY | NO DETERMINATION | Controllability under determination | CAD 0.00",
+      "expected": "MS MARIE-�VE TREMBLAY | NO DETERMINATION | Controllability under determination | CAD 0.00",
+      "id": "CP041"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MR LUC TREMBLAY | NO DETERMINATION | Controllability under determination | CAD 0.00",
+      "expected": "MR LUC TREMBLAY | NO DETERMINATION | Controllability under determination | CAD 0.00",
+      "id": "CP042"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "NOTE: If the review confirms Weather, both passengers become Not Eligible. If it changes the cause to controllable, APPR 6 to under 9 hrs applies (CAD 700 each).",
+      "expected": "NOTE: If the review confirms Weather, both passengers become Not Eligible. If it changes the cause to controllable, APPR 6 to under 9 hrs applies (CAD 700 each).",
+      "id": "CP043"
+    },
+    {
+      "section": "FRAUD SCREENING � NOT TRIGGERED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "CyberSource runs only for ELIGIBLE cases ? NOT invoked",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "AC WALLET / CASH � NOT TRIGGERED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "No offer, even with Basic Aeroplan linked",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "NO DETERMINATION RESULT",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Chatbot displays the standard No Determination response:",
+      "expected": "Based on the information available, we are unable to determine your eligibility at this time. Flight disruptions can involve multiple factors, and the reason for a disruption may change as additional information becomes available. Your claim will be reviewed and we will respond within 30 days.",
+      "id": "CP046"
+    },
+    {
+      "section": "NO DETERMINATION RESULT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the chatbot does NOT say the claim is declined or that weather makes them ineligible",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "NO DETERMINATION RESULT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no compensation amount is shown",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "NO DETERMINATION RESULT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no \"Would you like us to proceed?\" prompt is shown (case created automatically)",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "NO DETERMINATION RESULT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no payment country, Interac email or other payment details are collected",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Chatbot responds: \"Your claim has been submitted. Case Reference: CASE-FD-20260814-302.\" / \"Our team will review your case and contact you within 30 days.\"",
+      "expected": "Your claim has been submitted. Case Reference: CASE-FD-20260814-302. Our team will review your case and contact you within 30 days.",
+      "id": "CP051"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "And one case is created for both passengers",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the booking record is appended to the case automatically",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case is routed to the manual review queue",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "One acknowledgement email sent to m***@gmail.com for the case, containing: Case Reference, both passenger names, AC 305 YUL ? YVR Aug 5, 2026 (cancelled, rebooked, 7h late), the No Determination message, contact information",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email does NOT mention any compensation amount or a weather decline",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "\"Is there anything I can help you with?\" ? user selects \"No\" ? \"Thank you for choosing Air Canada.\"",
+      "expected": "Is there anything I can help you with? No Thank you for choosing Air Canada.",
+      "id": "CP057"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the case has been created for claimant \"Marie-�ve Tremblay\" with PNR \"UD002\" covering 2 passengers",
+      "expected": "",
+      "id": "CP058"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Case Header Topic/Sub-topic should be \"Travel Disruptions � Cancellations\"",
+      "expected": "",
+      "id": "CP059"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should be able to edit Topic/Sub-topic but cannot switch automated to non-automated",
+      "expected": "",
+      "id": "CP060"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status should be \"Forwarded � Manual Review\"",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Created and Last Updated dates should be populated",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the SLA countdown should track the 30-day response commitment",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Team assignment should be the manual review team",
+      "expected": "",
+      "id": "CP064"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no banners should be displayed for identified and authenticated Auth Flow 1 user",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant should be \"Marie-�ve Tremblay\", Adult, Authentication \"Pass\"",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR should be \"UD002\" with Creation Date, Journey ID, Booking Source and Office ID populated",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Regime should be \"APPR\"",
+      "expected": "",
+      "id": "CP068"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the passengers should be listed as Marie-�ve Tremblay (Adult, Claimant, Aeroplan 9876543210, Basic / Member) and Luc Tremblay (Adult)",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Email should be \"m***@gmail.com\" and the Address populated",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey should show \"Bound 1: YUL ? YVR\" with AC 305 Cancelled (MSL) and AC 311 as the rebooked flight (+7H 00M)",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Disruption Code should show \"WXX � Weather\" with the \"Under Investigation / under review\" flag",
+      "expected": "",
+      "id": "CP072"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Ancillary Fee section should be present and empty",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility and Compensation section should show \"NO DETERMINATION � Controllability under determination � CAD 0\" for each passenger",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no Cash or AC Wallet offer should be recorded",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And DDS should have run automatically with no agent action",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And Decision Assist should show \"No Determination\" and should not show \"Not Eligible\" or \"Eligible\"",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Duplicate Check should show \"No duplicate found\" for both passengers using baseline \"Marie-�ve Tremblay + UD002 + YUL?YVR + FD\"",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the CyberSource result should be \"Not triggered\"",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the IDV status should be \"Not triggered\"",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Trip Tracer poll should NOT be required",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And Customer Communications should show one acknowledgement email with no compensation amount",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the chatbot transcript should be linked",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Audit Log should record DDS result, case creation, routing and notification with timestamps",
+      "expected": "",
+      "id": "CP084"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Attachments tab should be empty",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should not edit the flight code and should request a coding review, then re-run Decision Assist once the review is complete",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should be able to record a manual decision per passenger (Eligible or Not Eligible) after the review",
+      "expected": "",
+      "id": "CP087"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should not be able to access Case Search as it is for leads and management only",
+      "expected": "Payment Validation Gherkin:",
+      "id": "CP088"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the DDS outcome is \"NO DETERMINATION\" for both passengers because controllability is under determination",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then no payment country should be collected",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no Cash or AC Wallet option should be offered",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no Interac email, bank or card details should be collected",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And Persona IDV for payout should not be triggered",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no payment record should be created for either passenger",
+      "expected": "",
+      "id": "CP094"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And nothing should be picked up by the evening batch file",
+      "expected": "",
+      "id": "CP095"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And nothing should be sent to Unifier or EIP",
+      "expected": "",
+      "id": "CP096"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Compensation tab should show no payout (CAD 0 per passenger, CAD 0 total)",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": "GLOB-11",
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And if manual review later finds the claim eligible, payment should follow the Canada resident path (Interac, email only) or AC Wallet if selected, with a separate payment record per passenger",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS returns NO DETERMINATION (FD-APPR-ND-xx, controllability under determination) for both passengers, CAD 0.",
+      "expected": "DDS returns NO DETERMINATION (FD-APPR-ND-xx, controllability under determination) for both passengers, CAD 0.",
+      "id": "CP099"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "It does not return FD-APPR-NE-28.",
+      "expected": "It does not return FD-APPR-NE-28.",
+      "id": "CP100"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Tracer shows the MSL as AC 305 cancelled with WXX Weather plus an under-review flag, rebooked on AC 311, +7H 00M.",
+      "expected": "Trip Tracer shows the MSL as AC 305 cancelled with WXX Weather plus an under-review flag, rebooked on AC 311, +7H 00M.",
+      "id": "CP101"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The chatbot shows the standard No Determination message, with no decline and no amount, and creates one case automatically.",
+      "expected": "The chatbot shows the standard No Determination message, with no decline and no amount, and creates one case automatically.",
+      "id": "CP102"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The case is Forwarded � Manual Review with a 30-day SLA.",
+      "expected": "The case is Forwarded � Manual Review with a 30-day SLA.",
+      "id": "CP103"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "No CyberSource check, offer, IDV, payment details or payment records.",
+      "expected": "No CyberSource check, offer, IDV, payment details or payment records.",
+      "id": "CP104"
+    }
+  ]
+}

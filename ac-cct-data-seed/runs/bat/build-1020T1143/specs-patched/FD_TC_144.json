@@ -1,0 +1,81 @@
+{
+ "id": "FD_TC_144",
+ "family": "FD",
+ "summary": "Adult, AC870 YYZ-CDG (Canada to Paris) sched arr 08:00 CDG, arrived 12:00 (+4h), code 42 controllable: not an EU origin and AC is not an EU carrier, so EU 261 does not apply (Not Eligible under EU 261; APPR assessed separately)",
+ "passengers": [
+  {
+   "firstName": "ROBERT",
+   "lastName": "TREMBLAY",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "870",
+   "origin": "YYZ",
+   "destination": "CDG",
+   "depLocal": "19:00",
+   "arrLocal": "08:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-EU-NE-19",
+  "amount": 0,
+  "currency": "EUR",
+  "delayBand": null,
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 870, Route: YYZ → CDG, Scheduled Arrival: 08:00 (local CDG)",
+   "Current Itinerary - Flight: AC 870, Route: YYZ → CDG, Status: ARRIVED LATE, Actual: 12:00, Delay: +4H 00M",
+   "Origin: YYZ (Toronto, Canada) - NOT EU ORIGIN",
+   "Destination: CDG (Paris, EU) - EU destination only",
+   "Carrier: AC (Canadian - NOT EU-based)",
+   "Regime Check: EU 261 requires EU origin → YYZ is NOT EU → EU 261 DOES NOT APPLY",
+   "Regime Check (arrival rule): Destination CDG is EU, BUT carrier AC is NOT EU-based → EU arrival rule also does NOT apply",
+   "APPR: May apply separately (Canadian origin, AC operated)",
+   "Arrival Delay Code: 42 - numeric delay code (NOT a cancellation code - this is a delay scenario)",
+   "CONTROLLABLE (delay code 42 in controllable list)",
+   "EU 261 Assessment: NOT ELIGIBLE (itinerary not EU origin; non-EU carrier arriving in EU)",
+   "Flight Compensation (EU 261): MR ROBERT TREMBLAY | NOT ELIGIBLE | NOT_EU_ORIGIN | EUR 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 19:00 YYZ on the evening before; arrival 08:00 CDG is the next calendar day (arrLocal 08:00 with the arrival day = dayOffset 1; seg dayOffset left 0 as dep day) - builder should treat arrLocal earlier than depLocal as next day",
+  "APPR was not given an expected code; this scenario asserts only the EU 261 outcome FD-EU-NE-19"
+ ],
+ "unsupported": []
+}

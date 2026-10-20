@@ -1,0 +1,92 @@
+{
+  "id": "SOC_UAT_076__CHAI-31991",
+  "family": "SOC",
+  "summary": "1 adult, AC 301 YYZ-YVR 25-Jun 08:00 departed 14:00 (6h late), code 77 weather; DDS originally NOT ELIGIBLE (APPR NE-07); an emergency override is Pending (case held)",
+  "passengers": [
+    {
+      "firstName": "OLIVIA",
+      "lastName": "BROWN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "301",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "08:00",
+      "arrLocal": "11:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 360,
+      "depDelayMin": 360,
+      "delayCode": "77",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-APPR-NE-07",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": 360,
+    "control": "UNCONTROLLABLE",
+    "cause": "77",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected - DISPUTED / OVERRIDE PENDING",
+      "Single-segment trip YYZ->YVR on AC301 delayed due to weather (uncontrollable)",
+      "Regime: APPR; PASSENGERS: 1 - SEGMENTS: 1",
+      "Promised: AC 301 YYZ->YVR Sched Dep 25-Jun 08:00",
+      "Current: ARRIVED LATE, Sched Dep 08:00, Actual 14:00 (TT text says +7H 00M, prerequisite 6h/360 min)",
+      "SOC section present; Departure Delay Code 77 (Weather) - Uncontrollable",
+      "Original DDS: SoC-APPR-NE-07 (NOT ELIGIBLE - weather)",
+      "PASSENGER STATUS: NOT_ELIGIBLE (original) -> DISPUTED -> OVERRIDE PENDING; Dispute Flag YES; Override Status PENDING; CyberSource NOT triggered",
+      "Case in manual handling queue; no payment initiated; no Welcome Back email",
+      "Final expected state: SoC-Override-Pending (PENDING)"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none from DDS (NE-07); emergency override Pending holds the case"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Regime APPR per TT (prerequisite says ANY)",
+    "Delay 360 from stated actual-vs-scheduled times (08:00 -> 14:00, arr 11:00 -> 17:00); TT/chatbot text says 7h: not matching its own actual times",
+    "Actual arrival 17:00 local YVR => arrival delay 360",
+    "expect.systemCode is the raw DDS code the booking produces (NE-07); the scenario's final state SoC-Override-Pending exists only after the override flow",
+    "Cabin W (PY), class O",
+    "Residence CA",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10.",
+    "Scenario id duplicates SOC_UAT_076 (ASL pending, CHAI-31990); this one is CHAI-31991"
+  ],
+  "unsupported": [
+    "The emergency override (ACTIVE / Pending), the dispute flag and the manual handling queue state are created in Case Services/Claims Dashboard, not by booking data; the booking only reproduces the original NE-07 weather result"
+  ]
+}

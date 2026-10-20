@@ -1,0 +1,102 @@
+{
+ "id": "FD_TC_048",
+ "family": "FD",
+ "summary": "Single pax Richard Clarke (Aeroplan Elite 35K 9876543210, 014 ticket) AC 123 YYZ-YVR (dep 09:00, arr 14:00) cancelled D-1 code DAMA (ANA, third-party ground vehicle damage, uncontrollable); INVOL rebooked AC 127 arriving 21:00 (+7h); APPR -> NOT ELIGIBLE CAD 0",
+ "passengers": [
+  {
+   "firstName": "RICHARD",
+   "lastName": "CLARKE",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "35K",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "123",
+   "origin": "YYZ",
+   "destination": "YVR",
+   "depLocal": "09:00",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": 420,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "DAMA",
+   "noticeHours": 24,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "127",
+   "origin": "YYZ",
+   "destination": "YVR",
+   "depLocal": "14:00",
+   "arrLocal": "21:00",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-28",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "UNCONTROLLABLE",
+  "cause": "DAMA",
+  "ttUi": [
+   "Promised: AC 123 YYZ->YVR Scheduled Departure 09:00, Scheduled Arrival 14:00 (CANCELLED)",
+   "Current: AC 127 YYZ->YVR, ARRIVED, Actual Arrival 21:00",
+   "History: Change 1 INVOL - AC 123 cancelled at D-1 (DAMA - ANA); customer rebooked onto AC 127 YYZ->YVR",
+   "Operating carrier: Air Canada (AC) on all segments - OAL redirect NOT applied",
+   "Ticket stock: 014- (AC issued)",
+   "Delay Calculation: 21:00 - 14:00 = 7 hrs DELAY_6_TO_LT_9_HOURS",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 123 YYZ->YVR Cancellation Code: DAMA (ANA) \"Cancelled due to aircraft damage requiring maintenance\"",
+   "Fallback: FALSE (cancellation code available)",
+   "APPR causal category: Outside carrier control -> UNCONTROLLABLE",
+   "Aeroplan: 9876543210 (Elite 35K linked)",
+   "DDS outcome code: FD-APPR-NE-TBC",
+   "Flight Compensation: MR RICHARD CLARKE | NOT ELIGIBLE | DELAY_6_TO_LT_9_HOURS | UNCONTROLLABLE | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "AC 127 dep 14:00 assumed (only arrival 21:00 given); times used verbatim although YYZ-YVR block is unrealistic with timezones",
+  "cancelled at D-1 -> noticeHours 24",
+  "residence CA"
+ ],
+ "unsupported": [
+  "Ticket stock 014- (AC-issued) has no field (irrelevant to outcome)"
+ ],
+ "loyalty": {
+  "tier": "E35K",
+  "why": "jira prerequisites name Elite 35K"
+ }
+}

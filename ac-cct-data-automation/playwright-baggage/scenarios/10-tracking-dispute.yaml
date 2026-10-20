@@ -1,0 +1,15 @@
+id: tracking-dispute
+title: Live tracking, then the customer disputes what the bot found -> GenUC-27
+booking: { pool: any, pick: next-unused, need: [open, recent], avoid: [partner, waiting, two-bags, cap-spent, duplicate, closed] }
+first_message: "Where is my bag? I'd like to track it."
+steps:
+  - expect: { step: tracking.no-notice, board: no claim notice on the live-tracking road, absent: ["claim will be assessed", "Reminder: your claim"] }
+  - notice: "yes"
+  - identify: true
+  - verify: true
+  - journey: one
+  - expect: { step: BAG-04.S3, board: bag status / location, any_of: ["your bag", "located", "on its way", "status", "tracking"] }
+  - say: "That's not right, I was told my bag was found but I never got it."
+  - expect: { step: GenUC-27, board: "manual review: first question (email)", any_of: ["email address"], form: ["Email address*"] }
+  - stop: manual-review
+known: [notice-on-tracking, I-02, K-02]

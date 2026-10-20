@@ -1,0 +1,121 @@
+{
+ "id": "SOC_UAT_043",
+ "family": "SOC",
+ "summary": "1 adult in J: AC 852 LHR-YYZ operated, AC 853 YYZ-YVR cancelled (crew shortage code 64), rebooked 10h later; stranded at YYZ; EU SOC eligible",
+ "passengers": [
+  {
+   "firstName": "DANIEL",
+   "lastName": "KRAUSE",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "DE",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "852",
+   "origin": "LHR",
+   "destination": "YYZ",
+   "depLocal": "06:00",
+   "arrLocal": "09:00",
+   "dayOffset": 0,
+   "cabin": "J",
+   "bookingClass": "J",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "853",
+   "origin": "YYZ",
+   "destination": "YVR",
+   "depLocal": "11:00",
+   "arrLocal": "13:20",
+   "dayOffset": 0,
+   "cabin": "J",
+   "bookingClass": "J",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "delay",
+   "arrDelayMin": 600,
+   "depDelayMin": 600,
+   "delayCode": "64",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "SoC-EU-EL-03",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_6_HOURS_OR_MORE",
+  "delayMin": 600,
+  "control": null,
+  "cause": "64",
+  "ttUi": [
+   "Trip Not Completed, Disruption Detected",
+   "Regime: EU (departure of journey origin)",
+   "SOC Segment: AC 853 YYZ->YVR (cancelled); delay on SOC segment 600 min (10h) >= 2h",
+   "Departure Delay Code 64 (crew shortage) - controllability NOT CHECKED (EU)",
+   "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 60.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+   "CyberSource: GREEN",
+   "DDS code SoC-EU-EL-03"
+  ],
+  "soc": {
+   "eligibility": "ELIGIBLE",
+   "entitlements": "J cabin same CCT rates: Meals 30/pax (TT shows EUR 60), hotel rate of day max 3 nights cap 500, transport 200, comm 30, parking 50, essentials 30"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "Conflict: prerequisite = LHR-YYZ-YVR with AC 853 cancelled (600 min, code 64); Gherkin/TT text describes single-segment AC 837 FRA-YYZ diverted back to FRA, 840 min, code 06 (copy of another case). Prerequisite (and title 'No Travel Incomplete') used",
+  "Times chosen: AC852 06:00-09:00, AC853 11:00-13:20, rebooked AC 853 equivalent 21:00-23:20",
+  "Cabin J, booking class J",
+  "Residence DE (Gherkin: departing country Germany, FRA); journey origin LHR assumed per prerequisite",
+  "Delay code 64 kept, cancelCode CREW inferred from 'Flight Crew Shortage'",
+  "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period)."
+ ],
+ "unsupported": [
+  "TT validation block in the source describes a different flight (AC 837 FRA-YYZ, diversion, code 06, 840 min); only the prerequisite structure is built"
+ ]
+}

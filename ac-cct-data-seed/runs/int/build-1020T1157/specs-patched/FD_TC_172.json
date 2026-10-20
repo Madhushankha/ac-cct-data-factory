@@ -1,0 +1,84 @@
+{
+ "id": "FD_TC_172",
+ "family": "FD",
+ "summary": "Mixed regime CDG-YYZ AC871 arrived 4h late, controllable code 42: EU 261 EUR 600 selected over APPR CAD 400 (fixed priority)",
+ "passengers": [
+  {
+   "firstName": "MARIE",
+   "lastName": "LEFEVRE",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "871",
+   "origin": "CDG",
+   "destination": "YYZ",
+   "depLocal": "13:30",
+   "arrLocal": "16:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "Y",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": null,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "MIXED",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-MIXED-EL-01",
+  "amount": 600,
+  "currency": "EUR",
+  "delayBand": null,
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised Itinerary: AC 871 CDG->YYZ scheduled arrival 16:00",
+   "Current Itinerary: AC 871 CDG->YYZ ARRIVED LATE, actual 20:00, +4H 00M",
+   "Dual Regime: EU 261 + APPR",
+   "EU 261: ELIGIBLE EUR 600",
+   "APPR: ELIGIBLE CAD 400",
+   "Most Generous: EU 261 EUR 600 (fixed priority: EU always selected over APPR)",
+   "MSL FLIGHT: AC 871 CDG->YYZ - 42",
+   "CONTROLLABLE (Code 42)",
+   "Fallback: FALSE",
+   "Sister City: FALSE",
+   "Flight Compensation: MS MARIE LEFEVRE | ELIGIBLE | EU261_4_PLUS_HOURS_LONG_HAUL (FIXED PRIORITY) | EUR 600"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 13:30 CDG chosen (text gives scheduled arrival 16:00 YYZ)",
+  "name \"Lefevre\" written without accent",
+  "regime \"MIXED\" = EU 261 + APPR both assessed; selected = EU 261 (EUR 600); APPR (CAD 400, Tier 1, 3 to <6 hrs) is the secondary result and must be shown alongside",
+  "distance CDG-YYZ ~5,500 km (>3500 km band)",
+  "flight date June 10, 2026; flightDaysAgo=10"
+ ],
+ "unsupported": [],
+ "stripLoyalty": true
+}

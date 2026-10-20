@@ -1,0 +1,104 @@
+{
+  "id": "FD_TC_093",
+  "family": "FD",
+  "summary": "Two adults PHILIPPE TREMBLAY (linked Aeroplan Basic 9876543210, claimant) and SOPHIE TREMBLAY (no Aeroplan), AC 365 YYZ-YVR arriving scheduled 14:00, actual 19:00 (300 min late), arrival delay code 71 (severe weather, snowstorm, uncontrollable); no booking changes",
+  "passengers": [
+    {
+      "firstName": "PHILIPPE",
+      "lastName": "TREMBLAY",
+      "type": "ADT",
+      "aeroplanNumber": "9876543210",
+      "aeroplanTier": "Basic",
+      "residence": null,
+      "employee": false
+    },
+    {
+      "firstName": "SOPHIE",
+      "lastName": "TREMBLAY",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "365",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "11:55",
+      "arrLocal": "14:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 300,
+      "depDelayMin": 300,
+      "delayCode": "71",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null,
+      "depDelayCode": "71"
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    },
+    {
+      "seg": 1,
+      "pax": 2,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "FD-APPR-NE-28",
+    "amount": 0,
+    "currency": "CAD",
+    "delayBand": null,
+    "delayMin": 300,
+    "control": "UNCONTROLLABLE",
+    "cause": "71",
+    "fallback": false,
+    "passengersExpected": "both NOT ELIGIBLE, CAD 0",
+    "ttUi": [
+      "Promised Itinerary - Flight: AC 365, Route: YYZ->YVR, Scheduled Arrival: 14:00",
+      "Current Itinerary - Flight: AC 365, Route: YYZ->YVR, Status: ARRIVED LATE, Scheduled Arrival: 14:00 - Actual: 19:00, Delay: +5H 00M",
+      "Regime: APPR (1 regime)",
+      "MSL FLIGHT: AC 365 - YYZ->YVR - 71",
+      "\"Delayed due to severe weather (snowstorm)\"",
+      "Delay: +5H 00M - UNCONTROLLABLE",
+      "APPR Gate 8: Delay 5h - 3h - PASSES threshold",
+      "APPR Gate 9: Code 71 = Uncontrollable - NOT ELIGIBLE",
+      "Fallback: FALSE",
+      "Flight Compensation: MR PHILIPPE TREMBLAY | NOT ELIGIBLE | UNCONTROLLABLE | CAD 0.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "cabin Y and booking class T on every segment (text gives none)",
+    "YYZ-YVR departure assumed 11:55 so that Pacific arrival is 14:00",
+    "departure delay assumed equal to arrival delay (300 min); departure code 71 also assumed",
+    "TT UI Flight Compensation line in the text lists only the claimant; expected results state both passengers are NE-28"
+  ],
+  "unsupported": []
+}

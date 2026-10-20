@@ -1,0 +1,82 @@
+{
+  "id": "FD_TC_176",
+  "family": "FD",
+  "summary": "Mixed regime LHR-YYZ AC855 arrived 4h late with a delay code that is controllable under EU but uncontrollable under APPR: EU (GBP 520) eligible, APPR not eligible",
+  "passengers": [
+    {
+      "firstName": "BRIDGET",
+      "lastName": "CARMICHAEL",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "855",
+      "origin": "LHR",
+      "destination": "YYZ",
+      "depLocal": "12:45",
+      "arrLocal": "16:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "MIXED",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "FD-MIXED-NE-01",
+    "amount": 520,
+    "currency": "GBP",
+    "delayBand": null,
+    "delayMin": 240,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Promised Itinerary: AC 855 LHR->YYZ scheduled arrival 16:00",
+      "Current Itinerary: AC 855 LHR->YYZ ARRIVED LATE, actual 20:00, +4H 00M",
+      "Dual Regime: EU 261 + APPR",
+      "EU 261: ELIGIBLE GBP 520 (controllable under EU rules; EU UK column, 4+ hours, >3500km)",
+      "APPR: NOT ELIGIBLE (uncontrollable under APPR rules)",
+      "Same disruption code -> different controllability per regime",
+      "Selected: EU 261 (only eligible regime)",
+      "MSL FLIGHT: AC 855 LHR->YYZ - [Code]",
+      "Flight Compensation: MS BRIDGET CARMICHAEL | ELIGIBLE | EU_UK_4_PLUS_HOURS_LONG_HAUL | GBP 520"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "dep 12:45 LHR chosen (scheduled arrival 16:00, actual 20:00 given); distance LHR-YYZ ~5,550 km",
+    "delayCode left null: the text only says \"a code that maps to controllable under EU 261 but uncontrollable under APPR\" without naming it",
+    "regime \"MIXED\" (EU 261 + APPR); eligible result is EU (UK column) GBP 520 although DDS code is FD-MIXED-NE-01",
+    "flight date June 5, 2026; flightDaysAgo=10"
+  ],
+  "unsupported": [
+    "The specific regime-divergent delay code is not stated in the text; it must be picked from the DDS/EU-vs-APPR code mapping where the code is controllable for EU but uncontrollable for APPR"
+  ]
+}

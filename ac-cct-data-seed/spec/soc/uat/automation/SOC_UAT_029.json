@@ -1,0 +1,94 @@
+{
+  "id": "SOC_UAT_029",
+  "family": "SOC",
+  "summary": "EU SOC: 1 revenue pax on BA 178 LHR-JFK (OAL only) Jun 4 dep 08:00 actual 13:00 (+300); OAL-only -> NOT ELIGIBLE, redirect to British Airways (SoC-EU-NE-05)",
+  "passengers": [
+    {
+      "firstName": "EMMA",
+      "lastName": "CLARKE",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "BA",
+      "number": "178",
+      "origin": "LHR",
+      "destination": "JFK",
+      "depLocal": "08:00",
+      "arrLocal": "11:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 300,
+      "depDelayMin": 300,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-EU-NE-05",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_2_TO_6_HOURS",
+    "delayMin": 300,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip LHR→JFK on BA178 delayed +5H 00M, OAL operated (British Airways)",
+      "Regime: EU (LHR departure)",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Promised Itinerary: BA 178 LHR→JFK Scheduled Dep 04-Jun 08:00",
+      "Current Itinerary: BA 178 LHR→JFK ARRIVED LATE, Scheduled Dep 08:00 → Actual 13:00, +5H 00M",
+      "Operating Carrier: BA (British Airways, OAL)",
+      "PASSENGER | NOT_ELIGIBLE | DELAY_2_TO_6_HOURS",
+      "NOT_ELIGIBLE reason: OAL-operated segment, redirect to British Airways"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none; OAL-only itinerary, redirect to British Airways"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "arrival 11:00 EDT (8h block, tz -5h)",
+    "no delay code (OAL only)"
+  ],
+  "unsupported": [
+    "Itinerary with no AC segment (BA-only PNR with no AC delay data) must exist in Trip Tracer"
+  ]
+}

@@ -1,0 +1,93 @@
+{
+ "id": "SOC_UAT_044",
+ "family": "SOC",
+ "summary": "1 adult, AC 854 LHR-YYZ 10:00-14:00 cancelled, no alternative within 24h; passenger stayed at LHR; EU SOC eligible",
+ "passengers": [
+  {
+   "firstName": "SOPHIE",
+   "lastName": "TAYLOR",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "GB",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "854",
+   "origin": "LHR",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "OPER",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "SoC-EU-EL-04",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_6_HOURS_OR_MORE",
+  "delayMin": 1440,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Trip Not Completed, Disruption Detected",
+   "Single-segment trip LHR->YYZ on AC854 cancelled - no alternative within 24h. Passenger stayed at origin (LHR).",
+   "Regime: EU (LHR departure)",
+   "PASSENGERS: 1 - SEGMENTS: 1",
+   "Promised: AC 854 LHR->YYZ Sched Dep 10:00",
+   "Current: AC 854 LHR->YYZ Status: CANCELLED - No alternative within 24h",
+   "Cancellation: YES | SOC Segment Delay: 1440 min (24h) >= 2h; Controllability: NOT CHECKED",
+   "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 60.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+   "CyberSource: GREEN",
+   "DDS code SoC-EU-EL-04"
+  ],
+  "soc": {
+   "eligibility": "ELIGIBLE",
+   "entitlements": "Meals 60, hotel rate of day max 3 nights cap 500, transport 200, communication 30, parking 50, essentials 30"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "No rebooking offered within 24h; the 1440 min delay is represented on the cancellation outcome (delayMin 1440)",
+  "cancelCode null (irrelevant under EU SOC)",
+  "Cabin W (PY), class O",
+  "Residence GB (GBP receipts then payout country from chatbot)",
+  "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+  "Gherkin date June 20 same as prerequisite"
+ ],
+ "unsupported": []
+}

@@ -1,0 +1,1287 @@
+{
+  "key": "CHAI-31601",
+  "test_id": "FD_TC_209",
+  "title": "Travel Completed | APPR | PAL Airlines as MSL | Spotty Coding | DDS Behaviour Validation",
+  "goal": "Customer travels on an AC-ticketed itinerary where the disrupted leg is operated by PAL Airlines (interline partner). PAL is identified as the Most Significant Leg (MSL). PAL's disruption coding is known to be spotty/inconsistent � this test validates DDS behaviour in BOTH scenarios: (A) when PAL coding IS present and DDS can evaluate, and (B) when PAL coding is MISSING/incomplete and DDS cannot determine controllability. Confirms that when coding is absent, DDS correctly flags the case for agent review rather than auto-deciding. This is critical because spotty coding from PAL may result in missing disruption codes, missing delay reasons, or incomplete flight status data.",
+  "summary": {
+    "seed": 11,
+    "chat": 55,
+    "api": 36,
+    "email": 0,
+    "dashboard": 23,
+    "implied": 14,
+    "manual": 1,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Customer travels on an AC-ticketed itinerary where the disrupted leg is operated by PAL Airlines (interline partner). PAL is identified as the Most Significant Leg (MSL). PAL's disruption coding is known to be spotty/inconsistent � this test validates DDS behaviour in BOTH scenarios: (A) when PAL coding IS present and DDS can evaluate, and (B) when PAL coding is MISSING/incomplete and DDS cannot determine controllability. Confirms that when coding is absent, DDS correctly flags the case for agent review rather than auto-deciding. This is critical because spotty coding from PAL may result in missing disruption codes, missing delay reasons, or incomplete flight status data.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: Single passenger (�lise Beaumont), multi-leg itinerary",
+      "expected": "PNR: Single passenger (�lise Beaumont), multi-leg itinerary",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Leg 1: AC 501 YUL?MNL (AC operated, no disruption)",
+      "expected": "Leg 1: AC 501 YUL?MNL (AC operated, no disruption)",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Leg 2: PAL 102 MNL?CEB (PAL operated, disrupted � 4hr delay)",
+      "expected": "Leg 2: PAL 102 MNL?CEB (PAL operated, disrupted � 4hr delay)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Itinerary: Leg 2 scheduled arrival 14:00, Actual arrival 18:00 (4hr delay)",
+      "expected": "Itinerary: Leg 2 scheduled arrival 14:00, Actual arrival 18:00 (4hr delay)",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "MSL: PAL 102 MNL?CEB (PAL is the operating carrier on the disrupted leg)",
+      "expected": "MSL: PAL 102 MNL?CEB (PAL is the operating carrier on the disrupted leg)",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Disruption code on PAL leg: TEST BOTH SCENARIOS � Scenario A: Code present (e.g., 42 equivalent); Scenario B: Code MISSING/NULL",
+      "expected": "Disruption code on PAL leg: TEST BOTH SCENARIOS � Scenario A: Code present (e.g., 42 equivalent); Scenario B: Code MISSING/NULL",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Booking changes: None",
+      "expected": "Booking changes: None",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Carrier: AC ticketing carrier, PAL operating carrier on disrupted leg",
+      "expected": "Carrier: AC ticketing carrier, PAL operating carrier on disrupted leg",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "72hrs: Elapsed",
+      "expected": "72hrs: Elapsed",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Time limit: Within 366 days",
+      "expected": "Time limit: Within 366 days",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No duplicate case",
+      "expected": "No duplicate case",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "implied",
+      "step": "CyberSource: GREEN",
+      "expected": "CyberSource: GREEN",
+      "id": "CP013"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP014"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP015"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP016"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP017"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP018"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My connecting flight on PAL was delayed and I arrived 4 hours late at my final destination, I want compensation\"",
+      "expected": "My connecting flight on PAL was delayed and I arrived 4 hours late at my final destination, I want compensation",
+      "id": "CP019"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP022"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP023"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP024"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP025"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"Luc Beauchemin\"",
+      "expected": "Luc Beauchemin",
+      "id": "CP026"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, Luc! And, what is your booking reference number?",
+      "id": "CP027"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: TC016\"",
+      "expected": "PNR: TC016",
+      "id": "CP028"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC016",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND (Auth Flow 1)",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer data (passenger info, journey details) is revealed to the customer",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP032"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: l***@gmail.com � Phone: +1***567",
+      "id": "CP033"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: l***@gmail.com\"",
+      "expected": "Email: l***@gmail.com",
+      "id": "CP034"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP035"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"492817\"",
+      "expected": "492817",
+      "id": "CP036"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful. Let's proceed to the next step.",
+      "id": "CP038"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the system checks Trip Tracer for group booking identifier",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And group booking identifier = NOT PRESENT",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And system proceeds to passenger selection",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks:",
+      "expected": "How many people are on your claim?",
+      "id": "CP042"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays passengers from PNR:",
+      "expected": "I found 1 passenger on this booking: � Luc Beauchemin (Adult) Is this who you'd like to include?",
+      "id": "CP043"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP044"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: PAX count on PNR = 1 ? ?9 ? NOT a group booking ? PROCEED",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot retrieves booking details and displays:",
+      "expected": "I found the following journey: � Leg 1: AC 501 � Montreal (YUL) ? Toronto (YYZ) � June 25, 2026 � Leg 2: PAL 802 � Toronto (YYZ) ? Vancouver (YVR) � June 25, 2026 � Arrival Delay at final destination: 4 hours Is this the journey you'd like to check?",
+      "id": "CP046"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP047"
+    },
+    {
+      "section": "SEGMENT CHECK",
+      "requirement": "GenUC-18",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: More than 1 segment on selected journey? ? YES (2 legs)",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "SEGMENT CHECK",
+      "requirement": "GenUC-18",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot identifies: MSL = Leg 2 (PAL 802 YYZ?YVR) � longest leg / disrupted leg",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "SEGMENT CHECK",
+      "requirement": "GenUC-18",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot confirms segments with customer",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot sends request to Case Services for duplicate check",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "And Case Services returns: NO existing case found for this passenger + journey combination",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "72-HOUR CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Hours since last leg arrival",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "72-HOUR CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system calculates: >72 hours ? PROCEED",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "CLAIM TIME LIMIT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Filing deadline for APPR = 366 days from disruption ? within 366 days ? PROCEED",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the DDS evaluation is done in backend",
+      "expected": "??? SUB-SCENARIO A: PAL Coding PRESENT ???",
+      "id": "CP056"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Promised Itinerary - Leg 1: AC 501 YUL?YYZ, Leg 2: PAL 802 YYZ?YVR, Scheduled Final Arrival: 18:00",
+      "expected": "Promised Itinerary - Leg 1: AC 501 YUL?YYZ, Leg 2: PAL 802 YYZ?YVR, Scheduled Final Arrival: 18:00",
+      "id": "CP057"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current Itinerary - Leg 1: AC 501 YUL?YYZ (ON TIME), Leg 2: PAL 802 YYZ?YVR, Status: ARRIVED LATE, Actual: 22:00, Delay: +4H 00M",
+      "expected": "Current Itinerary - Leg 1: AC 501 YUL?YYZ (ON TIME), Leg 2: PAL 802 YYZ?YVR, Status: ARRIVED LATE, Actual: 22:00, Delay: +4H 00M",
+      "id": "CP058"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: APPR",
+      "expected": "Regime: APPR",
+      "id": "CP059"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL FLIGHT: PAL 802 � YYZ ? YVR � 42",
+      "expected": "MSL FLIGHT: PAL 802 � YYZ ? YVR � 42",
+      "id": "CP060"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "\"Delayed due to Scheduled maintenance\"",
+      "expected": "\"Delayed due to Scheduled maintenance\"",
+      "id": "CP061"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Delay: +4H 00M � CONTROLLABLE",
+      "expected": "Delay: +4H 00M � CONTROLLABLE",
+      "id": "CP062"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PAL coding: PRESENT � Code 42 populated",
+      "expected": "PAL coding: PRESENT � Code 42 populated",
+      "id": "CP063"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "CRITICAL: DDS successfully reads PAL coding and classifies as Controllable",
+      "expected": "CRITICAL: DDS successfully reads PAL coding and classifies as Controllable",
+      "id": "CP064"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MR LUC BEAUCHEMIN | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00 | [expiry date]",
+      "expected": "MR LUC BEAUCHEMIN | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00 | [expiry date]",
+      "id": "CP065"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS proceeds normally ? Eligible ? Payment flow continues as per TC_001",
+      "expected": "DDS proceeds normally ? Eligible ? Payment flow continues as per TC_001",
+      "id": "CP066"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "SUB-SCENARIO B: PAL Coding MISSING ???",
+      "expected": "SUB-SCENARIO B: PAL Coding MISSING ???",
+      "id": "CP067"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Promised Itinerary - Leg 1: AC 501 YUL?YYZ, Leg 2: PAL 802 YYZ?YVR, Scheduled Final Arrival: 18:00",
+      "expected": "Promised Itinerary - Leg 1: AC 501 YUL?YYZ, Leg 2: PAL 802 YYZ?YVR, Scheduled Final Arrival: 18:00",
+      "id": "CP068"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current Itinerary - Leg 1: AC 501 YUL?YYZ (ON TIME), Leg 2: PAL 802 YYZ?YVR, Status: ARRIVED LATE, Actual: 22:00, Delay: +4H 00M",
+      "expected": "Current Itinerary - Leg 1: AC 501 YUL?YYZ (ON TIME), Leg 2: PAL 802 YYZ?YVR, Status: ARRIVED LATE, Actual: 22:00, Delay: +4H 00M",
+      "id": "CP069"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: APPR",
+      "expected": "Regime: APPR",
+      "id": "CP070"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL FLIGHT: PAL 802 � YYZ ? YVR � BLANK/NULL",
+      "expected": "MSL FLIGHT: PAL 802 � YYZ ? YVR � BLANK/NULL",
+      "id": "CP071"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Disruption reason: MISSING � no coding from PAL",
+      "expected": "Disruption reason: MISSING � no coding from PAL",
+      "id": "CP072"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Delay: +4H 00M � Classification: UNABLE TO DETERMINE (no code)",
+      "expected": "Delay: +4H 00M � Classification: UNABLE TO DETERMINE (no code)",
+      "id": "CP073"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "PAL coding: MISSING � Code field is BLANK/NULL",
+      "expected": "PAL coding: MISSING � Code field is BLANK/NULL",
+      "id": "CP074"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "CRITICAL: DDS cannot classify controllability without disruption code",
+      "expected": "CRITICAL: DDS cannot classify controllability without disruption code",
+      "id": "CP075"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MR LUC BEAUCHEMIN | PENDING REVIEW | DELAY_3_TO_LT_6_HOURS | AGENT REVIEW REQUIRED | [expiry date]",
+      "expected": "MR LUC BEAUCHEMIN | PENDING REVIEW | DELAY_3_TO_LT_6_HOURS | AGENT REVIEW REQUIRED | [expiry date]",
+      "id": "CP076"
+    },
+    {
+      "section": "DDS MISSING CODING BEHAVIOUR",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then DDS detects: MSL carrier = PAL, disruption code = NULL/BLANK",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "DDS MISSING CODING BEHAVIOUR",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS flags: UNABLE TO CLASSIFY � missing coding from interline partner",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "DDS MISSING CODING BEHAVIOUR",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS routes case to: AGENT REVIEW QUEUE (not auto-approved)",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "DDS MISSING CODING BEHAVIOUR",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thank you for providing your information. We've received your claim and it requires additional review by our team. A Customer Relations agent will review your case and follow up with you within 30 business days. You will receive a confirmation email with your case reference number.",
+      "id": "CP080"
+    },
+    {
+      "section": "DDS MISSING CODING BEHAVIOUR",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "And an alert information is displayed: \"Claim submitted for review.\"",
+      "expected": "Claim submitted for review.",
+      "id": "CP081"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers:",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP082"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP083"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP084"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the case has been created for claimant \"�lise Beaumont\" with PNR \"TC183\"",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Case Header Topic/Sub-topic should be \"Travel Disruptions � Delay\"",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status should be \"In Review\" or \"Done\"",
+      "expected": "",
+      "id": "CP087"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Created date should be populated",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Last Updated date should be populated",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Name should be \"�lise Beaumont\"",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Type should be \"Adult\"",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Authentication should be \"Pass\"",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR should be \"TC183\"",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Regime should be \"APPR\"",
+      "expected": "",
+      "id": "CP094"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Operating Carrier should be \"PAL\"",
+      "expected": "",
+      "id": "CP095"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Ticketing Carrier should be \"AC\"",
+      "expected": "",
+      "id": "CP096"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Full Name should be \"�lise Beaumont\"",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Email should be \"e***@gmail.com\"",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Phone should be \"+1***567\"",
+      "expected": "",
+      "id": "CP099"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Aeroplan should be \"Not linked\"",
+      "expected": "",
+      "id": "CP100"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey should show \"Bound 1: YUL ? MNL (AC 501, on time) ? MNL ? CEB (PAL 102, delayed)\"",
+      "expected": "",
+      "id": "CP101"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist Panel should show DDS ran automatically",
+      "expected": "",
+      "id": "CP102"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the eligibility decision should be pre-populated",
+      "expected": "",
+      "id": "CP103"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the MSL should be PAL 102",
+      "expected": "",
+      "id": "CP104"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Operating carrier PAL should be clearly displayed",
+      "expected": "",
+      "id": "CP105"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the CyberSource result should be \"GREEN\"",
+      "expected": "",
+      "id": "CP106"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Final Status should be \"Resolved\"",
+      "expected": "",
+      "id": "CP107"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given Sub-Scenario A where PAL coding is present and DDS is eligible",
+      "expected": "",
+      "id": "CP108"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then payment should be processed through the standard FD compensation flow",
+      "expected": "",
+      "id": "CP109"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the customer's country of residence should be \"Canada\"",
+      "expected": "",
+      "id": "CP110"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the currency should be set to \"CAD\"",
+      "expected": "",
+      "id": "CP111"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the payment method should be \"Interac e-Transfer\"",
+      "expected": "",
+      "id": "CP112"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the customer has no Aeroplan linked so only Cash should be offered with no AC Wallet option",
+      "expected": "",
+      "id": "CP113"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the compensation amount should be \"$400 CAD\" for FD delay tier 3 to less than 6 hours under APPR NOT $900 which is the Denied Boarding tier",
+      "expected": "",
+      "id": "CP114"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And IDV should be completed via Persona and Persona should return IDV PASS",
+      "expected": "",
+      "id": "CP115"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And a compensation record should be created in the system",
+      "expected": "",
+      "id": "CP116"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And a daily batch file should be generated and dispatched to Unifier",
+      "expected": "",
+      "id": "CP117"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the 35-day expiry rule should apply",
+      "expected": "",
+      "id": "CP118"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard Compensation tab should show Amount $400 Currency CAD Method Cash Interac Status Pending or Completed",
+      "expected": "",
+      "id": "CP119"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And given Sub-Scenario B where PAL coding is missing and DDS is pending review",
+      "expected": "",
+      "id": "CP120"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no automated payment should be processed",
+      "expected": "",
+      "id": "CP121"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence prompt should be displayed",
+      "expected": "",
+      "id": "CP122"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no Cash vs AC Wallet check should be triggered",
+      "expected": "",
+      "id": "CP123"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no payment method should be presented to the customer",
+      "expected": "",
+      "id": "CP124"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no Persona IDV should be triggered",
+      "expected": "",
+      "id": "CP125"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no CyberSource fraud screening should be triggered",
+      "expected": "",
+      "id": "CP126"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record should be created in the automated pipeline",
+      "expected": "",
+      "id": "CP127"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the case should be routed to agent queue for manual review",
+      "expected": "",
+      "id": "CP128"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard Compensation tab should show Amount Pending Currency TBD Method TBD Status Awaiting Agent Review",
+      "expected": "",
+      "id": "CP129"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And any automated payment in Sub-Scenario B is a P1 defect",
+      "expected": "",
+      "id": "CP130"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Scenario A (PAL coding present): DDS returns FD-APPR-EL-01.",
+      "expected": "Scenario A (PAL coding present): DDS returns FD-APPR-EL-01.",
+      "id": "CP131"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Tracer: Promise = 14:00 (14-day mark); Actual = 18:00; Delay = 4hrs; MSL = PAL 102 MNL?CEB; Operating Carrier = PAL; Ticketing Carrier = AC; Disruption code present and mapped; Controllable.",
+      "expected": "Trip Tracer: Promise = 14:00 (14-day mark); Actual = 18:00; Delay = 4hrs; MSL = PAL 102 MNL?CEB; Operating Carrier = PAL; Ticketing Carrier = AC; Disruption code present and mapped; Controllable.",
+      "id": "CP132"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Compensation: $400 CAD.",
+      "expected": "Compensation: $400 CAD.",
+      "id": "CP133"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "CyberSource: GREEN ? auto-approved.",
+      "expected": "CyberSource: GREEN ? auto-approved.",
+      "id": "CP134"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "CRITICAL: DDS must correctly read and interpret PAL's disruption coding.",
+      "expected": "CRITICAL: DDS must correctly read and interpret PAL's disruption coding.",
+      "id": "CP135"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Scenario B (PAL coding missing): DDS returns PENDING REVIEW.",
+      "expected": "Scenario B (PAL coding missing): DDS returns PENDING REVIEW.",
+      "id": "CP136"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Tracer: Promise = 14:00; Actual = 18:00; Delay = 4hrs; MSL = PAL 102 MNL?CEB; Operating Carrier = PAL; Disruption code = NULL/MISSING; Controllability = UNKNOWN.",
+      "expected": "Trip Tracer: Promise = 14:00; Actual = 18:00; Delay = 4hrs; MSL = PAL 102 MNL?CEB; Operating Carrier = PAL; Disruption code = NULL/MISSING; Controllability = UNKNOWN.",
+      "id": "CP137"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Case routed to agent queue.",
+      "expected": "Case routed to agent queue.",
+      "id": "CP138"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "CRITICAL: DDS must NOT auto-approve or auto-deny.",
+      "expected": "CRITICAL: DDS must NOT auto-approve or auto-deny.",
+      "id": "CP139"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Agent must manually review.",
+      "expected": "Agent must manually review.",
+      "id": "CP140"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Verify DDS gracefully handles missing PAL data without errors.",
+      "expected": "Verify DDS gracefully handles missing PAL data without errors.",
+      "id": "CP141"
+    }
+  ]
+}

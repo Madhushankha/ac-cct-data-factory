@@ -1,0 +1,1251 @@
+{
+  "key": "CHAI-31629",
+  "test_id": "FD_TC_232",
+  "title": "Awaiting Customer Info ? Park + Welcome Back link ? customer returns ? back to the same agent's Assigned Cases | APPR | Controllable (Code 96 � Operations Control) | Delay 6 to under 9 hrs | 1 Pax | 1 Leg | Basic Aeroplan",
+  "goal": "Checks the full park and Welcome Back cycle. Flight AC 412 YUL ? YYZ arrived 7 hours late (Code 96, Controllable). DDS returns FD-APPR-EL-02, CAD 700. In the chat, the customer said they \"may have been moved to a later flight\", but Trip Tracer shows no booking change. Agent Sarah Martin needs to confirm which flight was actually taken before paying out. She sends a \"Welcome Back � Additional Details\" request with a structured question and parks the case as Awaiting Customer Info. On Aug 8 the customer opens the deep link and goes straight to the question, without repeating earlier steps or starting a new claim. They confirm they flew AC 412 as booked. The case moves to \"Update Pending Action\" in Sarah's Assigned Cases list with \"?? UPDATE RECEIVED\". Sarah opens it (In Progress), confirms the decision and sends \"Welcome Back � Payout\". The customer goes straight to payment. They live in Canada and pick Cash, so payment goes by Interac and only the email is collected. Opening the same link again afterwards shows the case status only.",
+  "summary": {
+    "seed": 15,
+    "chat": 22,
+    "api": 12,
+    "email": 4,
+    "dashboard": 0,
+    "implied": 83,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Checks the full park and Welcome Back cycle. Flight AC 412 YUL ? YYZ arrived 7 hours late (Code 96, Controllable). DDS returns FD-APPR-EL-02, CAD 700. In the chat, the customer said they \"may have been moved to a later flight\", but Trip Tracer shows no booking change. Agent Sarah Martin needs to confirm which flight was actually taken before paying out. She sends a \"Welcome Back � Additional Details\" request with a structured question and parks the case as Awaiting Customer Info. On Aug 8 the customer opens the deep link and goes straight to the question, without repeating earlier steps or starting a new claim. They confirm they flew AC 412 as booked. The case moves to \"Update Pending Action\" in Sarah's Assigned Cases list with \"?? UPDATE RECEIVED\". Sarah opens it (In Progress), confirms the decision and sends \"Welcome Back � Payout\". The customer goes straight to payment. They live in Canada and pick Cash, so payment goes by Interac and only the email is collected. Opening the same link again afterwards shows the case status only.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: PK002 � single passenger Olivier Bergeron (Adult, Basic Aeroplan 9876543210, good standing)",
+      "expected": "PNR: PK002 � single passenger Olivier Bergeron (Adult, Basic Aeroplan 9876543210, good standing)",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "AC 412 YUL ? YYZ, July 20, 2026",
+      "expected": "AC 412 YUL ? YYZ, July 20, 2026",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Scheduled arrival 12:00, actual 19:00 (7h delay)",
+      "expected": "Scheduled arrival 12:00, actual 19:00 (7h delay)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Code 96 (Operations Control � Controllable)",
+      "expected": "Code 96 (Operations Control � Controllable)",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Travelled, arrived late",
+      "expected": "Travelled, arrived late",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Trip Tracer: no VOL/INVOL change",
+      "expected": "Trip Tracer: no VOL/INVOL change",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "AC only",
+      "expected": "AC only",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Claim filed Jul 28, 2026",
+      "expected": "Claim filed Jul 28, 2026",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Case reference: CASE-FD-20260728-002",
+      "expected": "Case reference: CASE-FD-20260728-002",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No duplicate",
+      "expected": "No duplicate",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "implied",
+      "step": "CyberSource GREEN",
+      "expected": "CyberSource GREEN",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Country of residence: Canada",
+      "expected": "Country of residence: Canada",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Owner agent: Sarah Martin (Available, not On Leave)",
+      "expected": "Owner agent: Sarah Martin (Available, not On Leave)",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Second agent: Marc Dubois (Available)",
+      "expected": "Second agent: Marc Dubois (Available)",
+      "id": "CP015"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Park date: Aug 1",
+      "expected": "Park date: Aug 1",
+      "id": "CP016"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Customer returns: Aug 8, 11:00 (day 7, within 30 days)",
+      "expected": "Customer returns: Aug 8, 11:00 (day 7, within 30 days)",
+      "id": "CP017"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01) and the user selects \"English\"",
+      "expected": "English",
+      "id": "CP019"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then the privacy alert is displayed",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Montreal to Toronto was delayed about 7 hours, I think I may have been moved to a later flight, I'd like to check if I'm eligible for compensation\"",
+      "expected": "My flight from Montreal to Toronto was delayed about 7 hours, I think I may have been moved to a later flight, I'd like to check if I'm eligible for compensation",
+      "id": "CP021"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP022"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then third-party check ? NO, and the legal disclaimer is shown and accepted",
+      "expected": "IDENTIFICATION (GenUC-01): \"Olivier Bergeron\" + PNR \"PK002\" ? Trip Tracer PNR FOUND (Auth Flow 1) AUTHENTICATION (GenUC-05): Email o***@gmail.com ? OTP \"370528\" ? CORRECT (attempt 1 of 5) GROUP BOOKING / PASSENGER SELECTION (GenUC-06): group identifier NOT PRESENT; 1 passenger confirmed JOURNEY SELECTION (GenUC-08): AC 412, YUL ? YYZ, July 20, 2026, Arrival Delay 7 hours ? \"Yes\" CHECKS: single leg; no duplicate; more than 72 hours; within 366 days ? PROCEED DDS: APPR; Code 96 Controllable; 420 min; ELIGIBLE; FD-APPR-EL-02; CAD 700",
+      "id": "CP023"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK002",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current: AC 412, ARRIVED LATE, 12:00 ? 19:00, +7H 00M",
+      "expected": "Current: AC 412, ARRIVED LATE, 12:00 ? 19:00, +7H 00M",
+      "id": "CP024"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK002",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Booking changes: None (no VOL / INVOL)",
+      "expected": "Booking changes: None (no VOL / INVOL)",
+      "id": "CP025"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK002",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: APPR (1 regime)",
+      "expected": "Regime: APPR (1 regime)",
+      "id": "CP026"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK002",
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL: AC 412 � YUL ? YYZ � 96 \"Delayed due to operations control\" � CONTROLLABLE",
+      "expected": "MSL: AC 412 � YUL ? YYZ � 96 \"Delayed due to operations control\" � CONTROLLABLE",
+      "id": "CP027"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK002",
+      "kind": "verdict",
+      "method": "api",
+      "step": "MR OLIVIER BERGERON | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet",
+      "expected": "MR OLIVIER BERGERON | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet",
+      "id": "CP028"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK002",
+      "kind": "verdict",
+      "method": "api",
+      "step": "CYBERSOURCE (GLOB-05): GREEN",
+      "expected": "CYBERSOURCE (GLOB-05): GREEN",
+      "id": "CP029"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK002",
+      "kind": "verdict",
+      "method": "api",
+      "step": "CUSTOMER DROPS OFF: closes the chat before payment",
+      "expected": "CUSTOMER DROPS OFF: closes the chat before payment",
+      "id": "CP030"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK002",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then case CASE-FD-20260728-002 is created as ELIGIBLE, CAD 700, with no payment instruction, and the transcript is linked",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given Sarah Martin clicks \"Get Next Case\" ? Assigned ? opens it within 10 minutes ? In Progress",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When she reads the transcript and sees \"may have been moved to a later flight\"",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer shows no booking change",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then she decides to confirm the flight taken before payout",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When she triggers \"Welcome Back � Additional Details\"",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And defines the request with a structured question: \"Which flight did you travel on? (AC 412 as booked / a different flight)\", plus an optional text field for the flight number and date",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then a Welcome Back email with a deep link is sent to o***@gmail.com",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the link shows no readable case or customer data (key only)",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case status becomes \"Awaiting Customer Info\"",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah selects \"Park Case\"",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the status becomes \"Parked\"",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case moves to Sarah's Incomplete / Parked Cases widget",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Sarah's active slot is freed",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the assigned agent stays Sarah Martin",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "PART B � AGENT REQUESTS INFO AND PARKS",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the Audit Log records: Welcome Back type (Additional Details), question sent, notification sent, Parked, actor and timestamp",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "PART C � CUSTOMER RETURNS THROUGH THE DEEP LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given the case is Parked",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "PART C � CUSTOMER RETURNS THROUGH THE DEEP LINK",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "When the customer clicks the deep link",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "PART C � CUSTOMER RETURNS THROUGH THE DEEP LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system resolves the key and loads the case context",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "PART C � CUSTOMER RETURNS THROUGH THE DEEP LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Case Services returns \"Waiting on customer details\"",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "PART C � CUSTOMER RETURNS THROUGH THE DEEP LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the customer lands straight on the Additional Details question",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "PART C � CUSTOMER RETURNS THROUGH THE DEEP LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the customer is NOT asked to repeat greeting, identification, passenger or journey selection",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "PART C � CUSTOMER RETURNS THROUGH THE DEEP LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no new FD claim is started",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "PART C � CUSTOMER RETURNS THROUGH THE DEEP LINK",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And no IDV is asked for at this step (not a payment step)",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "PART C � CUSTOMER RETURNS THROUGH THE DEEP LINK",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "When the customer selects \"AC 412 as booked\" and types \"I was told I might be moved but I stayed on AC 412\"",
+      "expected": "AC 412 as booked I was told I might be moved but I stayed on AC 412",
+      "id": "CP055"
+    },
+    {
+      "section": "PART C � CUSTOMER RETURNS THROUGH THE DEEP LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And submits",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "PART C � CUSTOMER RETURNS THROUGH THE DEEP LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot confirms the information has been added to the case",
+      "expected": "",
+      "id": "CP057"
+    },
+    {
+      "section": "PART C � CUSTOMER RETURNS THROUGH THE DEEP LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the answer is attached to the case as a structured field plus the free-text note",
+      "expected": "",
+      "id": "CP058"
+    },
+    {
+      "section": "PART D � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the status changes Parked ? \"Update Pending Action\" straight away",
+      "expected": "",
+      "id": "CP059"
+    },
+    {
+      "section": "PART D � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case leaves Sarah's Parked widget and appears in her Assigned Cases list",
+      "expected": "",
+      "id": "CP060"
+    },
+    {
+      "section": "PART D � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case shows \"?? UPDATE RECEIVED\"",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "PART D � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And it does not count against her one-new-case limit",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "PART D � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the assigned agent stays Sarah Martin",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "PART D � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case does NOT go to \"To Be Assigned\"",
+      "expected": "",
+      "id": "CP064"
+    },
+    {
+      "section": "PART D � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Marc Dubois cannot pull the case with \"Get Next Case\"",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "PART D � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no Appeal Pending or Case Closed banner is shown",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "PART D � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Case ID does not change",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "PART D � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Audit Log records: Welcome Back response received (channel: deep link), Parked ? Update Pending Action",
+      "expected": "",
+      "id": "CP068"
+    },
+    {
+      "section": "PART E � AGENT CONTINUES AND TRIGGERS PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah clicks the case row",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "PART E � AGENT CONTINUES AND TRIGGERS PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the status changes to \"In Progress\"",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "PART E � AGENT CONTINUES AND TRIGGERS PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the customer's answer is clearly shown",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "PART E � AGENT CONTINUES AND TRIGGERS PAYOUT",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And she confirms it matches Trip Tracer (AC 412, no change)",
+      "expected": "",
+      "id": "CP072"
+    },
+    {
+      "section": "PART E � AGENT CONTINUES AND TRIGGERS PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And she keeps the decision ELIGIBLE, FD-APPR-EL-02, CAD 700 (no override)",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "PART E � AGENT CONTINUES AND TRIGGERS PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When she triggers \"Welcome Back � Payout\"",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "PART E � AGENT CONTINUES AND TRIGGERS PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the amount and type are filled in by the system (CAD 700) and she cannot type or change the payout structure",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "PART E � AGENT CONTINUES AND TRIGGERS PAYOUT",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a Welcome Back payout email is sent to o***@gmail.com",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "PART E � AGENT CONTINUES AND TRIGGERS PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case is Awaiting Customer Info (Compensation)",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT THROUGH WELCOME BACK",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "When the customer clicks the deep link again",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT THROUGH WELCOME BACK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then they land straight on the payment step (earlier steps not shown)",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT THROUGH WELCOME BACK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And country of residence = Canada ? CAD",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT THROUGH WELCOME BACK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Basic Aeroplan is found ? both options offered: Cash CAD 700 (Interac, 5 to 10 business days) or AC Wallet CAD 840 (20% bonus)",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT THROUGH WELCOME BACK",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the customer selects \"Cash\"",
+      "expected": "Cash",
+      "id": "CP082"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT THROUGH WELCOME BACK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And only the Interac email o***@gmail.com is confirmed",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT THROUGH WELCOME BACK",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Persona IDV runs (payment step) ? PASS, and the result is saved to the case",
+      "expected": "",
+      "id": "CP084"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT THROUGH WELCOME BACK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the customer submits ? one CAD 700 compensation record is created",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "PART F � CUSTOMER COMPLETES PAYOUT THROUGH WELCOME BACK",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the eligible notification email is sent via Adobe",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "When the customer opens the same deep link after payout",
+      "expected": "",
+      "id": "CP087"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then they are NOT sent back to the question or payment step",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And they see the latest case status only",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When a changed or invalid key is used",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then a fallback message says the link is not valid, and no case data is shown",
+      "expected": "Claims Dashboard Gherkin:",
+      "id": "CP091"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given case \"CASE-FD-20260728-002\" for claimant \"Olivier Bergeron\" is owned by \"Sarah Martin\"",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah sends \"Welcome Back � Additional Details\" and parks the case",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the status should be \"Parked\" and the case should be in her \"Incomplete / Parked Cases\" widget",
+      "expected": "",
+      "id": "CP094"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "When the customer answers through the deep link",
+      "expected": "",
+      "id": "CP095"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the answer should be attached to the case",
+      "expected": "",
+      "id": "CP096"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the status should change to \"Update Pending Action\"",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case should appear in Sarah's \"Assigned Cases\" list with \"?? UPDATE RECEIVED\"",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the assigned agent should remain \"Sarah Martin\"",
+      "expected": "",
+      "id": "CP099"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case should NOT be in \"To Be Assigned\"",
+      "expected": "",
+      "id": "CP100"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And another Available agent should NOT be able to pull the case",
+      "expected": "",
+      "id": "CP101"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no new case should be created and the Case ID should not change",
+      "expected": "",
+      "id": "CP102"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah clicks the case",
+      "expected": "",
+      "id": "CP103"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the status should change to \"In Progress\"",
+      "expected": "",
+      "id": "CP104"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Topic/Sub-topic should be \"Travel Disruptions � Delay\"",
+      "expected": "",
+      "id": "CP105"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Claimant should be \"Olivier Bergeron\", Adult, Authentication \"Pass\"",
+      "expected": "",
+      "id": "CP106"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the PNR should be \"PK002\" with Creation Date, Journey ID, Booking Source and Office ID populated",
+      "expected": "",
+      "id": "CP107"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And the Regime should be \"APPR\"",
+      "expected": "APPR",
+      "id": "CP108"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Aeroplan should be \"9876543210\", Tier \"Basic / Member\"",
+      "expected": "",
+      "id": "CP109"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Journey should show \"Bound 1: YUL ? YYZ\" (AC 412, +7H 00M, Code 96)",
+      "expected": "",
+      "id": "CP110"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Decision Assist should show ELIGIBLE, FD-APPR-EL-02, CAD 700 and not be greyed out",
+      "expected": "",
+      "id": "CP111"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Duplicate Check should show \"No duplicate found\"",
+      "expected": "",
+      "id": "CP112"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And CyberSource should be \"GREEN\"",
+      "expected": "",
+      "id": "CP113"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Customer Communications should show both Welcome Back emails, the customer's answer and the eligible notification in date order",
+      "expected": "",
+      "id": "CP114"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the Audit Log should record in order: created, Assigned, In Progress, Welcome Back (Additional Details) sent, Parked, customer answer, Update Pending Action, In Progress, Welcome Back (Payout) sent, IDV PASS, payout, Resolved, with actor, timestamp and before/after values",
+      "expected": "",
+      "id": "CP115"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Final Status should be \"Resolved\" and read-only",
+      "expected": "Payment Validation Gherkin:",
+      "id": "CP116"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given the case is ELIGIBLE, CAD 700 and Sarah has triggered \"Welcome Back � Payout\"",
+      "expected": "",
+      "id": "CP117"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the payout amount should be filled in by the system and not editable as free text",
+      "expected": "",
+      "id": "CP118"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "When the customer opens the deep link",
+      "expected": "",
+      "id": "CP119"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then they should land straight on payment",
+      "expected": "",
+      "id": "CP120"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And country should be \"Canada\" and currency \"CAD\"",
+      "expected": "",
+      "id": "CP121"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And both Cash (CAD 700) and AC Wallet (CAD 840) should be offered",
+      "expected": "",
+      "id": "CP122"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the customer selects \"Cash\" ? Interac e-Transfer",
+      "expected": "Cash",
+      "id": "CP123"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And only the email \"o***@gmail.com\" should be collected",
+      "expected": "",
+      "id": "CP124"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Persona IDV should PASS and be saved to the case",
+      "expected": "",
+      "id": "CP125"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And exactly one CAD 700 compensation record should be created",
+      "expected": "",
+      "id": "CP126"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And it should be picked up by the evening batch and sent to Unifier (manual trigger in UAT)",
+      "expected": "",
+      "id": "CP127"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Unifier should acknowledge",
+      "expected": "",
+      "id": "CP128"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Interac status should move Pending ? Cached / Rejected / Expired, with Expired after 35 days unclaimed",
+      "expected": "",
+      "id": "CP129"
+    },
+    {
+      "section": "PART G � LINK REUSE AND EXPIRED LINK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Compensation tab should show CAD 700, Cash � Interac, status via talkback",
+      "expected": "",
+      "id": "CP130"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS FD-APPR-EL-02, CAD 700.",
+      "expected": "DDS FD-APPR-EL-02, CAD 700.",
+      "id": "CP131"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The agent sends Welcome Back � Additional Details and parks the case.",
+      "expected": "The agent sends Welcome Back � Additional Details and parks the case.",
+      "id": "CP132"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The customer uses the deep link and goes straight to the question, with no restart and no new case.",
+      "expected": "The customer uses the deep link and goes straight to the question, with no restart and no new case.",
+      "id": "CP133"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Their answer is attached, and the case moves to Update Pending Action with \"?? UPDATE RECEIVED\" in the same agent's Assigned Cases list.",
+      "expected": "Their answer is attached, and the case moves to Update Pending Action with \"?? UPDATE RECEIVED\" in the same agent's Assigned Cases list.",
+      "id": "CP134"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The agent opens it (In Progress) and sends Welcome Back � Payout with a system-filled amount.",
+      "expected": "The agent opens it (In Progress) and sends Welcome Back � Payout with a system-filled amount.",
+      "id": "CP135"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The customer goes straight to payment and is paid CAD 700 Cash via Interac (email only), with one compensation record.",
+      "expected": "The customer goes straight to payment and is paid CAD 700 Cash via Interac (email only), with one compensation record.",
+      "id": "CP136"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Reusing the link afterwards shows status only.",
+      "expected": "Reusing the link afterwards shows status only.",
+      "id": "CP137"
+    }
+  ]
+}

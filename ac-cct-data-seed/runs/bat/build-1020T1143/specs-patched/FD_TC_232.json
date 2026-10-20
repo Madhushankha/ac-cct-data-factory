@@ -1,0 +1,85 @@
+{
+  "id": "FD_TC_232",
+  "family": "FD",
+  "summary": "Single pax Olivier Bergeron, AC 412 YUL-YYZ Jul 20, arrived 7h late (arr 12:00 -> 19:00), code 96 controllable, no VOL/INVOL changes, AC only, travelled; Basic Aeroplan; resident of Canada",
+  "passengers": [
+    {
+      "firstName": "OLIVIER",
+      "lastName": "BERGERON",
+      "type": "ADT",
+      "aeroplanNumber": "9876543210",
+      "aeroplanTier": "Basic",
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "412",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "10:45",
+      "arrLocal": "12:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    }
+  ],
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": 420,
+      "delayCode": "96",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "FD-APPR-EL-02",
+    "amount": 700,
+    "currency": "CAD",
+    "delayBand": "DELAY_6_TO_LT_9_HOURS",
+    "delayMin": 420,
+    "control": "CONTROLLABLE",
+    "cause": "96",
+    "ttUi": [
+      "Promised: AC 412 YUL→YYZ 12:00",
+      "Current: AC 412 ARRIVED LATE 12:00→19:00 +7H 00M",
+      "Booking changes: None (no VOL / INVOL)",
+      "Regime: APPR (1 regime)",
+      "MSL: AC 412 YUL→YYZ 96 \"Delayed due to operations control\" CONTROLLABLE",
+      "MR OLIVIER BERGERON | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "cabin Y, booking class T (not stated)",
+    "AC 412 departure 10:45 (text gives only scheduled arrival 12:00; 1h15 block time)",
+    "depDelayMin 420 assumed equal to arrival delay (text gives only arrival times)",
+    "flightDaysAgo 10 default (flight Jul 20, claim Jul 28 = 8 days after; only needs >72h and <366 days)",
+    "Customer's chat claim of a possible move to a later flight is chatbot dialogue only; booking has NO change",
+    "residence CA from prerequisites"
+  ],
+  "unsupported": [],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "vouchers": [],
+  "bags": [],
+  "flightDaysAgo": 10
+}

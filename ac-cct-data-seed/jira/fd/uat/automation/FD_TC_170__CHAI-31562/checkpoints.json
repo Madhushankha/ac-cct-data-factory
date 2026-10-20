@@ -1,0 +1,612 @@
+{
+  "key": "CHAI-31562",
+  "test_id": "FD_TC_170",
+  "title": "ASL | No Determination | OAL Data Not Available | 14-Day Polling Exhausted | Manual Handling",
+  "goal": "Israel-destination multi-leg (YYZ?FRA?TLV). AC leg (Leg 1 YYZ?FRA) completed on time. OAL leg (Leg 2 LH 694 FRA?TLV, Lufthansa operated) was disrupted but Lufthansa's flight data has NOT been received through OAG feeds within the 14-day window. AC's own data is complete but the partner airline's data is unavailable. Without OAL timing data, DDS cannot determine actual arrival at TLV or whether the delay was caused by AC or Lufthansa. ASL counterpart to APPR TC_073 (ND-06) and EU TC_145 equivalent.",
+  "summary": {
+    "seed": 8,
+    "chat": 11,
+    "api": 17,
+    "email": 3,
+    "dashboard": 14,
+    "implied": 8,
+    "manual": 4,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Israel-destination multi-leg (YYZ?FRA?TLV). AC leg (Leg 1 YYZ?FRA) completed on time. OAL leg (Leg 2 LH 694 FRA?TLV, Lufthansa operated) was disrupted but Lufthansa's flight data has NOT been received through OAG feeds within the 14-day window. AC's own data is complete but the partner airline's data is unavailable. Without OAL timing data, DDS cannot determine actual arrival at TLV or whether the delay was caused by AC or Lufthansa. ASL counterpart to APPR TC_073 (ND-06) and EU TC_145 equivalent.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: single passenger Shira Abramov (Adult)",
+      "expected": "PNR: single passenger Shira Abramov (Adult)",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Journey: 2 legs: Leg 1 AC 873 YYZ?FRA (AC operated � data AVAILABLE, on time); Leg 2 LH 694 FRA?TLV (Lufthansa operated � data NOT AVAILABLE)",
+      "expected": "Journey: 2 legs: Leg 1 AC 873 YYZ?FRA (AC operated � data AVAILABLE, on time); Leg 2 LH 694 FRA?TLV (Lufthansa operated � data NOT AVAILABLE)",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "MSL: Leg 2 (OAL, disrupted, data missing)",
+      "expected": "MSL: Leg 2 (OAL, disrupted, data missing)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "AC leg data: Complete",
+      "expected": "AC leg data: Complete",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "OAL leg data: NOT RECEIVED from OAG feeds within 14-day window (data-sharing gap for this specific flight)",
+      "expected": "OAL leg data: NOT RECEIVED from OAG feeds within 14-day window (data-sharing gap for this specific flight)",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "14-day retry: EXHAUSTED",
+      "expected": "14-day retry: EXHAUSTED",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Regime: ASL (TLV destination) + APPR",
+      "expected": "Regime: ASL (TLV destination) + APPR",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Residence: Israel",
+      "expected": "Residence: Israel",
+      "id": "CP009"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given a case was previously created for PNR: TC144",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case was placed in the System Processing Queue (case previously filed via chatbot, all identification/authentication/journey selection completed)",
+      "expected": "",
+      "id": "CP011"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And 72 hours have elapsed since last leg arrival",
+      "expected": "",
+      "id": "CP012"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Rules Engine attempted to retrieve disruption data from OAL (Lufthansa LH 694)",
+      "expected": "",
+      "id": "CP013"
+    },
+    {
+      "section": "OAL DATA RETRIEVAL",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system attempts to retrieve disruption data from Lufthansa on a scheduled basis",
+      "expected": "Day 1: RE queries OAL data feed ? Lufthansa LH 694 data: NOT AVAILABLE ? retry Day 3: RE retries ? Lufthansa LH 694 data: NOT AVAILABLE ? retry Day 7: RE retries ? Lufthansa LH 694 data: NOT AVAILABLE ? retry Day 10: RE retries ? Lufthansa LH 694 data: NOT AVAILABLE ? retry Day 14: RE final retry ? Lufthansa LH 694 data: NOT AVAILABLE ? 14-DAY WINDOW EXHAUSTED ? OAL DATA NOT AVAILABLE ? NO DETERMINATION ? ESCALATE TO AGENT",
+      "id": "CP014"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Segment 1: Flight: AC 873, Route: YYZ ? FRA, Status: COMPLETED (on time) � AC operated",
+      "expected": "Segment 1: Flight: AC 873, Route: YYZ ? FRA, Status: COMPLETED (on time) � AC operated",
+      "id": "CP015"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Segment 2: Flight: LH 694, Route: FRA ? TLV, Status: ARRIVED LATE, Delay: +4H 00M � Lufthansa operated (OAL)",
+      "expected": "Segment 2: Flight: LH 694, Route: FRA ? TLV, Status: ARRIVED LATE, Delay: +4H 00M � Lufthansa operated (OAL)",
+      "id": "CP016"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL = Segment 2 (LH 694 � Lufthansa, OAL)",
+      "expected": "MSL = Segment 2 (LH 694 � Lufthansa, OAL)",
+      "id": "CP017"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: ASL (Israel) (Israel destination � TLV)",
+      "expected": "Regime: ASL (Israel) (Israel destination � TLV)",
+      "id": "CP018"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Destination: TLV (Israel)",
+      "expected": "Destination: TLV (Israel)",
+      "id": "CP019"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL Operating Carrier: Lufthansa (LH) � Star Alliance partner, but data unavailable for this specific flight",
+      "expected": "MSL Operating Carrier: Lufthansa (LH) � Star Alliance partner, but data unavailable for this specific flight",
+      "id": "CP020"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "OAL Data: NOT AVAILABLE (Lufthansa did not share disruption data for LH 694)",
+      "expected": "OAL Data: NOT AVAILABLE (Lufthansa did not share disruption data for LH 694)",
+      "id": "CP021"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Arrival Code (LH 694): NULL (OAL data not shared)",
+      "expected": "Arrival Code (LH 694): NULL (OAL data not shared)",
+      "id": "CP022"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Departure Code (LH 694): NULL (OAL data not shared)",
+      "expected": "Departure Code (LH 694): NULL (OAL data not shared)",
+      "id": "CP023"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "14-Day Retry Window: EXHAUSTED",
+      "expected": "14-Day Retry Window: EXHAUSTED",
+      "id": "CP024"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Case Status: System Processing Queue ? 14 days exhausted ? ESCALATED TO AGENT",
+      "expected": "Case Status: System Processing Queue ? 14 days exhausted ? ESCALATED TO AGENT",
+      "id": "CP025"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "NOTE: Even though Lufthansa is Star Alliance, the specific flight data was unavailable � this is a data sharing issue, not a carrier classification issue",
+      "expected": "NOTE: Even though Lufthansa is Star Alliance, the specific flight data was unavailable � this is a data sharing issue, not a carrier classification issue",
+      "id": "CP026"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[PASSENGER] | NO DETERMINATION | OAL_DATA_NOT_AVAILABLE_14_DAYS | PENDING AGENT REVIEW",
+      "expected": "[PASSENGER] | NO DETERMINATION | OAL_DATA_NOT_AVAILABLE_14_DAYS | PENDING AGENT REVIEW",
+      "id": "CP027"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system updates the case status from \"System Processing Queue\" to \"Pending Agent Review\"",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system records: 14-day retry window exhausted, OAL data not available (Lufthansa LH 694), data sharing issue",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case is routed to the manual review agent queue",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "NOTIFICATION � ESCALATION EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "NOTIFICATION � ESCALATION EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a No Determination notification email is sent to the customer's email on file",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "NOTIFICATION � ESCALATION EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains:",
+      "expected": "Update on your Air Canada claim � [Case Reference] Your claim is currently under review by our Customer Relations team. We require additional time to assess your eligibility as this involves coordination with another airline.",
+      "id": "CP033"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the case has been created for PNR \"TC144\" under ASL Israel destination TLV",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Case Header Topic/Sub-topic should be \"Travel Disruptions � Delay\"",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status should be \"Pending Agent Review\" escalated from System Processing Queue after 14 days",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Last Updated date should be Day 14",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Team assignment should be \"Manual Review Agent Queue\"",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey should show \"Segment 1: YYZ ? FRA\" as completed and AC operated and \"Segment 2: FRA ? TLV\" arrived late plus 4h and Lufthansa LH 694 operated as OAL",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the MSL should be Segment 2 Lufthansa LH 694 as OAL",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And even though Lufthansa is Star Alliance the specific flight data was unavailable as this is a data sharing issue not a carrier classification issue",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And this should differ from TC183 where Star Alliance results in immediate StarQuest routing based on carrier identity whereas here the system polled for data and it was unavailable",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility and Compensation section should be present and show \"NO DETERMINATION\" with reason \"OAL data not available � Lufthansa did not share disruption data for LH 694; 14-day retry exhausted\"",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And RE should have polled on Days 1, 3, 7, 10, and 14 and all returned Lufthansa LH 694 data NOT AVAILABLE",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the 14-Day Retry Window should be exhausted",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the determination should be \"NO DETERMINATION\" escalated to agent",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status History should show Created then System Processing Queue then Day 14 Pending Agent Review escalated due to OAL data not available",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And an escalation email should have been sent to the customer's email on file containing Case Reference and Leg 1 YYZ to FRA AC completed and Leg 2 FRA to TLV Lufthansa delayed 4h and status under review and coordination with another airline note",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should not be able to access Case Search as it is for leads and management only",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given no determination was made due to OAL data not available after 14-day retry",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no automated payment flow should be triggered",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the case was created and sent to agent for manual handling",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence should have been asked",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record should have been created automatically",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no batch file should have been dispatched",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And if the agent later determines eligible manual compensation should be created and payment dispatched per type with cash to Unifier and e-credit to EIP",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard should show case status as \"No Determination\" with no payout section until manually resolved",
+      "expected": "",
+      "id": "CP057"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS returns FD-ASL-ND-06.",
+      "expected": "DDS returns FD-ASL-ND-06.",
+      "id": "CP058"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Tracer: Leg 1 (AC YYZ?FRA) = Data AVAILABLE (on time); Leg 2 (LH FRA?TLV) = Data NOT AVAILABLE (OAG feed gap); MSL = Leg 2 (OAL, disrupted); Final arrival at TLV = UNKNOWN; Delay = CANNOT CALCULATE at final destination.",
+      "expected": "Trip Tracer: Leg 1 (AC YYZ?FRA) = Data AVAILABLE (on time); Leg 2 (LH FRA?TLV) = Data NOT AVAILABLE (OAG feed gap); MSL = Leg 2 (OAL, disrupted); Final arrival at TLV = UNKNOWN; Delay = CANNOT CALCULATE at final destination.",
+      "id": "CP059"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "OAL Data Check: OAG feed for LH 694 = NOT RECEIVED; 14-day window exhausted ? NO DETERMINATION.",
+      "expected": "OAL Data Check: OAG feed for LH 694 = NOT RECEIVED; 14-day window exhausted ? NO DETERMINATION.",
+      "id": "CP060"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Case Routing: Manual handling � 30-day SLA.",
+      "expected": "Case Routing: Manual handling � 30-day SLA.",
+      "id": "CP061"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Agent must request OAL data manually from Lufthansa.",
+      "expected": "Agent must request OAL data manually from Lufthansa.",
+      "id": "CP062"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Compensation: NOT CALCULATED.",
+      "expected": "Compensation: NOT CALCULATED.",
+      "id": "CP063"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Fraud Screening: NOT INVOKED.",
+      "expected": "Fraud Screening: NOT INVOKED.",
+      "id": "CP064"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime Assessment: ASL = ND-06 (OAL data unavailable, Lufthansa); APPR = ND (same gap); EU = assessed separately.",
+      "expected": "Regime Assessment: ASL = ND-06 (OAL data unavailable, Lufthansa); APPR = ND (same gap); EU = assessed separately.",
+      "id": "CP065"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Claims Dashboard: Case = CASE-FD-20260528-206; Status = Pending � Manual Investigation; MSL = Leg 2 (LH 694 FRA?TLV); OAL = Lufthansa (data gap); 30-day SLA active; Agent Action = \"Request LH disruption data manually, re-run DDS\"; DDS = FD-ASL-ND-06.",
+      "expected": "Claims Dashboard: Case = CASE-FD-20260528-206; Status = Pending � Manual Investigation; MSL = Leg 2 (LH 694 FRA?TLV); OAL = Lufthansa (data gap); 30-day SLA active; Agent Action = \"Request LH disruption data manually, re-run DDS\"; DDS = FD-ASL-ND-06.",
+      "id": "CP066"
+    }
+  ]
+}

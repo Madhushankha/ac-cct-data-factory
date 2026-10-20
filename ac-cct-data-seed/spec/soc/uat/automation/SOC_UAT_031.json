@@ -1,0 +1,95 @@
+{
+  "id": "SOC_UAT_031",
+  "family": "SOC",
+  "summary": "EU(UK) SOC gate test: 1 regular revenue pax on AC 855 YUL-LHR Jun 6 20:00 actual Jun 7 02:00 (+360), code 64; origin YUL is not UK -> NOT ELIGIBLE under UK/EU (SoC-EU-NE-07) although TT routes to APPR",
+  "passengers": [
+    {
+      "firstName": "PIERRE",
+      "lastName": "GAUTHIER",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "855",
+      "origin": "YUL",
+      "destination": "LHR",
+      "depLocal": "20:00",
+      "arrLocal": "07:45",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 360,
+      "depDelayMin": 360,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-EU-NE-07",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 360,
+    "control": "CONTROLLABLE",
+    "cause": "64",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip YUL→LHR on AC855 delayed +6H 00M, origin NOT in UK (YUL = Canada)",
+      "Regime: APPR (system determines; UK/EU does not apply to non-UK/EU departures)",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Promised Itinerary: AC 855 YUL→LHR Scheduled Dep 06-Jun 20:00",
+      "Current Itinerary: AC 855 YUL→LHR ARRIVED LATE, Scheduled Dep 20:00 → Actual 07-Jun 02:00, +6H 00M",
+      "Geographic Check: Origin YUL (Canada) not UK -> UK regime does NOT apply",
+      "Regime applied: APPR; Departure Delay Code 64 (Flight Crew Shortage), Controllable",
+      "PASSENGER status depends on regime routing (ELIGIBLE under APPR / NOT_ELIGIBLE if evaluated under EU/UK only)"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none under UK/EU (geographic gate); would be eligible under APPR"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "arrival 07:45 BST next day (6h45 block, tz +5h)",
+    "expect.regime set to EU (UK application) because the test targets the UK geographic gate; TT line shows APPR",
+    "residence CA assumed"
+  ],
+  "unsupported": [
+    "Text contradiction: TT shows regime APPR (pax would be ELIGIBLE) while DDS code SoC-EU-NE-07 and Expected Result say NOT ELIGIBLE under UK/EU"
+  ]
+}

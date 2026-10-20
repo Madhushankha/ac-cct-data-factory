@@ -1,0 +1,80 @@
+{
+ "id": "FD_ED_TC_08",
+ "family": "FD",
+ "summary": "Single pax Vincent Larose, Basic Aeroplan 9876543210, AC 422 YUL-YYZ arriving 7h late, code 64 controllable, APPR 6-<9h $700 cash / $840 AC wallet; payout blocked later by IDV fail",
+ "passengers": [
+  {
+   "firstName": "VINCENT",
+   "lastName": "LAROSE",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "422",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 420,
+   "depDelayMin": null,
+   "delayCode": "64",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-02",
+  "amount": 700,
+  "currency": "CAD",
+  "delayBand": "APPR_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "CONTROLLABLE",
+  "cause": "64",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 422, Route: YUL-YYZ, Scheduled Arrival: 10:00",
+   "Current Itinerary - Flight: AC 422, Route: YUL-YYZ, Status: ARRIVED LATE, Actual: 17:00, Delay: +7H 00M (6-<9h band)",
+   "Regime: APPR (Canadian origin - YUL)",
+   "MSL FLIGHT: AC 422 - YUL-YYZ - 64",
+   "CONTROLLABLE (Code 64 - Flight Crew Shortage)",
+   "APPR: Delay 6-9h, Controllable - ELIGIBLE (Tier 2)",
+   "Aeroplan: 9876543210 (Basic Member - linked)",
+   "MR VINCENT LAROSE | ELIGIBLE | APPR_6_TO_LT_9_HOURS | CAD $700 Cash / CAD $840 AC Wallet (+20%) | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 08:40",
+  "systemCode FD-APPR-EL-01 is quoted in the prerequisites for this Tier 2 case"
+ ],
+ "unsupported": [
+  "IDV failure at payout / fraud flag / held payment are claim-side behaviour",
+  "flight date June 2 2026 in text; run uses flightDaysAgo=10"
+ ]
+}

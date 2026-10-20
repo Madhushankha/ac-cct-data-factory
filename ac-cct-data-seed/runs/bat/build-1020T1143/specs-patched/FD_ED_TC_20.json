@@ -1,0 +1,75 @@
+{
+ "id": "FD_ED_TC_20",
+ "family": "FD",
+ "summary": "Single pax Jean-Pierre Martin on AC 422 YUL-YYZ arriving 4h late, code 42, APPR 3-6h $400; RDS flags (geolocation, multiple email, late booking) override CyberSource GREEN",
+ "passengers": [
+  {
+   "firstName": "JEAN-PIERRE",
+   "lastName": "MARTIN",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "422",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": null,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "APPR_3_TO_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "APPR: Delay 3-6h, Controllable - ELIGIBLE",
+   "Compensation: CAD $400"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 08:40 arr 10:00",
+  "no TT block in text; expectation from DDS lines and APPR EL-01 prerequisite"
+ ],
+ "unsupported": [
+  "RDS flags (IP geolocation Nigeria, same email on 3 other claims, late booking) and CyberSource result are claim-side, not booking data; the late-booking flag would need a booking creation date which the spec cannot express",
+  "compensation HOLD / manual review is Claims Dashboard behaviour",
+  "flight date June 1 2026 in text; run uses flightDaysAgo=10"
+ ]
+}

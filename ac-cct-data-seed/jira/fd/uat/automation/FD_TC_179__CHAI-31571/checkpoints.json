@@ -1,0 +1,828 @@
+{
+  "key": "CHAI-31571",
+  "test_id": "FD_TC_179",
+  "title": "Travel Completed | Duplicate Claim | Multi-Leg (ORD?DEN?YYZ) | Code 15 Boarding | Delay 6�9h (7h) | Canada Disrupted Leg | Basic Aeroplan",
+  "goal": "Customer files a second claim for the exact same multi-leg journey with a Canadian arrival destination (Chicago ORD ? Denver DEN ? Toronto YYZ) for which compensation was already issued on a prior claim. The disrupted segment is Leg 2 (Denver DEN ? Toronto YYZ), which experienced a 7-hour arrival delay (6�<9h band) caused by Code 15 (Boarding Process Delay � Controllable) and paid out $700 CAD Cash / $840 CAD AC Wallet. System detects the duplicate during GenUC-10 based on exact match of PNR + Passenger Name + Journey/Flight Numbers + Flight Date. Validates that: (1) System blocks the second claim attempt automatically, (2) References the original case ID (CASE-FD-20260501-153) and prior payout details, (3) Basic Aeroplan profile is recognized on the PNR, (4) No new DDS evaluation, IDV, CyberSource, or payment dispatch is triggered, (5) Second claim is logged as Closed � Not Eligible (Duplicate).",
+  "summary": {
+    "seed": 0,
+    "chat": 41,
+    "api": 7,
+    "email": 0,
+    "dashboard": 28,
+    "implied": 9,
+    "manual": 4,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Customer files a second claim for the exact same multi-leg journey with a Canadian arrival destination (Chicago ORD ? Denver DEN ? Toronto YYZ) for which compensation was already issued on a prior claim. The disrupted segment is Leg 2 (Denver DEN ? Toronto YYZ), which experienced a 7-hour arrival delay (6�<9h band) caused by Code 15 (Boarding Process Delay � Controllable) and paid out $700 CAD Cash / $840 CAD AC Wallet. System detects the duplicate during GenUC-10 based on exact match of PNR + Passenger Name + Journey/Flight Numbers + Flight Date. Validates that: (1) System blocks the second claim attempt automatically, (2) References the original case ID (CASE-FD-20260501-153) and prior payout details, (3) Basic Aeroplan profile is recognized on the PNR, (4) No new DDS evaluation, IDV, CyberSource, or payment dispatch is triggered, (5) Second claim is logged as Closed � Not Eligible (Duplicate).",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "BACKGROUND � ORIGINAL CASE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given a case was previously created and completed:",
+      "expected": "? Original Case Reference: CASE-FD-20260501-153 ? Passenger: Catherine Bouchard (Basic Aeroplan Member #: 9876543210) ? PNR: TC153 ? Journey: ORD ? DEN ? YYZ (Leg 1 AC 8452, Leg 2 AC 8204), May 1, 2026, delayed 7h (Code 15 Boarding on Leg 2 DEN?YYZ) ? Regime: APPR ? Decision: ELIGIBLE � $700 CAD Cash / $840 CAD AC Wallet ? Payment: AC Wallet � $840 CAD ISSUED (May 12, 2026) ? Case Status: CLOSED (compensation paid)",
+      "id": "CP002"
+    },
+    {
+      "section": "SECOND CLAIM ATTEMPT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP003"
+    },
+    {
+      "section": "SECOND CLAIM ATTEMPT",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP004"
+    },
+    {
+      "section": "SECOND CLAIM ATTEMPT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "SECOND CLAIM ATTEMPT",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP006"
+    },
+    {
+      "section": "SECOND CLAIM ATTEMPT",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP007"
+    },
+    {
+      "section": "SECOND CLAIM ATTEMPT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Denver to Toronto on May 1st was delayed 7 hours due to boarding delays. I'd like to file a compensation claim.\"",
+      "expected": "My flight from Denver to Toronto on May 1st was delayed 7 hours due to boarding delays. I'd like to file a compensation claim.",
+      "id": "CP008"
+    },
+    {
+      "section": "SECOND CLAIM ATTEMPT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "SECOND CLAIM ATTEMPT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "SECOND CLAIM ATTEMPT",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP011"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP012"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP013"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP014"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"Catherine Bouchard\"",
+      "expected": "Catherine Bouchard",
+      "id": "CP015"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, Catherine! And, what is your booking reference number?",
+      "id": "CP016"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: TC153\"",
+      "expected": "PNR: TC153",
+      "id": "CP017"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC153",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND (Auth Flow 1)",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer data (passenger info, journey details) is revealed to the customer",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP021"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: c***@gmail.com � Phone: +1***234",
+      "id": "CP022"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: c***@gmail.com\"",
+      "expected": "Email: c***@gmail.com",
+      "id": "CP023"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP024"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"482917\"",
+      "expected": "482917",
+      "id": "CP025"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP026"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful. Let's proceed to the next step.",
+      "id": "CP027"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the system checks Trip Tracer for group booking identifier",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And group booking identifier = NOT PRESENT",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays passengers from PNR:",
+      "expected": "I found 1 passenger on this booking: � Catherine Bouchard (Adult - Aeroplan Member) Is this who you'd like to include?",
+      "id": "CP030"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP031"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot retrieves booking details and displays:",
+      "expected": "I found the following journey: � Segment 1: Flight AC 8452, Chicago (ORD) ? Denver (DEN) � COMPLETED � Segment 2: Flight AC 8204, Denver (DEN) ? Toronto (YYZ) � ARRIVED LATE � Date: May 1, 2026 � Arrival Delay at final destination (YYZ): 7 hours Is this the journey you'd like to check?",
+      "id": "CP032"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP033"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK � DUPLICATE DETECTED",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot sends request to Case Services for duplicate check",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK � DUPLICATE DETECTED",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "And Case Services checks:",
+      "expected": "? PNR: TC153 ? MATCH ? Passenger: Catherine Bouchard ? MATCH ? Journey: ORD ? DEN ? YYZ (AC 8452 / AC 8204) ? MATCH ? Flight Date: May 1, 2026 ? MATCH ? Existing Case: CASE-FD-20260501-153 ? Existing Case Status: CLOSED (compensation paid � $840 CAD AC Wallet) ? Payment Status: ISSUED / PAID (May 12, 2026)",
+      "id": "CP035"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK � DUPLICATE DETECTED",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "And Case Services returns: DUPLICATE DETECTED",
+      "expected": "? Duplicate Match Type: EXACT (PNR + Passenger + Multi-leg Journey + Date all match) ? Original Case: CASE-FD-20260501-153 ? Original Decision: ELIGIBLE � $840 CAD AC Wallet ISSUED",
+      "id": "CP036"
+    },
+    {
+      "section": "DUPLICATE CLAIM � BLOCKED",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can see that a claim has already been filed and processed for this journey. Here are the details of your existing claim: � Case Reference: CASE-FD-20260501-153 � Journey: Chicago (ORD) ? Denver (DEN) ? Toronto (YYZ), May 1, 2026 � Disruption Reason: Gate Boarding Delay (Code 15) � Decision: Eligible � Compensation: $840 CAD (AC Wallet) � Payment Status: Issued (May 12, 2026) Since compensation has already been issued for this flight, a new claim cannot be filed for the same journey. If you believe there is an error or if you have questions about your existing claim, please contact our Customer Relations team.",
+      "id": "CP037"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers:",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP038"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP039"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP040"
+    },
+    {
+      "section": "DUPLICATE DETECTION VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? PNR match: YES (TC153) ?",
+      "expected": "? Passenger match: YES (Catherine Bouchard) ? ? Multi-leg journey match: YES (ORD?DEN?YYZ) ? ? Date match: YES (May 1, 2026) ? ? Duplicate detected: YES ? ? Original case referenced: YES (CASE-FD-20260501-153) ? ? Original payment status shown: YES ($840 CAD AC Wallet issued) ? ? Second claim blocked: YES ? ? Customer informed of existing claim: YES ?",
+      "id": "CP041"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the second claim attempt was made for claimant \"Catherine Bouchard\" with PNR \"TC153\"",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Case Header Topic/Sub-topic should be \"Travel Disruptions � Delay\"",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status should be \"Closed � Not Eligible (Duplicate)\"",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Created date should be populated",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Last Updated date should be populated",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And a Duplicate Warning Banner should be displayed on top of the case",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist panel should be blocked with no new DDS assessment",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Name should be \"Catherine Bouchard\"",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Type should be \"Adult\"",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Authentication should be \"Pass\"",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR should be \"TC153\"",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Aeroplan should be \"9876543210\" linked and in good standing (Basic Member)",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Tier Status should be \"Basic / Member\"",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Regime should be \"APPR\" (same as original)",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey should show \"Bound 1: ORD ? DEN ? YYZ\" (multi-leg connecting with disrupted segment arriving in Canada)",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Ancillary Fee section should be present",
+      "expected": "",
+      "id": "CP057"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility and Compensation section should show \"NOT ELIGIBLE (DUPLICATE)\" with compensation $0 CAD as already paid on original case",
+      "expected": "",
+      "id": "CP058"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the DUPLICATE check MUST have triggered during GenUC-10",
+      "expected": "",
+      "id": "CP059"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the match criteria should show PNR match, Passenger match, Multi-leg journey match, and Flight date match",
+      "expected": "",
+      "id": "CP060"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Original Case ID should be referenced (CASE-FD-20260501-153)",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the original payment details ($840 CAD AC Wallet / $700 CAD Cash) should be linked",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the system MUST NOT process the second claim or create a new compensation record",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And CyberSource should NOT have been triggered",
+      "expected": "",
+      "id": "CP064"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the system should have appended the booking record automatically",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And a duplicate notification email should have been sent via Adobe containing Case Reference, duplicate detected status, original case ID, and original payout summary",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Agent Notes section should be accessible",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Audit Log should record duplicate detection and original case reference",
+      "expected": "",
+      "id": "CP068"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And Customer Communications should show the duplicate notification",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Related Cases tab should link directly to the original case (CASE-FD-20260501-153)",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Final Status should be \"Closed � Not Eligible (Duplicate)\"",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the case should be in read-only mode",
+      "expected": "",
+      "id": "CP072"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the claim is a DUPLICATE",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no payment flow should be triggered",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence or payment method choice should be asked",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no new compensation record should be created",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no batch file should be dispatched",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no IDV should be triggered",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no CyberSource fraud screening should be triggered",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the original case should be referenced as CASE-FD-20260501-153 with $840 CAD AC Wallet already ISSUED on May 12, 2026",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the second claim should be BLOCKED and the system must NOT process any payment for the duplicate",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard should show eligibility as \"NOT ELIGIBLE (Duplicate)\" with no new payout section",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard Related Cases tab should link to the original case showing original payment ($840 CAD AC Wallet ISSUED)",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS returns FD-DUP-NE-01.",
+      "expected": "DDS returns FD-DUP-NE-01.",
+      "id": "CP084"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Duplicate Detection: System matches second claim against existing database ? DUPLICATE FOUND.",
+      "expected": "Duplicate Detection: System matches second claim against existing database ? DUPLICATE FOUND.",
+      "id": "CP085"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Original case CASE-FD-20260501-153 retrieved.",
+      "expected": "Original case CASE-FD-20260501-153 retrieved.",
+      "id": "CP086"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "CRITICAL: System MUST NOT process the second claim � compensation was already paid ($840 CAD AC Wallet / $700 CAD Cash for 7h delay under Code 15 Boarding on Leg 2 DEN?YYZ).",
+      "expected": "CRITICAL: System MUST NOT process the second claim � compensation was already paid ($840 CAD AC Wallet / $700 CAD Cash for 7h delay under Code 15 Boarding on Leg 2 DEN?YYZ).",
+      "id": "CP087"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Must reference the original case ID so customer and agent see prior payout.",
+      "expected": "Must reference the original case ID so customer and agent see prior payout.",
+      "id": "CP088"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Compensation: $0 � already paid on original claim.",
+      "expected": "Compensation: $0 � already paid on original claim.",
+      "id": "CP089"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Claims Dashboard: Closed � Not Eligible; Reason = Duplicate claim detected; Original case ID = CASE-FD-20260501-153; Original payment = $840 AC Wallet; Second claim blocked; DDS = FD-DUP-NE-01.",
+      "expected": "Claims Dashboard: Closed � Not Eligible; Reason = Duplicate claim detected; Original case ID = CASE-FD-20260501-153; Original payment = $840 AC Wallet; Second claim blocked; DDS = FD-DUP-NE-01.",
+      "id": "CP090"
+    }
+  ]
+}

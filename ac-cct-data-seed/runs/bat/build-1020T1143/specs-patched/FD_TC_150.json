@@ -1,0 +1,79 @@
+{
+ "id": "FD_TC_150",
+ "family": "FD",
+ "summary": "EU 261 LHR-YYZ AC flight operated yesterday, 4h late, filed 30h after flight (inside 72h window) -> Pending",
+ "passengers": [
+  {
+   "firstName": "PHILIPPE",
+   "lastName": "LAVOIE",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "849",
+   "origin": "LHR",
+   "destination": "YYZ",
+   "depLocal": "12:45",
+   "arrLocal": "16:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "Y",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 1,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "PENDING",
+  "systemCode": "FD-EU-PE-01",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": 240,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Status: Pending - within 72hr processing window",
+   "EU 261 regime identified (UK/LHR origin)",
+   "Auto-assessment scheduled; DDS will process when 72hr window expires",
+   "No polling needed"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "Text is inconsistent on route: Prerequisites/Expected use LHR-YYZ; chatbot says AC 871 CDG-YYZ June 15, 2026. Followed Prerequisites (LHR).",
+  "flight AC 849, dep 12:45 LHR, scheduled arrival 16:00 YYZ (given), actual 20:00 (4h delay, given)",
+  "flightDaysAgo=1 (flight yesterday; filing 30 hours after flight, inside 72h)",
+  "eligibility \"PENDING\" is outside the schema enum (ELIGIBLE|NOT_ELIGIBLE|NO_DETERMINATION); DDS code FD-EU-PE-01 is the real expectation",
+  "delay code not yet available (null)"
+ ],
+ "unsupported": [
+  "Delay code absent/not yet processed by DDS (\"data may or may not be available yet\" within 72h) - timing is driven by flightDaysAgo=1, not by booking data"
+ ],
+ "pinDaysAgo": true
+}

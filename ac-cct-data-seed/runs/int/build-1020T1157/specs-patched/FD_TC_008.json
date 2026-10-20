@@ -1,0 +1,132 @@
+{
+ "id": "FD_TC_008",
+ "family": "FD",
+ "summary": "Single pax Valerie Dupont: original 2 legs AC 8103 YUL-YOW + AC 8203 YOW-YYZ arr 10:00; INVOL (D-3) reroute via YKF arr 17:00; VOL (D-1) to EARLIER YKF itinerary arr 15:00; delay 5h (negative VOL not deducted), code 62, APPR Tier 1 $400",
+ "passengers": [
+  {
+   "firstName": "VALERIE",
+   "lastName": "DUPONT",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "8103",
+   "origin": "YUL",
+   "destination": "YOW",
+   "depLocal": "08:00",
+   "arrLocal": "09:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "8203",
+   "origin": "YOW",
+   "destination": "YYZ",
+   "depLocal": "09:30",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "noticeHours": 72,
+   "cancelCode": "OPER"
+  },
+  {
+   "seg": 2,
+   "kind": "cancel",
+   "noticeHours": 72,
+   "cancelCode": "OPER",
+   "arrDelayMin": 300
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "8302",
+   "origin": "YUL",
+   "destination": "YKF",
+   "depLocal": "10:00",
+   "arrLocal": "11:30",
+   "dayOffset": 0,
+   "accepted": true,
+   "voluntary": false,
+   "changeDaysBeforeDeparture": 1,
+   "paxEvent": "boarded"
+  },
+  {
+   "replacesSeg": 2,
+   "carrier": "AC",
+   "number": "8402",
+   "origin": "YKF",
+   "destination": "YYZ",
+   "depLocal": "12:30",
+   "arrLocal": "15:00",
+   "dayOffset": 0,
+   "accepted": true,
+   "voluntary": false,
+   "changeDaysBeforeDeparture": 1,
+   "actualArrLocal": "15:00",
+   "arrDelayMin": 300,
+   "delayCode": "62",
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 300,
+  "control": "CONTROLLABLE",
+  "cause": "OPER",
+  "ttUi": [
+   "Rebooking: MANY_TO_MANY (2-2 legs, connection change) - original YUL-YOW-YYZ rerouted to YUL-YKF-YYZ",
+   "Promise = 10:00 (14-day mark)",
+   "Actual final arrival at YYZ = 15:00",
+   "Total delay = 5hrs; Post-INVOL VOL = -2hrs (NEGATIVE - NOT DEDUCTED); Net delay = 5hrs",
+   "MSL = Leg 2 (AC 8402 YKF-YYZ); Code 62; Controllable",
+   "Compensation: $400 CAD (Tier 1, 3-<6hrs)"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "name accent dropped (VALERIE)",
+  "INVOL/VOL history is modelled with optional extra keys (voluntary, changeDaysBeforeDeparture, changeType) not in the base schema",
+  "text gives no TT block; expectations from Expected Results",
+  "outcome seg2 arrDelayMin 300 is the delay at YYZ versus the 10:00 promise; delayCode 62 belongs to the final leg AC 8402",
+  "amount 400 (no wallet figure given)"
+ ],
+ "unsupported": [
+  "VOL (customer-initiated) versus INVOL change type is not a field of the base schema (added as optional \"voluntary\")",
+  "negative-VOL no-deduction rule is DDS logic, not stored data",
+  "flight date: run uses flightDaysAgo=10 (text: filed D+13)"
+ ],
+ "pinDaysAgo": true
+}

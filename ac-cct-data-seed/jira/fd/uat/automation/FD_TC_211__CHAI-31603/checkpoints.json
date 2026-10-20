@@ -1,0 +1,315 @@
+{
+  "key": "CHAI-31603",
+  "test_id": "FD_TC_211",
+  "title": "3rd Party � Claims Company � Claim Opened � Not in CS � Non-EU Country � Rejected",
+  "goal": "Validates that when a claims company submits on behalf of a passenger, the claim was opened by the passenger, the case number is not found in CS, and the country of origin is a non-EU country (e.g., Canada), the system rejects the third-party submission and advises the passenger to file themselves.",
+  "summary": {
+    "seed": 4,
+    "chat": 14,
+    "api": 0,
+    "email": 0,
+    "dashboard": 9,
+    "implied": 4,
+    "manual": 1,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Validates that when a claims company submits on behalf of a passenger, the claim was opened by the passenger, the case number is not found in CS, and the country of origin is a non-EU country (e.g., Canada), the system rejects the third-party submission and advises the passenger to file themselves.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Third-party caller type: Claims Company",
+      "expected": "Third-party caller type: Claims Company",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Passenger has opened a claim",
+      "expected": "Passenger has opened a claim",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Case number provided does not exist in Case Services",
+      "expected": "Case number provided does not exist in Case Services",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Country of origin: Canada",
+      "expected": "Country of origin: Canada",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot Then the chatbot displays greeting (GLOB-01)",
+      "expected": "",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"I'm calling from a claims company on behalf of a passenger regarding a flight disruption claim\"",
+      "expected": "I'm calling from a claims company on behalf of a passenger regarding a flight disruption claim",
+      "id": "CP008"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? YES",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot identifies third-party type ? Claims Company",
+      "expected": "",
+      "id": "CP011"
+    },
+    {
+      "section": "CLAIM OPENED CHECK",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks: \"Has a claim been opened by the passenger?\"",
+      "expected": "Has a claim been opened by the passenger?",
+      "id": "CP012"
+    },
+    {
+      "section": "CLAIM OPENED CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds: \"Yes\"",
+      "expected": "",
+      "id": "CP013"
+    },
+    {
+      "section": "CASE NUMBER COLLECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please provide a case number and the name of one of the passengers on the claim.\"",
+      "expected": "Please provide a case number and the name of one of the passengers on the claim.",
+      "id": "CP014"
+    },
+    {
+      "section": "CASE NUMBER COLLECTION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides: Case number \"CLM-98765\" and passenger name \"Jean-Pierre Martin\"",
+      "expected": "CLM-98765 Jean-Pierre Martin",
+      "id": "CP015"
+    },
+    {
+      "section": "CASE NUMBER COLLECTION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides: \"Canada\"",
+      "expected": "Canada",
+      "id": "CP016"
+    },
+    {
+      "section": "REJECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Claims for flight disruption which occurred in Canada must be submitted by the passenger who experienced the disruption. Third parties cannot submit claims for disruption that occur in Canada. Please advise the passenger to open a claim themselves.\"",
+      "expected": "Claims for flight disruption which occurred in Canada must be submitted by the passenger who experienced the disruption. Third parties cannot submit claims for disruption that occur in Canada. Please advise the passenger to open a claim themselves.",
+      "id": "CP017"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Is there anything I can help you with?\"",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP018"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP019"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP020"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the system correctly identifies the third-party as a Claims Company",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the claim has been opened as YES",
+      "expected": "",
+      "id": "CP022"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the case number and passenger name have been collected",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the CS lookup returns NOT FOUND",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the country is \"Canada\" which is non-EU",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the system should display the rejection message with the correct country name inserted",
+      "expected": "",
+      "id": "CP026"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the flow should end with no manual handoff",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no case should be created in Claims Dashboard",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And when searching Claims Dashboard no entry should exist for this third-party submission",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "Given the third-party submission was rejected for non-EU country",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no payment flow should be triggered",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no case should exist in Claims Dashboard",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record should have been created",
+      "expected": "",
+      "id": "CP033"
+    }
+  ]
+}

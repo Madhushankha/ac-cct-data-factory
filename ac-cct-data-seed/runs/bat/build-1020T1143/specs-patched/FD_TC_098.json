@@ -1,0 +1,89 @@
+{
+  "id": "FD_TC_098",
+  "family": "FD",
+  "summary": "Single adult VERONIQUE CARON (linked Aeroplan Basic), AC 372 YUL-YYZ arriving scheduled 14:00, actual 21:00 (420 min late, 6-<9h band); NO delay code of any kind (arrival, departure, cancellation all null); disruption 23 days ago so the 14-day wait has expired",
+  "passengers": [
+    {
+      "firstName": "VERONIQUE",
+      "lastName": "CARON",
+      "type": "ADT",
+      "aeroplanNumber": "9876543210",
+      "aeroplanTier": "Basic",
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "372",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "12:35",
+      "arrLocal": "14:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 23,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": 420,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "FD-APPR-ND-04",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_TO_LT_9_HOURS",
+    "delayMin": 420,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Promised Itinerary - Flight: AC 372, Route: YUL->YYZ, Scheduled Arrival: 14:00",
+      "Current Itinerary - Flight: AC 372, Route: YUL->YYZ, Status: ARRIVED LATE, Actual Arrival: 21:00, Delay: +7H 00M (6-<9h band observed in ADS/AODB)",
+      "Arrival Code: NULL / MISSING",
+      "Departure Code: NULL / MISSING (no fallback available)",
+      "Cancellation Code: NULL (flight operated - not cancelled)",
+      "Aeroplan: 9876543210 (Basic Member - linked)",
+      "DDS Gate 6: Is disruption code available? / Arrival code: NULL - check departure code / Departure code: NULL - NO CODE AVAILABLE",
+      "DDS Gate 6.1: Has 14 days elapsed since disruption? / Disruption date: May 18, 2026 / Current date: June 10, 2026 / Days elapsed: 23 days - YES, 14+ days elapsed",
+      "Result: NO DETERMINATION - No code available after 14 days - Manual review required",
+      "Flight Compensation: MS VERONIQUE CARON | NO DETERMINATION | NO_CODE_14_DAYS | CAD 0.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "cabin Y and booking class T on every segment (text gives none)",
+    "flightDaysAgo=23 (disruption May 18, current date given June 10: \"23 days elapsed\", >14 so polling window exhausted)",
+    "departure delay assumed equal to arrival delay (420 min)",
+    "departure 12:35 assumed"
+  ],
+  "unsupported": [
+    "the daily 14-day polling process is system behaviour; only the missing codes and the elapsed time are expressible"
+  ]
+}

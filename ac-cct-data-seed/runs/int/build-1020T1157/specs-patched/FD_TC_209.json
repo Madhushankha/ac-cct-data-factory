@@ -1,0 +1,216 @@
+{
+ "id": "FD_TC_209",
+ "bookings": [
+  {
+   "id": "FD_TC_209_A",
+   "family": "FD",
+   "summary": "Pax ELISE BEAUMONT AC-ticketed YUL-MNL AC 501 on time then PAL 102 MNL-CEB (PAL-operated MSL) delayed 4h (sched 14:00, actual 18:00); PAL delay code 42-equivalent present",
+   "passengers": [
+    {
+     "firstName": "ELISE",
+     "lastName": "BEAUMONT",
+     "type": "ADT",
+     "aeroplanNumber": null,
+     "aeroplanTier": null,
+     "residence": "CA",
+     "employee": false
+    }
+   ],
+   "segments": [
+    {
+     "seg": 1,
+     "bound": 1,
+     "carrier": "AC",
+     "number": "501",
+     "origin": "YUL",
+     "destination": "MNL",
+     "depLocal": "23:30",
+     "arrLocal": "05:00",
+     "dayOffset": 2,
+     "cabin": "Y",
+     "bookingClass": "T",
+     "status": "HK"
+    },
+    {
+     "seg": 2,
+     "bound": 1,
+     "carrier": "PB",
+     "number": "102",
+     "origin": "MNL",
+     "destination": "CEB",
+     "depLocal": "11:30",
+     "arrLocal": "14:00",
+     "dayOffset": 2,
+     "cabin": "Y",
+     "bookingClass": "T",
+     "status": "HK"
+    }
+   ],
+   "flightDaysAgo": 10,
+   "outcomes": [
+    {
+     "seg": 1,
+     "kind": "ontime",
+     "arrDelayMin": 0,
+     "depDelayMin": 0,
+     "delayCode": null,
+     "cancelCode": null,
+     "noticeHours": null,
+     "divertTo": null
+    },
+    {
+     "seg": 2,
+     "kind": "delay",
+     "arrDelayMin": 240,
+     "depDelayMin": 240,
+     "delayCode": "42",
+     "cancelCode": null,
+     "noticeHours": null,
+     "divertTo": null
+    }
+   ],
+   "rebooking": [],
+   "scheduleChanges": [],
+   "paxEvents": [],
+   "vouchers": [],
+   "bags": [],
+   "expect": {
+    "regime": "APPR",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "FD-APPR-EL-01",
+    "amount": 400,
+    "currency": "CAD",
+    "delayBand": "DELAY_3_TO_LT_6_HOURS",
+    "delayMin": 240,
+    "control": "CONTROLLABLE",
+    "cause": "42",
+    "ttUi": [
+     "Promise = 14:00 (14-day mark); Actual = 18:00; Delay = 4hrs",
+     "MSL FLIGHT: PAL 102 MNL→CEB",
+     "Operating Carrier = PAL; Ticketing Carrier = AC",
+     "Regime: APPR",
+     "Journey: Bound 1: YUL→MNL (AC 501, on time) -> MNL→CEB (PAL 102, delayed)",
+     "Disruption code present and mapped; Controllable (PAL coding PRESENT - code populated)",
+     "Flight Compensation: MR | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00"
+    ],
+    "soc": null
+   },
+   "assumed": [
+    "PNR name accents dropped (GDS ASCII)",
+    "PAL Airlines carrier code PB (PAL operating, AC ticketing); AC501 times 23:30 dep, 05:00 arr dayOffset 2 and PAL 102 dep 11:30 are invented",
+    "delay code 42 in scenario A is the text's 'e.g., 42 equivalent' placeholder",
+    "prerequisites/Expected Results use AC 501 YUL-MNL + PAL 102 MNL-CEB; the TT UI block of the same scenario instead lists AC 501 YUL-YYZ + PAL 802 YYZ-YVR (final arrival 18:00 -> 22:00); the prerequisite/Expected itinerary was used",
+    "scenario is split into two bookings, A (coding present) and B (coding missing)"
+   ],
+   "unsupported": [
+    "Interline operating carrier (PAL operates, AC ticketed) is expressed only via the carrier code; operating-vs-ticketing carrier distinction and MSL designation not expressible"
+   ]
+  },
+  {
+   "id": "FD_TC_209_B",
+   "family": "FD",
+   "summary": "Pax ELISE BEAUMONT AC-ticketed YUL-MNL AC 501 on time then PAL 102 MNL-CEB (PAL-operated MSL) delayed 4h (sched 14:00, actual 18:00); PAL delay code MISSING",
+   "passengers": [
+    {
+     "firstName": "ELISE",
+     "lastName": "BEAUMONT",
+     "type": "ADT",
+     "aeroplanNumber": null,
+     "aeroplanTier": null,
+     "residence": "CA",
+     "employee": false
+    }
+   ],
+   "segments": [
+    {
+     "seg": 1,
+     "bound": 1,
+     "carrier": "AC",
+     "number": "501",
+     "origin": "YUL",
+     "destination": "MNL",
+     "depLocal": "23:30",
+     "arrLocal": "05:00",
+     "dayOffset": 2,
+     "cabin": "Y",
+     "bookingClass": "T",
+     "status": "HK"
+    },
+    {
+     "seg": 2,
+     "bound": 1,
+     "carrier": "PB",
+     "number": "102",
+     "origin": "MNL",
+     "destination": "CEB",
+     "depLocal": "11:30",
+     "arrLocal": "14:00",
+     "dayOffset": 2,
+     "cabin": "Y",
+     "bookingClass": "T",
+     "status": "HK"
+    }
+   ],
+   "flightDaysAgo": 10,
+   "outcomes": [
+    {
+     "seg": 1,
+     "kind": "ontime",
+     "arrDelayMin": 0,
+     "depDelayMin": 0,
+     "delayCode": null,
+     "cancelCode": null,
+     "noticeHours": null,
+     "divertTo": null
+    },
+    {
+     "seg": 2,
+     "kind": "delay",
+     "arrDelayMin": 240,
+     "depDelayMin": 240,
+     "delayCode": null,
+     "cancelCode": null,
+     "noticeHours": null,
+     "divertTo": null
+    }
+   ],
+   "rebooking": [],
+   "scheduleChanges": [],
+   "paxEvents": [],
+   "vouchers": [],
+   "bags": [],
+   "expect": {
+    "regime": "APPR",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": null,
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_3_TO_LT_6_HOURS",
+    "delayMin": 240,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+     "Promise = 14:00 (14-day mark); Actual = 18:00; Delay = 4hrs",
+     "MSL FLIGHT: PAL 102 MNL→CEB",
+     "Operating Carrier = PAL; Ticketing Carrier = AC",
+     "Regime: APPR",
+     "Journey: Bound 1: YUL→MNL (AC 501, on time) -> MNL→CEB (PAL 102, delayed)",
+     "Disruption code = NULL/MISSING; Controllability = UNKNOWN (UNABLE TO DETERMINE - no code)",
+     "Flight Compensation: | PENDING REVIEW | DELAY_3_TO_LT_6_HOURS | AGENT REVIEW REQUIRED",
+     "Case routed to agent review queue; DDS must not auto-approve or auto-deny"
+    ],
+    "soc": null
+   },
+   "assumed": [
+    "PNR name accents dropped (GDS ASCII)",
+    "PAL Airlines carrier code PB (PAL operating, AC ticketing); AC501 times 23:30 dep, 05:00 arr dayOffset 2 and PAL 102 dep 11:30 are invented",
+    "delay code 42 in scenario A is the text's 'e.g., 42 equivalent' placeholder",
+    "prerequisites/Expected Results use AC 501 YUL-MNL + PAL 102 MNL-CEB; the TT UI block of the same scenario instead lists AC 501 YUL-YYZ + PAL 802 YYZ-YVR (final arrival 18:00 -> 22:00); the prerequisite/Expected itinerary was used",
+    "scenario is split into two bookings, A (coding present) and B (coding missing)"
+   ],
+   "unsupported": [
+    "Interline operating carrier (PAL operates, AC ticketed) is expressed only via the carrier code; operating-vs-ticketing carrier distinction and MSL designation not expressible"
+   ]
+  }
+ ]
+}

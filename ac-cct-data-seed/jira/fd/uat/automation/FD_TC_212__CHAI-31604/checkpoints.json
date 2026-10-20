@@ -1,0 +1,342 @@
+{
+  "key": "CHAI-31604",
+  "test_id": "FD_TC_212",
+  "title": "3rd Party � Claims Company � Claim Opened � Not in CS � EU Country (France) � Manual Handoff",
+  "goal": "Validates that when a claims company submits on behalf of a passenger, the claim was opened but not found in CS, and the country of origin is an EU-eligible country (France), the system collects required information and sends the case for manual handling.",
+  "summary": {
+    "seed": 4,
+    "chat": 18,
+    "api": 0,
+    "email": 0,
+    "dashboard": 7,
+    "implied": 6,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Validates that when a claims company submits on behalf of a passenger, the claim was opened but not found in CS, and the country of origin is an EU-eligible country (France), the system collects required information and sends the case for manual handling.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Third-party caller type: Claims Company",
+      "expected": "Third-party caller type: Claims Company",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Passenger has opened a claim",
+      "expected": "Passenger has opened a claim",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Case number not in CS",
+      "expected": "Case number not in CS",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Country of origin: France",
+      "expected": "Country of origin: France",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01)",
+      "expected": "",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP008"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP009"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"I represent a claims company and I need to file a flight disruption claim for a passenger\"",
+      "expected": "I represent a claims company and I need to file a flight disruption claim for a passenger",
+      "id": "CP010"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP011"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? YES",
+      "expected": "",
+      "id": "CP012"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot identifies third-party type ? Claims Company",
+      "expected": "",
+      "id": "CP013"
+    },
+    {
+      "section": "CLAIM OPENED CHECK",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks: \"Has a claim been opened by the passenger?\"",
+      "expected": "Has a claim been opened by the passenger?",
+      "id": "CP014"
+    },
+    {
+      "section": "CLAIM OPENED CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds: \"Yes\"",
+      "expected": "",
+      "id": "CP015"
+    },
+    {
+      "section": "CASE NUMBER COLLECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please provide a case number and the name of one of the passengers on the claim.\"",
+      "expected": "Please provide a case number and the name of one of the passengers on the claim.",
+      "id": "CP016"
+    },
+    {
+      "section": "CASE NUMBER COLLECTION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides: Case number \"CLM-11223\" and passenger name \"Sophie Lef�vre\"",
+      "expected": "CLM-11223 Sophie Lef�vre",
+      "id": "CP017"
+    },
+    {
+      "section": "CS LOOKUP",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system checks if the claim exists in Case Services ? NO (not found)",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "COUNTRY OF ORIGIN",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks: \"From which country did the person you are claiming for originate?\"",
+      "expected": "From which country did the person you are claiming for originate?",
+      "id": "CP019"
+    },
+    {
+      "section": "COUNTRY OF ORIGIN",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides: \"France\"",
+      "expected": "France",
+      "id": "CP020"
+    },
+    {
+      "section": "MANUAL HANDOFF � INFO COLLECTION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Thanks, a few questions for me to forward your claim: Please provide the name of claims company, ticket number, booking reference, contact information for the passenger, full passenger names for your claim. You'll also need to upload the power of attorney or notice of authorization to have your claim actioned.\" And the user provides all required information",
+      "expected": "Thanks, a few questions for me to forward your claim: Please provide the name of claims company, ticket number, booking reference, contact information for the passenger, full passenger names for your claim. You'll also need to upload the power of attorney or notice of authorization to have your claim actioned.",
+      "id": "CP021"
+    },
+    {
+      "section": "CASE SENT FOR MANUAL HANDLING",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system creates a case and routes it for manual handling",
+      "expected": "",
+      "id": "CP022"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Is there anything I can help you with?\"",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP023"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP024"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP025"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the system correctly identifies the third-party as a Claims Company",
+      "expected": "",
+      "id": "CP026"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the claim has been opened as YES",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the CS lookup returns NOT FOUND",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the country is \"France\" which is EU-eligible",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the system should prompt for claims company name and ticket number and booking reference and passenger contact info and full passenger names and power of attorney or authorization upload",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And a case should be created and routed for manual handling",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claims Dashboard should show case status as \"manual review\" with third-party type \"Claims Company\"",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the third-party submission was accepted for EU-eligible country and routed to manual handling",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no automated payment flow should be triggered",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the case should be in manual review status",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And any payment should be determined by the reviewing agent",
+      "expected": "",
+      "id": "CP036"
+    }
+  ]
+}

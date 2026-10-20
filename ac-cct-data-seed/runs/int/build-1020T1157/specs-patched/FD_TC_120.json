@@ -1,0 +1,87 @@
+{
+ "id": "FD_TC_120",
+ "family": "FD",
+ "summary": "Adult, AC1840 PTP-YUL diverted to sister city YOW, sched arr 18:00 YUL, arrived 21:30 at YOW; arrival code MISSING, departure code 42 fallback: EU261 Guadeloupe flat EUR 400 sister city + fallback",
+ "passengers": [
+  {
+   "firstName": "LAURENT",
+   "lastName": "MERCIER",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "FR",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "1840",
+   "origin": "PTP",
+   "destination": "YUL",
+   "depLocal": "13:00",
+   "arrLocal": "18:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "divert",
+   "arrDelayMin": 210,
+   "depDelayMin": 210,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": "YOW",
+   "arrDelayCode": null,
+   "depDelayCode": "42",
+   "fallback": true
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-EU-EL-12",
+  "amount": 400,
+  "currency": "EUR",
+  "delayBand": "EU261_GUADELOUPE_DELAY_GTE_3_HOURS",
+  "delayMin": 210,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 1840, Route: PTP → YUL, Scheduled Arrival: 18:00 at YUL",
+   "Current Itinerary - Flight: AC 1840, Route: PTP → YOW (sister city), Status: ARRIVED LATE, Scheduled Arrival: 18:00 → Actual: 21:30 at YOW, Delay: +3H 30M",
+   "Sister City Check: YOW ↔ YUL = VALID PAIR (confirmed in DDS sister city config)",
+   "Sister city accepted as equivalent destination",
+   "Regime: EU 261 (Guadeloupe / DOM-TOM)",
+   "Compensation Rule: Flat €400",
+   "MSL FLIGHT: AC 1840 - PTP → YOW - ARRIVAL CODE: NULL (MISSING)",
+   "FALLBACK TRIGGERED: Arrival code NULL → using departure code",
+   "Departure Code: 42 (Scheduled Maintenance)",
+   "Fallback Flag: TRUE",
+   "CONTROLLABLE (Code 42 via fallback departure code)",
+   "Delay: +3H 30M - CONTROLLABLE",
+   "Flight Compensation: MR LAURENT MERCIER | ELIGIBLE | EU261_GUADELOUPE_DELAY_GTE_3_HOURS (SISTER CITY + FALLBACK) | EUR 400.00 | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 13:00 PTP local (text gives only arrival 18:00 YUL)",
+  "residence FR (Guadeloupe, EUR) per text",
+  "Guadeloupe (PTP) is an EU outermost region: regime stands for EU 261 Guadeloupe flat EUR 400; APPR EL-xx $400 CAD also assessed and EU selected as most generous",
+  "delayCode null (arrival code missing); departure code 42 in non-schema extras on the outcome"
+ ],
+ "unsupported": []
+}

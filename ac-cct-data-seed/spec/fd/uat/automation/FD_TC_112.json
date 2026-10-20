@@ -1,0 +1,87 @@
+{
+ "id": "FD_TC_112",
+ "family": "FD",
+ "summary": "Adult, AC870 CDG-YYZ dep 10:00 arr 14:00, departed 14:00 and diverted to sister city YTZ arriving 18:00 (+240 min), code 42 controllable, Rest of Europe origin: EU261 EUR 600 sister city",
+ "passengers": [
+  {
+   "firstName": "MARIE",
+   "lastName": "DUPUIS",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "FR",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "870",
+   "origin": "CDG",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "divert",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": "YTZ"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-EU-EL-04",
+  "amount": 600,
+  "currency": "EUR",
+  "delayBand": "EU261_REST_OF_EUROPE_DELAY_GTE_4_HOURS_SISTER_CITY",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 870, Route: CDG → YYZ, Scheduled Departure: 10:00, Scheduled Arrival: 14:00",
+   "Current Itinerary - Flight: AC 870, Route: CDG → YTZ (sister city), Status: ARRIVED, Actual Departure: 14:00, Actual Arrival: 18:00",
+   "Sister City Check: YTZ ↔ YYZ = VALID PAIR (confirmed in DDS sister city config)",
+   "Sister city accepted as equivalent destination",
+   "Arrival Delay: 4 hours (≥ 3-hour threshold MET)",
+   "Customer Status: TRAVELLED (completed journey)",
+   "History - No changes recorded",
+   "Regime: EU 261 (Rest of Europe - CDG origin) + APPR (Canada arrival)",
+   "MSL FLIGHT: AC 6712 - CDG → LGW - 42 (as written in the text)",
+   "\"Delay - scheduled maintenance\"",
+   "CONTROLLABLE (Code 42)",
+   "Origin Region: CDG = Rest of Europe",
+   "EU 261 Compensation: Rest of Europe + delay ≥ 4 hrs + sister city = €600",
+   "Fallback: FALSE",
+   "Flight Compensation: MS MARIE DUPUIS | ELIGIBLE | EU261_REST_OF_EUROPE_DELAY_GTE_4_HOURS_SISTER_CITY | EUR €600.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "times 10:00 dep / 14:00 arr are as stated by the text (clock times unrealistic for CDG-YYZ but kept)",
+  "text is inconsistent on the diversion airport in places (Trip Tracer MSL line 'AC 6712 CDG→LGW', chatbot note 'LGW'): booking uses AC 870 diverted to YTZ as in prerequisites and Current Itinerary",
+  "depDelayMin 240 from Actual Departure 14:00",
+  "Dual regime: APPR EL-01 $400 also assessed; EU 261 EL-04 selected as most generous",
+  "residence FR (text: France, EUR)"
+ ],
+ "unsupported": []
+}

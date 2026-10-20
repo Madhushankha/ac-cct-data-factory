@@ -1,0 +1,89 @@
+{
+ "id": "FD_TC_035",
+ "family": "FD",
+ "summary": "Single pax Dominique Arsenault (Basic Aeroplan 9876543210); AC 435 YUL-YYZ dep 08:00 arr 10:00 cancelled FOC (flight ops control / crew, controllable); INVOL reprotected on renumbered AC 445 same dep 08:00 and same arr 10:00 (0h delay); APPR controllable-cancellation entitlement floor 400 Cash / 480 Wallet",
+ "passengers": [
+  {
+   "firstName": "DOMINIQUE",
+   "lastName": "ARSENAULT",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "435",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "cancelCode": "OPER"
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "445",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": null,
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "CONTROLLABLE_CANCELLATION_ENTITLEMENT",
+  "delayMin": 0,
+  "control": "CONTROLLABLE",
+  "cause": "OPER",
+  "ttUi": [
+   "Promised: AC 435 YUL->YYZ Scheduled Departure 08:00, Scheduled Arrival 10:00 (original flight CANCELLED)",
+   "Current: AC 445 (Renumbered) YUL->YYZ, ARRIVED, Scheduled Departure 08:00 (SAME), Actual Arrival 10:00 (SAME)",
+   "History: Change 1 INVOL - AC 435 YUL->YYZ cancelled (FOC Crew / Flight Ops Control); customer reprotected onto renumbered AC 445 YUL->YYZ",
+   "Departure Check: scheduled departure matches original (08:00)",
+   "Arrival Check: actual arrival matches original promise (10:00) - 0h arrival delay",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 435 YUL->YYZ Cancellation Code: FOC (Flight Ops Control / Crew - Controllable)",
+   "Rebooked Flight: AC 445 YUL->YYZ (Renumbered)",
+   "DDS Entitlement Gate: Controllable Cancellation Entitlement Floor applies (CAD 400 Cash / CAD 480 AC Wallet)",
+   "Aeroplan: 9876543210 (Basic Member linked)",
+   "Flight Compensation: MS DOMINIQUE ARSENAULT | ELIGIBLE | CONTROLLABLE_CANCELLATION_ENTITLEMENT | CAD 400.00 Cash / CAD 480.00 AC Wallet (+20%)"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "noticeHours null (not stated)",
+  "delayBand field carries the TT label CONTROLLABLE_CANCELLATION_ENTITLEMENT (no delay band applies; delay 0)",
+  "systemCode not stated (null)"
+ ],
+ "unsupported": []
+}

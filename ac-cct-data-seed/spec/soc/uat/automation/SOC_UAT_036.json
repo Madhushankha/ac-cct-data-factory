@@ -1,0 +1,95 @@
+{
+  "id": "SOC_UAT_036",
+  "family": "SOC",
+  "summary": "1 adult, single AC 849 LHR-YYZ operated on time; passenger never boarded (no-show) and did not travel",
+  "passengers": [
+    {
+      "firstName": "OLIVER",
+      "lastName": "HARRIS",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "GB",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "849",
+      "origin": "LHR",
+      "destination": "YYZ",
+      "depLocal": "10:00",
+      "arrLocal": "13:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "no_show"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-EU-NE-12",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": null,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Trip Not Completed - Passenger did not board",
+      "Single-segment trip LHR->YYZ on AC849 - flight operated as scheduled. Passenger chose not to board.",
+      "Regime: EU (LHR departure)",
+      "PASSENGERS: 1 - SEGMENTS: 1",
+      "Promised: AC 849 LHR->YYZ Sched Dep 10:00",
+      "Current: AC 849 LHR->YYZ Status: OPERATED - On time (passenger did not board)",
+      "SOC section present; Flight Status OPERATED (not cancelled); no departure delay code",
+      "PASSENGER STATUS: NOT_ELIGIBLE | BAND/MEAL/ACCOMMODATION/GENERAL EXPENSES blank",
+      "NOT_ELIGIBLE reason: Flight not cancelled - no disruption",
+      "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE; DDS code SoC-EU-NE-12"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none (flight not cancelled, no disruption)"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen (text uses [First Name] [Last Name])",
+    "Arrival 13:00 local YYZ (text gives only departure 10:00)",
+    "Cabin W (Premium Economy 'PY'), booking class O",
+    "Residence GB (departure country UK)",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+    "Gherkin says 'Days elapsed: 2 days' but also >72h passed; used >72h (10 days)",
+    "Gherkin journey date June 6 vs prerequisite 09-Jun; day label ignored"
+  ],
+  "unsupported": [
+    "Passenger choosing not to board: expressed as paxEvents no_show on a flight that operated on time"
+  ]
+}

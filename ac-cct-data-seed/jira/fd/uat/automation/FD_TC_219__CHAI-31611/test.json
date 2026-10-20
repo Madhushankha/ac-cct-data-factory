@@ -1,0 +1,25 @@
+{
+  "key": "CHAI-31611",
+  "issue_id": "7380460",
+  "test_id": "FD_TC_219",
+  "summary": "FD_TC_219_3rd Party | Travel Agency | Hard Rejection | Code 67 Crew Transport | Delay 6�9h (7h) | APPR | Basic Aeroplan",
+  "title": "3rd Party | Travel Agency | Hard Rejection | Code 67 Crew Transport | Delay 6�9h (7h) | APPR | Basic Aeroplan",
+  "status": "New",
+  "priority": "Low",
+  "labels": [],
+  "scenario_type": "scenario",
+  "execution": "CHAI-31809",
+  "synced_at": "2026-10-13T07:02:34Z",
+  "description": "Validates that when a Travel Agency attempts to submit a flight disruption claim on behalf of a passenger, the system immediately rejects the submission and advises the customer must file the claim themselves. The underlying flight involves a 7-hour arrival delay (6�<9h band) caused by Code 67 (Crew Transport / Hotel / Logistics Delay � Controllable) on a domestic APPR-applicable route, and the passenger holds a Basic Aeroplan profile (9876543210). Despite the disruption being a valid APPR controllable claim that would normally yield $700 CAD (Tier 2) / $840 CAD AC Wallet for a linked Basic Aeroplan member, the Travel Agency submission is a hard rejection per policy. Validates that: (1) System correctly identifies third-party type as Travel Agency, (2) System immediately rejects without proceeding to case number, country, Aeroplan, or info collection steps, (3) No case is created regardless of how valid or eligible the underlying flight disruption is, (4) No country-based, Aeroplan-based, or dispute override path exists for Travel Agencies, (5) Flow ends cleanly with rejection message.\r\nPrerequisites:\r\nThird-party caller type: Travel Agency. Underlying flight: 1 leg AC domestic YUL?YYZ. Arrival delay code: 67 (Crew Transport / Hotel / Logistics Delay � Controllable). Delay: 7 hours (6�<9h band, APPR Tier 2 � would yield $700 CAD Cash / $840 CAD AC Wallet if filed by passenger directly). Regime: APPR (domestic). Passenger Aeroplan: Basic Member (9876543210). CRITICAL: Despite a valid controllable APPR claim, Travel Agency submission is a hard rejection with no override path.",
+  "goal": "Validates that when a Travel Agency attempts to submit a flight disruption claim on behalf of a passenger, the system immediately rejects the submission and advises the customer must file the claim themselves. The underlying flight involves a 7-hour arrival delay (6�<9h band) caused by Code 67 (Crew Transport / Hotel / Logistics Delay � Controllable) on a domestic APPR-applicable route, and the passenger holds a Basic Aeroplan profile (9876543210). Despite the disruption being a valid APPR controllable claim that would normally yield $700 CAD (Tier 2) / $840 CAD AC Wallet for a linked Basic Aeroplan member, the Travel Agency submission is a hard rejection per policy. Validates that: (1) System correctly identifies third-party type as Travel Agency, (2) System immediately rejects without proceeding to case number, country, Aeroplan, or info collection steps, (3) No case is created regardless of how valid or eligible the underlying flight disruption is, (4) No country-based, Aeroplan-based, or dispute override path exists for Travel Agencies, (5) Flow ends cleanly with rejection message.",
+  "prerequisites": "Third-party caller type: Travel Agency. Underlying flight: 1 leg AC domestic YUL?YYZ. Arrival delay code: 67 (Crew Transport / Hotel / Logistics Delay � Controllable). Delay: 7 hours (6�<9h band, APPR Tier 2 � would yield $700 CAD Cash / $840 CAD AC Wallet if filed by passenger directly). Regime: APPR (domestic). Passenger Aeroplan: Basic Member (9876543210). CRITICAL: Despite a valid controllable APPR claim, Travel Agency submission is a hard rejection with no override path.",
+  "prerequisite_items": [
+    "Third-party caller type: Travel Agency",
+    "Underlying flight: 1 leg AC domestic YUL?YYZ",
+    "Arrival delay code: 67 (Crew Transport / Hotel / Logistics Delay � Controllable)",
+    "Delay: 7 hours (6�<9h band, APPR Tier 2 � would yield $700 CAD Cash / $840 CAD AC Wallet if filed by passenger directly)",
+    "Regime: APPR (domestic)",
+    "Passenger Aeroplan: Basic Member (9876543210)",
+    "CRITICAL: Despite a valid controllable APPR claim, Travel Agency submission is a hard rejection with no override path"
+  ]
+}

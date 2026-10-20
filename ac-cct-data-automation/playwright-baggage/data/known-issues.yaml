@@ -1,0 +1,36 @@
+# Known issues (guide section 9), as of 2026-10-07. A failure is tagged `known (<id>)` when an issue's
+# `match` fits it: `step`, `got` and `expected` are case-insensitive regexes over the failure's fields
+# (all given ones must match). An issue without `match` never tags anything, so a vague entry cannot
+# hide a new defect. Remove an entry when the fix ships: its failures then show up as new.
+issues:
+  - id: interim-only
+    what: BAG-03e.S3 interim-only branch not built (lost + receipts always gets the contents+expenses road)
+    match: { step: 'BAG-03e\.S3' }
+
+  - id: I-07
+    what: Proof of ownership asked after [I confirm], no S10 alert, nothing in the pop-up
+    match: { step: 'BAG-06\.S10' }
+
+  - id: I-11
+    what: '"Montreal convention" has no link yet'
+    match: { expected: 'Montreal' , got: 'link .*missing' }
+
+  - id: I-12
+    what: Life event (funeral, death) not detected at BAG-08.S3
+    match: { step: 'BAG-08\.S3' }
+
+  - id: notice-on-tracking
+    what: The claim notice shows on the live-tracking road
+    match: { step: 'tracking', got: 'claim will be assessed|Reminder' }
+
+  - id: I-02
+    what: Sometimes a second "I understand…" opens GenUC-27 (fix in progress)
+    match: { step: 'GenUC-27', got: 'I understand' }
+
+  - id: I-14
+    what: Expense receipt on the lost-bag road not priced ("take your time… upload the receipt")
+    match: { step: 'BAG-08\.S7|expense', got: 'take your time|upload the receipt' }
+
+  - id: K-02
+    what: No "Bag recovery >" button (middleware)
+    match: { expected: 'Bag recovery' }

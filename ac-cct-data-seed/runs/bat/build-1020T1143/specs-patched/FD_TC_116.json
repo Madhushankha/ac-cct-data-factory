@@ -1,0 +1,88 @@
+{
+ "id": "FD_TC_116",
+ "family": "FD",
+ "summary": "Adult, AC858 LHR-YYZ diverted to sister city YTZ, sched arr 16:00 YYZ, arrived 21:00 at YTZ (+300 min); arrival code MISSING, departure code 42 fallback: EU261 UK Tier 2 sister city + fallback",
+ "passengers": [
+  {
+   "firstName": "VICTORIA",
+   "lastName": "HUGHES",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "GB",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "858",
+   "origin": "LHR",
+   "destination": "YYZ",
+   "depLocal": "13:00",
+   "arrLocal": "16:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "divert",
+   "arrDelayMin": 300,
+   "depDelayMin": 300,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": "YTZ",
+   "arrDelayCode": null,
+   "depDelayCode": "42",
+   "fallback": true
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-EU-EL-08",
+  "amount": 520,
+  "currency": "GBP",
+  "delayBand": "EU261_UK_DELAY_GTE_4_HOURS_LONG_HAUL",
+  "delayMin": 300,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 858, Route: LHR → YYZ, Scheduled Arrival: 16:00 at YYZ",
+   "Current Itinerary - Flight: AC 858, Route: LHR → YTZ (sister city), Status: ARRIVED LATE, Scheduled Arrival: 16:00 → Actual: 21:00 at YTZ, Delay: +5H 00M",
+   "Sister City Check: YTZ ↔ YYZ = VALID PAIR (confirmed in DDS sister city config)",
+   "Sister city accepted as equivalent destination",
+   "Regime: EU 261 (UK)",
+   "Origin Region: LHR = UK",
+   "MSL FLIGHT: AC 858 - LHR → YTZ - ARRIVAL CODE: NULL (MISSING)",
+   "FALLBACK TRIGGERED: Arrival code NULL → using departure code",
+   "Departure Code: 42 (Maintenance)",
+   "Fallback Flag: TRUE",
+   "CONTROLLABLE (Code 42 via fallback departure code)",
+   "Delay: +5H 00M - CONTROLLABLE",
+   "EU 261 UK Tier: 4+ hrs → UK Tier 2",
+   "Flight Compensation: MS VICTORIA HUGHES | ELIGIBLE | EU261_UK_DELAY_GTE_4_HOURS_LONG_HAUL (SISTER CITY + FALLBACK) | GBP 520.00 | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 13:00 LHR local",
+  "residence GB (text: UK)",
+  "delayCode null (arrival code missing); departure delay code 42 carried in non-schema extras (arrDelayCode/depDelayCode/fallback) on the outcome",
+  "Dual regime: APPR EL-10 $400 (Sister City + Fallback) also assessed; EU-UK selected"
+ ],
+ "unsupported": []
+}

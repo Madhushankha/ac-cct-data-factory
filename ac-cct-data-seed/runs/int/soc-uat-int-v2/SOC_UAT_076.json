@@ -1,0 +1,124 @@
+{
+ "case": "SOC_UAT_076",
+ "locator": "ZZ27G1",
+ "pnrId": "ZZ27G1-2026-09-19",
+ "flight": "AC7196",
+ "route": "TLV-YYZ",
+ "expected": {
+  "regime": "ASL",
+  "eligibility": "PENDING",
+  "system_code": {
+   "raw": "SOC-ASL-PE-01",
+   "regime": null,
+   "suffix": ""
+  },
+  "money": {
+   "amount": null,
+   "currency": null
+  },
+  "delay": {
+   "value": 360
+  },
+  "band": {
+   "value": null
+  },
+  "control": null,
+  "cause": null,
+  "extras": {
+   "soc": {
+    "eligibility": null,
+    "entitlements": "none yet - PENDING until 72h window closes"
+   }
+  }
+ },
+ "published": [
+  {
+   "key": "AC#7196#2026-10-19#TLV",
+   "kind": "delay",
+   "minutes": 360,
+   "code": null
+  }
+ ],
+ "engine": {
+  "engine": "raptor",
+  "release": 47,
+  "rulesSha256": "96e3a9e7ceb69b747ede9a746f000d86986b75ccb6e672d2750851193eb5db59"
+ },
+ "seen": {
+  "tripCounts": {
+   "passengers": 1,
+   "segments": 1,
+   "tickets": 2,
+   "ancillaries": 0,
+   "baggage": 0
+  },
+  "segments": [
+   {
+    "flight": "AC7196",
+    "from": "TLV",
+    "to": "YYZ",
+    "status": "DEPARTED",
+    "delayMin": 360,
+    "cause": "UNKNOWN",
+    "causeCode": null,
+    "regimes": [
+     "APPR",
+     "ASL"
+    ],
+    "schedDep": "Oct 19, 2026 04:00 PM",
+    "schedArr": "Oct 19, 2026 10:00 PM",
+    "actualDep": "Oct 19, 2026 10:00 PM",
+    "actualArr": null,
+    "scheduledDeparture": null,
+    "scheduledArrival": null,
+    "actualDeparture": null,
+    "actualArrival": null
+   }
+  ],
+  "disruption_present": true,
+  "delays": [
+   360
+  ]
+ },
+ "document": null,
+ "checks": [
+  {
+   "name": "tt_trip_found",
+   "applies": true,
+   "ok": true,
+   "detail": "1 segment(s) in the Trip",
+   "expected": "at least 1",
+   "actual": "1",
+   "structural": true
+  },
+  {
+   "name": "tt_disruption",
+   "applies": true,
+   "ok": true,
+   "detail": "delays in the Trip: [360]",
+   "expected": "a disrupted segment",
+   "actual": "[360]",
+   "structural": true
+  },
+  {
+   "name": "tt_delay",
+   "applies": true,
+   "ok": true,
+   "detail": "the Trip holds [360], the scenario published [360]",
+   "expected": "[360]",
+   "actual": "[360]",
+   "structural": true
+  },
+  {
+   "name": "verdict",
+   "applies": false,
+   "ok": null,
+   "detail": "no assessment: the engine holds no verdict for this booking yet",
+   "expected": "",
+   "actual": "",
+   "structural": false
+  }
+ ],
+ "agrees": false,
+ "saved_at": "2026-10-20T07:25:42+00:00"
+}

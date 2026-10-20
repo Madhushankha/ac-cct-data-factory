@@ -1,0 +1,91 @@
+{
+ "id": "FD_TC_181",
+ "family": "FD",
+ "summary": "APPR YUL-YYZ AC401 voluntary change via Pre-Move (RF-PMV / YMQAC0848): promise updates 10:00 -> 14:00, flight on time -> Not Eligible (no delay)",
+ "passengers": [
+  {
+   "firstName": "ANDRE",
+   "lastName": "PELLETIER",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "401",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "Y",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [
+  {
+   "seg": 1,
+   "depDeltaMin": 240,
+   "arrDeltaMin": 240,
+   "noticeHours": 360,
+   "changeType": "VOL"
+  }
+ ],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": null,
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": 0,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Promised Itinerary: AC 401 YUL->YYZ scheduled arrival 14:00 (updated by Pre-Move VOL)",
+   "Current Itinerary: AC 401 YUL->YYZ ON TIME, actual 14:00",
+   "Change 1: Pre-Move (RF-PMV / YMQAC0848) at D-8 - VOL - arrival 10:00 -> 14:00",
+   "Promise = 14:00 (updated by VOL)",
+   "Delay from promise = 0 hours",
+   "Regime: APPR",
+   "Result: NOT ELIGIBLE (no delay)",
+   "No MSL (no disruption)",
+   "No disruption code",
+   "Flight Compensation: MR ANDRE PELLETIER | NOT ELIGIBLE | NO_DELAY_FROM_PROMISE | $0"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "segments hold the ORIGINAL 14-day schedule; the Pre-Move/VOL change is modelled as a scheduleChange moving the arrival; flight then operates on time against the CHANGED schedule (arrDelayMin 0)",
+  "flight date June 10, 2026 in text; flightDaysAgo=10 (72 hrs elapsed)",
+  "dep time = original arrival minus 1h20 (YUL-YYZ ~1h20 block)",
+  "currency of \"$0\" taken as CAD (APPR)"
+ ],
+ "unsupported": [
+  "PNR change-history marker for the Pre-Move tool (identifier RF-PMV or office ID YMQAC0848) and its VOL (voluntary) classification - the scheduleChanges schema has no initiator/tool field"
+ ]
+}

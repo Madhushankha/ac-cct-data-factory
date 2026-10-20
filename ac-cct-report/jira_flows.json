@@ -1,0 +1,71 @@
+{
+  "_comment": [
+    "Maps an S3 flow segment (runs/<env>/<FLOW>/...) to its Jira component and Xray Test",
+    "Executions, per suite. Derived from the CHAI project components and the 'SIT Test Cases'",
+    "Confluence page (id in CONFLUENCE_TEST_PLAN_PAGE).",
+    "",
+    "Edit this file to add a flow or retarget an execution — no code change, no redeploy of the",
+    "app image beyond shipping the file. 'component' drives the ticket lists (JQL); 'executions'",
+    "drive the test-execution results view. A flow may have several executions per suite",
+    "(bookingchange splits VOL / INVOL / E2E), so both are lists."
+  ],
+  "flows": {
+    "fd": {
+      "label": "Flight Disruption",
+      "component": "Agentic-Flight Disruption",
+      "labels": ["FD_RC"],
+      "executions": { "sit": ["CHAI-24950"], "uat": ["CHAI-25510"] }
+    },
+    "anc": {
+      "label": "Ancillary",
+      "component": "Agentic-Ancillary",
+      "labels": [],
+      "executions": { "sit": ["CHAI-25015"], "uat": ["CHAI-24022"] }
+    },
+    "baggage": {
+      "label": "Baggage",
+      "component": "Agentic-Baggage",
+      "labels": [],
+      "executions": { "sit": ["CHAI-25129"], "uat": ["CHAI-24021"] }
+    },
+    "soc": {
+      "label": "Standards of Care",
+      "component": "Agentic-SoC",
+      "labels": [],
+      "executions": { "sit": ["CHAI-26520"], "uat": ["CHAI-25887"] }
+    },
+    "bookingchange": {
+      "label": "Booking Change",
+      "component": "Agentic-Booking Change",
+      "labels": [],
+      "executions": {
+        "sit": ["CHAI-26702", "CHAI-26823", "CHAI-26863"],
+        "uat": ["CHAI-23804", "CHAI-23810", "CHAI-23813"]
+      }
+    },
+    "nc": {
+      "label": "Name Correction",
+      "component": "Agentic-Name Correction",
+      "labels": [],
+      "executions": { "sit": ["CHAI-24709"], "uat": ["CHAI-23807"] }
+    },
+    "seatchange": {
+      "label": "Seat Change",
+      "component": "Agentic-Seat Change",
+      "labels": [],
+      "executions": { "sit": ["CHAI-28144"], "uat": ["CHAI-23736"] }
+    },
+    "faq": {
+      "label": "FAQ",
+      "component": "Agentic-FAQ",
+      "labels": [],
+      "executions": { "sit": ["CHAI-21822"], "uat": ["CHAI-25150", "CHAI-25152"] }
+    },
+    "nonmvp": {
+      "label": "Non-MVP",
+      "component": "Agentic-Non MVP",
+      "labels": [],
+      "executions": { "sit": ["CHAI-24815"], "uat": [] }
+    }
+  }
+}

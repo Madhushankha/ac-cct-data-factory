@@ -1,0 +1,75 @@
+{
+ "id": "FD_TC_219",
+ "family": "FD",
+ "summary": "Travel Agency third-party submission is hard rejected; underlying booking: domestic AC YUL-YYZ, 7h arrival delay, code 67 (controllable), passenger Basic Aeroplan 9876543210",
+ "passengers": [
+  {
+   "firstName": "MARC",
+   "lastName": "TREMBLAY",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "423",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 420,
+   "depDelayMin": 420,
+   "delayCode": "67",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": null,
+  "amount": 700,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "CONTROLLABLE",
+  "cause": "67",
+  "ttUi": [
+   "Underlying (not evaluated in this scenario): APPR Tier 2 $700 CAD Cash / $840 CAD AC Wallet for Basic Aeroplan member 9876543210",
+   "Travel Agency submission is rejected at the third-party gate before PNR lookup, authentication, journey selection or DDS evaluation; no case created"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "PNR name accents dropped (GDS ASCII)",
+  "passenger name, flight AC 423 and times 08:00-10:00 invented (text gives only YUL-YYZ domestic, 7h delay, code 67)",
+  "expected eligibility/amount are the underlying 'would normally yield' values; the scenario itself never reaches DDS because the Travel Agency rejection is absolute"
+ ],
+ "unsupported": [
+  "The scenario outcome (hard rejection, no case) is chatbot gate behaviour, not expressible in booking data; the booking exists only as a distractor",
+  "Code 67 (Crew Transport) controllable classification assumed from text"
+ ]
+}

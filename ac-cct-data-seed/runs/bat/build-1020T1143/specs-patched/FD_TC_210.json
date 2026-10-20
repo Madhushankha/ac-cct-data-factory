@@ -1,0 +1,129 @@
+{
+ "id": "FD_TC_210",
+ "family": "FD",
+ "summary": "Pax ANTOINE LAVOIE AC-ticketed YUL-MNL AC 501 on time, then PAL 205 MNL-CEB (PAL-operated MSL) denied boarding (overbooking), rebooked on PAL 207 arriving 19:00 vs original 14:00 (+5h)",
+ "passengers": [
+  {
+   "firstName": "ANTOINE",
+   "lastName": "LAVOIE",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "501",
+   "origin": "YUL",
+   "destination": "MNL",
+   "depLocal": "23:30",
+   "arrLocal": "05:00",
+   "dayOffset": 2,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "PB",
+   "number": "205",
+   "origin": "MNL",
+   "destination": "CEB",
+   "depLocal": "11:30",
+   "arrLocal": "14:00",
+   "dayOffset": 2,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "delay",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": "97",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "codeOnly": true
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 2,
+   "carrier": "PB",
+   "number": "207",
+   "origin": "MNL",
+   "destination": "CEB",
+   "depLocal": "16:30",
+   "arrLocal": "19:00",
+   "dayOffset": 2,
+   "accepted": true,
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "denied_boarding"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-06",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": null,
+  "control": null,
+  "cause": "97",
+  "ttUi": [
+   "Promise = 14:00 (original PAL 205 arrival); Rebooked flight PAL 207 arrival = 19:00; Delay at destination = 5hrs",
+   "Disruption Type: DENIED BOARDING (not delay/cancellation); Denied Boarding Classification: INVOLUNTARY",
+   "Regime: APPR",
+   "MSL FLIGHT: PAL 205 MNL\u2192CEB (denied boarding reason overbooking, PAL code 97 populated)",
+   "Operating Carrier = PAL; Ticketing Carrier = AC",
+   "Journey: Bound 1: YUL\u2192MNL (AC 501, on time) -> MNL\u2192CEB (PAL 205, denied boarding -> rebooked PAL 207)",
+   "Flight Compensation: | ELIGIBLE | DENIED_BOARDING | DELAY_AT_DEST_GTE_2_HRS | CAD 900.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "PNR name accents dropped (GDS ASCII)",
+  "PAL Airlines carrier code PB; AC501 times and PAL 205/207 departure times (11:30 / 16:30) invented",
+  "denied-boarding reason code 97 taken from the TT UI block (PAL coding PRESENT); PAL missing-coding variant noted in text but not required",
+  "prerequisites use AC 501 YUL-MNL + PAL 205/207 MNL-CEB, 5h delay, while the UI block lists AC 501 YUL-YYZ + PAL 802/806 YYZ-YVR, 4h delay; the prerequisite/Expected itinerary was used",
+  "delayBand label taken from the DDS line DELAY_AT_DEST_GTE_2_HRS (Expected Results say 3-<6h delay at destination)"
+ ],
+ "unsupported": [
+  "Operating-vs-ticketing carrier distinction (PAL operates, AC ticketed) and MSL designation are not expressible beyond the carrier code",
+  "Denied-boarding reason code is carried as paxEvent only (reason overbooking and code 97 not expressible)"
+ ],
+ "dbcpSegs": [
+  2
+ ]
+}

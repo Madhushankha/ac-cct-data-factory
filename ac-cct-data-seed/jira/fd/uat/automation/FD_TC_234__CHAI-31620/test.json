@@ -1,0 +1,32 @@
+{
+  "key": "CHAI-31620",
+  "issue_id": "7380469",
+  "test_id": "FD_TC_234",
+  "summary": "FD_TC_234_FD Eligible | SINGLE pax | Agent override to Not Eligible | APPR | Controllable (Code 96 � Operations Control) | Delay 6 to under 9 hrs (7h) | Travelled (arrived late) | 1 Leg | Domestic (CA) | Basic Aeroplan",
+  "title": "FD Eligible | SINGLE pax | Agent override to Not Eligible | APPR | Controllable (Code 96 � Operations Control) | Delay 6 to under 9 hrs (7h) | Travelled (arrived late) | 1 Leg | Domestic (CA) | Basic Aeroplan",
+  "status": "New",
+  "priority": "Low",
+  "labels": [],
+  "scenario_type": "scenario",
+  "execution": "CHAI-31809",
+  "synced_at": "2026-10-13T07:02:34Z",
+  "description": "Checks the Decision Assist override from Eligible to Not Eligible for a single passenger. Flight AC 412 YUL ? YYZ arrived 7 hours late (Code 96, Controllable). DDS returns FD-APPR-EL-02, CAD 700. The customer leaves the chat before payment, so the case goes to agent Sarah Martin. She finds a record showing that CAD 700 APPR compensation was already paid for AC 412 on Jul 22 through an airport/legacy channel. This record isn't linked in the Claims Dashboard, so the automatic duplicate check didn't catch it. Sarah overrides the decision to Not Eligible and enters a reason of 50 to 500 characters. The original Eligible recommendation stays visible as read-only, and the override is audited with before/after values. She sends \"Decision Rendered � Not Eligible\" and the case closes as Closed � Not Eligible. No compensation record is created and nothing is paid. Also checks that the reason length is enforced and that only permitted users can override.\n\nPrerequisites:\nPNR: OV001 � single passenger Antoine Leblanc (Adult, Basic Aeroplan 9876543210, good standing). AC 412 YUL ? YYZ, July 20, 2026. Scheduled arrival 12:00, actual 19:00 (7h delay). Code 96 (Operations Control � Controllable). Travelled, arrived late. No VOL/INVOL changes. AC only. Claim filed Jul 28, 2026 (within 366 days). Case reference: CASE-FD-20260728-101. Claims Dashboard duplicate check: no duplicate (the prior payment is outside CD). Prior payment evidence: legacy / airport record of CAD 700 APPR paid Jul 22, 2026 (reference LEG-APPR-55821). CyberSource GREEN. Country of residence: Canada. Users: Sarah Martin (Agent with case.render_decision), Paul Girard (read-only user without case.render_decision).",
+  "goal": "Checks the Decision Assist override from Eligible to Not Eligible for a single passenger. Flight AC 412 YUL ? YYZ arrived 7 hours late (Code 96, Controllable). DDS returns FD-APPR-EL-02, CAD 700. The customer leaves the chat before payment, so the case goes to agent Sarah Martin. She finds a record showing that CAD 700 APPR compensation was already paid for AC 412 on Jul 22 through an airport/legacy channel. This record isn't linked in the Claims Dashboard, so the automatic duplicate check didn't catch it. Sarah overrides the decision to Not Eligible and enters a reason of 50 to 500 characters. The original Eligible recommendation stays visible as read-only, and the override is audited with before/after values. She sends \"Decision Rendered � Not Eligible\" and the case closes as Closed � Not Eligible. No compensation record is created and nothing is paid. Also checks that the reason length is enforced and that only permitted users can override.",
+  "prerequisites": "PNR: OV001 � single passenger Antoine Leblanc (Adult, Basic Aeroplan 9876543210, good standing). AC 412 YUL ? YYZ, July 20, 2026. Scheduled arrival 12:00, actual 19:00 (7h delay). Code 96 (Operations Control � Controllable). Travelled, arrived late. No VOL/INVOL changes. AC only. Claim filed Jul 28, 2026 (within 366 days). Case reference: CASE-FD-20260728-101. Claims Dashboard duplicate check: no duplicate (the prior payment is outside CD). Prior payment evidence: legacy / airport record of CAD 700 APPR paid Jul 22, 2026 (reference LEG-APPR-55821). CyberSource GREEN. Country of residence: Canada. Users: Sarah Martin (Agent with case.render_decision), Paul Girard (read-only user without case.render_decision).",
+  "prerequisite_items": [
+    "PNR: OV001 � single passenger Antoine Leblanc (Adult, Basic Aeroplan 9876543210, good standing)",
+    "AC 412 YUL ? YYZ, July 20, 2026",
+    "Scheduled arrival 12:00, actual 19:00 (7h delay)",
+    "Code 96 (Operations Control � Controllable)",
+    "Travelled, arrived late",
+    "No VOL/INVOL changes",
+    "AC only",
+    "Claim filed Jul 28, 2026 (within 366 days)",
+    "Case reference: CASE-FD-20260728-101",
+    "Claims Dashboard duplicate check: no duplicate (the prior payment is outside CD)",
+    "Prior payment evidence: legacy / airport record of CAD 700 APPR paid Jul 22, 2026 (reference LEG-APPR-55821)",
+    "CyberSource GREEN",
+    "Country of residence: Canada",
+    "Users: Sarah Martin (Agent with case.render_decision), Paul Girard (read-only user without case.render_decision)"
+  ]
+}

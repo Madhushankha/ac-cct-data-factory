@@ -1,0 +1,114 @@
+{
+ "id": "BAG_PO_007",
+ "family": "BAG",
+ "summary": "SD-02.7 · BAG-02 · no open file",
+ "passengers": [
+  {
+   "firstName": "NORA",
+   "lastName": "FENCASHAL",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "9582",
+   "origin": "YVR",
+   "destination": "YYZ",
+   "depLocal": "13:10",
+   "arrLocal": "20:40",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 5,
+ "pinDaysAgo": true,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "64",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "bagPlan": {
+  "shape": "no_ahl",
+  "bags": 1,
+  "ahls": 0,
+  "segment": 1,
+  "perPassenger": false,
+  "closedDaysAgo": null,
+  "deliveredHoursAfterSchedArrival": null,
+  "ahlHoursAfterActualArrival": 2,
+  "ahlNumberSeed": 76280
+ },
+ "expect": {
+  "regime": null,
+  "eligibility": null,
+  "systemCode": null,
+  "delayMin": 240,
+  "cause": "64",
+  "ttUi": [
+   "bag shape no_ahl",
+   "old PNR X26RQJ-2026-08-17 (AC9582 YVR→YYZ 2026-09-25T13:10)"
+  ],
+  "soc": null
+ },
+ "expectBag": {
+  "bagEventShape": "no_ahl",
+  "bagEvents": "['BAG_CREATED', 'BAG_ACCEPTED', 'BAG_SEEN_AT_STATION']",
+  "bagCount": 1,
+  "ahlCount": 0,
+  "isAhlPresent": false,
+  "isClosedAhlPresent": false,
+  "isMultipleOpenAhlPresent": false,
+  "isBagDelivered": false,
+  "isLastCarrierAC": true,
+  "isOal": false,
+  "oldDaysSinceArrival": 5,
+  "closedDaysAgo": null,
+  "deliveredHoursAfterSchedArrival": null
+ },
+ "requestInputs": {},
+ "source": {
+  "repo": "BAGGAGE_SIT_KIT_20261017",
+  "dataset": "baggage-sit-int-v55",
+  "case_id": "BAG_SIT_SD_02_7",
+  "sd": "SD-02.7",
+  "sp": null,
+  "rule": "BAG-02",
+  "condition": "no open file",
+  "oldPnrId": "X26RQJ-2026-08-17",
+  "oldFlights": "AC9582 YVR→YYZ 2026-09-25T13:10",
+  "oldRoute": "YVR-YYZ",
+  "oldExpectedDds": "NOT_ELIGIBLE · FD-BAG-NE-01 · — · 240 min code 64",
+  "seedNotes": [
+   "23:29:44 [index] 21-day window: arrival moved to 2026-09-26 (4 days ago) as the card requires",
+   "23:33:07 [bags] no_ahl: 3 event row(s) for 1 bag(s), AHL YVRAC00026"
+  ]
+ },
+ "assumed": [
+  "times YVR 13:10 -> YYZ 20:40 local (old seed: YVR dep 13:10, arrival 00:40Z); outbound YYZ 09:00 -> YVR 11:00",
+  "AHL opened 2 h after the ACTUAL (delayed) arrival; the old seed opened it 2 h after the scheduled arrival, which was before the delayed flight landed",
+  "FD-BAG-NE-01 (the old forced DDS answer) is not reproduced: Raptor has no FD-BAG rules",
+  "no verdict is stated: Case Intake baggage EA at run time (BAG-LB-* / BAG-IE-*); the spec states bag facts in expectBag and no eligibility"
+ ],
+ "unsupported": []
+}

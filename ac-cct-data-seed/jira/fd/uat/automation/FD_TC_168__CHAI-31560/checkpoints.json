@@ -1,0 +1,594 @@
+{
+  "key": "CHAI-31560",
+  "test_id": "FD_TC_168",
+  "title": "No Determination | ASL | No Code 14 Days",
+  "goal": "Israel-route flight was disrupted but NO disruption code (arrival, departure, or cancellation) has been assigned after the full 14-day polling window. The flight data (times, status) may be partially available, but without a disruption code, DDS cannot determine controllability � and controllability is required for eligibility assessment. Different from ND-05 (ALL data missing) � here some data exists but the critical CODE is absent. Case routed for agent review.",
+  "summary": {
+    "seed": 6,
+    "chat": 8,
+    "api": 17,
+    "email": 3,
+    "dashboard": 17,
+    "implied": 7,
+    "manual": 5,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Israel-route flight was disrupted but NO disruption code (arrival, departure, or cancellation) has been assigned after the full 14-day polling window. The flight data (times, status) may be partially available, but without a disruption code, DDS cannot determine controllability � and controllability is required for eligibility assessment. Different from ND-05 (ALL data missing) � here some data exists but the critical CODE is absent. Case routed for agent review.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: Single passenger",
+      "expected": "PNR: Single passenger",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Journey: Israel route (AC operated)",
+      "expected": "Journey: Israel route (AC operated)",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Flight data: Partially available (times may exist)",
+      "expected": "Flight data: Partially available (times may exist)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Disruption codes: ALL NULL � arrival code, departure code, cancellation code = MISSING after 14-day polling",
+      "expected": "Disruption codes: ALL NULL � arrival code, departure code, cancellation code = MISSING after 14-day polling",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "14-day retry: EXHAUSTED",
+      "expected": "14-day retry: EXHAUSTED",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Regime: ASL applicable",
+      "expected": "Regime: ASL applicable",
+      "id": "CP007"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given a case was previously created for PNR: TC142",
+      "expected": "",
+      "id": "CP008"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case was placed in the System Processing Queue (case previously filed via chatbot, all identification/authentication/journey selection completed)",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And 72 hours have elapsed since last leg arrival",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "DDS POLLING",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system polls for disruption codes on a scheduled basis",
+      "expected": "Day 1: DDS runs ? Arrival code: NULL, Departure code: NULL ? NO DETERMINATION ? retry Day 3: DDS retries ? Arrival code: NULL, Departure code: NULL ? NO DETERMINATION ? retry Day 7: DDS retries ? Arrival code: NULL, Departure code: NULL ? NO DETERMINATION ? retry Day 10: DDS retries ? Arrival code: NULL, Departure code: NULL ? NO DETERMINATION ? retry Day 14: DDS final retry ? Arrival code: NULL, Departure code: NULL ? 14-DAY WINDOW EXHAUSTED ? NO DETERMINATION ? ESCALATE TO AGENT",
+      "id": "CP011"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Promised Itinerary - Flight: AC 084, Route: TLV ? YYZ, Scheduled Arrival: 16:00",
+      "expected": "Promised Itinerary - Flight: AC 084, Route: TLV ? YYZ, Scheduled Arrival: 16:00",
+      "id": "CP012"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current Itinerary - Flight: AC 084, Route: TLV ? YYZ, Status: ARRIVED LATE, Scheduled Arrival: 16:00 ? Actual: 20:00, Delay: +4H 00M",
+      "expected": "Current Itinerary - Flight: AC 084, Route: TLV ? YYZ, Status: ARRIVED LATE, Scheduled Arrival: 16:00 ? Actual: 20:00, Delay: +4H 00M",
+      "id": "CP013"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: ASL (Israel) (Israel origin � TLV)",
+      "expected": "Regime: ASL (Israel) (Israel origin � TLV)",
+      "id": "CP014"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL FLIGHT: AC 084 � TLV ? YYZ � NO CODE",
+      "expected": "MSL FLIGHT: AC 084 � TLV ? YYZ � NO CODE",
+      "id": "CP015"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Arrival Code: NULL (after 14 days)",
+      "expected": "Arrival Code: NULL (after 14 days)",
+      "id": "CP016"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Departure Code: NULL (after 14 days)",
+      "expected": "Departure Code: NULL (after 14 days)",
+      "id": "CP017"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Cancellation Code: NULL (after 14 days)",
+      "expected": "Cancellation Code: NULL (after 14 days)",
+      "id": "CP018"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Fallback: ATTEMPTED ? ALL CODES NULL ? NO FALLBACK AVAILABLE",
+      "expected": "Fallback: ATTEMPTED ? ALL CODES NULL ? NO FALLBACK AVAILABLE",
+      "id": "CP019"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "14-Day Retry Window: EXHAUSTED",
+      "expected": "14-Day Retry Window: EXHAUSTED",
+      "id": "CP020"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Case Status: System Processing Queue ? 14 days exhausted ? ESCALATED TO CR AGENT",
+      "expected": "Case Status: System Processing Queue ? 14 days exhausted ? ESCALATED TO CR AGENT",
+      "id": "CP021"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MR/MS [PASSENGER] | NO DETERMINATION | NO_CODE_14_DAYS | PENDING CR AGENT",
+      "expected": "MR/MS [PASSENGER] | NO DETERMINATION | NO_CODE_14_DAYS | PENDING CR AGENT",
+      "id": "CP022"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system updates the case status from \"System Processing Queue\" to \"Pending Agent Review\"",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system records: 14-day retry window exhausted, no disruption code available",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case is routed to the Customer Relations (CR) agent queue",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "NOTIFICATION � ESCALATION EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP026"
+    },
+    {
+      "section": "NOTIFICATION � ESCALATION EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a No Determination notification email is sent to the customer's email on file",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "NOTIFICATION � ESCALATION EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains:",
+      "expected": "Update on your Air Canada claim � [Case Reference] Your claim is currently under review by our Customer Relations team. We require additional time to assess your eligibility.",
+      "id": "CP028"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the case has been created for PNR \"TC142\" under ASL Israel origin TLV",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Case Header Topic/Sub-topic should be \"Travel Disruptions � Delay\"",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status should be \"Pending Agent Review\" escalated from System Processing Queue after 14 days",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Created date should be populated as the original case creation date",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Last Updated date should be Day 14 as the date of final retry and escalation",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the SLA countdown should be tracking correctly",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Team assignment should be \"Customer Relations (CR) Agent Queue\"",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist panel status should reflect NO DETERMINATION after 14-day exhaustion",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey should show \"Bound 1: TLV ? YYZ\" arrived late plus 4h",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility and Compensation section should be present and show \"NO DETERMINATION\" with reason \"No disruption code after 14 days � all codes NULL; arrival, departure, and cancellation codes all missing\"",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And DDS should have polled on Days 1, 3, 7, 10, and 14 and all returned NULL codes",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And fallback should have been attempted but ALL CODES NULL with NO FALLBACK AVAILABLE",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the 14-Day Retry Window should be exhausted",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the determination should be \"NO DETERMINATION\" escalated to CR agent",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Duplicate Check should have run automatically and the result should be \"No duplicate found\"",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And CyberSource should NOT have been triggered",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the booking should have been appended at original case creation",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status History should show Created then System Processing Queue then Day 14 Pending Agent Review escalated",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And an escalation email should have been sent to the customer's email on file containing Case Reference and flight details AC 084 TLV to YYZ delay 4h and status under review by Customer Relations and expected timeline",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should not be able to access Case Search as it is for leads and management only",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given no determination was made due to no disruption code after 14-day retry",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no automated payment flow should be triggered",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the case was created and sent to agent for manual handling",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence should have been asked",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record should have been created automatically",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no batch file should have been dispatched",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And if the agent later determines eligible manual compensation should be created and payment dispatched per type with cash to Unifier and e-credit to EIP",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard should show case status as \"No Determination\" with no payout section until manually resolved",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS returns FD-ASL-ND-04.",
+      "expected": "DDS returns FD-ASL-ND-04.",
+      "id": "CP057"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Tracer: Flight times may be partially available; Arrival Code = NULL; Departure Code = NULL; Cancellation Code = NULL; ALL codes MISSING after 14-day polling; Delay may be calculable but controllability CANNOT be determined (no code).",
+      "expected": "Trip Tracer: Flight times may be partially available; Arrival Code = NULL; Departure Code = NULL; Cancellation Code = NULL; ALL codes MISSING after 14-day polling; Delay may be calculable but controllability CANNOT be determined (no code).",
+      "id": "CP058"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "No Determination: Delay exists but without a code, DDS cannot classify controllability (controllable vs extraordinary) ? cannot determine eligibility.",
+      "expected": "No Determination: Delay exists but without a code, DDS cannot classify controllability (controllable vs extraordinary) ? cannot determine eligibility.",
+      "id": "CP059"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Case Routing: Agent review � agent must investigate the disruption cause through operations team, assign a code, then re-run DDS.",
+      "expected": "Case Routing: Agent review � agent must investigate the disruption cause through operations team, assign a code, then re-run DDS.",
+      "id": "CP060"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Compensation: NOT CALCULATED.",
+      "expected": "Compensation: NOT CALCULATED.",
+      "id": "CP061"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Fraud Screening: NOT INVOKED.",
+      "expected": "Fraud Screening: NOT INVOKED.",
+      "id": "CP062"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime Assessment: ASL = ND-04 (No code after 14 days).",
+      "expected": "Regime Assessment: ASL = ND-04 (No code after 14 days).",
+      "id": "CP063"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Claims Dashboard: Status = No Determination; Reason = No disruption code after 14-day polling; Agent Action = \"Contact operations for code assignment, then re-run DDS\"; DDS = FD-ASL-ND-04.",
+      "expected": "Claims Dashboard: Status = No Determination; Reason = No disruption code after 14-day polling; Agent Action = \"Contact operations for code assignment, then re-run DDS\"; DDS = FD-ASL-ND-04.",
+      "id": "CP064"
+    }
+  ]
+}

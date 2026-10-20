@@ -1,0 +1,88 @@
+{
+ "id": "FD_TC_208",
+ "family": "FD",
+ "summary": "Single pax YUL-YYZ AC 430 08:00-10:00; AC cancels the flight 5 days before departure (CREW), customer declines rebooking and does not travel",
+ "passengers": [
+  {
+   "firstName": "MATHIEU",
+   "lastName": "PELLETIER",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "430",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "CREW",
+   "noticeHours": 120,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-13",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "NO_TRAVEL",
+  "delayMin": null,
+  "control": "CONTROLLABLE",
+  "cause": "CREW",
+  "ttUi": [
+   "Promised: AC 430 YUL\u2192YYZ Scheduled Arrival 10:00 (14-day mark)",
+   "Current: AC 430 YUL\u2192YYZ Status CANCELLED, No Actual Arrival",
+   "History - Change 1 (Day -5): INVOL - AC cancels flight",
+   "No Travel: Customer elected not to rebook",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 430 YUL\u2192YYZ CREW",
+   "Flight cancelled - crew scheduling",
+   "Cancellation: D-5 - CONTROLLABLE (CREW)",
+   "Fallback: FALSE - Sister City: FALSE",
+   "Flight Compensation: MR MATHIEU PELLETIER (CAD 400)"
+  ],
+  "soc": null,
+  "note": "TripTracer side only; payout/refund path is the Claims/Refund flow"
+ },
+ "assumed": [
+  "PNR name accents dropped (GDS ASCII)",
+  "flightDaysAgo 10 (text says claim filed D+5 after travel; 72h elapsed, within 366 days) ",
+  "noticeHours 120 = D-5 cancellation notice",
+  "$400 CAD cancellation amount as stated in Expected Results"
+ ],
+ "unsupported": []
+}

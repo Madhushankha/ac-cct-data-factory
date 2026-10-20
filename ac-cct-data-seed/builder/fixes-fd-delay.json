@@ -1,0 +1,1606 @@
+{
+ "rules": [
+  {
+   "id": "R1",
+   "title": "One bound per plan bound (connections)",
+   "rule": "Seed ZZ6GMP (the only (2 seg,1 pax) seed) is a round trip with TWO JOURNEY_SERVER_BOUND itineraries; builder.walk() only rewrites their end points, so two segments of one spec bound become two Raptor bounds (observed: two APPR rows per pax, bound 2 = NE-08 'origin'/NE-27 instead of NE-12/13/18/19, and delayMin of the more delayed bound). Post-process every PNR message in scenario_build.build_one (all families): set processedPnr.flightItineraries to one JOURNEY_SERVER_BOUND per plan.bounds entry listing that bound's segment ids in order {flights:[{flightSegment:{id}}...]}, originIataCode=first.origin, destinationIataCode=last.destination (also the TK/HK replacement ids the builder appends).",
+   "evidence": "engine/src/booking/pnr.rs:1051-1075 (bound rph = position among JOURNEY_SERVER_BOUND itineraries, segments = all flights/connectedFlights); builder.py:538-544; facts/dds/builtins.rs destination() ~250-295: boarded seg1 + unboarded seg2 in ONE bound -> travelled_any=true, last completed arrival YYZ is a promised intermediate -> INTERMEDIATE -> NE-12/13/18/19/EL-17/18; in its own bound the unboarded seg is ORIGIN/REMAINED_AT_ORIGIN -> NE-08/09/14/15",
+   "affects": 47
+  },
+  {
+   "id": "R2",
+   "title": "Rebooked passengers must check in and board the replacement flight",
+   "rule": "spec_to_build.py:123 skips check_in/boarding for every cancelled/rebooked segment and never emits them for the replacement (a segment index len(segs)+n). With no boarding/flown coupon Raptor reads the passenger as NO TRAVEL (ORIGIN): code EL-13 (400, band NO_TRAVEL) or NE-08, delay 0, instead of PROMISED + delay vs promise. Emit, for each accepted rebooking n (k_new = len(spec segments)+n, in rebooking-list order = builder execution order), check_in at departure:k_new -180 and boarding at departure:k_new -25 (+dep delay); for accepted:false (declined) emit nothing (no-travel is then right, delayMin = MSL own delay). Replacement FDM: kind ontime (or delay by r.arrDelayMin), arrival = rebooking arrLocal.",
+   "evidence": "facts/dds/builtins.rs destination(): `!travelled_any && (index==0||actual.len()==1)` -> ORIGIN; passengers.rs travelled()=boarded||flown; dds-arrival-delay.dsl: ORIGIN/INTERMEDIATE use MSL's own delay (or 0) instead of promised-vs-actual; observed FD_TC_034 EL-13 NO_TRAVEL 400 delay 0, FD_TC_031-036/237 delay 0",
+   "affects": 27
+  },
+  {
+   "id": "R3",
+   "title": "Cancel code must be a NetLine 4-letter code in APPR_cancellation_lookup",
+   "rule": "Cancel outcomes carry the text's code into legCancelCodePrimary. Numeric IATA delay codes (31,18,96,36,62..) and invented codes (SOP, FOC, SKD, WXX) are not keys of APPR_cancellation_lookup -> msl_flight_disruption_type=OTHER -> ND-X02 / NO_DETERMINATION. Lookup keys: AIRS ARPT RUNW RTNS DAMA POLI INDU WEAT (UNCONTROLLABLE); COMM HOLI OPER POSI REPO EQUI FUEL HDLG ROTA CREW (CONTROLLABLE); PERF TECH (SAFETY). Map to a key with the expected controllability (default OPER / WEAT / TECH) and set expect.cause to that code (Raptor reports the cancellation code as cause). Exception: WXX in FD_TC_237 is intentionally OTHER (expects NO_DETERMINATION).",
+   "evidence": "studio-rules dds-msl-flight-disruption-type (first rows): cancellation code not_in APPR_cancellation_lookup.key -> OTHER; lookup-tables 'APPR Cancellation Code Lookup (consolidated)'; builtins.rs msl_codes(): cancellation wins over delay codes",
+   "affects": 17
+  },
+  {
+   "id": "R4",
+   "title": "Rebooking chains: one step per replaced segment",
+   "rule": "spec_to_build emits one flight_cancelled_rebooked per rebooking entry, all with segment=k of the ORIGINAL segment. After the first, that segment is gone (builder: 'segment 1 is not in the PNR') so only the first replacement exists (FD_TC_006 saw only AC425). The builder also forces the replacement's origin/destination to the replaced segment's (builder.py step_flight_cancelled_rebooked spec dict), so ONE_TO_MANY / MANY_TO_ONE and VOL->INVOL chains are not expressible. Collapse to the final replacement per replaced segment (last INVOL entry), with the promise = the booked flight (the last VOL flight is made the booked segment), delay = final arrival - booked arrival.",
+   "evidence": "builder.py:976-1022; itinerary.rs Promise::bounded (promise = itinerary before first involuntary FLIGHT_REBOOKING, else the 14-day mark); bound.promised, not the rebooked flight, supplies the MSL (builtins.rs most_significant)",
+   "affects": 3
+  },
+  {
+   "id": "R5",
+   "title": "INVOL schedule change: FDM delay is relative to the shifted schedule",
+   "rule": "scenario_build uses the Build segment's (already shifted) dep/arr for the FDM message, then adds `minutes` on top: delay is counted twice (FD_TC_009 240->480, 011 300->600, 012 270->540, 028 420->840). Set flight minutes = arrDelayMin - sum(arrDeltaMin of that segment's scheduleChanges) (depMinutes likewise with depDeltaMin), floor 0. When the remainder is 0 the code must still be sent: in scenario_fdm.py emit ARRIVAL_CODE (and the delay element) when f.codeOnly is true even if minutes==0 (or use minutes=1 as fallback, tolerance +-2).",
+   "evidence": "scenario_build.py segs[...].dep_utc after step_schedule_change; Flight::promised_arrival_delay() = on-block minus the PROMISED itinerary's arrival (itinerary.rs:~115); promise = 14-day mark itinerary because a retime never locks (itinerary.rs locks())",
+   "affects": 4
+  },
+  {
+   "id": "R6",
+   "title": "Voluntary changes must predate the 14-day mark",
+   "rule": "A VOL retime/rebooking inside 14 days is invisible (builder retime keeps status HK so eds-stc-schedule-change needs TK; builder UN/TK pairs are INVOLUNTARY by eds-involuntary-change-detection step 5) and the promise stays the original (FD_TC_181-185, 104: delay 180-300 instead of 0). Emit VOL changes >= 15 days before the last original departure (noticeHours>=360 / changeDaysBeforeFlight=15): Promise::bounded then takes the itinerary at the cutoff (already changed) as the promise and deducts nothing.",
+   "evidence": "itinerary.rs Promise::bounded: cutoff = last original departure - 14d; `mark = at_time(cutoff)`; changes before cutoff are filtered out; without lock `snapshot = ... unwrap_or(mark)`; rules/eds-stc-schedule-change.dsl; rules/eds-involuntary-change-detection.dsl",
+   "affects": 6
+  },
+  {
+   "id": "R7",
+   "title": "Formula 2 (customer's own later rebooking) cannot be built; use the net delay",
+   "rule": "Scenarios with INVOL rebook + VOL Pre-Move deduction (FD_TC_007, 196-200) expect the NET delay. The builder has no customer-rebooking family (HK add + old segment removed, no UN). Send the flight late by the net delay so delayMin/band/amount/code match; document history as unsupported.",
+   "evidence": "itinerary.rs voluntary_delay() / eds customer_rebooking_detection",
+   "affects": 6
+  },
+  {
+   "id": "R8",
+   "title": "Sister-city rebooking (SISTER_PROMISED) needs a post-build patch and YTZ",
+   "rule": "The only sister pair near these scenarios in sister_cities_lookup is YYZ<->YTZ (YHM is NOT a sister city of YYZ, so YUL->YHM rebookings read OTHER/INTERMEDIATE). The builder forces the replacement's destination to the original's. For FD_TC_031/032/033/036/040/041/042 post-process in scenario_build: after the build, in every PNR version set the replacement product's airSegment.arrival.iataCode='YTZ' (and the FDM extra flight destination YTZ). Then bound_destination_type=SISTER_PROMISED -> EL-04/05/06 (10/11/12 with fallback).",
+   "evidence": "builtins.rs destination(): same_or_sister(arrival, promised_destination) -> SISTER_PROMISED; lookup-tables 'Sister Cities' (YYZ:[YTZ]); appr-compensation-eligible-reason.dsl EL-04..06,10..12",
+   "affects": 7
+  },
+  {
+   "id": "R9",
+   "title": "No-travel delayMin is the MSL's own delay",
+   "rule": "For ORIGIN/SISTER_ORIGIN/INTERMEDIATE the reported arrival_delay_in_minutes = MSL flight's own arrival delay (else departure delay, else 0), NOT promised-vs-actual; a cancelled MSL has 0 (eligibility via msl_no_travel_delay_qualifies = cancelled || delay>=180). So expected delayMin>0 for cancelled/no-travel cases (FD_TC_047,048,088,142,160,161,237) is reachable only for a PROMISED/travelled passenger (R2) and delayMin of a cancelled no-travel is 0: set expect.delayMin null/0 for those.",
+   "evidence": "rules/dds-arrival-delay.dsl; builtins.rs msl_codes(); rules/appr-compensation-eligible.dsl",
+   "affects": 8
+  },
+  {
+   "id": "R10",
+   "title": "Expectation vocabulary / data conflicts",
+   "rule": "delayBand name is DELAY_GTE_9_HOURS (not DELAY_9_HOURS_PLUS); delay code 41 is UNCONTROLLABLE (use 43-47/52/69/03 for SAFETY); per-pax amounts (3-pax total 2100 = 3x700); expect NE-TBC placeholder.",
+   "evidence": "lookup-tables APPR Delay Code Lookup; gate band names in obs",
+   "affects": 4
+  }
+ ],
+ "perScenario": {
+  "FD_TC_006": {
+   "specPatch": {
+    "expect": {
+     "cause": "OPER"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": 570,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": 72,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "8201",
+      "origin": "YOW",
+      "destination": "YYZ",
+      "depLocal": "21:00",
+      "arrLocal": "22:30",
+      "dayOffset": 0,
+      "accepted": true,
+      "voluntary": false,
+      "changeDaysBeforeDeparture": 3,
+      "actualArrLocal": "22:30",
+      "arrDelayMin": 570,
+      "delayCode": "96",
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2",
+    "R3",
+    "R4"
+   ],
+   "note": "cancel code '96' is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; rebooking chain collapsed to the last (final) replacement per replaced segment; VOL/INVOL history not expressible, DDS numbers preserved; replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_007": {
+   "specPatch": {
+    "expect": {
+     "cause": "OPER"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": 72,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": 72,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "427",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "17:40",
+      "arrLocal": "19:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "voluntary": false,
+      "changeDaysBeforeDeparture": 1,
+      "replacesAlsoSeg": 2,
+      "actualArrLocal": "19:00",
+      "delayCode": "32",
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R1",
+    "R2",
+    "R3",
+    "R3",
+    "R4"
+   ],
+   "note": "cancel code None is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; cancel code None is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; rebooking chain collapsed to the last (final) replacement per replaced segment; VOL/INVOL history not expressible, DDS numbers preserved; needs one bound holding both segments (R1); replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_008": {
+   "specPatch": {
+    "expect": {
+     "cause": "OPER"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": 72,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": 300,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": 72,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "8302",
+      "origin": "YUL",
+      "destination": "YKF",
+      "depLocal": "10:00",
+      "arrLocal": "11:30",
+      "dayOffset": 0,
+      "accepted": true,
+      "voluntary": false,
+      "changeDaysBeforeDeparture": 1,
+      "paxEvent": "boarded"
+     },
+     {
+      "replacesSeg": 2,
+      "carrier": "AC",
+      "number": "8402",
+      "origin": "YKF",
+      "destination": "YYZ",
+      "depLocal": "12:30",
+      "arrLocal": "15:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "voluntary": false,
+      "changeDaysBeforeDeparture": 1,
+      "actualArrLocal": "15:00",
+      "arrDelayMin": 300,
+      "delayCode": "62",
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R1",
+    "R2",
+    "R3",
+    "R3",
+    "R4"
+   ],
+   "note": "cancel code None is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; cancel code '62' is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; rebooking chain collapsed to the last (final) replacement per replaced segment; VOL/INVOL history not expressible, DDS numbers preserved; needs one bound holding both segments (R1); replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_009": {
+   "specPatch": {},
+   "tags": [
+    "R5"
+   ],
+   "note": "INVOL retime: FDM must report delay relative to the shifted schedule (minutes - sum(arrDeltaMin)); code record needs codeOnly when remainder is 0"
+  },
+  "FD_TC_010": {
+   "specPatch": {
+    "expect": {
+     "cause": "OPER"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": 240,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": 72,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "429",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "12:40",
+      "arrLocal": "14:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "voluntary": false,
+      "changeDaysBeforeDeparture": 3,
+      "changeType": "SELFREACC",
+      "actualArrLocal": "14:00",
+      "arrDelayMin": 240,
+      "delayCode": "36",
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2",
+    "R3"
+   ],
+   "note": "cancel code '36' is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_011": {
+   "specPatch": {},
+   "tags": [
+    "R5"
+   ],
+   "note": "INVOL retime: FDM must report delay relative to the shifted schedule (minutes - sum(arrDeltaMin)); code record needs codeOnly when remainder is 0"
+  },
+  "FD_TC_012": {
+   "specPatch": {},
+   "tags": [
+    "R5"
+   ],
+   "note": "INVOL retime: FDM must report delay relative to the shifted schedule (minutes - sum(arrDeltaMin)); code record needs codeOnly when remainder is 0"
+  },
+  "FD_TC_013": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "423",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "13:10",
+      "arrLocal": "14:30",
+      "dayOffset": 0,
+      "accepted": true,
+      "voluntary": false,
+      "changeDaysBeforeDeparture": 0,
+      "changeType": "REACC",
+      "actualArrLocal": "14:30",
+      "arrDelayMin": 270,
+      "delayCode": "61",
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2"
+   ],
+   "note": "replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_028": {
+   "specPatch": {},
+   "tags": [
+    "R5"
+   ],
+   "note": "INVOL retime: FDM must report delay relative to the shifted schedule (minutes - sum(arrDeltaMin)); code record needs codeOnly when remainder is 0"
+  },
+  "FD_TC_029": {
+   "specPatch": {
+    "expect": {
+     "delayBand": "DELAY_GTE_9_HOURS"
+    }
+   },
+   "tags": [
+    "BAND"
+   ],
+   "note": "BAND"
+  },
+  "FD_TC_031": {
+   "specPatch": {
+    "expect": {
+     "cause": "OPER"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": 240,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "436",
+      "origin": "YUL",
+      "destination": "YHM",
+      "depLocal": "16:30",
+      "arrLocal": "18:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2",
+    "R3"
+   ],
+   "note": "cancel code '31' is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_032": {
+   "specPatch": {
+    "expect": {
+     "cause": "OPER"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": 420,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "436",
+      "origin": "YUL",
+      "destination": "YHM",
+      "depLocal": "15:30",
+      "arrLocal": "17:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2",
+    "R3"
+   ],
+   "note": "cancel code '31' is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_033": {
+   "specPatch": {
+    "expect": {
+     "cause": "OPER"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": 420,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "436",
+      "origin": "YUL",
+      "destination": "YHM",
+      "depLocal": "15:30",
+      "arrLocal": "17:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2",
+    "R3"
+   ],
+   "note": "cancel code 'SOP' is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_034": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "445",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "08:00",
+      "arrLocal": "17:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2"
+   ],
+   "note": "replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_035": {
+   "specPatch": {
+    "expect": {
+     "cause": "OPER"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": 0,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "445",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "08:00",
+      "arrLocal": "10:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2",
+    "R3"
+   ],
+   "note": "cancel code 'FOC' is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_036": {
+   "specPatch": {
+    "expect": {
+     "cause": "OPER"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": 600,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "438",
+      "origin": "YUL",
+      "destination": "YHM",
+      "depLocal": "16:30",
+      "arrLocal": "18:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2",
+    "R3"
+   ],
+   "note": "cancel code '18' is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_040": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "444",
+      "origin": "YUL",
+      "destination": "YHM",
+      "depLocal": "15:30",
+      "arrLocal": "17:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2"
+   ],
+   "note": "replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_041": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "443",
+      "origin": "YUL",
+      "destination": "YHM",
+      "depLocal": "15:30",
+      "arrLocal": "17:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2"
+   ],
+   "note": "replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_042": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "445",
+      "origin": "YUL",
+      "destination": "YHM",
+      "depLocal": "16:30",
+      "arrLocal": "18:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2"
+   ],
+   "note": "replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_044": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_047": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "UA",
+      "number": "4525",
+      "origin": "ORD",
+      "destination": "DEN",
+      "depLocal": "19:30",
+      "arrLocal": "21:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2"
+   ],
+   "note": "replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_048": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "127",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "14:00",
+      "arrLocal": "21:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ],
+    "expect": {
+     "systemCode": "FD-APPR-NE-28"
+    }
+   },
+   "tags": [
+    "R2"
+   ],
+   "note": "placeholder NE-TBC; with boarding on the replacement and uncontrollable code Raptor returns NE-28 (promised, uncontrollable, non-fallback); replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_049": {
+   "specPatch": {
+    "expect": {
+     "cause": "OPER"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": 150,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "445",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "08:00",
+      "arrLocal": "12:30",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2",
+    "R3",
+    "UNSUPPORTED"
+   ],
+   "note": "cancel code 'SKD' is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; \"declined/offered alternative below 3h\" or <3h rebooked delay is not modelled by Raptor: cancelled MSL qualifies a no-travel passenger (msl_codes cancelled||late). Expected NE code cannot be reached; set expect to what Raptor returns (EL-25/EL-13 for cancelled no-travel; NE-27 for rebooked <3h); replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_050": {
+   "specPatch": {
+    "expect": {
+     "cause": "WEAT"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": 0,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "WEAT",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "445",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "08:00",
+      "arrLocal": "10:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2",
+    "R3"
+   ],
+   "note": "cancel code 'WXX' is not in APPR_cancellation_lookup -> OTHER/ND-X02; use WEAT (UNCONTROLLABLE); expect.cause becomes WEAT; replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_064": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_065": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_066": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_067": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_068": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_069": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_070": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_071": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_072": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_073": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_074": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_075": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_078": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-08",
+     "control": "UNCONTROLLABLE"
+    }
+   },
+   "tags": [
+    "EXPECT"
+   ],
+   "note": "delay code 41 is UNCONTROLLABLE in APPR_delay_lookup (reclassified 2026-07-21); for NE-14/SAFETY use code 43/44/45/46/47 instead, or accept NE-08"
+  },
+  "FD_TC_082": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_083": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_084": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_085": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_086": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_088": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 2,
+      "carrier": "AC",
+      "number": "486",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "18:25",
+      "arrLocal": "20:30",
+      "dayOffset": 0,
+      "accepted": false,
+      "paxEvent": "not_travelled"
+     }
+    ]
+   },
+   "tags": [
+    "R1",
+    "UNSUPPORTED"
+   ],
+   "note": "\"declined/offered alternative below 3h\" or <3h rebooked delay is not modelled by Raptor: cancelled MSL qualifies a no-travel passenger (msl_codes cancelled||late). Expected NE code cannot be reached; set expect to what Raptor returns (EL-25/EL-13 for cancelled no-travel; NE-27 for rebooked <3h); needs one bound holding both segments (R1)"
+  },
+  "FD_TC_090": {
+   "specPatch": {
+    "expect": {
+     "cause": "OPER"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "412",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "15:05",
+      "arrLocal": "16:30",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2",
+    "R3"
+   ],
+   "note": "cancel code 'SKD' is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_095": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_096": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_097": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 2,
+      "carrier": "AC",
+      "number": "500",
+      "origin": "YYZ",
+      "destination": "YEG",
+      "depLocal": "13:30",
+      "arrLocal": "15:10",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R1",
+    "R2"
+   ],
+   "note": "needs one bound holding both segments (R1); replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_102": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_104": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "505",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "13:45",
+      "arrLocal": "15:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "voluntary": true,
+      "changeDaysBeforeFlight": 15,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R6",
+    "R2"
+   ],
+   "note": "VOL rebooking placed 15 days before departure (before the 14-day mark) so the promise is the new flight; converter must use changeDaysBeforeFlight/changeDaysBeforeDeparture for voluntary rebookings instead of outcome noticeHours; passenger boards the replacement (R2). Expect NE-27 (delay 0 <180)"
+  },
+  "FD_TC_105": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "506",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "10:45",
+      "arrLocal": "12:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "voluntary": false,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2"
+   ],
+   "note": "replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_132": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_133": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_134": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_135": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_139": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "856",
+      "origin": "LHR",
+      "destination": "YYZ",
+      "depLocal": "14:00",
+      "arrLocal": "18:00",
+      "dayOffset": 0,
+      "accepted": true,
+      "voluntary": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2"
+   ],
+   "note": "replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_141": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_142": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "873",
+      "origin": "CDG",
+      "destination": "YYZ",
+      "depLocal": "12:00",
+      "arrLocal": "15:00",
+      "dayOffset": 0,
+      "accepted": false,
+      "paxEvent": "not_travelled"
+     }
+    ]
+   },
+   "tags": [
+    "UNSUPPORTED"
+   ],
+   "note": "\"declined/offered alternative below 3h\" or <3h rebooked delay is not modelled by Raptor: cancelled MSL qualifies a no-travel passenger (msl_codes cancelled||late). Expected NE code cannot be reached; set expect to what Raptor returns (EL-25/EL-13 for cancelled no-travel; NE-27 for rebooked <3h)"
+  },
+  "FD_TC_143": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 2,
+      "carrier": "AC",
+      "number": "123",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "17:30",
+      "arrLocal": "19:50",
+      "dayOffset": 0,
+      "accepted": false,
+      "paxEvent": "not_travelled"
+     }
+    ]
+   },
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_145": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_147": {
+   "specPatch": {
+    "expect": {
+     "cause": "OPER"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     },
+     {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 2,
+      "carrier": "AC",
+      "number": "107",
+      "origin": "YYZ",
+      "destination": "YEG",
+      "depLocal": "17:00",
+      "arrLocal": "19:10",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R1",
+    "R2",
+    "R3"
+   ],
+   "note": "cancel code '42' is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; needs one bound holding both segments (R1); replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_149": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_153": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_159": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_161": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 2,
+      "carrier": "AC",
+      "number": "9044",
+      "origin": "FRA",
+      "destination": "TLV",
+      "depLocal": "14:30",
+      "arrLocal": "19:00",
+      "dayOffset": 1,
+      "accepted": false,
+      "paxEvent": "not_travelled"
+     }
+    ]
+   },
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_163": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_165": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_166": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_167": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "83",
+      "origin": "TLV",
+      "destination": "YOW",
+      "depLocal": "15:00",
+      "arrLocal": "19:30",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2",
+    "R3"
+   ],
+   "note": "cancel code None is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_170": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_178": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_179": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_181": {
+   "specPatch": {
+    "scheduleChanges": [
+     {
+      "seg": 1,
+      "depDeltaMin": 240,
+      "arrDeltaMin": 240,
+      "noticeHours": 360,
+      "changeType": "VOL"
+     }
+    ]
+   },
+   "tags": [
+    "R6"
+   ],
+   "note": "VOL retime moved to >=15 days before departure so the 14-day-mark promise already holds the new time (itinerary.rs Promise::bounded cutoff/mark)"
+  },
+  "FD_TC_182": {
+   "specPatch": {
+    "scheduleChanges": [
+     {
+      "seg": 1,
+      "depDeltaMin": 180,
+      "arrDeltaMin": 180,
+      "noticeHours": 360,
+      "changeType": "VOL"
+     }
+    ]
+   },
+   "tags": [
+    "R6"
+   ],
+   "note": "VOL retime moved to >=15 days before departure so the 14-day-mark promise already holds the new time (itinerary.rs Promise::bounded cutoff/mark)"
+  },
+  "FD_TC_183": {
+   "specPatch": {
+    "scheduleChanges": [
+     {
+      "seg": 1,
+      "depDeltaMin": 180,
+      "arrDeltaMin": 180,
+      "noticeHours": 360,
+      "changeType": "VOL"
+     }
+    ]
+   },
+   "tags": [
+    "R6"
+   ],
+   "note": "VOL retime moved to >=15 days before departure so the 14-day-mark promise already holds the new time (itinerary.rs Promise::bounded cutoff/mark)"
+  },
+  "FD_TC_184": {
+   "specPatch": {
+    "scheduleChanges": [
+     {
+      "seg": 1,
+      "depDeltaMin": 300,
+      "arrDeltaMin": 300,
+      "noticeHours": 360,
+      "changeType": "VOL"
+     }
+    ]
+   },
+   "tags": [
+    "R6"
+   ],
+   "note": "VOL retime moved to >=15 days before departure so the 14-day-mark promise already holds the new time (itinerary.rs Promise::bounded cutoff/mark)"
+  },
+  "FD_TC_185": {
+   "specPatch": {
+    "scheduleChanges": [
+     {
+      "seg": 1,
+      "depDeltaMin": 240,
+      "arrDeltaMin": 240,
+      "noticeHours": 360,
+      "changeType": "VOL"
+     }
+    ]
+   },
+   "tags": [
+    "R6"
+   ],
+   "note": "VOL retime moved to >=15 days before departure so the 14-day-mark promise already holds the new time (itinerary.rs Promise::bounded cutoff/mark)"
+  },
+  "FD_TC_209#1": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_209#2": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_210": {
+   "specPatch": {
+    "rebooking": [
+     {
+      "replacesSeg": 2,
+      "carrier": "PB",
+      "number": "207",
+      "origin": "MNL",
+      "destination": "CEB",
+      "depLocal": "16:30",
+      "arrLocal": "19:00",
+      "dayOffset": 2,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R1",
+    "R2"
+   ],
+   "note": "needs one bound holding both segments (R1); replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_235": {
+   "specPatch": {
+    "expect": {
+     "amount": 700
+    }
+   },
+   "tags": [
+    "EXPECT"
+   ],
+   "note": "amount 2100 is the 3-pax total; Raptor is per passenger (700). Extra rows EL-13/NO_TRAVEL come from seed travellers 4-5 (template has 5 pax): use 3-pax seed or ignore"
+  },
+  "FD_TC_236": {
+   "specPatch": {},
+   "tags": [
+    "R1"
+   ],
+   "note": "needs one bound holding both segments (R1)"
+  },
+  "FD_TC_237": {
+   "specPatch": {
+    "expect": {
+     "cause": "OPER"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": 420,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "OPER",
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ],
+    "rebooking": [
+     {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "311",
+      "origin": "YUL",
+      "destination": "YVR",
+      "depLocal": "15:00",
+      "arrLocal": "17:30",
+      "dayOffset": 0,
+      "accepted": true,
+      "paxEvent": "boarded"
+     }
+    ]
+   },
+   "tags": [
+    "R2",
+    "R3"
+   ],
+   "note": "cancel code 'WXX' is not in APPR_cancellation_lookup -> OTHER/ND-X02; use OPER (CONTROLLABLE); expect.cause becomes OPER; replacement flight must be checked in + boarded by the passenger (R2)"
+  },
+  "FD_TC_196": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ]
+   },
+   "tags": [
+    "R7"
+   ],
+   "note": "INVOL REACC + VOL Pre-Move: Raptor Formula 2 (itinerary.rs voluntary_delay) needs a customer-rebooking (HK add / old segment removed, no UN) that the builder cannot emit; collapse to one flight late by the NET delay (240 min) so delayMin/band/code/amount match"
+  },
+  "FD_TC_197": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ]
+   },
+   "tags": [
+    "R7"
+   ],
+   "note": "INVOL REACC + VOL Pre-Move: Raptor Formula 2 (itinerary.rs voluntary_delay) needs a customer-rebooking (HK add / old segment removed, no UN) that the builder cannot emit; collapse to one flight late by the NET delay (240 min) so delayMin/band/code/amount match"
+  },
+  "FD_TC_198": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ]
+   },
+   "tags": [
+    "R7"
+   ],
+   "note": "INVOL REACC + VOL Pre-Move: Raptor Formula 2 (itinerary.rs voluntary_delay) needs a customer-rebooking (HK add / old segment removed, no UN) that the builder cannot emit; collapse to one flight late by the NET delay (240 min) so delayMin/band/code/amount match"
+  },
+  "FD_TC_199": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 300,
+      "depDelayMin": 300,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ]
+   },
+   "tags": [
+    "R7"
+   ],
+   "note": "INVOL REACC + VOL Pre-Move: Raptor Formula 2 (itinerary.rs voluntary_delay) needs a customer-rebooking (HK add / old segment removed, no UN) that the builder cannot emit; collapse to one flight late by the NET delay (300 min) so delayMin/band/code/amount match"
+  },
+  "FD_TC_200": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+     }
+    ]
+   },
+   "tags": [
+    "R7"
+   ],
+   "note": "INVOL REACC + VOL Pre-Move: Raptor Formula 2 (itinerary.rs voluntary_delay) needs a customer-rebooking (HK add / old segment removed, no UN) that the builder cannot emit; collapse to one flight late by the NET delay (240 min) so delayMin/band/code/amount match"
+  }
+ }
+}

@@ -1,0 +1,89 @@
+{
+  "id": "SOC_UAT_050",
+  "family": "SOC",
+  "summary": "1 other-airline employee (non-revenue) on LY 082 TLV-YYZ 01:00 departing 07:00 (7h late), code 64; ASL SOC not eligible (OAL employee booking)",
+  "passengers": [
+    {
+      "firstName": "NOA",
+      "lastName": "COHEN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "IL",
+      "employee": true
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "LY",
+      "number": "082",
+      "origin": "TLV",
+      "destination": "YYZ",
+      "depLocal": "01:00",
+      "arrLocal": "05:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": 420,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-ASL-NE-02",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 420,
+    "control": null,
+    "cause": "64",
+    "ttUi": [
+      "TYPE: EMPLOYEE (non-revenue)",
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip TLV->YYZ on LY082 delayed +7H 00M",
+      "Regime: ASL (TLV departure - Israel)",
+      "PASSENGERS: 1 - SEGMENTS: 1",
+      "Promised: LY 082 TLV->YYZ Sched Dep 02-Jun 01:00",
+      "Current: ARRIVED LATE, Sched Dep 01:00, Actual 07:00, Delay +7H 00M",
+      "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE",
+      "NOT_ELIGIBLE reason: Employee booking (OAL)",
+      "Passenger Claims: NOT ELIGIBLE; DDS code SoC-ASL-NE-02"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none (employee booking)"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen; employee=true",
+    "Flight LY 082 used (prerequisite also mentions LY 016; TT note says use LY 082)",
+    "Arrival 05:00 local YYZ same day; arrival delay assumed 420",
+    "Cabin W (PY), class O",
+    "Residence IL",
+    "Delay code 64 kept as given although the carrier is OAL",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "unsupported": [
+    "OAL (El Al) flight actuals/delay code are not in AC operational feeds; must be injected as flight data. Employee/OAL staff ticketing distinguished from AC employee only by the TT 'Employee (OAL)' reason, which booking data cannot select"
+  ]
+}

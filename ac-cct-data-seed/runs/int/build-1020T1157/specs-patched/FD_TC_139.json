@@ -1,0 +1,78 @@
+{
+ "id": "FD_TC_139",
+ "family": "FD",
+ "summary": "Adult on AC LHR-YYZ (original dep 10:00); passenger voluntarily gave up the seat (voluntary denied boarding, EUR 200 voucher) and flew the next flight dep 14:00 arr 18:00 (4h later): EU 261 Not Eligible (voluntary denied boarding, VOL-DB)",
+ "passengers": [
+  {
+   "firstName": "SOPHIE",
+   "lastName": "LAURENT",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "GB",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "858",
+   "origin": "LHR",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "denied_boarding",
+   "voluntary": true
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-EU-NE-05",
+  "amount": 0,
+  "currency": "GBP",
+  "delayBand": null,
+  "delayMin": null,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "No Trip Tracer UI validation block in the text; Expected Results: Original flight = LHR \u2192 YYZ 10:00; Customer voluntarily denied boarding; Accepted compensation offer (200 voucher); Rebooked on next flight arriving 4hrs later; Denied Boarding Type = VOLUNTARY",
+   "Claims Dashboard text: booking flag VOL-DB = TRUE; Denied Boarding Type VOLUNTARY; Journey Bound 1: LHR \u2192 YYZ with original flight (sched dep 10:00) and next flight (departed 14:00, arrived 18:00)",
+   "Eligibility: NOT ELIGIBLE (Flight Disruption) - Voluntary Denied Boarding - GBP 0; no EU 261 amount (GBP 520 / EUR 600) calculated on top of the voluntary offer; the 4-hour later arrival is NOT used for delay compensation"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "original AC 858 LHR 10:00 - YYZ 14:00 (original arrival is implied by 'next flight arrived 18:00, 4hr later than original'); next flight assumed AC 856 LHR 14:00 - YYZ 18:00",
+  "the 4h arrival difference is encoded as outcome delay (240) vs the original promise; DDS must still return NOT ELIGIBLE because of the voluntary denied boarding",
+  "text conflicts on the DDS code: Expected Results FD-EU-NE-05, Claims Dashboard text FD-EU-NE-06; FD-EU-NE-05 used",
+  "residence GB (text: UK; voucher quoted in EUR/GBP symbols mangled)",
+  "denied boarding modelled as paxEvents denied_boarding with non-schema extra voluntary=true and the replacement flight in rebooking (accepted)"
+ ],
+ "unsupported": [
+  "Voluntary denied-boarding voucher of 200 (vouchers[] only supports meal/hotel/transport kinds) and the VOL-DB booking flag (carried only as paxEvents[].voluntary=true, a non-schema extra)"
+ ]
+}

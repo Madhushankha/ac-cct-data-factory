@@ -1,0 +1,5123 @@
+[
+ {
+  "id": "SOC_UAT_001",
+  "pnrId": "ZZ9SN2-2026-09-08",
+  "locator": "ZZ9SN2",
+  "flights": [
+   {
+    "rider": "ZZ9SN2-2026-09-08",
+    "carrier": "AC",
+    "number": "101",
+    "origin": "YYZ",
+    "destination": "YUL",
+    "depUtc": "2026-10-08T12:00:00Z",
+    "arrUtc": "2026-10-08T13:20:00Z",
+    "kind": "delay",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-APPR-NE-01",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 360,
+   "control": "CONTROLLABLE",
+   "cause": "64",
+   "ttUi": [
+    "TYPE: EMPLOYEE (non-revenue)",
+    "Trip Completed, Disruption Detected",
+    "Single-segment domestic trip YYZ\u2192YUL on AC101 delayed +6H 00M due to crew / FDP exceedance (controllable)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 101 YYZ\u2192YUL Scheduled Dep 01-Jun 08:00",
+    "Current Itinerary: AC 101 YYZ\u2192YUL ARRIVED LATE, Scheduled Dep 08:00 \u2192 Actual 14:00, +6H 00M",
+    "SOC section present",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_6_HOURS_OR_MORE | MEAL \u2014 | ACCOMMODATION \u2014 | GENERAL EXPENSES \u2014 | EXPIRES \u2014",
+    "NOT_ELIGIBLE reason: Employee booking",
+    "Passenger Claims: Intent TRAVEL DISRUPTIONS, Sub-Intent EXPENSES, Status NOT ELIGIBLE"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; AC employee booking (non-revenue); eligible for baggage claims only"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "Non-revenue / standby ticket type and booking-office suffix (ES/OT/EP/EE/EC) are not expressible beyond employee=true"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "employee office suffix (ES/OT/EP/EE/EC) not chosen; employee=true only",
+   "residence CA assumed (domestic Canadian flight; not stated)",
+   "arrival 09:20 (1h20 block)"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_002",
+  "pnrId": "ZZE5FC-2026-09-08",
+  "locator": "ZZE5FC",
+  "flights": [
+   {
+    "rider": "ZZE5FC-2026-09-08",
+    "carrier": "AC",
+    "number": "872",
+    "origin": "FRA",
+    "destination": "YYZ",
+    "depUtc": "2026-10-08T08:00:00Z",
+    "arrUtc": "2026-10-08T17:00:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-APPR-NE-02",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": "CONTROLLABLE",
+   "cause": "64",
+   "ttUi": [
+    "TYPE: EMPLOYEE (non-revenue)",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip FRA\u2192YYZ on LH470 delayed +7H 00M",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: LH 470 FRA\u2192YYZ Scheduled Dep 01-Jun 10:00",
+    "Current Itinerary: LH 470 FRA\u2192YYZ ARRIVED LATE, Scheduled Dep 10:00 \u2192 Actual 17:00, +7H 00M",
+    "SOC section present",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_6_HOURS_OR_MORE | MEAL \u2014 | ACCOMMODATION \u2014 | GENERAL EXPENSES \u2014 | EXPIRES \u2014",
+    "NOT_ELIGIBLE reason: Employee booking (OAL)"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; OAL employee booking"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "Non-revenue OAL employee ticket type is not expressible beyond employee=true"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "arrival 12:40 (8h40 block, tz -6h)",
+   "regime APPR taken from text although itinerary originates in FRA"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_003",
+  "pnrId": "ZZS5YO-2026-08-26",
+  "locator": "ZZS5YO",
+  "flights": [
+   {
+    "rider": "ZZS5YO-2026-08-26",
+    "carrier": "AC",
+    "number": "201",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-09-25T18:00:00Z",
+    "arrUtc": "2026-09-25T22:40:00Z",
+    "kind": "delay",
+    "minutes": 1080,
+    "depMinutes": 1080,
+    "code": "67",
+    "reportedMinutes": 900,
+    "arrivalCode": "67"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-APPR-NE-03",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 1080,
+   "control": "CONTROLLABLE",
+   "cause": "67",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment domestic trip YYZ\u2192YVR on AC201 delayed +18H 00M due to crew (controllable)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 201 YYZ\u2192YVR Scheduled Dep 05-Jun 14:00",
+    "Current Itinerary: AC 201 YYZ\u2192YVR ARRIVED LATE, Scheduled Dep 14:00 \u2192 Actual Dep 06-Jun 08:00, +18H 00M",
+    "SOC section present",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_6_HOURS_OR_MORE",
+    "NOT_ELIGIBLE reason: Notified >=12 hours before departure"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; passenger notified >=12h before departure (APPR)"
+   }
+  },
+  "daysAgo": 25,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "Actual departure Jun 6 08:00 = dayOffset 1 vs the scheduled day (shown as the delay of 1080 min)",
+   "delay notified 15h before scheduled departure -> modelled as scheduleChange with noticeHours 15 (and outcome noticeHours 15)",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_004",
+  "pnrId": "ZZHSDH-2026-09-08",
+  "locator": "ZZHSDH",
+  "flights": [
+   {
+    "rider": "ZZHSDH-2026-09-08",
+    "carrier": "AC",
+    "number": "301",
+    "origin": "YYZ",
+    "destination": "YOW",
+    "depUtc": "2026-10-08T13:00:00Z",
+    "arrUtc": "2026-10-08T14:00:00Z",
+    "kind": "delay",
+    "minutes": 90,
+    "depMinutes": 90,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-APPR-NE-04",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_LESS_THAN_2_HOURS",
+   "delayMin": 90,
+   "control": "CONTROLLABLE",
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment domestic trip YYZ\u2192YOW on AC301 delayed +1H 30M due to crew (controllable)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 301 YYZ\u2192YOW Scheduled Dep 03-Jun 09:00",
+    "Current Itinerary: AC 301 YYZ\u2192YOW ARRIVED LATE, Scheduled Dep 09:00 \u2192 Actual 10:30, +1H 30M",
+    "SOC section present",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_LESS_THAN_2_HOURS",
+    "NOT_ELIGIBLE reason: Delay below 2-hour threshold"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; delay 90 min below 2-hour threshold"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "arrival 10:00 (1h block)",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_005",
+  "pnrId": "ZZM0T1-2026-09-08",
+  "locator": "ZZM0T1",
+  "flights": [
+   {
+    "rider": "ZZM0T1-2026-09-08",
+    "carrier": "UA",
+    "number": "456",
+    "origin": "ORD",
+    "destination": "LAX",
+    "depUtc": "2026-10-08T15:00:00Z",
+    "arrUtc": "2026-10-08T19:15:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-APPR-NE-05",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_2_TO_6_HOURS",
+   "delayMin": 300,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip ORD\u2192LAX on UA456 delayed +5H 00M, OAL operated",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: UA 456 ORD\u2192LAX Scheduled Dep 02-Jun 10:00",
+    "Current Itinerary: UA 456 ORD\u2192LAX ARRIVED LATE, Scheduled Dep 10:00 \u2192 Actual 15:00, +5H 00M",
+    "SOC section present",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_2_TO_6_HOURS",
+    "NOT_ELIGIBLE reason: OAL-operated segment, redirect to United Airlines"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; OAL-only itinerary, redirect to United Airlines"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "Itinerary with no AC segment (UA-only PNR with no AC delay data) must exist in Trip Tracer"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "arrival 12:15 local LAX (4h15 block, tz -2h)",
+   "no delay code (OAL only; AC has no departure delay code data)"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_006",
+  "pnrId": "ZZIOID-2026-09-08",
+  "locator": "ZZIOID",
+  "flights": [
+   {
+    "rider": "ZZIOID-2026-09-08",
+    "carrier": "AC",
+    "number": "701",
+    "origin": "YYZ",
+    "destination": "YWG",
+    "depUtc": "2026-10-08T10:00:00Z",
+    "arrUtc": "2026-10-08T12:10:00Z",
+    "kind": "cancel",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "cancelCode": "AIRS",
+    "noticeMinutes": 180
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-APPR-NE-08",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": null,
+   "control": "UNCONTROLLABLE",
+   "cause": "72",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Not Completed, Disruption Detected",
+    "Single-segment domestic trip YYZ\u2192YWG on AC701 cancelled due to ATC restriction (uncontrollable)",
+    "Passenger stayed at origin (YYZ)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 701 YYZ\u2192YWG Scheduled Dep 05-Jun 06:00",
+    "Current Itinerary: AC 701 YYZ\u2192YWG CANCELLED",
+    "SOC section present",
+    "PASSENGER | NOT_ELIGIBLE | BAND \u2014 (cancelled, no delay band)",
+    "NOT_ELIGIBLE reason: Uncontrollable (ATC Restriction, Code 72), regular passenger, no travel"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; no travel, outside carrier control"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "arrival 07:10 (2h10 block, tz -1h)",
+   "cancel code ATC chosen as the NetLine equivalent of delay code 72 (ATC restriction)",
+   "noticeHours null (not stated)",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_007",
+  "pnrId": "ZZ6SED-2026-09-08",
+  "locator": "ZZ6SED",
+  "flights": [
+   {
+    "rider": "ZZ6SED-2026-09-08",
+    "carrier": "AC",
+    "number": "901",
+    "origin": "YYZ",
+    "destination": "YYC",
+    "depUtc": "2026-10-08T11:00:00Z",
+    "arrUtc": "2026-10-08T15:15:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZ6SED-2026-09-08",
+    "carrier": "AC",
+    "number": "902",
+    "origin": "YYC",
+    "destination": "YVR",
+    "depUtc": "2026-10-08T19:25:00Z",
+    "arrUtc": "2026-10-08T20:55:00Z",
+    "kind": "cancel",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": "77",
+    "arrivalCode": "77",
+    "cancelCode": "WEAT",
+    "noticeMinutes": 180
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-APPR-NE-12",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": null,
+   "control": "UNCONTROLLABLE",
+   "cause": "77",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Not Completed, Disruption Detected",
+    "Multi-segment domestic trip YYZ\u2192YYC\u2192YVR, Segment 2 AC902 YYC\u2192YVR cancelled due to weather (uncontrollable); passenger stranded at YYC",
+    "PASSENGERS: 1 SEGMENTS: 2",
+    "Promised: Seg 1 AC 901 YYZ\u2192YYC 06-Jun 07:00 | Seg 2 AC 902 YYC\u2192YVR 06-Jun 12:00",
+    "Current: Seg 1 AC 901 ON TIME | Seg 2 AC 902 CANCELLED",
+    "SOC section present, SOC Segment: AC 902 YYC\u2192YVR",
+    "Departure Delay Code: 77 (Weather), Uncontrollable",
+    "PASSENGER | NOT_ELIGIBLE | BAND \u2014 "
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; mid-point stranding, outside carrier control"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "arrivals 09:15 (seg 1) and 12:30 (seg 2) chosen from block times",
+   "cancel code WEAT chosen as NetLine equivalent of delay code 77 (weather)",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_008",
+  "pnrId": "ZZYMTZ-2026-08-25",
+  "locator": "ZZYMTZ",
+  "flights": [
+   {
+    "rider": "ZZYMTZ-2026-08-25",
+    "carrier": "AC",
+    "number": "111",
+    "origin": "YYZ",
+    "destination": "YUL",
+    "depUtc": "2026-09-24T13:00:00Z",
+    "arrUtc": "2026-09-24T14:20:00Z",
+    "kind": "delay",
+    "minutes": 90,
+    "depMinutes": 90,
+    "code": "42",
+    "arrivalCode": "42"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-APPR-NE-14",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_LESS_THAN_2_HOURS",
+   "delayMin": 90,
+   "control": "CONTROLLABLE",
+   "cause": "42",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Not Completed, Disruption Detected",
+    "Single-segment domestic trip YYZ\u2192YUL on AC111 cancelled, rebooked with SOC segment departure delay +1H 30M; passenger stayed at origin (YYZ)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 111 YYZ\u2192YUL Scheduled Dep 07-Jun 09:00",
+    "Current Itinerary: AC 111 YYZ\u2192YUL CANCELLED, rebooked, SOC Segment Departure Delay +1H 30M",
+    "SOC Segment Departure Delay: 90 min, below 2h threshold",
+    "Departure Delay Code: 42 (Scheduled Maintenance), Controllable (irrelevant, threshold not met)",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_LESS_THAN_2_HOURS"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; no travel, delay below 2 h"
+   }
+  },
+  "daysAgo": 26,
+  "seedNote": null,
+  "unsupported": [
+   "Text states two different delays (90 min vs 150 min in Expected Results); spec uses 90"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "delay 90 min per prerequisites and TT lines (the Expected Results line says 150 min: text inconsistency)",
+   "rebooked flight AC 113 YYZ-YUL dep 10:30 arr 11:50 invented (number not stated); accepted=false because passenger stayed at origin",
+   "cancel code TECH chosen as NetLine equivalent of delay code 42 (scheduled maintenance)",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_009",
+  "pnrId": "ZZFE5C-2026-09-08",
+  "locator": "ZZFE5C",
+  "flights": [
+   {
+    "rider": "ZZFE5C-2026-09-08",
+    "carrier": "AC",
+    "number": "131",
+    "origin": "YYZ",
+    "destination": "YYC",
+    "depUtc": "2026-10-08T11:00:00Z",
+    "arrUtc": "2026-10-08T15:15:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZFE5C-2026-09-08",
+    "carrier": "AC",
+    "number": "132",
+    "origin": "YYC",
+    "destination": "YVR",
+    "depUtc": "2026-10-08T19:25:00Z",
+    "arrUtc": "2026-10-08T20:55:00Z",
+    "kind": "delay",
+    "minutes": 90,
+    "depMinutes": 90,
+    "code": "42",
+    "arrivalCode": "42"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-APPR-NE-16",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_LESS_THAN_2_HOURS",
+   "delayMin": 90,
+   "control": "CONTROLLABLE",
+   "cause": "42",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Not Completed, Disruption Detected",
+    "Multi-segment domestic trip YYZ\u2192YYC\u2192YVR, Segment 2 AC132 YYC\u2192YVR cancelled, rebooked with SOC segment departure delay +1H 30M; passenger stranded at YYC",
+    "PASSENGERS: 1 SEGMENTS: 2",
+    "Promised: Seg 1 AC 131 YYZ\u2192YYC 07-Jun 07:00 | Seg 2 AC 132 YYC\u2192YVR 07-Jun 12:00",
+    "Current: Seg 1 AC 131 ON TIME | Seg 2 AC 132 CANCELLED, rebooked, SOC Segment Departure Delay +1H 30M",
+    "SOC Segment: AC 132 YYC\u2192YVR, delay 90 min below 2h",
+    "Departure Delay Code: 42 (Scheduled Maintenance), Controllable (irrelevant)",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_LESS_THAN_2_HOURS"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; no travel (incomplete), delay below 2 h"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "rebooked flight AC 134 YYC-YVR dep 13:30 arr 14:00 invented; accepted=false because passenger did not reach destination",
+   "cancel code TECH = NetLine equivalent of delay code 42",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_010",
+  "pnrId": "ZZY05P-2026-09-08",
+  "locator": "ZZY05P",
+  "flights": [
+   {
+    "rider": "ZZY05P-2026-09-08",
+    "carrier": "AC",
+    "number": "845",
+    "origin": "YYZ",
+    "destination": "FRA",
+    "depUtc": "2026-10-08T12:00:00Z",
+    "arrUtc": "2026-10-09T11:00:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZY05P-2026-09-08",
+    "carrier": "KL",
+    "number": "1741",
+    "origin": "FRA",
+    "destination": "MUC",
+    "depUtc": "2026-10-09T15:00:00Z",
+    "arrUtc": "2026-10-09T16:00:00Z",
+    "kind": "delay",
+    "minutes": 300,
+    "depMinutes": 300,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NO_DETERMINATION",
+   "systemCode": "SoC-APPR-ND-01",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_2_TO_6_HOURS",
+   "delayMin": 300,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Multi-segment trip YYZ\u2192FRA\u2192MUC: Seg 1 AC845 on time, Seg 2 LH470 (OAL) delayed +5H 00M",
+    "PASSENGERS: 1 SEGMENTS: 2",
+    "Promised: Seg 1 AC 845 YYZ\u2192FRA 10-Jun 08:00 | Seg 2 LH 470 FRA\u2192MUC 10-Jun 14:00",
+    "Current: Seg 1 AC 845 ON TIME | Seg 2 LH 470 ARRIVED LATE, Scheduled Dep 14:00 \u2192 Actual 19:00, +5H 00M",
+    "SOC Segment: LH 470 FRA\u2192MUC (OAL); Operating Carrier LH (OAL)",
+    "Departure Delay Code: Unknown (OAL, AC has no data)",
+    "PASSENGER | NO_DETERMINATION | DELAY_2_TO_6_HOURS",
+    "NO_DETERMINATION reason: OAL-operated SOC segment, AC cannot determine controllability"
+   ],
+   "soc": {
+    "eligibility": "NO_DETERMINATION",
+    "entitlements": "none determined; passenger redirected to OAL; case created for manual agent handling"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "OAL (LH) segment delay data/code unavailable to AC and cannot be simulated in the test environment (text: 'Cannot simulate OAL delays')",
+   "Itinerary timeline inconsistent (YYZ-FRA dep 08:00 cannot connect to FRA-MUC dep 14:00 same day); text times kept"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "AC 845 arrival set to 13:30 (text schedules LH 470 to depart FRA at 14:00 the same day, so the transatlantic block time is shortened to fit; real YYZ-FRA block is ~7h40)",
+   "LH 470 arrival 15:05 (1h05)",
+   "no delay code on LH leg (unknown)",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_011",
+  "pnrId": "ZZEWOG-2026-09-08",
+  "locator": "ZZEWOG",
+  "flights": [
+   {
+    "rider": "ZZEWOG-2026-09-08",
+    "carrier": "AC",
+    "number": "789",
+    "origin": "YYZ",
+    "destination": "ORD",
+    "depUtc": "2026-10-08T12:00:00Z",
+    "arrUtc": "2026-10-08T13:50:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZEWOG-2026-09-08",
+    "carrier": "UA",
+    "number": "8765",
+    "origin": "ORD",
+    "destination": "SFO",
+    "depUtc": "2026-10-08T19:00:00Z",
+    "arrUtc": "2026-10-08T23:30:00Z",
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NO_DETERMINATION",
+   "systemCode": "SoC-APPR-ND-02",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_2_TO_6_HOURS",
+   "delayMin": 240,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Multi-segment trip YYZ\u2192ORD\u2192SFO: Seg 1 AC789 on time, Seg 2 UA8765 (STAR) delayed +4H 00M",
+    "PASSENGERS: 1 SEGMENTS: 2",
+    "Promised: Seg 1 AC 789 YYZ\u2192ORD 02-Jun 08:00 | Seg 2 UA 8765 ORD\u2192SFO 02-Jun 14:00",
+    "Current: Seg 1 AC 789 ON TIME | Seg 2 UA 8765 ARRIVED LATE, Scheduled Dep 14:00 \u2192 Actual 18:00, +4H 00M",
+    "SOC Segment: UA 8765 ORD\u2192SFO (STAR); Operating Carrier UA (STAR Alliance)",
+    "Departure Delay Code: Unknown (STAR, AC has limited data)",
+    "PASSENGER | NO_DETERMINATION | DELAY_2_TO_6_HOURS"
+   ],
+   "soc": {
+    "eligibility": "NO_DETERMINATION",
+    "entitlements": "none determined; case created for agent review; receipt collection initiated"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "STAR (UA) segment delay code/data unavailable to AC; cannot be set in booking data"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "arrivals 08:50 (seg 1) and 16:30 (seg 2) chosen from block times",
+   "UA 8765 is the STAR operating carrier; no delay code",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_012",
+  "pnrId": "ZZJLZX-2026-04-24",
+  "locator": "ZZJLZX",
+  "flights": [
+   {
+    "rider": "ZZJLZX-2026-04-24",
+    "carrier": "AC",
+    "number": "7412",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-05-24T12:00:00Z",
+    "arrUtc": "2026-05-24T16:40:00Z",
+    "kind": "delay",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NO_DETERMINATION",
+   "systemCode": "SoC-APPR-ND-03",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 360,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment domestic trip YYZ\u2192YVR on AC301 delayed +6H 00M, departure delay code missing after 14-day retrigger",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 301 YYZ\u2192YVR Scheduled Dep 15-May 08:00",
+    "Current Itinerary: AC 301 YYZ\u2192YVR ARRIVED LATE, Scheduled Dep 08:00 \u2192 Actual 14:00, +6H 00M",
+    "Departure Delay Code: NONE (not populated after 14-day RE retrigger)",
+    "14-Day RE Retrigger: COMPLETED, code still not populated",
+    "PASSENGER | NO_DETERMINATION | DELAY_6_HOURS_OR_MORE"
+   ],
+   "soc": {
+    "eligibility": "NO_DETERMINATION",
+    "entitlements": "none determined; case created for manual review"
+   }
+  },
+  "daysAgo": 149,
+  "seedNote": null,
+  "unsupported": [
+   "Departure delay code must be absent and a completed 14-day RE retrigger must be recorded (retrigger state is not booking data)"
+  ],
+  "assumed": [
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "flightDaysAgo 30 (text: journey well beyond 14 days; RE retrigger at 14 days already completed)",
+   "arrival 09:40 (4h40 block, tz -3h)",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_013",
+  "pnrId": "ZZ5S28-2026-08-24",
+  "locator": "ZZ5S28",
+  "flights": [
+   {
+    "rider": "ZZ5S28-2026-08-24",
+    "carrier": "AC",
+    "number": "501",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-09-23T11:00:00Z",
+    "arrUtc": "2026-09-23T15:40:00Z",
+    "kind": "cancel",
+    "minutes": 0,
+    "depMinutes": 1440,
+    "code": "41",
+    "arrivalCode": "41",
+    "cancelCode": "TECH",
+    "noticeMinutes": 180
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-APPR-EL-01",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 1440,
+   "control": "SAFETY",
+   "cause": "41",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Not Completed, Disruption Detected",
+    "Single-segment domestic trip YYZ\u2192YVR on AC501 cancelled due to aircraft defect (safety)",
+    "Passenger stayed at origin (YYZ)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 501 YYZ\u2192YVR Scheduled Dep 10-Jun 07:00",
+    "Current Itinerary: AC 501 YYZ\u2192YVR CANCELLED",
+    "Departure Delay Code: 41 (Aircraft Defects / Maintenance Finding), Safety",
+    "PASSENGER | ELIGIBLE | DELAY_6_HOURS_OR_MORE | MEAL $60.00 | ACCOMMODATION Rate of day (max $500) | GENERAL EXPENSES Transport $200 + Comm $30 + Parking $50 + Essentials $30 | EXPIRES [date]",
+    "CyberSource: GREEN"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "Meals $60/pax (as stated), hotel rate of day max 3 nights $500 cap (overnight, delay >360 min), transport $200 (1-5 pax), communication $30/pax, parking $50 (1 day), essentials $30/pax"
+   }
+  },
+  "daysAgo": 27,
+  "seedNote": null,
+  "unsupported": [
+   "ACR (airline-issued meal/hotel/transport voucher) 'No' for all categories: expressed by an empty vouchers list"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cancel code TECH = NetLine equivalent of delay code 41",
+   "arrival 08:40 PDT (4h40 block, tz -3h)",
+   "depDelayMin 1440 (no rebooking within 24 h)",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_014",
+  "pnrId": "ZZBVKB-2026-05-14",
+  "locator": "ZZBVKB",
+  "flights": [
+   {
+    "rider": "ZZBVKB-2026-05-14",
+    "carrier": "AC",
+    "number": "7812",
+    "origin": "YYZ",
+    "destination": "YYC",
+    "depUtc": "2026-06-13T11:00:00Z",
+    "arrUtc": "2026-06-13T15:15:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZBVKB-2026-05-14",
+    "carrier": "AC",
+    "number": "7813",
+    "origin": "YYC",
+    "destination": "YVR",
+    "depUtc": "2026-06-13T19:25:00Z",
+    "arrUtc": "2026-06-13T20:55:00Z",
+    "kind": "cancel",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "cancelCode": "TECH",
+    "noticeMinutes": 180
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-APPR-EL-05",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 840,
+   "control": "SAFETY",
+   "cause": "44",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Not Completed, Disruption Detected",
+    "Multi-segment domestic trip YYZ\u2192YYC\u2192YVR, Segment 2 AC702 YYC\u2192YVR cancelled due to mechanical/safety issue (Code 44); passenger stranded at YYC",
+    "PASSENGERS: 1 SEGMENTS: 2",
+    "Class of Booking: J (Business)",
+    "Promised: Seg 1 AC 701 YYZ\u2192YYC 12-Jun 07:00 | Seg 2 AC 702 YYC\u2192YVR 12-Jun 12:00",
+    "Current: Seg 1 AC 701 ON TIME | Seg 2 AC 702 CANCELLED",
+    "SOC Segment: AC 702 YYC\u2192YVR",
+    "Departure Delay Code: 44 (Spares and Maintenance Equipment), Safety",
+    "PASSENGER | ELIGIBLE | DELAY_6_HOURS_OR_MORE | MEAL $60.00 (J cabin, same CCT rate) | ACCOMMODATION Rate of day (max $500) | GENERAL EXPENSES Transport $200 + Comm $30 + Parking $50 + Essentials $30",
+    "CyberSource: GREEN"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "J class: meals $60, hotel rate of day max 3 nights $500 cap, transport $200, communication $30, parking $50, essentials $30"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin J / booking class J (Business)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "arrivals 09:15 and 12:30 chosen from block times",
+   "cancel code TECH = NetLine equivalent of delay code 44",
+   "rebooking: AC 702 YYC-YVR next day dep 02:00 (+840 min), arr 02:30, invented (stated only 'rebooked next day' and 840 min); accepted=false because trip not completed / stranded at YYC",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_015",
+  "pnrId": "ZZPOTY-2026-05-14",
+  "locator": "ZZPOTY",
+  "flights": [
+   {
+    "rider": "ZZPOTY-2026-05-14",
+    "carrier": "AC",
+    "number": "8004",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-06-13T12:00:00Z",
+    "arrUtc": "2026-06-13T16:40:00Z",
+    "kind": "delay",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": "77",
+    "arrivalCode": "77"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-APPR-EL-07",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 360,
+   "control": "UNCONTROLLABLE",
+   "cause": "77",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment domestic trip YYZ\u2192YVR on AC301 delayed +6H 00M due to weather (uncontrollable but irrelevant for exception pax)",
+    "PASSENGERS: 2 (Super Elite 50K + companion) SEGMENTS: 1",
+    "Class of Booking: J (Business)",
+    "Promised Itinerary: AC 301 YYZ\u2192YVR Scheduled Dep 12-Jun 08:00",
+    "Current Itinerary: AC 301 YYZ\u2192YVR ARRIVED LATE, Scheduled Dep 08:00 \u2192 Actual 14:00, +6H 00M",
+    "Standards of Care (2): 2 passenger rows",
+    "Departure Delay Code: 77 (Weather), Uncontrollable (SKIPPED for exception pax)",
+    "PASSENGER 1 (Adult, Super Elite 50K, Claimant) | ELIGIBLE | DELAY_6_HOURS_OR_MORE | MEAL $30.00 | ACCOMMODATION Rate of day (max $500)",
+    "PASSENGER 2 (Adult, Companion) | ELIGIBLE (exception privilege extended) | same entitlements",
+    "Transportation (PNR-level): $200.00 (1-5 pax shared)",
+    "Hotel: 2 rooms (1 per adult)",
+    "CyberSource: GREEN"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "both pax eligible; meals $30/pax ($60), hotel rate of day 2 rooms max 3 nights $500 cap, transport $200 shared, communication $30/pax ($60), parking $50, essentials $30/pax ($60)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin J / booking class J (Business)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "arrival 09:40 (4h40, tz -3h)",
+   "tier 'SE' for 'Super Elite 50K' (the text lists the exception tier as Aeroplan 100K / Star Gold / Super Elite; mapped to schema value SE)",
+   "Aeroplan number 9876543210 assumed; companion has no Aeroplan",
+   "residence CA assumed"
+  ],
+  "passengers": 2
+ },
+ {
+  "id": "SOC_UAT_016",
+  "pnrId": "ZZCM2U-2026-05-14",
+  "locator": "ZZCM2U",
+  "flights": [
+   {
+    "rider": "ZZCM2U-2026-05-14",
+    "carrier": "AC",
+    "number": "8041",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-06-13T12:00:00Z",
+    "arrUtc": "2026-06-13T16:40:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-APPR-EL-08",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": "CONTROLLABLE",
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment domestic trip YYZ\u2192YVR on AC301 delayed +7H 00M due to crew shortage (controllable)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 301 YYZ\u2192YVR Scheduled Dep 15-Jun 08:00",
+    "Current Itinerary: AC 301 YYZ\u2192YVR ARRIVED LATE, Scheduled Dep 08:00 \u2192 Actual 15:00, +7H 00M",
+    "Departure Delay Code: 64 (Flight Crew Shortage), Controllable",
+    "PASSENGER | ELIGIBLE | DELAY_6_HOURS_OR_MORE | MEAL $30.00 | ACCOMMODATION Rate of day (max $500) | GENERAL EXPENSES Transport $200 + Comm $30 + Parking $50 + Essentials $30",
+    "CyberSource: GREEN"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "meals $30, hotel rate of day max 3 nights $500 cap, transport $200, communication $30, parking $50, essentials $30"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "arrival 09:40",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_017",
+  "pnrId": "ZZRICV-2026-05-14",
+  "locator": "ZZRICV",
+  "flights": [
+   {
+    "rider": "ZZRICV-2026-05-14",
+    "carrier": "AC",
+    "number": "8078",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-06-13T12:00:00Z",
+    "arrUtc": "2026-06-13T16:40:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "65",
+    "arrivalCode": "65"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-APPR-EL-08",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": "CONTROLLABLE",
+   "cause": "65",
+   "ttUi": [
+    "Single-segment domestic trip YYZ\u2192YVR on AC301 delayed +7H 00M (Flight Crew Shortage / Scheduling, controllable)",
+    "Promised Itinerary: AC 301 YYZ\u2192YVR Scheduled Dep 15-Jun 08:00",
+    "Current Itinerary: AC 301 YYZ\u2192YVR ARRIVED LATE, Scheduled Dep 08:00 \u2192 Actual 15:00, +7H 00M",
+    "Departure Delay Code: 65 (Flight Crew Shortage / Scheduling), Controllable",
+    "PASSENGER(S) | ELIGIBLE | DELAY_6_HOURS_OR_MORE (overnight eligible)",
+    "CyberSource: GREEN"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "meals $120 (4 x $30), hotel rate of day max 3 nights $500 per room, transport $200, communication $120, parking $50, essentials $120; submitted meal receipt CAD 88 auto-approved and paid"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": "template has 5 passengers for 4",
+  "unsupported": [
+   "Accessibility SSRs (pax 1 WCHR, pax 2 DPNA) cannot be expressed in the passenger schema",
+   "Receipt (CAD 88 meal) and payout steps are Claims Dashboard / chatbot behaviour, not booking data"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "arrival 09:40",
+   "Aeroplan numbers invented where members are stated",
+   "residence CA assumed (Interac payout for Canada)",
+   "TT UI lines reconstructed from the DDS evaluation block (text has no explicit Trip Tracer UI validation list for this case)",
+   "Aeroplan numbers for pax 2-4 invented (text says all four are Basic members)"
+  ],
+  "passengers": 4
+ },
+ {
+  "id": "SOC_UAT_018",
+  "pnrId": "ZZID77-2026-05-14",
+  "locator": "ZZID77",
+  "flights": [
+   {
+    "rider": "ZZID77-2026-05-14",
+    "carrier": "AC",
+    "number": "8115",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-06-13T12:00:00Z",
+    "arrUtc": "2026-06-13T16:40:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "66",
+    "arrivalCode": "66"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-APPR-EL-08",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": "CONTROLLABLE",
+   "cause": "66",
+   "ttUi": [
+    "Single-segment domestic trip YYZ\u2192YVR on AC301 delayed +7H 00M (Flight Crew Shortage / Scheduling, controllable)",
+    "Promised Itinerary: AC 301 YYZ\u2192YVR Scheduled Dep 15-Jun 08:00",
+    "Current Itinerary: AC 301 YYZ\u2192YVR ARRIVED LATE, Scheduled Dep 08:00 \u2192 Actual 15:00, +7H 00M",
+    "Departure Delay Code: 66 (Flight Crew Shortage / Scheduling), Controllable",
+    "PASSENGER(S) | ELIGIBLE | DELAY_6_HOURS_OR_MORE (overnight eligible)",
+    "CyberSource: GREEN"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "hotel rate of day max 3 nights $500 cap per room, meals $90 (3 x $30), transport $200, communication $90, parking $50, essentials $90; submitted hotel receipt CAD 620 capped at CAD 500"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": "template has 5 passengers for 3",
+  "unsupported": [
+   "Date of birth / age (>= 65) of pax 1 cannot be expressed in the passenger schema",
+   "Receipt (CAD 620 hotel) and payout steps are Claims Dashboard / chatbot behaviour"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "arrival 09:40",
+   "Aeroplan numbers invented where members are stated",
+   "residence CA assumed (Interac payout for Canada)",
+   "TT UI lines reconstructed from the DDS evaluation block (text has no explicit Trip Tracer UI validation list for this case)",
+   "pax 1 typed SRC (senior) for 'Elderly Adult (Age >= 65)'; no date of birth available in schema (age >= 65 not expressed)"
+  ],
+  "passengers": 3
+ },
+ {
+  "id": "SOC_UAT_019",
+  "pnrId": "ZZ41JU-2026-05-14",
+  "locator": "ZZ41JU",
+  "flights": [
+   {
+    "rider": "ZZ41JU-2026-05-14",
+    "carrier": "AC",
+    "number": "8152",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-06-13T12:00:00Z",
+    "arrUtc": "2026-06-13T16:40:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "68",
+    "arrivalCode": "68"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-APPR-EL-08",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": "CONTROLLABLE",
+   "cause": "68",
+   "ttUi": [
+    "Single-segment domestic trip YYZ\u2192YVR on AC301 delayed +7H 00M (Flight Crew Shortage / Scheduling, controllable)",
+    "Promised Itinerary: AC 301 YYZ\u2192YVR Scheduled Dep 15-Jun 08:00",
+    "Current Itinerary: AC 301 YYZ\u2192YVR ARRIVED LATE, Scheduled Dep 08:00 \u2192 Actual 15:00, +7H 00M",
+    "Departure Delay Code: 68 (Flight Crew Shortage / Scheduling), Controllable",
+    "PASSENGER(S) | ELIGIBLE | DELAY_6_HOURS_OR_MORE (overnight eligible)",
+    "CyberSource: GREEN"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "hotel rate of day max 3 nights $500 cap per room, meals $90, transport $200, communication $90, parking $50, essentials $90; submitted meal CAD 65 + accommodation CAD 320 = CAD 385 auto-approved via Interac"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": "template has 5 passengers for 3",
+  "unsupported": [
+   "Date of birth / age (>= 65) of pax 1 cannot be expressed in the passenger schema",
+   "Receipt and payout steps are Claims Dashboard / chatbot behaviour"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "arrival 09:40",
+   "Aeroplan numbers invented where members are stated",
+   "residence CA assumed (Interac payout for Canada)",
+   "TT UI lines reconstructed from the DDS evaluation block (text has no explicit Trip Tracer UI validation list for this case)",
+   "pax 1 typed SRC (senior) for 'Elderly Adult (Age >= 65)'"
+  ],
+  "passengers": 3
+ },
+ {
+  "id": "SOC_UAT_020",
+  "pnrId": "ZZFQZA-2026-05-14",
+  "locator": "ZZFQZA",
+  "flights": [
+   {
+    "rider": "ZZFQZA-2026-05-14",
+    "carrier": "AC",
+    "number": "8189",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-06-13T12:00:00Z",
+    "arrUtc": "2026-06-13T16:40:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "63",
+    "arrivalCode": "63"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-APPR-EL-08",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": "CONTROLLABLE",
+   "cause": "63",
+   "ttUi": [
+    "Single-segment domestic trip YYZ\u2192YVR on AC301 delayed +7H 00M (Flight Crew Shortage / Scheduling, controllable)",
+    "Promised Itinerary: AC 301 YYZ\u2192YVR Scheduled Dep 15-Jun 08:00",
+    "Current Itinerary: AC 301 YYZ\u2192YVR ARRIVED LATE, Scheduled Dep 08:00 \u2192 Actual 15:00, +7H 00M",
+    "Departure Delay Code: 63 (Flight Crew Shortage / Scheduling), Controllable",
+    "PASSENGER(S) | ELIGIBLE | DELAY_6_HOURS_OR_MORE (overnight eligible)",
+    "CyberSource: GREEN"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "hotel rate of day max 3 nights $500 cap per room, meals $150, transport $200 (1-5 pax), communication $150, parking $50, essentials $150; submitted hotel 260 + meals 85 + transport 60 + essentials 45 = CAD 450 auto-approved"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "Receipt and payout steps are Claims Dashboard / chatbot behaviour"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "arrival 09:40",
+   "Aeroplan numbers invented where members are stated",
+   "residence CA assumed (Interac payout for Canada)",
+   "TT UI lines reconstructed from the DDS evaluation block (text has no explicit Trip Tracer UI validation list for this case)"
+  ],
+  "passengers": 5
+ },
+ {
+  "id": "SOC_UAT_021",
+  "pnrId": "ZZ6WSF-2026-05-14",
+  "locator": "ZZ6WSF",
+  "flights": [
+   {
+    "rider": "ZZ6WSF-2026-05-14",
+    "carrier": "AC",
+    "number": "8226",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-06-13T12:00:00Z",
+    "arrUtc": "2026-06-13T16:40:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "06",
+    "arrivalCode": "06"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-APPR-EL-08",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": "CONTROLLABLE",
+   "cause": "06",
+   "ttUi": [
+    "Single-segment domestic trip YYZ\u2192YVR on AC301 delayed +7H 00M (Airport Operations / Ramp Ground Handling, controllable)",
+    "Promised Itinerary: AC 301 YYZ\u2192YVR Scheduled Dep 15-Jun 08:00",
+    "Current Itinerary: AC 301 YYZ\u2192YVR ARRIVED LATE, Scheduled Dep 08:00 \u2192 Actual 15:00, +7H 00M",
+    "Departure Delay Code: 06 (Airport Operations / Ramp Ground Handling), Controllable",
+    "PASSENGER(S) | ELIGIBLE | DELAY_6_HOURS_OR_MORE (overnight eligible)",
+    "CyberSource: GREEN"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "hotel rate of day max 3 nights $500 cap per room, meals $60, transport $200, communication $60, parking $50, essentials $60; submitted hotel 550 + meals 130 + transport 220 + essentials 80 = CAD 980 exceeds CAD 800 total case threshold -> Manual Handling Queue (Pending Agent Review)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "Receipt, threshold and payout routing are Claims Dashboard behaviour"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "arrival 09:40",
+   "Aeroplan numbers invented where members are stated",
+   "residence CA assumed (Interac payout for Canada)",
+   "TT UI lines reconstructed from the DDS evaluation block (text has no explicit Trip Tracer UI validation list for this case)"
+  ],
+  "passengers": 2
+ },
+ {
+  "id": "SOC_UAT_022",
+  "pnrId": "ZZUNYT-2026-05-14",
+  "locator": "ZZUNYT",
+  "flights": [
+   {
+    "rider": "ZZUNYT-2026-05-14",
+    "carrier": "AC",
+    "number": "8263",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-06-13T12:00:00Z",
+    "arrUtc": "2026-06-13T16:40:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "61",
+    "arrivalCode": "61"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-APPR-EL-08",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": "CONTROLLABLE",
+   "cause": "61",
+   "ttUi": [
+    "Single-segment domestic trip YYZ\u2192YVR on AC301 delayed +7H 00M (Flight Operations / Flight Plan Preparation, controllable)",
+    "Promised Itinerary: AC 301 YYZ\u2192YVR Scheduled Dep 15-Jun 08:00",
+    "Current Itinerary: AC 301 YYZ\u2192YVR ARRIVED LATE, Scheduled Dep 08:00 \u2192 Actual 15:00, +7H 00M",
+    "Departure Delay Code: 61 (Flight Operations / Flight Plan Preparation), Controllable",
+    "PASSENGER(S) | ELIGIBLE | DELAY_6_HOURS_OR_MORE (overnight eligible)",
+    "CyberSource: GREEN"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "hotel rate of day max 3 nights $500 cap, meals $30, transport $200, communication $30, parking $50, essentials $30; submitted hotel CAD 580 exceeds the CAD 500 cap -> Manual Handling Queue (Pending Agent Review)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "Receipt, cap and payout routing are Claims Dashboard behaviour"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "arrival 09:40",
+   "Aeroplan numbers invented where members are stated",
+   "residence CA assumed (Interac payout for Canada)",
+   "TT UI lines reconstructed from the DDS evaluation block (text has no explicit Trip Tracer UI validation list for this case)"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_023",
+  "pnrId": "ZZQSNF-2026-09-08",
+  "locator": "ZZQSNF",
+  "flights": [
+   {
+    "rider": "ZZQSNF-2026-09-08",
+    "carrier": "AC",
+    "number": "401",
+    "origin": "YYZ",
+    "destination": "YHZ",
+    "depUtc": "2026-10-08T13:00:00Z",
+    "arrUtc": "2026-10-08T15:00:00Z",
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": "44",
+    "arrivalCode": "44"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-APPR-EL-09",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_2_TO_6_HOURS",
+   "delayMin": 240,
+   "control": "SAFETY",
+   "cause": "41",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment domestic trip YYZ\u2192YHZ on AC401 delayed +4H 00M due to aircraft defect (safety)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Class of Booking: J (Business)",
+    "Passenger Type: Exception (Accessibility SSR)",
+    "Promised Itinerary: AC 401 YYZ\u2192YHZ Scheduled Dep 16-Jun 09:00",
+    "Current Itinerary: AC 401 YYZ\u2192YHZ ARRIVED LATE, Scheduled Dep 09:00 \u2192 Actual 13:00, +4H 00M",
+    "Departure Delay Code: 41 (Aircraft Defects / Maintenance Finding), Safety",
+    "PASSENGER | ELIGIBLE | DELAY_2_TO_6_HOURS | MEAL $15.00 (LIMITED short delay tier) | ACCOMMODATION \u2014 (NOT ENTITLED, delay <6h) | GENERAL EXPENSES Comm $30 only | EXPIRES [date]",
+    "CyberSource: GREEN",
+    "LIMITED entitlements: Meals $15 + Comm $30 only; no hotel/transport/parking/essentials"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "limited: meals $15 + communication $30 only; not entitled to hotel, transport, parking, essentials (delay < 6 h)"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "Accessibility SSR (exception passenger) cannot be expressed in the passenger schema"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin J / booking class J (Business)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "arrival 12:00 ADT (2h block, tz +1h)",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_024",
+  "pnrId": "ZZUE8U-2026-09-19",
+  "locator": "ZZUE8U",
+  "flights": [
+   {
+    "rider": "ZZUE8U-2026-09-19",
+    "carrier": "AC",
+    "number": "7312",
+    "origin": "YYZ",
+    "destination": "YUL",
+    "depUtc": "2026-10-19T12:00:00Z",
+    "arrUtc": "2026-10-19T13:20:00Z",
+    "kind": "delay",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "PENDING",
+   "systemCode": "SoC-APPR-PE-01",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": 360,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "Journey < 72 h old: last leg landed less than 72 hours ago",
+    "DDS Response Code: SoC-APPR-PE-01 (PENDING)",
+    "Shell case created and placed in polling queue; passenger informed of pending status"
+   ],
+   "soc": {
+    "eligibility": null,
+    "entitlements": "none yet; PENDING until 72 h window passes, then RE retrigger -> DDS evaluation"
+   }
+  },
+  "daysAgo": 1,
+  "seedNote": null,
+  "unsupported": [
+   "Eligibility value PENDING is not in the schema enum",
+   "Timing: flight must be exactly 'yesterday' relative to the run date (<72 h old); future-dated/moving booking"
+  ],
+  "assumed": [
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "flightDaysAgo 1 (text: Dep [today-1]) so the journey is under 72 h old",
+   "arrival 09:20",
+   "delay code and controllability TBD (pending RE evaluation) -> null",
+   "delayBand not stated -> null (360 min would map to DELAY_6_HOURS_OR_MORE once evaluated)",
+   "eligibility 'PENDING' used although outside the schema enum (ELIGIBLE|NOT_ELIGIBLE|NO_DETERMINATION)",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_025",
+  "pnrId": "ZZ2Y2H-2026-07-10",
+  "locator": "ZZ2Y2H",
+  "flights": [
+   {
+    "rider": "ZZ2Y2H-2026-07-10",
+    "carrier": "AC",
+    "number": "849",
+    "origin": "LHR",
+    "destination": "YYZ",
+    "depUtc": "2026-08-09T18:00:00Z",
+    "arrUtc": "2026-08-10T02:00:00Z",
+    "kind": "delay",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": "41",
+    "arrivalCode": "41"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-01",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 360,
+   "control": null,
+   "cause": "41",
+   "ttUi": [
+    "TYPE: EMPLOYEE (non-revenue)",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip LHR\u2192YYZ on AC849 delayed +6H 00M",
+    "Regime: EU (LHR departure)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 849 LHR\u2192YYZ Scheduled Dep 01-Jun 19:00",
+    "Current Itinerary: AC 849 LHR\u2192YYZ ARRIVED LATE, Scheduled Dep 19:00 \u2192 Actual 02-Jun 01:00, +6H 00M",
+    "SOC section present",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_6_HOURS_OR_MORE | MEAL \u2014 | ACCOMMODATION \u2014 | GENERAL EXPENSES \u2014 | EXPIRES \u2014",
+    "NOT_ELIGIBLE reason: Employee booking (AC)"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; AC employee booking"
+   }
+  },
+  "daysAgo": 72,
+  "seedNote": null,
+  "unsupported": [
+   "Non-revenue ticket type / employee office suffix not expressible beyond employee=true"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "arrival 22:00 EDT same day (8h block, tz -5h), actual delay moves it past midnight",
+   "delay code 41 present but not evaluated (employee not eligible regardless) so control=null",
+   "residence null (LHR origin; not stated)"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_026",
+  "pnrId": "ZZ2TOR-2026-05-14",
+  "locator": "ZZ2TOR",
+  "flights": [
+   {
+    "rider": "ZZ2TOR-2026-05-14",
+    "carrier": "AC",
+    "number": "7983",
+    "origin": "FRA",
+    "destination": "YYZ",
+    "depUtc": "2026-06-13T08:00:00Z",
+    "arrUtc": "2026-06-13T17:00:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-02",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "TYPE: EMPLOYEE (non-revenue)",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip FRA\u2192YYZ on LH470 delayed +7H 00M",
+    "Regime: EU (FRA departure)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: LH 470 FRA\u2192YYZ Scheduled Dep 02-Jun 10:00",
+    "Current Itinerary: LH 470 FRA\u2192YYZ ARRIVED LATE, Scheduled Dep 10:00 \u2192 Actual 16:00, +7H 00M",
+    "SOC section present",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_6_HOURS_OR_MORE",
+    "NOT_ELIGIBLE reason: Employee booking (OAL)"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; OAL employee booking"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "Text inconsistency: actual dep 16:00 (= +6h) vs prerequisites 420 min (7h); spec uses 420",
+   "Non-revenue OAL employee ticket not expressible beyond employee=true"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "delay 420 min per prerequisites (text's own actual time 16:00 = +360; flagged inconsistency in the text)",
+   "arrival 12:40 EDT (8h40, tz -6h)",
+   "control left null (employee not eligible regardless)"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_027",
+  "pnrId": "ZZBE90-2026-05-14",
+  "locator": "ZZBE90",
+  "flights": [
+   {
+    "rider": "ZZBE90-2026-05-14",
+    "carrier": "AC",
+    "number": "7982",
+    "origin": "CDG",
+    "destination": "YUL",
+    "depUtc": "2026-06-14T03:00:00Z",
+    "arrUtc": "2026-06-14T10:30:00Z",
+    "kind": "delay",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": "64",
+    "reportedMinutes": 25920,
+    "arrivalCode": "64",
+    "codeOnly": true
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-03",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 1080,
+   "control": "CONTROLLABLE",
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip CDG\u2192YUL on AC871 delayed +18H 00M, passenger notified 18 days before departure",
+    "Regime: EU (CDG departure)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 871 CDG\u2192YUL Scheduled Dep 20-Jun 11:00",
+    "Current Itinerary: AC 871 CDG\u2192YUL ARRIVED LATE, Scheduled Dep 11:00 \u2192 Actual Dep 21-Jun 08:00, +18H 00M",
+    "Notification: 18 days before departure >= 14 days threshold -> NOT ELIGIBLE",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_6_HOURS_OR_MORE",
+    "NOT_ELIGIBLE reason: Notified >=14 days before departure (EU threshold)"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; notified >=14 days before departure (EU)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "Text inconsistency: stated delay 18 h vs times implying 21 h; spec uses 1080 min"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "delay 1080 min per prerequisites (the times 11:00 -> next day 08:00 would be 21 h: text inconsistency)",
+   "18-day notice modelled as scheduleChange noticeHours 432 (18 x 24)",
+   "arrival 12:30 EDT (7h30 block, tz -6h)",
+   "residence null"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_028",
+  "pnrId": "ZZAPJ5-2026-05-14",
+  "locator": "ZZAPJ5",
+  "flights": [
+   {
+    "rider": "ZZAPJ5-2026-05-14",
+    "carrier": "AC",
+    "number": "8330",
+    "origin": "LHR",
+    "destination": "YYZ",
+    "depUtc": "2026-06-13T12:00:00Z",
+    "arrUtc": "2026-06-13T20:00:00Z",
+    "kind": "delay",
+    "minutes": 90,
+    "depMinutes": 90,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-04",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_LESS_THAN_2_HOURS",
+   "delayMin": 90,
+   "control": "CONTROLLABLE",
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip LHR\u2192YYZ on AC849 delayed +1H 30M",
+    "Regime: EU (LHR departure)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 849 LHR\u2192YYZ Scheduled Dep 03-Jun 13:00",
+    "Current Itinerary: AC 849 LHR\u2192YYZ ARRIVED LATE, Scheduled Dep 13:00 \u2192 Actual 14:30, +1H 30M",
+    "SOC section present",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_LESS_THAN_2_HOURS",
+    "NOT_ELIGIBLE reason: Delay below 2-hour threshold"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; delay 90 min below 2-hour threshold"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "arrival 16:00 EDT (8h block, tz -5h)"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_029",
+  "pnrId": "ZZQ7VC-2026-09-08",
+  "locator": "ZZQ7VC",
+  "flights": [
+   {
+    "rider": "ZZQ7VC-2026-09-08",
+    "carrier": "BA",
+    "number": "178",
+    "origin": "LHR",
+    "destination": "JFK",
+    "depUtc": "2026-10-08T07:00:00Z",
+    "arrUtc": "2026-10-08T15:00:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-05",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_2_TO_6_HOURS",
+   "delayMin": 300,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip LHR\u2192JFK on BA178 delayed +5H 00M, OAL operated (British Airways)",
+    "Regime: EU (LHR departure)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: BA 178 LHR\u2192JFK Scheduled Dep 04-Jun 08:00",
+    "Current Itinerary: BA 178 LHR\u2192JFK ARRIVED LATE, Scheduled Dep 08:00 \u2192 Actual 13:00, +5H 00M",
+    "Operating Carrier: BA (British Airways, OAL)",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_2_TO_6_HOURS",
+    "NOT_ELIGIBLE reason: OAL-operated segment, redirect to British Airways"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; OAL-only itinerary, redirect to British Airways"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "Itinerary with no AC segment (BA-only PNR with no AC delay data) must exist in Trip Tracer"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "arrival 11:00 EDT (8h block, tz -5h)",
+   "no delay code (OAL only)"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_030",
+  "pnrId": "ZZ15X5-2026-09-09",
+  "locator": "ZZ15X5",
+  "flights": [
+   {
+    "rider": "ZZ15X5-2026-09-09",
+    "carrier": "AC",
+    "number": "848",
+    "origin": "YYZ",
+    "destination": "LHR",
+    "depUtc": "2026-10-09T23:00:00Z",
+    "arrUtc": "2026-10-10T06:00:00Z",
+    "kind": "delay",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-06",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 360,
+   "control": "CONTROLLABLE",
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip YYZ\u2192LHR on AC848 delayed +6H 00M, origin NOT in EU (YYZ = Canada)",
+    "Regime: APPR (system determines; EU does not apply to non-EU departures)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 848 YYZ\u2192LHR Scheduled Dep 05-Jun 19:00",
+    "Current Itinerary: AC 848 YYZ\u2192LHR ARRIVED LATE, Scheduled Dep 19:00 \u2192 Actual 06-Jun 01:00, +6H 00M",
+    "Geographic Check: Origin YYZ (Canada) not EU/EEA/UK -> EU regime does NOT apply",
+    "Regime applied: APPR; Departure Delay Code 64 (Crew Shortage), Controllable",
+    "PASSENGER status depends on regime routing (ELIGIBLE under APPR / NOT_ELIGIBLE if evaluated under EU only)"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none under EU (geographic gate); would be eligible under APPR"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "Text contradiction: prerequisite Regime 'APPR' and TT shows APPR (pax would be ELIGIBLE under APPR), yet DDS code SoC-EU-NE-06 and Expected Result NOT ELIGIBLE under EU"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "arrival 07:00 BST next day (7h block, tz +5h)",
+   "expect.regime set to EU because the test targets the EU geographic gate (SoC-EU-NE-06); the text's own prerequisite and TT regime line say APPR - APPR would make the pax ELIGIBLE",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_031",
+  "pnrId": "ZZ5PGD-2026-09-10",
+  "locator": "ZZ5PGD",
+  "flights": [
+   {
+    "rider": "ZZ5PGD-2026-09-10",
+    "carrier": "AC",
+    "number": "855",
+    "origin": "YUL",
+    "destination": "LHR",
+    "depUtc": "2026-10-10T00:00:00Z",
+    "arrUtc": "2026-10-10T06:45:00Z",
+    "kind": "delay",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-07",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 360,
+   "control": "CONTROLLABLE",
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip YUL\u2192LHR on AC855 delayed +6H 00M, origin NOT in UK (YUL = Canada)",
+    "Regime: APPR (system determines; UK/EU does not apply to non-UK/EU departures)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 855 YUL\u2192LHR Scheduled Dep 06-Jun 20:00",
+    "Current Itinerary: AC 855 YUL\u2192LHR ARRIVED LATE, Scheduled Dep 20:00 \u2192 Actual 07-Jun 02:00, +6H 00M",
+    "Geographic Check: Origin YUL (Canada) not UK -> UK regime does NOT apply",
+    "Regime applied: APPR; Departure Delay Code 64 (Flight Crew Shortage), Controllable",
+    "PASSENGER status depends on regime routing (ELIGIBLE under APPR / NOT_ELIGIBLE if evaluated under EU/UK only)"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none under UK/EU (geographic gate); would be eligible under APPR"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "Text contradiction: TT shows regime APPR (pax would be ELIGIBLE) while DDS code SoC-EU-NE-07 and Expected Result say NOT ELIGIBLE under UK/EU"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "arrival 07:45 BST next day (6h45 block, tz +5h)",
+   "expect.regime set to EU (UK application) because the test targets the UK geographic gate; TT line shows APPR",
+   "residence CA assumed"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_032",
+  "pnrId": "ZZKACS-2024-12-19",
+  "locator": "ZZKACS",
+  "flights": [
+   {
+    "rider": "ZZKACS-2024-12-19",
+    "carrier": "AC",
+    "number": "835",
+    "origin": "BRU",
+    "destination": "YYZ",
+    "depUtc": "2025-01-18T09:00:00Z",
+    "arrUtc": "2025-01-18T17:30:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-08",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "Regime: EU (BRU departure)",
+    "Disruption date 15-Jan-2025, delay +7H 00M (code 64, present in flight data but not evaluated)",
+    "Limitation period Belgium = 365 days; elapsed 509 days (filing Jun 8 2026) -> EXPIRED",
+    "SOC | NOT_ELIGIBLE",
+    "NOT_ELIGIBLE reason: claim outside EU limitation period"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; claim outside EU limitation period (365 days Belgium)"
+   }
+  },
+  "daysAgo": 640,
+  "seedNote": null,
+  "unsupported": [
+   "Text states filing date Jun 8 2026; real claim date is the run date so elapsed days differ (638 vs 509), still > 365"
+  ],
+  "assumed": [
+   "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "flightDaysAgo 638 = days from 2025-01-15 to run date 2026-10-15 (text's 509 days is measured to a fictitious filing date Jun 8 2026; either way > 365)",
+   "control left null (not evaluated: limitation check fails first)",
+   "arrival 12:30 EST (8h30 block, tz -6h)",
+   "text gives no TT UI validation lines for this case; ttUi reconstructed from prerequisites"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_033",
+  "pnrId": "ZZIY5F-2026-05-14",
+  "locator": "ZZIY5F",
+  "flights": [
+   {
+    "rider": "ZZIY5F-2026-05-14",
+    "carrier": "AC",
+    "number": "8367",
+    "origin": "LHR",
+    "destination": "YYZ",
+    "depUtc": "2026-06-13T08:00:00Z",
+    "arrUtc": "2026-06-13T16:00:00Z",
+    "kind": "delay",
+    "minutes": 90,
+    "depMinutes": 90,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-09",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_LESS_THAN_2_HOURS",
+   "delayMin": 90,
+   "control": "CONTROLLABLE",
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Not Completed, Disruption Detected",
+    "Single-segment trip LHR\u2192YYZ on AC849 cancelled, rebooked with SOC segment departure delay +1H 30M; passenger stayed at origin (LHR)",
+    "Regime: EU (LHR departure)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 849 LHR\u2192YYZ Scheduled Dep 07-Jun 09:00",
+    "Current Itinerary: AC 849 LHR\u2192YYZ CANCELLED, rebooked, SOC Segment Departure Delay +1H 30M",
+    "SOC Segment Departure Delay: 90 min, below 2h threshold",
+    "Departure Delay Code: 64 (Flight Crew Shortage), Controllable (not checked under EU)",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_LESS_THAN_2_HOURS"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; no travel (origin), delay below 2 h"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "Text states 90 min and 150 min; spec uses 90"
+  ],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "delay 90 min per prerequisites/TT lines (Expected Results says 150 min: text inconsistency)",
+   "rebooked AC 851 LHR-YYZ dep 10:30 arr 13:30 invented; accepted=false (stayed at origin)",
+   "cancel code CREW = NetLine equivalent of code 64",
+   "arrival 12:00 EDT (8h block)"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_034",
+  "pnrId": "ZZ4W83-2026-05-14",
+  "locator": "ZZ4W83",
+  "flights": [
+   {
+    "rider": "ZZ4W83-2026-05-14",
+    "carrier": "AC",
+    "number": "9236",
+    "origin": "CDG",
+    "destination": "YYZ",
+    "depUtc": "2026-06-13T09:00:00Z",
+    "arrUtc": "2026-06-13T17:00:00Z",
+    "kind": "delay",
+    "minutes": 90,
+    "depMinutes": 90,
+    "code": "64",
+    "arrivalCode": "64"
+   },
+   {
+    "rider": "ZZ4W83-2026-05-14",
+    "carrier": "AC",
+    "number": "9871",
+    "origin": "CDG",
+    "destination": "CDG",
+    "depUtc": "2026-06-13T09:20:00Z",
+    "arrUtc": "2026-06-13T10:50:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "code": null,
+    "sisterDest": "CDG"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-10",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_LESS_THAN_2_HOURS",
+   "delayMin": 90,
+   "control": "CONTROLLABLE",
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Not Completed, Disruption Detected",
+    "Single-segment trip CDG\u2192YYZ on AC871 diverted, returned to origin, rebooked with SOC segment departure delay +1H 30M; passenger returned to CDG",
+    "Regime: EU (CDG departure)",
+    "PASSENGERS: 1 SEGMENTS: 1",
+    "Promised Itinerary: AC 871 CDG\u2192YYZ Scheduled Dep 08-Jun 11:00",
+    "Current Itinerary: AC 871 CDG\u2192YYZ DIVERTED, returned to origin (CDG), rebooked, SOC Segment Departure Delay +1H 30M",
+    "SOC Segment Departure Delay: 90 min, below 2h threshold",
+    "Departure Delay Code: 64 (Flight Crew Shortage), Controllable (not checked under EU)",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_LESS_THAN_2_HOURS"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; no travel (return to origin), delay below 2 h"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "rebooked AC 873 CDG-YYZ dep 12:30 arr 14:30 invented; accepted=false (returned to CDG)",
+   "arrival 13:00 EDT (8h block, tz -6h)"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_035",
+  "pnrId": "ZZKGNG-2026-05-14",
+  "locator": "ZZKGNG",
+  "flights": [
+   {
+    "rider": "ZZKGNG-2026-05-14",
+    "carrier": "AC",
+    "number": "8404",
+    "origin": "LHR",
+    "destination": "FRA",
+    "depUtc": "2026-06-13T07:00:00Z",
+    "arrUtc": "2026-06-13T08:40:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZKGNG-2026-05-14",
+    "carrier": "AC",
+    "number": "8402",
+    "origin": "FRA",
+    "destination": "YYZ",
+    "depUtc": "2026-06-13T12:50:00Z",
+    "arrUtc": "2026-06-13T21:30:00Z",
+    "kind": "delay",
+    "minutes": 90,
+    "depMinutes": 90,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-11",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_LESS_THAN_2_HOURS",
+   "delayMin": 90,
+   "control": "CONTROLLABLE",
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Not Completed, Disruption Detected",
+    "Multi-segment trip LHR\u2192FRA\u2192YYZ, Segment 2 AC847 FRA\u2192YYZ cancelled, rebooked with SOC segment departure delay +1H 30M; passenger stranded at FRA",
+    "Regime: EU (LHR departure)",
+    "PASSENGERS: 1 SEGMENTS: 2",
+    "Promised: Seg 1 AC 849 LHR\u2192FRA 05-Jun 08:00 | Seg 2 AC 847 FRA\u2192YYZ 05-Jun 14:00",
+    "Current: Seg 1 AC 849 ON TIME | Seg 2 AC 847 CANCELLED, rebooked, SOC Segment Departure Delay +1H 30M",
+    "SOC Segment: AC 847 FRA\u2192YYZ; delay 90 min below 2h threshold",
+    "Departure Delay Code: 64, Controllable (not checked under EU)",
+    "PASSENGER | NOT_ELIGIBLE | DELAY_LESS_THAN_2_HOURS"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none; no travel (incomplete), delay below 2 h"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+   "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+   "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+   "arrivals 10:40 CEST and 16:40 EDT chosen from block times",
+   "rebooked AC 845 FRA-YYZ dep 15:30 arr 18:10 invented; accepted=false (stranded at FRA)",
+   "cancel code CREW = NetLine equivalent of code 64"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_036",
+  "pnrId": "ZZOZ6O-2026-05-14",
+  "locator": "ZZOZ6O",
+  "flights": [
+   {
+    "rider": "ZZOZ6O-2026-05-14",
+    "carrier": "AC",
+    "number": "8441",
+    "origin": "LHR",
+    "destination": "YYZ",
+    "depUtc": "2026-06-13T09:00:00Z",
+    "arrUtc": "2026-06-13T17:00:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-12",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": null,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "Trip Not Completed - Passenger did not board",
+    "Single-segment trip LHR->YYZ on AC849 - flight operated as scheduled. Passenger chose not to board.",
+    "Regime: EU (LHR departure)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 849 LHR->YYZ Sched Dep 10:00",
+    "Current: AC 849 LHR->YYZ Status: OPERATED - On time (passenger did not board)",
+    "SOC section present; Flight Status OPERATED (not cancelled); no departure delay code",
+    "PASSENGER STATUS: NOT_ELIGIBLE | BAND/MEAL/ACCOMMODATION/GENERAL EXPENSES blank",
+    "NOT_ELIGIBLE reason: Flight not cancelled - no disruption",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE; DDS code SoC-EU-NE-12"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (flight not cancelled, no disruption)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "Passenger choosing not to board: expressed as paxEvents no_show on a flight that operated on time"
+  ],
+  "assumed": [
+   "Passenger name chosen (text uses [First Name] [Last Name])",
+   "Arrival 13:00 local YYZ (text gives only departure 10:00)",
+   "Cabin W (Premium Economy 'PY'), booking class O",
+   "Residence GB (departure country UK)",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+   "Gherkin says 'Days elapsed: 2 days' but also >72h passed; used >72h (10 days)",
+   "Gherkin journey date June 6 vs prerequisite 09-Jun; day label ignored"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_037",
+  "pnrId": "ZZV4WG-2026-05-14",
+  "locator": "ZZV4WG",
+  "flights": [
+   {
+    "rider": "ZZV4WG-2026-05-14",
+    "carrier": "AC",
+    "number": "9236",
+    "origin": "CDG",
+    "destination": "YYZ",
+    "depUtc": "2026-06-13T12:00:00Z",
+    "arrUtc": "2026-06-13T20:00:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZV4WG-2026-05-14",
+    "carrier": "AC",
+    "number": "9871",
+    "origin": "CDG",
+    "destination": "CDG",
+    "depUtc": "2026-06-13T12:20:00Z",
+    "arrUtc": "2026-06-13T13:50:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "code": null,
+    "sisterDest": "CDG"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-13",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": null,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "Trip Not Completed - Passenger returned to origin",
+    "Single-segment trip CDG->YYZ on AC871 - flight operated (departed and returned to CDG). System records as 'operated' not 'cancelled'.",
+    "Regime: EU (CDG departure)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 871 CDG->YYZ Sched Dep 14:00",
+    "Current: AC 871 CDG->YYZ Status: OPERATED (departed and returned to origin - not recorded as cancelled)",
+    "SOC section present; Flight Status: OPERATED (not cancelled in system - departed + returned)",
+    "PASSENGER STATUS: NOT_ELIGIBLE",
+    "NOT_ELIGIBLE reason: Flight not recorded as cancelled (dispute relevant; agent may reclassify as de facto cancellation)",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE; DDS code SoC-EU-NE-13"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (flight recorded operated, not cancelled)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "The aircraft departing then returning to origin while still being recorded as 'operated' (no divert/cancel record) is only approximated by an on-time outcome plus not_travelled pax event"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Arrival 16:00 local YYZ (text gives only departure)",
+   "Cabin W (PY), class O",
+   "Residence FR",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+   "Flight modelled as ontime (system records it as operated), passenger as not_travelled",
+   "Gherkin journey date June 6 vs prerequisite 10-Jun; ignored"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_038",
+  "pnrId": "ZZ0WWU-2026-05-14",
+  "locator": "ZZ0WWU",
+  "flights": [
+   {
+    "rider": "ZZ0WWU-2026-05-14",
+    "carrier": "AC",
+    "number": "8478",
+    "origin": "LHR",
+    "destination": "FRA",
+    "depUtc": "2026-06-13T07:00:00Z",
+    "arrUtc": "2026-06-13T08:35:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZ0WWU-2026-05-14",
+    "carrier": "AC",
+    "number": "8476",
+    "origin": "FRA",
+    "destination": "YYZ",
+    "depUtc": "2026-06-13T12:45:00Z",
+    "arrUtc": "2026-06-13T21:25:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-EU-NE-14",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": null,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "Trip Not Completed - Passenger stranded at connection",
+    "Multi-segment trip LHR->FRA->YYZ - Segment 2 AC847 FRA->YYZ operated (passenger did not board - missed connection). Passenger stranded at FRA.",
+    "Regime: EU (LHR departure)",
+    "PASSENGERS: 1 - SEGMENTS: 2",
+    "Promised: Seg 1 AC 849 LHR->FRA Dep 08:00 | Seg 2 AC 847 FRA->YYZ Dep 14:00",
+    "Current: Seg 1 AC 849 Status ON TIME | Seg 2 AC 847 Status OPERATED (passenger did not board)",
+    "SOC section present - SOC Segment: AC 847 FRA->YYZ; Flight Status OPERATED (not cancelled - departed without passenger)",
+    "PASSENGER STATUS: NOT_ELIGIBLE",
+    "NOT_ELIGIBLE reason: Connecting flight operated - not cancelled",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE; DDS code SoC-EU-NE-14"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (SOC segment AC 847 operated)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "Passenger name chosen",
+   "Arrival times chosen from typical block times (LHR-FRA 10:35, FRA-YYZ 16:40)",
+   "Cabin W (PY), class O",
+   "Residence GB",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+   "Seg 1 boarded, seg 2 no_show"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_039",
+  "pnrId": "ZZZDSN-2026-05-14",
+  "locator": "ZZZDSN",
+  "flights": [
+   {
+    "rider": "ZZZDSN-2026-05-14",
+    "carrier": "AC",
+    "number": "8515",
+    "origin": "LHR",
+    "destination": "FRA",
+    "depUtc": "2026-06-13T07:00:00Z",
+    "arrUtc": "2026-06-13T08:30:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZZDSN-2026-05-14",
+    "carrier": "KL",
+    "number": "8407",
+    "origin": "FRA",
+    "destination": "MUC",
+    "depUtc": "2026-06-13T12:40:00Z",
+    "arrUtc": "2026-06-13T13:40:00Z",
+    "kind": "delay",
+    "minutes": 300,
+    "depMinutes": 300,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NO_DETERMINATION",
+   "systemCode": "SoC-EU-ND-01",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_2_TO_6_HOURS",
+   "delayMin": 300,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "Trip Completed, Disruption Detected",
+    "Multi-segment trip LHR->FRA->MUC - Segment 1 AC849 on time, Segment 2 LH470 (OAL) delayed +5H 00M",
+    "Regime: EU (LHR departure)",
+    "PASSENGERS: 1 - SEGMENTS: 2",
+    "Promised: Seg 1 AC 849 LHR->FRA Dep 08:00 | Seg 2 LH 470 FRA->MUC Dep 14:00",
+    "Current: Seg 1 ON TIME | Seg 2 LH 470 ARRIVED LATE, Sched Dep 14:00, Actual 19:00, Delay +5H 00M",
+    "SOC section present - SOC Segment: LH 470 FRA->MUC (OAL); Operating Carrier: LH (OAL)",
+    "Departure Delay Code: Unknown (OAL - AC has no data)",
+    "PASSENGER STATUS: NO_DETERMINATION | BAND: DELAY_2_TO_6_HOURS",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NO DETERMINATION (or redirected to OAL); DDS code SoC-EU-ND-01"
+   ],
+   "soc": {
+    "eligibility": null,
+    "entitlements": "none - no determination (OAL operated), case/redirect to OAL"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "Actual operation / delay of the Lufthansa segment normally comes from OAL data AC does not hold; the 5 h late actual (19:00) must be injected as flight data if TT is to show 'ARRIVED LATE +5H 00M'. Delay code intentionally left unknown."
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Arrival times chosen (FRA-MUC arr 15:10 sched; actual 5h late)",
+   "Cabin W (PY), class O",
+   "Residence GB",
+   "Arrival delay assumed equal to the stated 300 min departure delay",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+   "Text lists LH 470 as OAL (Lufthansa) - chatbot message wrongly says United; ignored"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_040",
+  "pnrId": "ZZW5VN-2026-05-14",
+  "locator": "ZZW5VN",
+  "flights": [
+   {
+    "rider": "ZZW5VN-2026-05-14",
+    "carrier": "AC",
+    "number": "8130",
+    "origin": "CDG",
+    "destination": "ORD",
+    "depUtc": "2026-06-13T06:00:00Z",
+    "arrUtc": "2026-06-13T14:30:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZW5VN-2026-05-14",
+    "carrier": "UA",
+    "number": "8024",
+    "origin": "ORD",
+    "destination": "SFO",
+    "depUtc": "2026-06-13T19:00:00Z",
+    "arrUtc": "2026-06-13T23:15:00Z",
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "NO_DETERMINATION",
+   "systemCode": "SoC-EU-ND-02",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_2_TO_6_HOURS",
+   "delayMin": 240,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "Trip Completed, Disruption Detected",
+    "Multi-segment trip CDG->ORD->SFO - Segment 1 AC871 on time, Segment 2 UA8765 (STAR) delayed +4H 00M",
+    "Regime: EU (CDG departure)",
+    "PASSENGERS: 1 - SEGMENTS: 2",
+    "Promised: Seg 1 AC 871 CDG->ORD Dep 08:00 | Seg 2 UA 8765 ORD->SFO Dep 14:00",
+    "Current: Seg 1 ON TIME | Seg 2 UA 8765 ARRIVED LATE, Sched Dep 14:00, Actual 18:00, Delay +4H 00M",
+    "SOC section present - SOC Segment UA 8765 ORD->SFO (STAR); Operating Carrier UA (Star Alliance)",
+    "Departure Delay Code: Unknown (STAR - AC has limited data)",
+    "PASSENGER STATUS: NO_DETERMINATION | BAND: DELAY_2_TO_6_HOURS",
+    "Receipt collection: INITIATED",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NO DETERMINATION, case created for manual review; DDS code SoC-EU-ND-02"
+   ],
+   "soc": {
+    "eligibility": null,
+    "entitlements": "none - no determination (STAR partner), manual review case, receipt collection initiated"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "UA 8765 actuals (dep 18:00) come from partner data that AC does not hold; must be injected as flight data for TT to show +4H 00M. Delay code intentionally unknown."
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Arrival times chosen (CDG-ORD 09:30, ORD-SFO 16:15)",
+   "Cabin W (PY), class O",
+   "Residence FR",
+   "Arrival delay assumed equal to stated 240 min departure delay",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period)."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_041",
+  "pnrId": "ZZOX92-2026-09-07",
+  "locator": "ZZOX92",
+  "flights": [
+   {
+    "rider": "ZZOX92-2026-09-07",
+    "carrier": "AC",
+    "number": "848",
+    "origin": "LHR",
+    "destination": "YYZ",
+    "depUtc": "2026-10-07T10:00:00Z",
+    "arrUtc": "2026-10-07T19:00:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "77",
+    "arrivalCode": "77"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-EU-EL-01",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": null,
+   "cause": "77",
+   "ttUi": [
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip LHR->YYZ on AC848 delayed +7H 00M due to weather (uncontrollable - NOT CHECKED under EU)",
+    "Regime: EU (LHR departure)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 848 LHR->YYZ Sched Dep 11:00",
+    "Current: AC 848 LHR->YYZ ARRIVED LATE, Sched Dep 11:00, Actual 18:00, Delay +7H 00M",
+    "Departure Delay Code: 77 (Weather) - NOT CHECKED (EU does not evaluate controllability)",
+    "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 30.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+    "CyberSource: GREEN",
+    "Weather = NOT ELIGIBLE under APPR (NE-07) but ELIGIBLE under EU (EL-01)",
+    "DDS code SoC-EU-EL-01"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "Meals EUR 30/pax, Hotel rate of day max 3 nights EUR 500 cap, Transport EUR 200, Communication EUR 30, Parking EUR 50 (1 day), Essentials EUR 30; no ACR issued"
+   }
+  },
+  "daysAgo": 13,
+  "seedNote": null,
+  "unsupported": [
+   "Booking cannot express that the passenger 'stayed at origin' beyond the delay itself",
+   "Receipt/OCR amounts and payout are chatbot/Case Services behaviour, not booking data"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Prerequisite says 'Flight cancelled. Rebooked next day' but also delay 420 min and TT shows ARRIVED LATE +7H (actual dep 18:00); modelled as 7h delay, not cancellation",
+   "Arrival delay assumed equal to 420 min departure delay",
+   "Cabin W (PY), class O",
+   "Residence DE (payout country Germany)",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+   "Gherkin date June 10 vs 18-Jun; ignored",
+   "Departure country UK"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_042",
+  "pnrId": "ZZXJUI-2026-09-08",
+  "locator": "ZZXJUI",
+  "flights": [
+   {
+    "rider": "ZZXJUI-2026-09-08",
+    "carrier": "AC",
+    "number": "850",
+    "origin": "CDG",
+    "destination": "YUL",
+    "depUtc": "2026-10-08T07:00:00Z",
+    "arrUtc": "2026-10-08T17:00:00Z",
+    "kind": "delay",
+    "minutes": 480,
+    "depMinutes": 480,
+    "code": "64",
+    "arrivalCode": "64"
+   },
+   {
+    "rider": "ZZXJUI-2026-09-08",
+    "carrier": "AC",
+    "number": "9850",
+    "origin": "CDG",
+    "destination": "CDG",
+    "depUtc": "2026-10-08T07:20:00Z",
+    "arrUtc": "2026-10-08T08:50:00Z",
+    "kind": "delay",
+    "minutes": 480,
+    "code": "64",
+    "sisterDest": "CDG"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-EU-EL-02",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 1080,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "Trip Not Completed, Disruption Detected",
+    "Single-segment trip cancelled - passenger stayed at origin (CDG) for 18 hours",
+    "Regime: EU (CDG departure)",
+    "Promised: CDG->(YUL) Sched Dep 09:00 on 19-Jun",
+    "Current: Status: CANCELLED",
+    "SOC section present; Cancellation: YES | SOC Segment Delay to rebooking: 1080 min (18h) >= 2h",
+    "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 60.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+    "CyberSource: GREEN",
+    "DDS code SoC-EU-EL-02 (case record later says EL-03)"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "Per-pax meals EUR 60 (x4), hotel rate of day 2 rooms (per adult) max 3 nights EUR 500 cap, transport EUR 200 (1-5 pax), communication/essentials EUR 30 per pax, parking EUR 50"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": "template has 5 passengers for 4",
+  "unsupported": [
+   "Diversion back to origin followed by cancellation is expressed only as a cancel + rebooking",
+   "Hotel 'two rooms' is an entitlement computation, not booking data"
+  ],
+  "assumed": [
+   "Passenger names chosen; family of 2 adults + 2 children from prerequisite (TT block says PASSENGERS: 1 and 1-adult entitlements - conflicting)",
+   "Conflict: prerequisite says diverted back and rebooked 8h later (480 min); TT validation says cancelled with 1080 min (18h) to rebooking. Used TT (1080); rebooking flight set to 03:00 next day to produce 18h",
+   "Gherkin flight AC 871 CDG-YYZ 11-Jun differs from prerequisite AC 850 CDG-YUL; prerequisite used",
+   "cancelCode left null (cause irrelevant under EU SOC)",
+   "No notice before departure (noticeHours 0)",
+   "Cabin W (PY), class O",
+   "Residence DE (payout Germany)",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+   "Case section says DDS code EL-03 while TT says EL-02; expected code EL-02 (matches expected-results line)"
+  ],
+  "passengers": 4
+ },
+ {
+  "id": "SOC_UAT_043",
+  "pnrId": "ZZJ22W-2026-09-08",
+  "locator": "ZZJ22W",
+  "flights": [
+   {
+    "rider": "ZZJ22W-2026-09-08",
+    "carrier": "AC",
+    "number": "852",
+    "origin": "LHR",
+    "destination": "YYZ",
+    "depUtc": "2026-10-08T05:00:00Z",
+    "arrUtc": "2026-10-08T13:00:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZJ22W-2026-09-08",
+    "carrier": "AC",
+    "number": "853",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-10-08T17:10:00Z",
+    "arrUtc": "2026-10-08T22:30:00Z",
+    "kind": "delay",
+    "minutes": 600,
+    "depMinutes": 600,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-EU-EL-03",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 600,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "Trip Not Completed, Disruption Detected",
+    "Regime: EU (departure of journey origin)",
+    "SOC Segment: AC 853 YYZ->YVR (cancelled); delay on SOC segment 600 min (10h) >= 2h",
+    "Departure Delay Code 64 (crew shortage) - controllability NOT CHECKED (EU)",
+    "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 60.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+    "CyberSource: GREEN",
+    "DDS code SoC-EU-EL-03"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "J cabin same CCT rates: Meals 30/pax (TT shows EUR 60), hotel rate of day max 3 nights cap 500, transport 200, comm 30, parking 50, essentials 30"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "TT validation block in the source describes a different flight (AC 837 FRA-YYZ, diversion, code 06, 840 min); only the prerequisite structure is built"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Conflict: prerequisite = LHR-YYZ-YVR with AC 853 cancelled (600 min, code 64); Gherkin/TT text describes single-segment AC 837 FRA-YYZ diverted back to FRA, 840 min, code 06 (copy of another case). Prerequisite (and title 'No Travel Incomplete') used",
+   "Times chosen: AC852 06:00-09:00, AC853 11:00-13:20, rebooked AC 853 equivalent 21:00-23:20",
+   "Cabin J, booking class J",
+   "Residence DE (Gherkin: departing country Germany, FRA); journey origin LHR assumed per prerequisite",
+   "Delay code 64 kept, cancelCode CREW inferred from 'Flight Crew Shortage'",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period)."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_044",
+  "pnrId": "ZZ3HJZ-2026-09-08",
+  "locator": "ZZ3HJZ",
+  "flights": [
+   {
+    "rider": "ZZ3HJZ-2026-09-08",
+    "carrier": "AC",
+    "number": "854",
+    "origin": "LHR",
+    "destination": "YYZ",
+    "depUtc": "2026-10-08T09:00:00Z",
+    "arrUtc": "2026-10-08T18:00:00Z",
+    "kind": "cancel",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "cancelCode": "OPER",
+    "noticeMinutes": 180
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-EU-EL-04",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 1440,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "Trip Not Completed, Disruption Detected",
+    "Single-segment trip LHR->YYZ on AC854 cancelled - no alternative within 24h. Passenger stayed at origin (LHR).",
+    "Regime: EU (LHR departure)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 854 LHR->YYZ Sched Dep 10:00",
+    "Current: AC 854 LHR->YYZ Status: CANCELLED - No alternative within 24h",
+    "Cancellation: YES | SOC Segment Delay: 1440 min (24h) >= 2h; Controllability: NOT CHECKED",
+    "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 60.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+    "CyberSource: GREEN",
+    "DDS code SoC-EU-EL-04"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "Meals 60, hotel rate of day max 3 nights cap 500, transport 200, communication 30, parking 50, essentials 30"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "Passenger name chosen",
+   "No rebooking offered within 24h; the 1440 min delay is represented on the cancellation outcome (delayMin 1440)",
+   "cancelCode null (irrelevant under EU SOC)",
+   "Cabin W (PY), class O",
+   "Residence GB (GBP receipts then payout country from chatbot)",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+   "Gherkin date June 20 same as prerequisite"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_045",
+  "pnrId": "ZZIB7O-2026-08-22",
+  "locator": "ZZIB7O",
+  "flights": [
+   {
+    "rider": "ZZIB7O-2026-08-22",
+    "carrier": "AC",
+    "number": "856",
+    "origin": "CDG",
+    "destination": "YUL",
+    "depUtc": "2026-09-21T12:00:00Z",
+    "arrUtc": "2026-09-21T22:00:00Z",
+    "kind": "cancel",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "cancelCode": "OPER",
+    "noticeMinutes": 180
+   },
+   {
+    "rider": "ZZIB7O-2026-08-22",
+    "carrier": "AC",
+    "number": "9856",
+    "origin": "CDG",
+    "destination": "CDG",
+    "depUtc": "2026-09-21T12:20:00Z",
+    "arrUtc": "2026-09-21T13:50:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "code": null,
+    "sisterDest": "CDG"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-EU-EL-05",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 960,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "Trip Not Completed, Disruption Detected",
+    "Single-segment trip CDG->YUL on AC856 diverted - returned to origin (CDG), then cancelled. Passenger returned to CDG, rebooked 16 hours later.",
+    "Regime: EU (CDG departure)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 856 CDG->YUL Sched Dep 14:00",
+    "Current: AC 856 CDG->YUL Status: DIVERTED - Returned to origin (CDG), CANCELLED, rebooked",
+    "Diversion + cancellation | SOC Segment Delay: 960 min (16h) >= 2h; Controllability NOT CHECKED",
+    "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 60.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+    "CyberSource: GREEN",
+    "DDS code SoC-EU-EL-05"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "Meals 60, hotel rate of day max 3 nights cap 500, transport 200, communication 30, parking 50, essentials 30"
+   }
+  },
+  "daysAgo": 29,
+  "seedNote": null,
+  "unsupported": [
+   "'Diverted back to origin AND cancelled' is expressed as kind divert (divertTo CDG) plus a next-day rebooking; there is no combined divert+cancel outcome"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Rebooked flight AC 856 next day 06:00-10:00 so that departure delay is 960 min (16h)",
+   "cancelCode null (irrelevant under EU SOC)",
+   "Cabin W (PY), class O",
+   "Residence FR",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+   "Gherkin date June 21 same as prerequisite"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_046",
+  "pnrId": "ZZO2SN-2026-07-05",
+  "locator": "ZZO2SN",
+  "flights": [
+   {
+    "rider": "ZZO2SN-2026-07-05",
+    "carrier": "AC",
+    "number": "858",
+    "origin": "LHR",
+    "destination": "YYZ",
+    "depUtc": "2026-08-04T09:00:00Z",
+    "arrUtc": "2026-08-04T17:00:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZO2SN-2026-07-05",
+    "carrier": "AC",
+    "number": "859",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-08-04T21:10:00Z",
+    "arrUtc": "2026-08-05T02:30:00Z",
+    "kind": "cancel",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "cancelCode": "OPER",
+    "noticeMinutes": 180
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-EU-EL-06",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 840,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "Trip Not Completed, Disruption Detected",
+    "Multi-segment trip LHR->YYZ->YVR - Segment 1 AC858 on time, Segment 2 AC859 YYZ->YVR cancelled. Passenger stranded at YYZ for 14 hours.",
+    "Regime: EU (LHR departure - journey origin)",
+    "PASSENGERS: 1 - SEGMENTS: 2",
+    "Promised: Seg 1 AC 858 LHR->YYZ | Seg 2 AC 859 YYZ->YVR (22-Jun)",
+    "Current: Seg 1 ON TIME | Seg 2 CANCELLED - Rebooked next day",
+    "SOC Segment: AC 859 YYZ->YVR; Cancellation: YES | SOC Segment Delay: 840 min (14h) >= 2h; Controllability NOT CHECKED",
+    "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 60.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+    "CyberSource: GREEN",
+    "DDS code SoC-EU-EL-06"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "Meals 60, hotel rate of day max 3 nights cap 500, transport 200, communication 30, parking 50, essentials 30"
+   }
+  },
+  "daysAgo": 77,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "Passenger name chosen",
+   "Times chosen: AC858 10:00-13:00, AC859 16:00-18:20; rebooked AC 859 next day 06:00-08:20 (14h after scheduled departure)",
+   "cancelCode null (irrelevant under EU SOC)",
+   "Cabin W (PY), class O",
+   "Residence GB",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period)."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_047",
+  "pnrId": "ZZ1OC0-2026-09-08",
+  "locator": "ZZ1OC0",
+  "flights": [
+   {
+    "rider": "ZZ1OC0-2026-09-08",
+    "carrier": "AC",
+    "number": "837",
+    "origin": "FRA",
+    "destination": "YYZ",
+    "depUtc": "2026-10-08T08:00:00Z",
+    "arrUtc": "2026-10-08T16:30:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "77",
+    "arrivalCode": "77"
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-EU-EL-07",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": null,
+   "cause": "77",
+   "ttUi": [
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip FRA->YYZ on AC837 delayed due to weather (uncontrollable - NOT CHECKED under EU)",
+    "Regime: EU (FRA departure)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 837 FRA->YYZ Sched Dep 22-Jun 10:00",
+    "Current: ARRIVED LATE, Sched Dep 10:00, Actual 17:00, Delay +7H 00M (prerequisite 420 min used, chatbot '8h' ignored)",
+    "Departure Delay Code: 77 (Weather) - NOT CHECKED (EU)",
+    "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 30.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+    "CyberSource: YELLOW - case PARKED in fraud queue (visible to fraud team only); status ELIGIBLE (parked - pending fraud review)",
+    "DDS code SoC-EU-EL-07"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "Meals 30/pax (EUR), hotel rate of day max 3 nights cap 500 (overnight eligible, delay >360), transport 200, communication 30, parking 50, essentials 30"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "CyberSource YELLOW fraud result (parked in fraud queue) is produced by the payment/fraud screening step from claimant/payment data, not by booking data; cannot be forced from the booking"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Arrival 12:30 local YYZ (not given)",
+   "Cabin W (PY), class O",
+   "Residence DE (departure country Germany)",
+   "Arrival delay assumed equal to 420 min departure delay",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10.",
+   "Chatbot journey screen says 8 hours; prerequisites (420) used per TT note"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_048",
+  "pnrId": "ZZMLVM-2026-09-19",
+  "locator": "ZZMLVM",
+  "flights": [
+   {
+    "rider": "ZZMLVM-2026-09-19",
+    "carrier": "AC",
+    "number": "7959",
+    "origin": "LHR",
+    "destination": "YYZ",
+    "depUtc": "2026-10-19T10:00:00Z",
+    "arrUtc": "2026-10-19T18:00:00Z",
+    "kind": "delay",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "EU",
+   "eligibility": "PENDING",
+   "systemCode": "SoC-EU-PE-01",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": 360,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "Status PENDING / SYSTEM PROCESSING: last leg less than 72h ago",
+    "Regime: EU (preliminary - LHR is UK origin, subject to confirmation)",
+    "Journey AC 848 LHR->YYZ, Flight Status DELAYED (6 hours - preliminary), delay ~360 min",
+    "Disruption code TBD (pending 72-hour data completion); Controllability not applicable under EU",
+    "DDS Response Code SoC-EU-PE-01 (PENDING), shell case in polling queue, no receipt upload"
+   ],
+   "soc": {
+    "eligibility": null,
+    "entitlements": "none yet - PENDING; re-evaluated after 72h (EU: delay >= 2h would then be eligible)"
+   }
+  },
+  "daysAgo": 1,
+  "seedNote": null,
+  "unsupported": [
+   "Post-72h re-evaluation, deep link email and Welcome Back flow are Case Services/chatbot behaviour, not booking data"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Flight departed yesterday: flightDaysAgo=1 (test is about being inside 72h)",
+   "eligibility field set to NO_DETERMINATION as the schema has no PENDING value; real expected state is PENDING (SoC-EU-PE-01)",
+   "Arrival 14:00 local; arrival delay assumed 360",
+   "Delay code 'TBD' -> null",
+   "Cabin W (PY), class O"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_049",
+  "pnrId": "ZZUNMK-2026-05-14",
+  "locator": "ZZUNMK",
+  "flights": [
+   {
+    "rider": "ZZUNMK-2026-05-14",
+    "carrier": "AC",
+    "number": "7639",
+    "origin": "TLV",
+    "destination": "YYZ",
+    "depUtc": "2026-06-13T18:00:00Z",
+    "arrUtc": "2026-06-14T05:00:00Z",
+    "kind": "delay",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-01",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 360,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "TYPE: EMPLOYEE (non-revenue)",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip TLV->YYZ on AC084 delayed +6H 00M",
+    "Regime: ASL (TLV departure - Israel)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 084 TLV->YYZ Sched Dep 01-Jun 21:00",
+    "Current: ARRIVED LATE, Sched Dep 21:00, Actual 02-Jun 03:00, Delay +6H 00M",
+    "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | no meal/accommodation/expenses",
+    "NOT_ELIGIBLE reason: Employee booking (AC)",
+    "Passenger Claims: NOT ELIGIBLE; DDS code SoC-ASL-NE-01"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (employee booking)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "Employee/non-revenue ticketing (office suffix ES/OT/EP/EE/EC, revenue=NO) is only expressed by the employee flag; TT 'TYPE: EMPLOYEE (non-revenue)' depends on how the ticket data is built"
+  ],
+  "assumed": [
+   "Passenger name chosen; employee=true (AC employee)",
+   "Arrival 01:00 local YYZ next day (dayOffset 1 for arrival is not modelled: arrLocal 01:00 means next calendar day)",
+   "Cabin W (PY); booking class O although a real employee ticket uses a staff fare/office suffix",
+   "Arrival delay assumed equal to 360 min departure delay",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_050",
+  "pnrId": "ZZEI9O-2026-09-07",
+  "locator": "ZZEI9O",
+  "flights": [
+   {
+    "rider": "ZZEI9O-2026-09-07",
+    "carrier": "AC",
+    "number": "86",
+    "origin": "TLV",
+    "destination": "YYZ",
+    "depUtc": "2026-10-07T22:00:00Z",
+    "arrUtc": "2026-10-08T10:00:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-02",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "TYPE: EMPLOYEE (non-revenue)",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip TLV->YYZ on LY082 delayed +7H 00M",
+    "Regime: ASL (TLV departure - Israel)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: LY 082 TLV->YYZ Sched Dep 02-Jun 01:00",
+    "Current: ARRIVED LATE, Sched Dep 01:00, Actual 07:00, Delay +7H 00M",
+    "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE",
+    "NOT_ELIGIBLE reason: Employee booking (OAL)",
+    "Passenger Claims: NOT ELIGIBLE; DDS code SoC-ASL-NE-02"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (employee booking)"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "OAL (El Al) flight actuals/delay code are not in AC operational feeds; must be injected as flight data. Employee/OAL staff ticketing distinguished from AC employee only by the TT 'Employee (OAL)' reason, which booking data cannot select"
+  ],
+  "assumed": [
+   "Passenger name chosen; employee=true",
+   "Flight LY 082 used (prerequisite also mentions LY 016; TT note says use LY 082)",
+   "Arrival 05:00 local YYZ same day; arrival delay assumed 420",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Delay code 64 kept as given although the carrier is OAL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_051",
+  "pnrId": "ZZ0J1K-2026-09-10",
+  "locator": "ZZ0J1K",
+  "flights": [
+   {
+    "rider": "ZZ0J1K-2026-09-10",
+    "carrier": "AC",
+    "number": "7084",
+    "origin": "TLV",
+    "destination": "YYZ",
+    "depUtc": "2026-10-11T07:00:00Z",
+    "arrUtc": "2026-10-11T18:00:00Z",
+    "kind": "delay",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": "64",
+    "reportedMinutes": 28800,
+    "arrivalCode": "64",
+    "codeOnly": true
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-03",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 1080,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip TLV->YYZ on AC084 delayed +18H 00M - passenger notified 20 days before departure",
+    "Regime: ASL (TLV departure - Israel)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 084 TLV->YYZ Sched Dep 20-Jun 16:00",
+    "Current: ARRIVED LATE, Sched Dep 16:00, Actual Dep 21-Jun 10:00, Delay +18H 00M",
+    "Notification: 20 days before departure >= 14 days threshold (ASL, same as EU) -> NOT ELIGIBLE",
+    "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE",
+    "NOT_ELIGIBLE reason: Notified >=14 days before departure (ASL threshold)",
+    "DDS code SoC-ASL-NE-03"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (notified 14+ days before departure)"
+   }
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "Passenger name chosen",
+   "Notification time 20 days = 480 hours modelled as a schedule change of 1080 min with noticeHours 480 (and noticeHours on the outcome)",
+   "Arrival 20:00 local YYZ same day as scheduled departure (sched); arrival delay assumed 1080",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_052",
+  "pnrId": "ZZJQTT-2026-05-14",
+  "locator": "ZZJQTT",
+  "flights": [
+   {
+    "rider": "ZZJQTT-2026-05-14",
+    "carrier": "AC",
+    "number": "7676",
+    "origin": "TLV",
+    "destination": "YYZ",
+    "depUtc": "2026-06-13T18:00:00Z",
+    "arrUtc": "2026-06-14T05:00:00Z",
+    "kind": "delay",
+    "minutes": 90,
+    "depMinutes": 90,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-04",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_LESS_THAN_2_HOURS",
+   "delayMin": 90,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip TLV->YYZ on AC084 delayed +1H 30M",
+    "Regime: ASL (TLV departure - Israel)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 084 TLV->YYZ Sched Dep 03-Jun 21:00",
+    "Current: ARRIVED LATE, Sched Dep 21:00, Actual 22:30, Delay +1H 30M",
+    "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_LESS_THAN_2_HOURS",
+    "NOT_ELIGIBLE reason: Delay below 2-hour threshold",
+    "DDS code SoC-ASL-NE-04"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (delay below 2h)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "Passenger name chosen",
+   "Arrival 01:00 local YYZ (next calendar day)",
+   "Arrival delay assumed equal to 90 min departure delay",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_053",
+  "pnrId": "ZZYNJ6-2026-09-07",
+  "locator": "ZZYNJ6",
+  "flights": [
+   {
+    "rider": "ZZYNJ6-2026-09-07",
+    "carrier": "LY",
+    "number": "1",
+    "origin": "TLV",
+    "destination": "JFK",
+    "depUtc": "2026-10-07T22:00:00Z",
+    "arrUtc": "2026-10-08T08:30:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-05",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_2_TO_6_HOURS",
+   "delayMin": 360,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip TLV->JFK on LY001 delayed +6H 00M - OAL operated (El Al)",
+    "Regime: ASL (TLV departure - Israel)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: LY 001 TLV->JFK Sched Dep 04-Jun 01:00",
+    "Current: ARRIVED LATE, Sched Dep 01:00, Actual 07:00, Delay +6H 00M",
+    "Operating Carrier: LY (El Al - OAL)",
+    "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_2_TO_6_HOURS",
+    "NOT_ELIGIBLE reason: OAL-operated segment - redirect to El Al; no case created",
+    "DDS code SoC-ASL-NE-05"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (OAL only, redirect to operating carrier)"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "Entire itinerary is other-airline (LY); El Al actuals are not in AC feeds and must be injected as flight data for TT to show +6H 00M"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Arrival 04:30 local JFK; arrival delay assumed 360",
+   "Delay code N/A -> null",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Chatbot screen says 5h delay; prerequisites 360 min used per TT note",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10.",
+   "Band DELAY_2_TO_6_HOURS taken from TT although 360 min would normally be the 6h boundary"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_054",
+  "pnrId": "ZZWOBB-2026-09-08",
+  "locator": "ZZWOBB",
+  "flights": [
+   {
+    "rider": "ZZWOBB-2026-09-08",
+    "carrier": "AC",
+    "number": "80",
+    "origin": "LHR",
+    "destination": "TLV",
+    "depUtc": "2026-10-08T20:00:00Z",
+    "arrUtc": "2026-10-09T01:00:00Z",
+    "kind": "delay",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-06",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 360,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip LHR->TLV on AC080 delayed +6H 00M - origin NOT in Israel (LHR = UK)",
+    "Regime: EU (system determines - ASL does not apply, LHR departure -> EU applies)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 080 LHR->TLV Sched Dep 05-Jun 21:00",
+    "Current: ARRIVED LATE, Sched Dep 21:00, Actual 06-Jun 03:00, Delay +6H 00M",
+    "Geographic Check (ASL): Origin LHR (UK) NOT Israel -> ASL FAIL; destination TLV pass",
+    "Regime applied: EU (UK261)",
+    "PASSENGER STATUS: depends on regime routing (ELIGIBLE under EU / NOT_ELIGIBLE under ASL geographic fail)",
+    "DDS code SoC-ASL-NE-06"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none under ASL (geographic gate); note EU would apply to a UK departure"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "Source is self-contradictory (EU regime, UK origin, 6h delay would be SOC ELIGIBLE under EU yet expected code is SoC-ASL-NE-06); the booking is built as described but the expected ASL NOT_ELIGIBLE outcome may not be reproducible by DDS"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Regime: prerequisite and TT say EU applies (LHR departure), yet DDS code and expected result say ASL NOT_ELIGIBLE (NE-06) with a wrong 'originated from YYZ' note: expect.regime set to ASL because the title/code say ASL; the real DDS may return EU eligibility instead",
+   "Arrival 04:00 local TLV next calendar day; arrival delay assumed 360",
+   "Cabin W (PY), class O",
+   "Residence GB",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10.",
+   "Chatbot screen says 8h delay; prerequisite 360 used"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_055",
+  "pnrId": "ZZ66GL-2026-09-08",
+  "locator": "ZZ66GL",
+  "flights": [
+   {
+    "rider": "ZZ66GL-2026-09-08",
+    "carrier": "AC",
+    "number": "84",
+    "origin": "YYZ",
+    "destination": "FRA",
+    "depUtc": "2026-10-08T12:00:00Z",
+    "arrUtc": "2026-10-09T09:30:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-07",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip TLV->LHR on AC085 delayed +7H 00M - destination NOT in Israel (LHR = UK)",
+    "Regime: APPR (system determines - ASL does not apply, AC carrier -> APPR applies)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 085 TLV->LHR Sched Dep 05-Jun",
+    "Current: ARRIVED LATE, Delay +7H 00M",
+    "Geographic Check (ASL): Origin TLV pass; Destination LHR NOT Israel -> ASL FAIL",
+    "Regime applied: APPR (AC carrier)",
+    "PASSENGER STATUS: depends on regime routing (ELIGIBLE under APPR if controllable / NOT_ELIGIBLE under ASL geographic fail)",
+    "DDS code SoC-ASL-NE-07"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none under ASL (destination gate)"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "Source is self-contradictory (APPR vs ASL, 'ended at FRA' vs LHR); expected ASL NE-07 may not be reproducible by DDS for an AC TLV-LHR flight"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Regime: prerequisite says APPR, TT says APPR, title/code say ASL NOT_ELIGIBLE; expect.regime set to ASL per code/title (the one under which NE-07 is produced)",
+   "Scheduled departure time not given ('time per prereqs'): 08:00 chosen; arrival 11:30 local LHR; arrival delay assumed 420",
+   "Prerequisite promised itinerary text (AC 084 YYZ-TLV via FRA) contradicts the single segment AC 085 TLV-LHR; single segment used",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10.",
+   "Chatbot screen says 8h delay; prerequisite 420 used"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_056",
+  "pnrId": "ZZUTJI-2020-12-06",
+  "locator": "ZZUTJI",
+  "flights": [
+   {
+    "rider": "ZZUTJI-2020-12-06",
+    "carrier": "AC",
+    "number": "84",
+    "origin": "TLV",
+    "destination": "VDA",
+    "depUtc": "2021-01-05T19:00:00Z",
+    "arrUtc": "2021-01-05T19:50:00Z",
+    "kind": "delay",
+    "minutes": 480,
+    "depMinutes": 480,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-08",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 480,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "Claim outside ASL limitation period (> 1,460 days / 4 years)",
+    "Journey AC 084 TLV->VDA delayed (prerequisite: 480 min, 01-Jan-2021 21:00 -> 02-Jan 05:00)",
+    "Flow stops at the claim time limit check before DDS evaluation; NOT_ELIGIBLE, SoC-ASL-NE-08, no receipt upload, no case creation",
+    "Regime: ASL"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (limitation expired)"
+   }
+  },
+  "daysAgo": 2114,
+  "seedNote": null,
+  "unsupported": [
+   "A 2021 flight date is probably outside the data retention of TripTracer/DDS history, and the limitation gate sits in the chatbot before DDS runs; TT may show nothing or an out-of-window state"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Conflicts: prerequisite routes (YYZ-TLV) and delay (480) and dates (01-Jan-2021) differ from the journey screen (TLV-VDA, 7h, 01-Mar-2022); built TLV-VDA (itinerary line) with prerequisite delay 480 and date 2021-01-01 -> flightDaysAgo=2112 (days before 2026-10-15; > 1460)",
+   "Arrival 21:50 local VDA (50 min flight); arrival delay assumed 480",
+   "Cabin W (PY), class O",
+   "Residence IL"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_057",
+  "pnrId": "ZZW4WR-2026-05-14",
+  "locator": "ZZW4WR",
+  "flights": [
+   {
+    "rider": "ZZW4WR-2026-05-14",
+    "carrier": "AC",
+    "number": "7713",
+    "origin": "TLV",
+    "destination": "VDA",
+    "depUtc": "2026-06-13T13:00:00Z",
+    "arrUtc": "2026-06-13T13:50:00Z",
+    "kind": "delay",
+    "minutes": 90,
+    "depMinutes": 90,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-09",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_LESS_THAN_2_HOURS",
+   "delayMin": 90,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Not Completed, Disruption Detected",
+    "Single-segment trip TLV->VDA on AC084 cancelled - rebooked with SOC segment departure delay +1H 30M. Passenger stayed at origin (TLV).",
+    "Regime: ASL (TLV->VDA = Israel->Israel)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 084 TLV->VDA Sched Dep 07-Jun 16:00",
+    "Current: CANCELLED - Rebooked, SOC Segment Departure Delay +1H 30M",
+    "Geographic Check: TLV->VDA Israel->Israel PASSED",
+    "Departure Delay Code 64 (Flight Crew Shortage) - NOT CHECKED (threshold fails first)",
+    "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_LESS_THAN_2_HOURS",
+    "DDS code SoC-ASL-NE-09"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (no-travel delay below 2h)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "Passenger name chosen",
+   "Conflicts: prerequisite promised itinerary says AC 085 TLV-YYZ, itinerary/SOC segment/TT say AC 084 TLV-VDA: TLV-VDA used; journey screen says 150 min but prerequisite/TT say 90 min: 90 used",
+   "Rebooked flight AC 084 17:30-18:20 same day (90 min later); cancelCode CREW inferred from delay code 64",
+   "Passenger stayed at origin: paxEvent not_travelled while a rebooking exists",
+   "Arrival 16:50 local VDA (50 min flight)",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_058",
+  "pnrId": "ZZTLWK-2026-05-14",
+  "locator": "ZZTLWK",
+  "flights": [
+   {
+    "rider": "ZZTLWK-2026-05-14",
+    "carrier": "AC",
+    "number": "8449",
+    "origin": "TLV",
+    "destination": "VDA",
+    "depUtc": "2026-06-13T13:00:00Z",
+    "arrUtc": "2026-06-13T13:50:00Z",
+    "kind": "delay",
+    "minutes": 90,
+    "depMinutes": 90,
+    "code": "64",
+    "arrivalCode": "64"
+   },
+   {
+    "rider": "ZZTLWK-2026-05-14",
+    "carrier": "AC",
+    "number": "9084",
+    "origin": "TLV",
+    "destination": "TLV",
+    "depUtc": "2026-06-13T13:20:00Z",
+    "arrUtc": "2026-06-13T14:50:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "code": null,
+    "sisterDest": "TLV"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-10",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_LESS_THAN_2_HOURS",
+   "delayMin": 90,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Regime: ASL (TLV/Israel domestic - Israel to Israel)",
+    "SOC section present",
+    "Geographic Check: Israel -> Israel PASSED",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE",
+    "Trip Not Completed, Disruption Detected",
+    "Single-segment trip TLV->VDA on AC084 diverted - returned to origin - rebooked with SOC segment departure delay +1H 30M. Passenger returned to TLV.",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 084 TLV->VDA Sched Dep 08-Jun 16:00",
+    "Current: Status DIVERTED - Returned to origin (TLV), rebooked, SOC Segment Departure Delay +1H 30M",
+    "SOC Segment Departure Delay 90 min - below 2h threshold",
+    "Departure Delay Code 64 (Flight Crew Shortage) - NOT CHECKED",
+    "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_LESS_THAN_2_HOURS",
+    "DDS code SoC-ASL-NE-10"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (no-travel delay below 2h)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "Diversion back to origin followed by a rebooking is expressed as a divert outcome (divertTo TLV) plus a rebooking"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Conflicts: promised itinerary text says AC 084 TLV-YYZ, itinerary/TT say TLV-VDA: TLV-VDA used; expected-results line says 160 min but prerequisite/TT/journey say 90: 90 used",
+   "Rebooked AC 084 17:30-18:20 same day",
+   "Arrival 16:50 local VDA (50 min); cancelCode none (diversion)",
+   "Passenger returned to origin: paxEvent not_travelled",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_059",
+  "pnrId": "ZZP7KQ-2026-09-08",
+  "locator": "ZZP7KQ",
+  "flights": [
+   {
+    "rider": "ZZP7KQ-2026-09-08",
+    "carrier": "AC",
+    "number": "90",
+    "origin": "TLV",
+    "destination": "HFA",
+    "depUtc": "2026-10-08T05:00:00Z",
+    "arrUtc": "2026-10-08T05:35:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZP7KQ-2026-09-08",
+    "carrier": "AC",
+    "number": "91",
+    "origin": "HFA",
+    "destination": "VDA",
+    "depUtc": "2026-10-08T09:45:00Z",
+    "arrUtc": "2026-10-08T11:00:00Z",
+    "kind": "delay",
+    "minutes": 90,
+    "depMinutes": 90,
+    "code": "64",
+    "arrivalCode": "64"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-11",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_LESS_THAN_2_HOURS",
+   "delayMin": 170,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Regime: ASL (TLV/Israel domestic - Israel to Israel)",
+    "SOC section present",
+    "Geographic Check: Israel -> Israel PASSED",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE",
+    "Trip Not Completed, Disruption Detected",
+    "Multi-segment trip TLV->HFA->VDA - Segment 2 AC091 HFA->VDA cancelled, rebooked with SOC segment departure delay +2H 50M (170 min). Passenger stranded at HFA.",
+    "PASSENGERS: 1 - SEGMENTS: 2",
+    "Promised: Seg 1 AC 090 TLV->HFA | Seg 2 AC 091 HFA->VDA",
+    "Current: Seg 1 ON TIME | Seg 2 CANCELLED - Rebooked, SOC Segment Departure Delay +2H 50M",
+    "SOC Segment: AC 091 HFA->VDA; SOC Segment Departure Delay 170 min (source says below 2h threshold despite 170 > 120 - validate against actual system behaviour)",
+    "Departure Delay Code 64 - NOT CHECKED",
+    "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_LESS_THAN_2_HOURS",
+    "DDS code SoC-ASL-NE-11"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (no-travel delay stated as below threshold)"
+   }
+  },
+  "daysAgo": 12,
+  "seedNote": null,
+  "unsupported": [
+   "Expected NOT_ELIGIBLE with 170 min delay contradicts a 2-hour threshold; real DDS may return ELIGIBLE (booking is built as written)"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Times chosen: AC090 08:00-08:35, AC091 11:00-12:15; rebooked AC 091 13:50-15:05 (170 min later)",
+   "cancelCode CREW inferred from delay code 64",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10.",
+   "Source is internally inconsistent: 170 min (>2h) yet stated 'below 2h threshold' and band DELAY_LESS_THAN_2_HOURS; modelled with 170 min as written"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_060",
+  "pnrId": "ZZAJWP-2026-05-14",
+  "locator": "ZZAJWP",
+  "flights": [
+   {
+    "rider": "ZZAJWP-2026-05-14",
+    "carrier": "AC",
+    "number": "7750",
+    "origin": "TLV",
+    "destination": "VDA",
+    "depUtc": "2026-06-13T13:00:00Z",
+    "arrUtc": "2026-06-13T13:50:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-12",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": null,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Regime: ASL (TLV/Israel domestic - Israel to Israel)",
+    "SOC section present",
+    "Geographic Check: Israel -> Israel PASSED",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE",
+    "Trip Not Completed - Passenger did not board",
+    "Single-segment trip TLV->VDA on AC084 - flight operated as scheduled. Passenger chose not to board.",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 084 TLV->VDA Sched Dep 09-Jun 16:00",
+    "Current: Status OPERATED - On time (passenger did not board)",
+    "Flight Status: OPERATED (not cancelled); no departure delay code",
+    "PASSENGER STATUS: NOT_ELIGIBLE | BAND blank",
+    "NOT_ELIGIBLE reason: Flight not cancelled - no disruption",
+    "DDS code SoC-ASL-NE-12"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (flight operated)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "Passenger name chosen",
+   "Arrival 16:50 local VDA (50 min flight)",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_061",
+  "pnrId": "ZZ82ER-2026-05-14",
+  "locator": "ZZ82ER",
+  "flights": [
+   {
+    "rider": "ZZ82ER-2026-05-14",
+    "carrier": "AC",
+    "number": "8449",
+    "origin": "TLV",
+    "destination": "VDA",
+    "depUtc": "2026-06-13T13:00:00Z",
+    "arrUtc": "2026-06-13T13:50:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZ82ER-2026-05-14",
+    "carrier": "AC",
+    "number": "9084",
+    "origin": "TLV",
+    "destination": "TLV",
+    "depUtc": "2026-06-13T13:20:00Z",
+    "arrUtc": "2026-06-13T14:50:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "code": null,
+    "sisterDest": "TLV"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-13",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": null,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Regime: ASL (TLV/Israel domestic - Israel to Israel)",
+    "SOC section present",
+    "Geographic Check: Israel -> Israel PASSED",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE",
+    "Trip Not Completed - Passenger returned to origin",
+    "Single-segment trip TLV->VDA on AC084 - flight operated (departed and returned to TLV). System records as 'operated' not 'cancelled'.",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 084 TLV->VDA Sched Dep 10-Jun 16:00",
+    "Current: Status OPERATED (departed and returned to origin - not recorded as cancelled)",
+    "Flight Status: OPERATED (not cancelled in system - departed + returned)",
+    "PASSENGER STATUS: NOT_ELIGIBLE | BAND blank",
+    "NOT_ELIGIBLE reason: Flight not recorded as cancelled (dispute relevant, agent may reclassify)",
+    "DDS code SoC-ASL-NE-13"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (recorded as operated)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "Departed-then-returned-to-origin while recorded as 'operated' is only approximated by an on-time outcome plus a not_travelled pax event"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Arrival 16:50 local VDA",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Flight modelled as ontime (system records operated), passenger as not_travelled",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_062",
+  "pnrId": "ZZJMXA-2026-05-14",
+  "locator": "ZZJMXA",
+  "flights": [
+   {
+    "rider": "ZZJMXA-2026-05-14",
+    "carrier": "AC",
+    "number": "7423",
+    "origin": "TLV",
+    "destination": "HFA",
+    "depUtc": "2026-06-13T05:00:00Z",
+    "arrUtc": "2026-06-13T05:35:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZJMXA-2026-05-14",
+    "carrier": "AC",
+    "number": "7424",
+    "origin": "HFA",
+    "destination": "VDA",
+    "depUtc": "2026-06-13T09:45:00Z",
+    "arrUtc": "2026-06-13T11:00:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-ASL-NE-14",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": null,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Regime: ASL (TLV/Israel domestic - Israel to Israel)",
+    "SOC section present",
+    "Geographic Check: Israel -> Israel PASSED",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE",
+    "Trip Not Completed - Passenger stranded at connection",
+    "Multi-segment trip TLV->HFA->VDA - Segment 2 AC091 HFA->VDA operated (passenger did not board - missed connection). Passenger stranded at HFA.",
+    "PASSENGERS: 1 - SEGMENTS: 2",
+    "Promised: Seg 1 AC 090 TLV->HFA | Seg 2 AC 091 HFA->VDA",
+    "Current: Seg 1 ON TIME | Seg 2 OPERATED (passenger did not board)",
+    "SOC Segment: AC 091 HFA->VDA; Flight Status OPERATED (not cancelled - departed without passenger)",
+    "PASSENGER STATUS: NOT_ELIGIBLE | BAND blank",
+    "NOT_ELIGIBLE reason: Connecting flight operated - not cancelled",
+    "DDS code SoC-ASL-NE-14"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none (SOC segment operated)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "Passenger name chosen",
+   "Times chosen: AC090 08:00-08:35, AC091 11:00-12:15",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10.",
+   "Seg 1 boarded, seg 2 no_show"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_063",
+  "pnrId": "ZZ824T-2026-05-14",
+  "locator": "ZZ824T",
+  "flights": [
+   {
+    "rider": "ZZ824T-2026-05-14",
+    "carrier": "AC",
+    "number": "7460",
+    "origin": "TLV",
+    "destination": "HFA",
+    "depUtc": "2026-06-13T05:00:00Z",
+    "arrUtc": "2026-06-13T06:00:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZ824T-2026-05-14",
+    "carrier": "KL",
+    "number": "7671",
+    "origin": "HFA",
+    "destination": "VDA",
+    "depUtc": "2026-06-13T10:10:00Z",
+    "arrUtc": "2026-06-13T11:10:00Z",
+    "kind": "delay",
+    "minutes": 300,
+    "depMinutes": 300,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NO_DETERMINATION",
+   "systemCode": "SoC-ASL-ND-01",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_2_TO_6_HOURS",
+   "delayMin": 300,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Multi-segment trip TLV->HFA->VDA - Segment 1 AC090 on time, Segment 2 LY301 (OAL) delayed +5H 00M",
+    "Regime: ASL (TLV->HFA->VDA = all Israel)",
+    "PASSENGERS: 1 - SEGMENTS: 2",
+    "Promised: Seg 1 AC 090 TLV->HFA | Seg 2 LY 301 HFA->VDA",
+    "Current: Seg 1 ON TIME | Seg 2 ARRIVED LATE, Delay +5H 00M",
+    "SOC section present - SOC Segment: LY 301 HFA->VDA (OAL); Operating Carrier LY (El Al - OAL)",
+    "Departure Delay Code: Unknown (OAL - AC has no data)",
+    "Geographic Check: all Israel PASSED",
+    "PASSENGER STATUS: NO_DETERMINATION | BAND: DELAY_2_TO_6_HOURS",
+    "Passenger Claims: NO DETERMINATION - case created for manual review (or redirected to OAL); DDS code SoC-ASL-ND-01"
+   ],
+   "soc": {
+    "eligibility": null,
+    "entitlements": "none - no determination (OAL operated), manual review / redirect to OAL"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "LY 301 actuals/delay come from OAL data AC does not hold; must be injected as flight data for TT to show +5H 00M. Delay code intentionally unknown."
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Times chosen: AC090 08:00-08:35, LY301 11:00-12:15 scheduled",
+   "Arrival delay assumed equal to the stated 300 min departure delay",
+   "Delay code unknown -> null",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_064",
+  "pnrId": "ZZ5GBD-2026-09-10",
+  "locator": "ZZ5GBD",
+  "flights": [
+   {
+    "rider": "ZZ5GBD-2026-09-10",
+    "carrier": "AC",
+    "number": "7195",
+    "origin": "YYZ",
+    "destination": "TLV",
+    "depUtc": "2026-10-10T09:30:00Z",
+    "arrUtc": "2026-10-10T19:30:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZ5GBD-2026-09-10",
+    "carrier": "TK",
+    "number": "7900",
+    "origin": "TLV",
+    "destination": "IST",
+    "depUtc": "2026-10-10T23:40:00Z",
+    "arrUtc": "2026-10-11T02:10:00Z",
+    "kind": "delay",
+    "minutes": 240,
+    "depMinutes": 240,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NO_DETERMINATION",
+   "systemCode": "SoC-ASL-ND-02",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_2_TO_6_HOURS",
+   "delayMin": 240,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Multi-segment trip YYZ->TLV->IST - Segment 1 AC084 on time, Segment 2 TK789 (STAR) delayed +4H 00M",
+    "Regime: ASL (journey involves Israel - TLV transit)",
+    "PASSENGERS: 1 - SEGMENTS: 2",
+    "Promised: Seg 1 AC 084 YYZ->TLV | Seg 2 TK 789 TLV->IST",
+    "Current: Seg 1 ON TIME | Seg 2 ARRIVED LATE, Delay +4H 00M",
+    "SOC section present - SOC Segment: TK 789 TLV->IST (STAR); Operating Carrier TK (Turkish Airlines - Star Alliance)",
+    "Departure Delay Code: Unknown (STAR - AC has limited data)",
+    "ASL dual geographic gate would also fail (origin YYZ, destination IST) but STAR carrier check triggered ND first",
+    "PASSENGER STATUS: NO_DETERMINATION | BAND: DELAY_2_TO_6_HOURS",
+    "Receipt collection: INITIATED",
+    "Passenger Claims: NO DETERMINATION - case created for manual review; DDS code SoC-ASL-ND-02"
+   ],
+   "soc": {
+    "eligibility": null,
+    "entitlements": "none - no determination (STAR partner), manual review, receipt collection initiated"
+   }
+  },
+  "daysAgo": 10,
+  "seedNote": null,
+  "unsupported": [
+   "TK 789 actuals/delay come from partner data that AC does not hold; must be injected as flight data. Delay code intentionally unknown",
+   "Source says both segments depart on 15-Jun, which the real flight times of a 10h YYZ-TLV flight rule out"
+  ],
+  "assumed": [
+   "Passenger name chosen; residence CA (journey origin YYZ)",
+   "Times chosen: AC084 05:30 YYZ -> 22:30 TLV (10h); TK789 TLV 00:45 next day (dayOffset 1) -> 03:15 IST, because a 10h flight cannot connect on the same day; TT lists both as 15-Jun",
+   "Arrival delay assumed equal to 240 min departure delay",
+   "Cabin W (PY), class O",
+   "Scenario dates are labels only; flight day set by flightDaysAgo."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_065",
+  "pnrId": "ZZOOAR-2026-04-30",
+  "locator": "ZZOOAR",
+  "flights": [
+   {
+    "rider": "ZZOOAR-2026-04-30",
+    "carrier": "AC",
+    "number": "7195",
+    "origin": "TLV",
+    "destination": "VDA",
+    "depUtc": "2026-05-30T13:00:00Z",
+    "arrUtc": "2026-05-30T13:50:00Z",
+    "kind": "delay",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NO_DETERMINATION",
+   "systemCode": "SoC-ASL-ND-03",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 360,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip TLV->VDA on AC084 delayed +6H 00M - departure delay code missing after 14-day retrigger",
+    "Regime: ASL (TLV->VDA = Israel->Israel)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 084 TLV->VDA Sched Dep 15-May 16:00",
+    "Current: ARRIVED LATE, Sched Dep 16:00, Actual 22:00, Delay +6H 00M",
+    "Departure Delay Code: NONE (not populated after 14-day RE retrigger); 14-Day RE Retrigger COMPLETED - code still not populated",
+    "Geographic Check: Israel->Israel PASSED",
+    "PASSENGER STATUS: NO_DETERMINATION | BAND: DELAY_6_HOURS_OR_MORE",
+    "Passenger Claims: NO DETERMINATION - case created for manual review; DDS code SoC-ASL-ND-03"
+   ],
+   "soc": {
+    "eligibility": null,
+    "entitlements": "none - no determination (delay code missing), manual review"
+   }
+  },
+  "daysAgo": 143,
+  "seedNote": null,
+  "unsupported": [
+   "Delay code absent after 14 days is the absence of an arrival-delay-code feed record; depends on the feed rather than booking data, and the 14-day RE re-trigger itself is a system behaviour"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "flightDaysAgo=24 (scenario: disruption May 16, filing Jun 9 = 24 days; test depends on the 14-day re-trigger having elapsed)",
+   "Arrival 16:50 local VDA; arrival delay assumed 360",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Chatbot journey screen says actual times unavailable while prerequisite/TT give actual dep 22:00: prerequisite/TT used (delay 360, code absent)"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_066",
+  "pnrId": "ZZ96QL-2026-08-25",
+  "locator": "ZZ96QL",
+  "flights": [
+   {
+    "rider": "ZZ96QL-2026-08-25",
+    "carrier": "AC",
+    "number": "7184",
+    "origin": "TLV",
+    "destination": "VDA",
+    "depUtc": "2026-09-24T18:00:00Z",
+    "arrUtc": "2026-09-24T18:50:00Z",
+    "kind": "scheduleonly",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NO_DETERMINATION",
+   "systemCode": "SoC-ASL-ND-04",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": null,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Disruption Suspected - Operating data missing",
+    "Single-segment trip TLV->VDA on AC084 - actual departure/arrival times NOT available after 14-day retrigger",
+    "Regime: ASL (TLV->VDA = Israel->Israel)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 084 TLV->VDA Sched Dep 16-May 21:00",
+    "Current: Status DATA UNAVAILABLE - actual departure/arrival times not populated",
+    "Operating Data: MISSING; 14-Day RE Retrigger COMPLETED - data still not populated; Delay Calculation: IMPOSSIBLE",
+    "Geographic Check: Israel->Israel PASSED",
+    "PASSENGER STATUS: NO_DETERMINATION | BAND: blank (cannot calculate)",
+    "Passenger Claims: NO DETERMINATION - case created for manual review; DDS code SoC-ASL-ND-04"
+   ],
+   "soc": {
+    "eligibility": null,
+    "entitlements": "none - no determination (operating data missing), manual review"
+   }
+  },
+  "daysAgo": 26,
+  "seedNote": null,
+  "unsupported": [
+   "'No actual times available' is the absence of any operational record for the flight; whether TripTracer/DDS will treat a flight with no outcome as DATA UNAVAILABLE depends on the flight feed, not on the booking",
+   "14-day RE re-trigger is a system behaviour"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "flightDaysAgo=24 (scenario: disruption May 16, filing Jun 9 = 24 days; test depends on the 14-day re-trigger having elapsed)",
+   "No outcome record at all: the flight has only scheduled times (no actuals)",
+   "Arrival 21:50 local VDA (scheduled)",
+   "Cabin W (PY), class O",
+   "Residence IL"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_067",
+  "pnrId": "ZZ7T77-2026-08-27",
+  "locator": "ZZ7T77",
+  "flights": [
+   {
+    "rider": "ZZ7T77-2026-08-27",
+    "carrier": "AC",
+    "number": "7201",
+    "origin": "TLV",
+    "destination": "HFA",
+    "depUtc": "2026-09-26T05:00:00Z",
+    "arrUtc": "2026-09-26T05:35:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "NO_DETERMINATION",
+   "systemCode": "SoC-ASL-ND-05",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": null,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Disruption Suspected - OAL operating data unavailable",
+    "Multi-segment trip TLV->HFA->VDA - Segment 1 AC090 on time, Segment 2 LY301 (OAL) - flight data unavailable after 14-day retrigger",
+    "Regime: ASL (TLV->HFA->VDA = all Israel)",
+    "PASSENGERS: 1 - SEGMENTS: 2",
+    "Promised: Seg 1 AC 090 TLV->HFA | Seg 2 LY 301 HFA->VDA",
+    "Current: Seg 1 ON TIME | Seg 2 DATA UNAVAILABLE - OAL operating data not populated",
+    "SOC section present - SOC Segment: LY 301 HFA->VDA (OAL); Operating Carrier LY (El Al - OAL)",
+    "OAL Operating Data: UNAVAILABLE after 14-day RE retrigger; Delay Calculation: IMPOSSIBLE",
+    "Geographic Check: all Israel PASSED",
+    "PASSENGER STATUS: NO_DETERMINATION | BAND: blank (cannot calculate)",
+    "Passenger Claims: NO DETERMINATION - case created for manual review (agent coordinates with OAL); DDS code SoC-ASL-ND-05"
+   ],
+   "soc": {
+    "eligibility": null,
+    "entitlements": "none - no determination (OAL data unavailable), manual review"
+   }
+  },
+  "daysAgo": 24,
+  "seedNote": null,
+  "unsupported": [
+   "Absence of any LY 301 operating data is a feed condition, not booking data; the 14-day RE re-trigger is a system behaviour"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "flightDaysAgo=24 (scenario: disruption May 16, filing Jun 9 = 24 days; test depends on the 14-day re-trigger having elapsed)",
+   "Times chosen: AC090 08:00-08:35, LY301 11:00-12:15; no outcome record for seg 2",
+   "Cabin W (PY), class O",
+   "Residence IL"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_068",
+  "pnrId": "ZZAHGL-2026-09-07",
+  "locator": "ZZAHGL",
+  "flights": [
+   {
+    "rider": "ZZAHGL-2026-09-07",
+    "carrier": "AC",
+    "number": "85",
+    "origin": "TLV",
+    "destination": "YYZ",
+    "depUtc": "2026-10-07T13:00:00Z",
+    "arrUtc": "2026-10-08T02:00:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "77",
+    "arrivalCode": "77"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-ASL-EL-01",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": null,
+   "cause": "77",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Regime: ASL",
+    "SOC section present",
+    "Geographic Check: Israel origin PASSED; Controllability NOT CHECKED (ASL)",
+    "CyberSource: GREEN",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - ELIGIBLE",
+    "DDS code SoC-ASL-EL-01",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip TLV->YYZ on AC085 delayed +7H 00M due to weather (uncontrollable - NOT CHECKED under ASL)",
+    "Promised: AC 085 TLV->YYZ Sched Dep 18-Jun 16:00",
+    "Current: ARRIVED LATE, Delay +7H 00M",
+    "Departure Delay Code: 77 (Weather) - NOT CHECKED",
+    "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL ILS 110.00 | ACCOMMODATION: Rate of day (max ILS 1,800) | GENERAL EXPENSES: Transport ILS 720 + Comm ILS 110 + Parking ILS 180 + Essentials ILS 110",
+    "Weather = NOT ELIGIBLE under APPR (NE-07) but ELIGIBLE under ASL (EL-01)",
+    "Currency ILS"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "Meals ILS 110/pax, hotel rate of day max 3 nights ILS 1,800 cap, transport ILS 720, communication ILS 110, parking ILS 180, essentials ILS 110"
+   }
+  },
+  "daysAgo": 13,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "Passenger name chosen",
+   "Conflict: prerequisite says flight cancelled, rebooked next day, 1440 min; TT/chatbot flow says delayed 7h: TT note says 'use chatbot flow: 7h' -> delay 420, code 77",
+   "Chatbot journey screen shows AC 084; prerequisite and TT use AC 085",
+   "Arrival 22:00 local YYZ as stated; arrival delay assumed 420",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_069",
+  "pnrId": "ZZTFFF-2026-05-14",
+  "locator": "ZZTFFF",
+  "flights": [
+   {
+    "rider": "ZZTFFF-2026-05-14",
+    "carrier": "AC",
+    "number": "8449",
+    "origin": "TLV",
+    "destination": "VDA",
+    "depUtc": "2026-06-13T18:00:00Z",
+    "arrUtc": "2026-06-13T18:50:00Z",
+    "kind": "delay",
+    "minutes": 1080,
+    "depMinutes": 1080,
+    "code": "77",
+    "arrivalCode": "77"
+   },
+   {
+    "rider": "ZZTFFF-2026-05-14",
+    "carrier": "AC",
+    "number": "9084",
+    "origin": "TLV",
+    "destination": "TLV",
+    "depUtc": "2026-06-13T18:20:00Z",
+    "arrUtc": "2026-06-13T19:50:00Z",
+    "kind": "delay",
+    "minutes": 1080,
+    "code": "77",
+    "sisterDest": "TLV"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-ASL-EL-02",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 1080,
+   "control": null,
+   "cause": "77",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Regime: ASL",
+    "SOC section present",
+    "Geographic Check: Israel origin PASSED; Controllability NOT CHECKED (ASL)",
+    "CyberSource: GREEN",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - ELIGIBLE",
+    "DDS code SoC-ASL-EL-02",
+    "Trip Not Completed, Disruption Detected",
+    "Single-segment trip TLV->VDA on AC084 cancelled - passenger stayed at origin (TLV) for 18 hours",
+    "PASSENGERS: 3 (2 adults + 1 child) - SEGMENTS: 1",
+    "Promised: AC 084 TLV->VDA Sched Dep 19-Jun 21:00",
+    "Current: CANCELLED",
+    "Departure Delay Code 77 (Weather) - NOT CHECKED",
+    "Cancellation: YES | SOC Segment Delay to rebooking: 1080 min (18h) >= 2h",
+    "SOC section with 3 passenger rows (Adult Claimant, Adult, Child), each ELIGIBLE, BAND DELAY_6_HOURS_OR_MORE; MEAL ILS 220.00 (3 pax); ACCOMMODATION Rate of day (max ILS 1,800); Transportation PNR-level ILS 720 (1-5 pax shared); Hotel: 2 rooms (1 per adult)"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "Per pax meals ILS 220 style amounts, hotel 2 rooms (per adult) rate of day cap ILS 1,800, transport ILS 720 shared (1-5 pax), communication/essentials per pax, parking ILS 180"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": "template has 5 passengers for 3",
+  "unsupported": [
+   "Diverted-back-to-origin wording of the prerequisite is dropped; booking is a plain cancellation with next-day rebooking"
+  ],
+  "assumed": [
+   "Passenger names chosen (family of 2 adults + 1 child)",
+   "Conflicts: prerequisite = AC 084 TLV-YYZ diverted back to TLV, rebooked 8h later (480 min), code 72; chatbot journey + TT = AC 084 TLV-VDA cancelled, stayed at origin 18h (1080 min), code 77. TT/journey version used (consistent with the 18h)",
+   "Rebooked flight AC 084 15:00 next day (21:00 + 18h), arr 15:50",
+   "Weather cancelCode WEAT inferred from delay code 77",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 3
+ },
+ {
+  "id": "SOC_UAT_070",
+  "pnrId": "ZZJRT7-2026-05-14",
+  "locator": "ZZJRT7",
+  "flights": [
+   {
+    "rider": "ZZJRT7-2026-05-14",
+    "carrier": "AC",
+    "number": "7497",
+    "origin": "TLV",
+    "destination": "HFA",
+    "depUtc": "2026-06-13T05:00:00Z",
+    "arrUtc": "2026-06-13T05:35:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZJRT7-2026-05-14",
+    "carrier": "AC",
+    "number": "7498",
+    "origin": "HFA",
+    "destination": "VDA",
+    "depUtc": "2026-06-13T11:00:00Z",
+    "arrUtc": "2026-06-13T12:15:00Z",
+    "kind": "delay",
+    "minutes": 180,
+    "depMinutes": 180,
+    "code": "05",
+    "arrivalCode": "05"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-ASL-EL-03",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_2_TO_6_HOURS",
+   "delayMin": 180,
+   "control": null,
+   "cause": "05",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Not Completed, Disruption Detected",
+    "Multi-segment trip TLV->HFA->VDA - Segment 2 AC091 HFA->VDA cancelled due to aircraft defect. Passenger stranded at HFA for 3 hours.",
+    "Regime: ASL (TLV->HFA->VDA = all Israel)",
+    "PASSENGERS: 1 - SEGMENTS: 2; Class of Booking: J (Business)",
+    "Promised: Seg 1 AC 090 TLV->HFA | Seg 2 AC 091 HFA->VDA",
+    "Current: Seg 1 ON TIME | Seg 2 CANCELLED",
+    "SOC Segment: AC 091 HFA->VDA; Departure Delay Code 05 (Aircraft Defect) - NOT CHECKED",
+    "Cancellation: YES | SOC Segment Delay: 180 min (3h) >= 2h",
+    "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_2_TO_6_HOURS | MEAL ILS 55.00 (LIMITED short delay tier) | ACCOMMODATION: not entitled (delay <6h) | GENERAL EXPENSES: Comm ILS 110 only (Transport/Parking/Essentials NOT ENTITLED)",
+    "CyberSource: GREEN",
+    "DDS code SoC-ASL-EL-03"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "LIMITED: Meals ILS 55 + Communication ILS 110 only; no hotel, transport, parking or essentials (delay < 360 min)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "Passenger name chosen",
+   "Times chosen: AC090 08:00-08:35; AC091 scheduled 14:00-15:15, rebooked 17:00-18:15 (3h later)",
+   "cancelCode TECH inferred from code 05 (aircraft defect)",
+   "Cabin J, booking class J",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_071",
+  "pnrId": "ZZ7N2I-2026-05-14",
+  "locator": "ZZ7N2I",
+  "flights": [
+   {
+    "rider": "ZZ7N2I-2026-05-14",
+    "carrier": "AC",
+    "number": "7787",
+    "origin": "TLV",
+    "destination": "VDA",
+    "depUtc": "2026-06-13T13:00:00Z",
+    "arrUtc": "2026-06-13T13:50:00Z",
+    "kind": "cancel",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "cancelCode": "AIRS",
+    "noticeMinutes": 180
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-ASL-EL-04",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 840,
+   "control": null,
+   "cause": "72",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Regime: ASL",
+    "SOC section present",
+    "Geographic Check: Israel origin PASSED; Controllability NOT CHECKED (ASL)",
+    "CyberSource: GREEN",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - ELIGIBLE",
+    "DDS code SoC-ASL-EL-04",
+    "Trip Not Completed, Disruption Detected",
+    "Single-segment trip TLV->VDA on AC084 cancelled due to ATC restriction - passenger stayed at origin (TLV) for 14 hours",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 084 TLV->VDA Sched Dep 20-Jun 16:00",
+    "Current: CANCELLED",
+    "Departure Delay Code: 72 (ATC Restriction) - NOT CHECKED",
+    "Cancellation: YES | SOC Segment Delay: 840 min (14h) >= 2h",
+    "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL ILS 220.00 | ACCOMMODATION: Rate of day (max ILS 1,800) | GENERAL EXPENSES: Transport ILS 720 + Comm ILS 110 + Parking ILS 180 + Essentials ILS 110"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "Meals ILS 220, hotel rate of day max 3 nights ILS 1,800 cap, transport ILS 720, communication ILS 110, parking ILS 180, essentials ILS 110"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "Passenger name chosen",
+   "Conflict: prerequisite = AC 085 TLV-YYZ cancelled, no alternative within 24h (1440 min); chatbot journey + TT = AC 084 TLV-VDA cancelled, ATC code 72, 14h (840 min): TT version used",
+   "Rebooked flight AC 084 06:00 next day (14h after 16:00)",
+   "cancelCode ATC inferred from code 72",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_072",
+  "pnrId": "ZZJ2YK-2026-05-14",
+  "locator": "ZZJ2YK",
+  "flights": [
+   {
+    "rider": "ZZJ2YK-2026-05-14",
+    "carrier": "AC",
+    "number": "8449",
+    "origin": "TLV",
+    "destination": "VDA",
+    "depUtc": "2026-06-13T18:00:00Z",
+    "arrUtc": "2026-06-13T18:50:00Z",
+    "kind": "cancel",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "cancelCode": "OPER",
+    "noticeMinutes": 180
+   },
+   {
+    "rider": "ZZJ2YK-2026-05-14",
+    "carrier": "AC",
+    "number": "9084",
+    "origin": "TLV",
+    "destination": "TLV",
+    "depUtc": "2026-06-13T18:20:00Z",
+    "arrUtc": "2026-06-13T19:50:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "code": null,
+    "sisterDest": "TLV"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-ASL-EL-05",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 960,
+   "control": null,
+   "cause": "06",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Regime: ASL",
+    "SOC section present",
+    "Geographic Check: Israel origin PASSED; Controllability NOT CHECKED (ASL)",
+    "CyberSource: GREEN",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - ELIGIBLE",
+    "DDS code SoC-ASL-EL-05",
+    "Trip Not Completed, Disruption Detected",
+    "Single-segment trip TLV->VDA on AC084 diverted - returned to origin (TLV), then cancelled. Passenger returned to TLV, rebooked 16 hours later.",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 084 TLV->VDA Sched Dep 21-Jun 21:00",
+    "Current: Status DIVERTED - Returned to origin (TLV), CANCELLED, rebooked",
+    "Departure Delay Code: 06 (Mechanical) - NOT CHECKED",
+    "Diversion + cancellation | SOC Segment Delay: 960 min (16h) >= 2h",
+    "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL ILS 220.00 | ACCOMMODATION: Rate of day (max ILS 1,800) | GENERAL EXPENSES: Transport ILS 720 + Comm ILS 110 + Parking ILS 180 + Essentials ILS 110"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "Meals ILS 220, hotel rate of day max 3 nights ILS 1,800 cap, transport ILS 720, communication ILS 110, parking ILS 180, essentials ILS 110"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "'Diverted back to origin AND cancelled' is expressed as kind divert (divertTo TLV) plus a next-day rebooking"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Conflict: prerequisite = AC 084 TLV-YYZ with 'rebooked next day' and code 'cancelled'; chatbot journey + TT = TLV-VDA diverted back and cancelled, code 06, 960 min: TT version used",
+   "Rebooked flight AC 084 13:00 next day (16h after 21:00), arr 13:50",
+   "cancelCode TECH inferred from code 06",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_073",
+  "pnrId": "ZZFH1X-2026-05-14",
+  "locator": "ZZFH1X",
+  "flights": [
+   {
+    "rider": "ZZFH1X-2026-05-14",
+    "carrier": "AC",
+    "number": "7534",
+    "origin": "TLV",
+    "destination": "HFA",
+    "depUtc": "2026-06-13T05:00:00Z",
+    "arrUtc": "2026-06-13T05:35:00Z",
+    "kind": "ontime",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null
+   },
+   {
+    "rider": "ZZFH1X-2026-05-14",
+    "carrier": "AC",
+    "number": "7535",
+    "origin": "HFA",
+    "destination": "VDA",
+    "depUtc": "2026-06-13T09:45:00Z",
+    "arrUtc": "2026-06-13T11:00:00Z",
+    "kind": "cancel",
+    "minutes": 0,
+    "depMinutes": 0,
+    "code": null,
+    "cancelCode": "CREW",
+    "noticeMinutes": 180
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-ASL-EL-06",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 720,
+   "control": null,
+   "cause": "64",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Regime: ASL",
+    "SOC section present",
+    "Geographic Check: Israel origin PASSED; Controllability NOT CHECKED (ASL)",
+    "CyberSource: GREEN",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - ELIGIBLE",
+    "DDS code SoC-ASL-EL-06",
+    "Trip Not Completed, Disruption Detected",
+    "Multi-segment trip TLV->HFA->VDA - Segment 2 AC091 HFA->VDA cancelled due to crew shortage. Passenger stranded at HFA for 12 hours.",
+    "PASSENGERS: 1 - SEGMENTS: 2",
+    "Promised: Seg 1 AC 090 TLV->HFA | Seg 2 AC 091 HFA->VDA",
+    "Current: Seg 1 ON TIME | Seg 2 CANCELLED",
+    "SOC Segment: AC 091 HFA->VDA; Departure Delay Code 64 (Flight Crew Shortage) - NOT CHECKED",
+    "Cancellation: YES | SOC Segment Delay: 720 min (12h) >= 2h",
+    "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL ILS 220.00 | ACCOMMODATION: Rate of day (max ILS 1,800) | GENERAL EXPENSES: Transport ILS 720 + Comm ILS 110 + Parking ILS 180 + Essentials ILS 110"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "Meals ILS 110/pax, hotel rate of day max 3 nights ILS 1,800 cap, transport ILS 720, communication ILS 110, parking ILS 180, essentials ILS 110"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "Rebooked arrival after midnight (00:15) cannot carry its own day offset; arrLocal given as 00:15 with dayOffset 0 meaning the next calendar day"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Times chosen: AC090 08:00-08:35; AC091 scheduled 11:00-12:15, rebooked 23:00-00:15 (12h later; arrival after midnight)",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_074",
+  "pnrId": "ZZ05PH-2026-05-14",
+  "locator": "ZZ05PH",
+  "flights": [
+   {
+    "rider": "ZZ05PH-2026-05-14",
+    "carrier": "AC",
+    "number": "7824",
+    "origin": "TLV",
+    "destination": "VDA",
+    "depUtc": "2026-06-13T13:00:00Z",
+    "arrUtc": "2026-06-13T13:50:00Z",
+    "kind": "delay",
+    "minutes": 420,
+    "depMinutes": 420,
+    "code": "77",
+    "arrivalCode": "77"
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "ELIGIBLE",
+   "systemCode": "SoC-ASL-EL-07",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 420,
+   "control": null,
+   "cause": "77",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Regime: ASL",
+    "SOC section present",
+    "Geographic Check: Israel origin PASSED; Controllability NOT CHECKED (ASL)",
+    "CyberSource: GREEN",
+    "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - ELIGIBLE",
+    "DDS code SoC-ASL-EL-07",
+    "Trip Completed, Disruption Detected",
+    "Single-segment trip TLV->VDA on AC084 delayed +7H 00M due to weather (uncontrollable - NOT CHECKED under ASL)",
+    "PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 084 TLV->VDA Sched Dep 22-Jun 16:00",
+    "Current: ARRIVED LATE, Sched Dep 16:00, Actual 23:00, Delay +7H 00M",
+    "Departure Delay Code: 77 (Weather) - NOT CHECKED",
+    "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL ILS 110.00 | ACCOMMODATION: Rate of day (max ILS 1,800) | GENERAL EXPENSES: Transport ILS 720 + Comm ILS 110 + Parking ILS 180 + Essentials ILS 110",
+    "Same weather scenario under APPR with regular pax = NOT ELIGIBLE (NE-07); under ASL = ELIGIBLE"
+   ],
+   "soc": {
+    "eligibility": "ELIGIBLE",
+    "entitlements": "Meals ILS 110/pax, hotel rate of day max 3 nights ILS 1,800 cap, transport ILS 720, communication ILS 110, parking ILS 180, essentials ILS 110; overnight eligible (delay > 360 min)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [],
+  "assumed": [
+   "Passenger name chosen",
+   "Arrival 16:50 local VDA (50 min flight); arrival delay assumed 420",
+   "Chatbot journey screen says 8h; prerequisites (420) used per TT note",
+   "Cabin W (PY), class O",
+   "Residence IL",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_076",
+  "pnrId": "ZZ27G1-2026-09-19",
+  "locator": "ZZ27G1",
+  "flights": [
+   {
+    "rider": "ZZ27G1-2026-09-19",
+    "carrier": "AC",
+    "number": "7196",
+    "origin": "TLV",
+    "destination": "YYZ",
+    "depUtc": "2026-10-19T13:00:00Z",
+    "arrUtc": "2026-10-20T02:00:00Z",
+    "kind": "delay",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": null
+   }
+  ],
+  "expect": {
+   "regime": "ASL",
+   "eligibility": "PENDING",
+   "systemCode": "SoC-ASL-PE-01",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": 360,
+   "control": null,
+   "cause": null,
+   "ttUi": [
+    "Status PENDING / SYSTEM PROCESSING: last leg less than 72h ago; shell case created and placed in polling queue",
+    "Regime: ASL (TLV origin Israel)",
+    "Journey AC 085 TLV->YYZ delayed ~360 min (6 hours) - preliminary",
+    "Disruption code TBD (pending RE evaluation); controllability not applicable",
+    "DDS Response Code SoC-ASL-PE-01 (PENDING); no receipt upload at this stage; after 72h RE retrigger -> DDS evaluation"
+   ],
+   "soc": {
+    "eligibility": null,
+    "entitlements": "none yet - PENDING until 72h window closes"
+   }
+  },
+  "daysAgo": 1,
+  "seedNote": null,
+  "unsupported": [
+   "Post-72h re-evaluation and deep link are Case Services/chatbot behaviour, not booking data"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Flight was yesterday: flightDaysAgo=1 (test is about the 72h hold)",
+   "eligibility field set to NO_DETERMINATION as the schema has no PENDING value; the real expected state is PENDING (SoC-ASL-PE-01)",
+   "Chatbot journey screen says AC 084 TLV-VDA 5h; prerequisite AC 085 TLV-YYZ 6h used",
+   "Scheduled times as stated (dep 16:00, arr 22:00), actual dep 22:00 / arr 04:00 next day; delay code TBD -> null",
+   "Cabin W (PY), class O",
+   "Residence IL"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_076__CHAI-31991",
+  "pnrId": "ZZENKE-2026-05-14",
+  "locator": "ZZENKE",
+  "flights": [
+   {
+    "rider": "ZZENKE-2026-05-14",
+    "carrier": "AC",
+    "number": "8300",
+    "origin": "YYZ",
+    "destination": "YVR",
+    "depUtc": "2026-06-13T12:00:00Z",
+    "arrUtc": "2026-06-13T18:00:00Z",
+    "kind": "delay",
+    "minutes": 360,
+    "depMinutes": 360,
+    "code": "77",
+    "arrivalCode": "77"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-APPR-NE-07",
+   "amount": null,
+   "currency": null,
+   "delayBand": null,
+   "delayMin": 360,
+   "control": "UNCONTROLLABLE",
+   "cause": "77",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected - DISPUTED / OVERRIDE PENDING",
+    "Single-segment trip YYZ->YVR on AC301 delayed due to weather (uncontrollable)",
+    "Regime: APPR; PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 301 YYZ->YVR Sched Dep 25-Jun 08:00",
+    "Current: ARRIVED LATE, Sched Dep 08:00, Actual 14:00 (TT text says +7H 00M, prerequisite 6h/360 min)",
+    "SOC section present; Departure Delay Code 77 (Weather) - Uncontrollable",
+    "Original DDS: SoC-APPR-NE-07 (NOT ELIGIBLE - weather)",
+    "PASSENGER STATUS: NOT_ELIGIBLE (original) -> DISPUTED -> OVERRIDE PENDING; Dispute Flag YES; Override Status PENDING; CyberSource NOT triggered",
+    "Case in manual handling queue; no payment initiated; no Welcome Back email",
+    "Final expected state: SoC-Override-Pending (PENDING)"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "none from DDS (NE-07); emergency override Pending holds the case"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "The emergency override (ACTIVE / Pending), the dispute flag and the manual handling queue state are created in Case Services/Claims Dashboard, not by booking data; the booking only reproduces the original NE-07 weather result"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Regime APPR per TT (prerequisite says ANY)",
+   "Delay 360 from stated actual-vs-scheduled times (08:00 -> 14:00, arr 11:00 -> 17:00); TT/chatbot text says 7h: not matching its own actual times",
+   "Actual arrival 17:00 local YVR => arrival delay 360",
+   "expect.systemCode is the raw DDS code the booking produces (NE-07); the scenario's final state SoC-Override-Pending exists only after the override flow",
+   "Cabin W (PY), class O",
+   "Residence CA",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10.",
+   "Scenario id duplicates SOC_UAT_076 (ASL pending, CHAI-31990); this one is CHAI-31991"
+  ],
+  "passengers": 1
+ },
+ {
+  "id": "SOC_UAT_077",
+  "pnrId": "ZZ4U76-2026-05-14",
+  "locator": "ZZ4U76",
+  "flights": [
+   {
+    "rider": "ZZ4U76-2026-05-14",
+    "carrier": "AC",
+    "number": "7349",
+    "origin": "YYZ",
+    "destination": "YYC",
+    "depUtc": "2026-06-13T11:00:00Z",
+    "arrUtc": "2026-06-13T14:45:00Z",
+    "kind": "delay",
+    "minutes": 480,
+    "depMinutes": 480,
+    "code": "77",
+    "arrivalCode": "77"
+   }
+  ],
+  "expect": {
+   "regime": "APPR",
+   "eligibility": "NOT_ELIGIBLE",
+   "systemCode": "SoC-APPR-NE-07",
+   "amount": null,
+   "currency": null,
+   "delayBand": "DELAY_6_HOURS_OR_MORE",
+   "delayMin": 480,
+   "control": "UNCONTROLLABLE",
+   "cause": "77",
+   "ttUi": [
+    "TYPE: REVENUE",
+    "Trip Completed, Disruption Detected - DISPUTED / OVERRIDE APPROVED (PAY)",
+    "Single-segment domestic trip YYZ->YYC on AC201 delayed +8H 00M",
+    "Regime: APPR; PASSENGERS: 1 - SEGMENTS: 1",
+    "Promised: AC 201 YYZ->YYC Sched Dep 27-Jun 07:00",
+    "Current: ARRIVED LATE, Sched Dep 07:00, Actual 15:00, Delay +8H 00M",
+    "Original Departure Delay Code: 77 (Weather) - Uncontrollable; Original DDS: SoC-APPR-NE-07 (NOT ELIGIBLE - weather, regular pax)",
+    "Override Section: Dispute Flag YES; Override Status APPROVED; Decision PAY; Corrected Departure Delay Code 64 (Flight Crew Shortage, controllable); Overridden DDS Code SoC-APPR-EL-08",
+    "PASSENGER STATUS: ELIGIBLE (overridden) | BAND: DELAY_6_HOURS_OR_MORE | MEAL CAD 30.00 | ACCOMMODATION: Rate of day (max CAD 500) | GENERAL EXPENSES: Transport 200 + Comm 30 + Parking 50 + Essentials 30",
+    "CyberSource: GREEN (post-override)",
+    "Final expected state: SoC-Override-Pay (ELIGIBLE)"
+   ],
+   "soc": {
+    "eligibility": "NOT_ELIGIBLE",
+    "entitlements": "DDS raw: none (NE-07 weather). After override PAY: meals 30, hotel rate of day cap 500, transport 200, communication 30, parking 50, essentials 30 (CAD)"
+   }
+  },
+  "daysAgo": 129,
+  "seedNote": null,
+  "unsupported": [
+   "The dispute, investigation, corrected delay code 64 and the override decision (Pay) are Case Services/Claims Dashboard actions, not booking data; the booking can only reproduce the pre-override weather state"
+  ],
+  "assumed": [
+   "Passenger name chosen",
+   "Booking carries the ORIGINAL delay code 77 so DDS first returns NE-07; the corrected code 64 / EL-08 / Override-Pay result only appears after the agent override",
+   "expect.systemCode is the raw DDS code (NE-07); final state after override is ELIGIBLE (SoC-APPR-EL-08 / SoC-Override-Pay)",
+   "Arrival 08:45 local YYC; arrival delay assumed 480",
+   "Chatbot journey screen says 6h delay; prerequisites (480) used for Trip Tracer",
+   "Cabin W (PY), class O",
+   "Residence CA",
+   "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "passengers": 1
+ }
+]

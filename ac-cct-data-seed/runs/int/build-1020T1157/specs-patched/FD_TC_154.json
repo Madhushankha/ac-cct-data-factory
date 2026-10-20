@@ -1,0 +1,78 @@
+{
+  "id": "FD_TC_154",
+  "family": "FD",
+  "summary": "ASL TLV-YYZ AC084 employee booking (AC employee), 4h late, code 42 -> Not Eligible (employee exclusion overrides everything)",
+  "passengers": [
+    {
+      "firstName": "DANIEL",
+      "lastName": "AVRAHAM",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": true
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "84",
+      "origin": "TLV",
+      "destination": "YYZ",
+      "depLocal": "12:00",
+      "arrLocal": "16:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": null,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": null,
+    "amount": 0,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": 240,
+    "control": "CONTROLLABLE",
+    "cause": "42",
+    "ttUi": [
+      "Promised Itinerary: AC 084 TLV->YYZ scheduled arrival 16:00",
+      "Current Itinerary: AC 084 TLV->YYZ ARRIVED LATE, actual 20:00, +4H 00M",
+      "Passenger: AC EMPLOYEE (employee booking identifier present)",
+      "Regime: ASL (Israel origin TLV) - BUT employee exclusion applies",
+      "MSL FLIGHT: AC 084 TLV->YYZ - 42 - CONTROLLABLE",
+      "Employee Check: AC EMPLOYEE -> NOT ELIGIBLE (overrides all other checks)",
+      "Flight Compensation: MR DANIEL AVRAHAM | NOT ELIGIBLE | EMPLOYEE_AC | 0.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "Text is inconsistent: Prerequisites say YYZ-TLV, sched arr 06:00, actual 10:00; TT UI + chatbot say AC 084 TLV-YYZ, sched 16:00, actual 20:00 (date May 31, 2026). Followed TT UI/chatbot (also matches FD_TC_155).",
+    "dep 12:00 TLV chosen",
+    "DDS code not stated in text (no Expected Results) -> systemCode null; likely FD-ASL-NE-01 but not asserted",
+    "currency not stated for 0.00 -> null"
+  ],
+  "unsupported": []
+}

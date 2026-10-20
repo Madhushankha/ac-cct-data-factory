@@ -1,0 +1,783 @@
+{
+  "key": "CHAI-31499",
+  "test_id": "FD_TC_107",
+  "title": "Case in Queue | DDS Runs | Not Eligible | Customer Notified",
+  "goal": "Customer files before 72 hours (similar to TC_018). System creates case, polls daily, data eventually arrives. DIFFERENCE: When DDS data arrives and processes, the result is NOT ELIGIBLE (uncontrollable cause). Validates that the Welcome Back flow correctly delivers a Not Eligible outcome � not just eligible outcomes (TC_018 tested eligible). Customer receives notification but the message is \"Not Eligible\" instead of \"complete your claim.\"",
+  "summary": {
+    "seed": 6,
+    "chat": 7,
+    "api": 17,
+    "email": 3,
+    "dashboard": 36,
+    "implied": 5,
+    "manual": 10,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Customer files before 72 hours (similar to TC_018). System creates case, polls daily, data eventually arrives. DIFFERENCE: When DDS data arrives and processes, the result is NOT ELIGIBLE (uncontrollable cause). Validates that the Welcome Back flow correctly delivers a Not Eligible outcome � not just eligible outcomes (TC_018 tested eligible). Customer receives notification but the message is \"Not Eligible\" instead of \"complete your claim.\"",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: Single passenger (Claudine V�zina), 1 leg AC domestic YUL?YYZ",
+      "expected": "PNR: Single passenger (Claudine V�zina), 1 leg AC domestic YUL?YYZ",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Itinerary: 4hr delay, Code 72 (Weather � uncontrollable)",
+      "expected": "Itinerary: 4hr delay, Code 72 (Weather � uncontrollable)",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Filing time: 36 hours after flight (within 72hr window)",
+      "expected": "Filing time: 36 hours after flight (within 72hr window)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "DDS data: NOT available at filing",
+      "expected": "DDS data: NOT available at filing",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Data arrives at D+4",
+      "expected": "Data arrives at D+4",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Expected DDS result when data arrives: Not Eligible (Code 72, uncontrollable)",
+      "expected": "Expected DDS result when data arrives: Not Eligible (Code 72, uncontrollable)",
+      "id": "CP007"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given a case was previously created for PNR: TC064",
+      "expected": "",
+      "id": "CP008"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case was placed in the System Processing Queue (72h not elapsed at time of filing)",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And 72 hours have now elapsed since last leg arrival",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "DDS AUTO-RUN",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the system triggers DDS evaluation automatically (scheduled run)",
+      "expected": "",
+      "id": "CP011"
+    },
+    {
+      "section": "DDS AUTO-RUN",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS retrieves flight data for PNR: TC064",
+      "expected": "",
+      "id": "CP012"
+    },
+    {
+      "section": "DDS AUTO-RUN",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS evaluates:",
+      "expected": "Flight: AC 508, YUL ? YYZ Arrival delay: 5 hours Disruption code: 71 (Severe Weather) Controllability: UNCONTROLLABLE Result: NOT ELIGIBLE",
+      "id": "CP013"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Promised Itinerary - Flight: AC 508, Route: YUL ? YYZ, Scheduled Arrival: 12:00",
+      "expected": "Promised Itinerary - Flight: AC 508, Route: YUL ? YYZ, Scheduled Arrival: 12:00",
+      "id": "CP014"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current Itinerary - Flight: AC 508, Route: YUL ? YYZ, Status: ARRIVED LATE, Scheduled Arrival: 12:00 ? Actual: 17:00, Delay: +5H 00M",
+      "expected": "Current Itinerary - Flight: AC 508, Route: YUL ? YYZ, Status: ARRIVED LATE, Scheduled Arrival: 12:00 ? Actual: 17:00, Delay: +5H 00M",
+      "id": "CP015"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: APPR (1 regime)",
+      "expected": "Regime: APPR (1 regime)",
+      "id": "CP016"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL FLIGHT: AC 508 � YUL ? YYZ � 71",
+      "expected": "MSL FLIGHT: AC 508 � YUL ? YYZ � 71",
+      "id": "CP017"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "\"Delayed due to severe weather\"",
+      "expected": "\"Delayed due to severe weather\"",
+      "id": "CP018"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Delay: +5H 00M � UNCONTROLLABLE",
+      "expected": "Delay: +5H 00M � UNCONTROLLABLE",
+      "id": "CP019"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Fallback: FALSE",
+      "expected": "Fallback: FALSE",
+      "id": "CP020"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Case Status: Previously in System Processing Queue ? DDS now ran ? NOT ELIGIBLE",
+      "expected": "Case Status: Previously in System Processing Queue ? DDS now ran ? NOT ELIGIBLE",
+      "id": "CP021"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MR/MS [PASSENGER] | NOT ELIGIBLE | UNCONTROLLABLE | CAD 0.00",
+      "expected": "MR/MS [PASSENGER] | NOT ELIGIBLE | UNCONTROLLABLE | CAD 0.00",
+      "id": "CP022"
+    },
+    {
+      "section": "FRAUD SCREENING � NOT TRIGGERED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "CyberSource is ONLY called for ELIGIBLE cases ? NOT invoked",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system updates the case status from \"System Processing Queue\" to \"Not Eligible\"",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And the system records the DDS result: NOT ELIGIBLE (Uncontrollable � Code 71)",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "NOTIFICATION � WELCOME BACK EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP026"
+    },
+    {
+      "section": "NOTIFICATION � WELCOME BACK EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a Not Eligible notification email is sent to the customer's email on file",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "NOTIFICATION � WELCOME BACK EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains:",
+      "expected": "Update on your Air Canada claim � [Case Reference] After a full review, we can confirm that weather was the primary reason. Since the delay was caused by severe weather conditions, weather and other factors outside of the airline's control aren't covered under the compensation regulations APPR. If you have travel insurance, you may want to contact your insurance provider to see if your policy offers any coverage for this situation.",
+      "id": "CP028"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the case has been created for the passenger from PNR \"TC064\" and was initially placed in System Processing Queue",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Case Header Topic/Sub-topic should be \"Travel Disruptions � Delay\"",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should be able to edit Topic/Sub-topic but cannot switch automated to non-automated",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Case Status should be \"Closed � Not Eligible\" transitioned from System Processing Queue",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Created date should be populated",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Last Updated date should be populated",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the SLA countdown should be tracking correctly",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Team assignment should be correct",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no banners should be displayed for identified and authenticated Auth Flow 1 user",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist panel should NOT be greyed out",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Type should be \"Adult\"",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Authentication should be \"Pass\"",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR should be \"TC064\"",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR Creation Date should be populated",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey ID should be populated",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Booking Source should be populated",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Booking Office ID should be populated",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Regime should be \"APPR\"",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Tags should include \"Claimant\" and \"Adult\"",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Aeroplan should be \"Not linked\"",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Profile ID should be populated",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Tier Status should be populated",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey should show \"Bound 1: YUL ? YYZ\" with claim filed for this flight",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Ancillary Fee section should be present",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the expected ancillary fees should be none",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility and Compensation section should be present and show \"NOT ELIGIBLE\" with reason \"Uncontrollable � weather, Code 71\"",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist Panel should auto-appear for FD topic",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And DDS should have run automatically after the 72-hour window elapsed as a system-triggered action with no customer interaction",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the eligibility decision should be pre-populated as \"NOT ELIGIBLE\" due to delay 5h with Code 71 being Uncontrollable",
+      "expected": "",
+      "id": "CP057"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Duplicate Check should have run automatically",
+      "expected": "",
+      "id": "CP058"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the result should be \"No duplicate found\"",
+      "expected": "",
+      "id": "CP059"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And CyberSource should NOT have been triggered as it only runs for eligible cases",
+      "expected": "",
+      "id": "CP060"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the system should have appended the booking record automatically for identified and authenticated user",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the previous status should have been \"System Processing Queue\" and the current status should be \"Closed � Not Eligible\" with the transition recorded in the Audit Log with timestamp",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And a Welcome Back / Not Eligible notification email should have been sent via Adobe",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the email subject should be \"Update on your Air Canada claim � [Case Reference]\"",
+      "expected": "",
+      "id": "CP064"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the email should contain the Case Reference and flight details AC 508 YUL to YYZ delay 5h and not eligible reason weather uncontrollable and insurance suggestion and contact information",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Agent Notes section should be accessible",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Audit Log should record case creation and System Processing Queue entry and DDS auto-run and status transition to Closed Not Eligible",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And Customer Communications should show the Welcome Back not eligible email",
+      "expected": "",
+      "id": "CP068"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the chatbot transcript should be accessible and linked to the case",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Attachments tab should be empty",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Final Status should be \"Closed � Not Eligible\"",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the case should be in read-only mode with no editable Decision Assist fields",
+      "expected": "",
+      "id": "CP072"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should not be able to access Case Search as it is for leads and management only",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the case was in System Processing Queue and DDS returned \"NOT ELIGIBLE\" due to uncontrollable weather",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then the customer was notified by email as not eligible",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no payment flow should be triggered",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence should have been asked",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record should have been created",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no batch file should have been dispatched",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard should show eligibility as \"NOT ELIGIBLE\" with no compensation record and no payout section",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS returns PENDING initially ? then FD-APPR-NE-28 when data arrives.",
+      "expected": "DDS returns PENDING initially ? then FD-APPR-NE-28 when data arrives.",
+      "id": "CP081"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Polling: System polls Trip Tracer daily from Day 2.",
+      "expected": "Polling: System polls Trip Tracer daily from Day 2.",
+      "id": "CP082"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "At D+4: Data arrives ? DDS processes ? Code 72, Weather, Uncontrollable ? Not Eligible.",
+      "expected": "At D+4: Data arrives ? DDS processes ? Code 72, Weather, Uncontrollable ? Not Eligible.",
+      "id": "CP083"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Notification: Email sent to customer with Not Eligible message � \"Your flight delay was caused by weather conditions beyond our control.",
+      "expected": "Notification: Email sent to customer with Not Eligible message � \"Your flight delay was caused by weather conditions beyond our control.",
+      "id": "CP084"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "You are not eligible for compensation under APPR.\" CRITICAL: Welcome Back must handle NE outcomes gracefully � customer was waiting for a decision and the answer is \"no.\" Claims Dashboard: Welcome Back = TRUE; Polling history shown; Data arrival at D+4; Final DDS = FD-APPR-NE-28; Not Eligible; Code 72.",
+      "expected": "You are not eligible for compensation under APPR.\" CRITICAL: Welcome Back must handle NE outcomes gracefully � customer was waiting for a decision and the answer is \"no.\" Claims Dashboard: Welcome Back = TRUE; Polling history shown; Data arrival at D+4; Final DDS = FD-APPR-NE-28; Not Eligible; Code 72.",
+      "id": "CP085"
+    }
+  ]
+}

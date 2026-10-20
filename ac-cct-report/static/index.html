@@ -1,0 +1,456 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>CCT — Test Execution Reports</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{--ac:#d0021b;--bg:#0f172a;--pnl:#1e293b;--bd:#334155;--tx:#e2e8f0;--mut:#94a3b8}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,sans-serif;background:var(--bg);color:var(--tx)}
+header{background:#111827;border-bottom:2px solid var(--ac);padding:12px 22px;display:flex;align-items:center;gap:14px}
+header h1{font-size:17px;margin:0}header .sp{margin-left:auto;color:var(--mut);font-size:13px}
+nav{display:flex;gap:2px;background:#111827;padding:0 22px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+nav button{background:none;border:0;color:var(--mut);padding:10px 14px;cursor:pointer;font-size:14px;border-bottom:2px solid transparent}
+nav button.on{color:#fff;border-bottom-color:var(--ac)}
+main{padding:22px;max-width:1300px;margin:0 auto}
+table{border-collapse:collapse;width:100%;font-size:13px;background:var(--pnl);border-radius:8px;overflow:hidden}
+th,td{border-bottom:1px solid var(--bd);padding:8px 11px;text-align:left}th{background:#0f172a;font-size:12px}
+tr:hover td{background:#243044}
+button.act{background:var(--ac);color:#fff;border:0;border-radius:6px;padding:6px 12px;cursor:pointer;font-size:13px}
+button.act:hover{filter:brightness(1.15)}button.gh{background:var(--bd)}button.gh:hover{background:#475569}
+.mut{color:var(--mut)}.bar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+input{background:#0f172a;color:var(--tx);border:1px solid var(--bd);border-radius:6px;padding:8px 10px;font-size:14px}
+.crumb{color:var(--mut);font-size:13px;margin-bottom:10px}.crumb a{color:#93c5fd;cursor:pointer}
+.fail{color:#f87171}.pass{color:#4ade80}
+/* master-detail split: test list left, report right (no page scroll between tests) */
+.split{display:flex;gap:14px;align-items:flex-start}
+.side{width:300px;flex:none;max-height:82vh;overflow:auto;border:1px solid var(--bd);border-radius:8px;background:var(--pnl)}
+.side .r{padding:9px 12px;border-bottom:1px solid var(--bd);cursor:pointer;font-size:13px}
+.side .r:hover{background:#243044}.side .r.sel{background:#243044;border-left:3px solid var(--ac)}
+.detail{flex:1;position:sticky;top:10px;min-width:0}
+.detail iframe{width:100%;height:82vh;border:1px solid var(--bd);border-radius:8px;background:#fff}
+.dh{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+/* env toggle (INT | CRT | …): segmented control in the header */
+.seg{display:inline-flex;border:1px solid var(--bd);border-radius:8px;overflow:hidden}
+.seg button{background:#0f172a;border:0;color:var(--mut);padding:6px 16px;cursor:pointer;font-size:13px;font-weight:600;letter-spacing:.3px}
+.seg button+button{border-left:1px solid var(--bd)}
+.seg button:hover{background:#243044;color:var(--tx)}
+.seg button.on{background:var(--ac);color:#fff}
+/* top-level view switcher: Reports | Jira tickets | Test executions */
+.views{display:flex;gap:2px;margin-left:18px}
+.views button{background:none;border:0;color:var(--mut);padding:6px 12px;cursor:pointer;font-size:13px;
+border-radius:6px}
+.views button.on{background:#243044;color:#fff}
+/* dashboard cards + bars */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:18px}
+.card{background:var(--pnl);border:1px solid var(--bd);border-radius:10px;padding:14px 16px}
+.card h4{margin:0 0 2px;font-size:14px}.card .c{color:var(--mut);font-size:12px;margin-bottom:9px}
+.nums{display:flex;gap:16px;align-items:baseline}.nums b{font-size:22px}
+.stack{display:flex;height:9px;border-radius:5px;overflow:hidden;background:#0f172a;margin-top:9px}
+.stack i{display:block}
+.lg{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin-top:7px}
+.lg s{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:4px}
+.pill{display:inline-block;padding:1px 7px;border-radius:9px;font-size:11px;font-weight:600}
+.p-pass{background:#14532d;color:#86efac}.p-fail{background:#7f1d1d;color:#fca5a5}
+.p-todo{background:#334155;color:#cbd5e1}.p-open{background:#78350f;color:#fcd34d}
+.p-done{background:#14532d;color:#86efac}
+a.jira{display:inline-block;background:#1d4ed8;color:#fff;text-decoration:none;border-radius:5px;
+padding:3px 9px;font-size:12px}a.jira:hover{filter:brightness(1.2)}
+.err{background:#7f1d1d;color:#fecaca;padding:10px 13px;border-radius:8px;margin-bottom:12px;font-size:13px}
+/* confirm dialog for anything that writes to Jira */
+.modal{position:fixed;inset:0;background:rgba(2,6,23,.72);display:flex;align-items:center;
+justify-content:center;z-index:50;padding:20px}
+.modal .box{background:var(--pnl);border:1px solid var(--bd);border-top:3px solid var(--ac);
+border-radius:12px;width:min(680px,100%);max-height:86vh;display:flex;flex-direction:column}
+.modal .mh{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--bd)}
+.modal .mh b{font-size:15px}.modal .mh button{margin-left:auto;padding:4px 10px}
+.modal .mb{padding:16px 18px;overflow:auto}
+.modal .mf{padding:12px 18px;border-top:1px solid var(--bd);display:flex;gap:9px;justify-content:flex-end}
+.modal h4{margin:16px 0 8px;font-size:13px;color:var(--mut);text-transform:uppercase;letter-spacing:.4px}
+.modal pre{background:#0f172a;border:1px solid var(--bd);border-radius:7px;padding:11px;
+font-size:12px;white-space:pre-wrap;word-break:break-word;margin:8px 0 0}
+.kv{display:flex;gap:12px;padding:5px 0;border-bottom:1px solid #23324a;font-size:13px}
+.kv span{color:var(--mut);min-width:130px}.kv b{word-break:break-word}
+</style></head><body>
+<header><h1>✈ CCT — Test Execution Reports</h1>
+  <div class="views" id="views"></div>
+  <div class="seg" id="envbar" title="Switch environment"></div>
+  <span class="sp" id="who"></span>
+  <a href="/logout"><button class="act gh">Sign out</button></a></header>
+<nav id="nav"></nav>
+<main id="main"><div class="mut">Loading…</div></main>
+<script>
+const $=s=>document.querySelector(s), esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const jget=async u=>{const r=await fetch(u);if(r.status===401||r.redirected){location.href='/login';return{}}return r.json()};
+let FLOWS=[],ENVS=[],ENV='';
+// ── top-level views ──────────────────────────────────────────────────────────
+const VIEWS=[['reports','📄 Reports'],['jira','🐛 Jira tickets'],['exec','✅ Test executions'],['map','🔗 Case mapping']];
+let VIEW='reports';
+function renderViews(){
+  $('#views').innerHTML=VIEWS.map(([k,l])=>
+    `<button class="${k===VIEW?'on':''}" onclick="setView('${k}')">${l}</button>`).join('');
+  // the env toggle only means anything for the S3 report browser
+  $('#envbar').style.display = VIEW==='reports' ? '' : 'none';
+}
+function setView(v){ VIEW=v; renderViews();
+  if(v==='reports'){ $('#nav').style.display='';
+    if(FLOWS.length) openFlow(FLOWS[0]); else loadEnv(); }
+  else { $('#nav').style.display='none';
+    $('#envbar').style.display = (v==='map') ? '' : 'none';   // mapping is env-scoped too
+    (v==='jira'?jiraFlows : v==='exec'?execFlows : mapView)(); } }
+async function boot(){ renderViews(); await loadEnv(); }
+
+// ── view 2: Jira tickets per flow ────────────────────────────────────────────
+const bar=(segs)=>{const t=segs.reduce((a,[,n])=>a+n,0)||1;
+  return `<div class=stack>${segs.map(([c,n])=>`<i style="width:${100*n/t}%;background:${c}"></i>`).join('')}</div>`};
+const apiErr=d=>d&&d.error?`<div class=err><b>${esc(d.error)}</b>${d.detail?' — '+esc(d.detail):''}</div>`:'';
+
+async function jiraFlows(){
+  const m=$('#main'); m.innerHTML='<div class=mut>Loading Jira… (first load can take ~30s)</div>';
+  const d=await jget('/api/jira/flows');
+  if(d.error){ m.innerHTML=apiErr(d); return }
+  const rows=d.flows||[];
+  m.innerHTML=`<div class=bar><b>Jira tickets by flow</b>
+      <span class=mut>project CHAI · grouped by component</span>
+      <span style=margin-left:auto></span>
+      <span class=mut>${d.cache_age!=null?'cached '+d.cache_age+'s ago':''}</span>
+      <button class="act gh" onclick="refreshJira()">Refresh</button></div>
+    <div class=cards>${rows.map(r=>{
+      const o=r.bugs_open||0, rs=r.bugs_resolved||0;
+      return `<div class=card>
+        <h4>${esc(r.label||r.flow)}</h4><div class=c>${esc(r.component||'—')}</div>
+        ${r.error?`<div class=fail style=font-size:12px>${esc(r.error)}</div>`:`
+        <div class=nums><div><b class=fail>${o}</b> <span class=mut>open bugs</span></div>
+          <div><b class=pass>${rs}</b> <span class=mut>resolved</span></div></div>
+        ${bar([['#f87171',o],['#4ade80',rs]])}
+        <div class=lg><span><s style=background:#f87171></s>open</span>
+          <span><s style=background:#4ade80></s>resolved</span>
+          <span style=margin-left:auto>${r.total} tickets total</span></div>`}
+        <div style=margin-top:10px><button class=act onclick="jiraTickets('${r.flow}')">View bugs ▸</button></div>
+      </div>`}).join('')}</div>`;
+}
+
+async function jiraTickets(flow){
+  const m=$('#main'); m.innerHTML='<div class=mut>Loading tickets…</div>';
+  const d=await jget('/api/jira/tickets?flow='+encodeURIComponent(flow)+'&type=Bug');
+  if(d.error){ m.innerHTML=apiErr(d); return }
+  const iss=d.issues||[];
+  m.innerHTML=`<div class=crumb><a onclick="jiraFlows()">Jira by flow</a> ▸ <b>${esc(d.label||flow)}</b></div>
+    <div class=bar><b>${iss.length}</b> bug(s) · <span class=pass>${d.counts.resolved} resolved</span> ·
+      <span class=fail>${d.counts.open} open</span>
+      ${d.truncated?'<span class=fail>(list truncated)</span>':''}
+      <input id=q placeholder="🔍 filter…" oninput=filterTix()></div>
+    <table id=tix><tr><th>Key</th><th>Summary</th><th>Status</th><th>Priority</th><th>Updated</th><th></th></tr>
+    ${iss.map(i=>`<tr data-t="${esc((i.key+' '+i.summary+' '+i.status).toLowerCase())}">
+      <td><b>${esc(i.key)}</b></td><td>${esc(i.summary)}</td>
+      <td><span class="pill ${i.resolution?'p-done':'p-open'}">${esc(i.status)}</span></td>
+      <td>${esc(i.priority||'—')}</td><td class=mut>${esc(i.updated)}</td>
+      <td><a class=jira href="${esc(i.url)}" target=_blank rel=noopener>Open ↗</a></td></tr>`).join('')
+      ||'<tr><td colspan=6 class=mut>No bugs on this component.</td></tr>'}</table>`;
+}
+function filterTix(){const q=($('#q').value||'').toLowerCase();
+  document.querySelectorAll('#tix tr[data-t]').forEach(tr=>tr.style.display=tr.dataset.t.includes(q)?'':'none')}
+
+// ── view 3: Xray test-execution results ──────────────────────────────────────
+let SUITE='sit';
+const SC={PASSED:'#4ade80',FAILED:'#f87171','TO DO':'#64748b',EXECUTING:'#fbbf24',ABORTED:'#a78bfa'};
+async function execFlows(){
+  const m=$('#main'); m.innerHTML='<div class=mut>Loading test executions… (first load can take ~1min)</div>';
+  const d=await jget('/api/jira/executions?suite='+SUITE);
+  if(d.error){ m.innerHTML=apiErr(d); return }
+  const rows=d.flows||[];
+  m.innerHTML=`<div class=bar><b>Test execution results</b>
+      <div class=seg style=margin-left:8px>${['sit','uat'].map(x=>
+        `<button class="${x===SUITE?'on':''}" onclick="setSuite('${x}')">${x.toUpperCase()}</button>`).join('')}</div>
+      <span style=margin-left:auto></span>
+      <span class=mut>${d.cache_age!=null?'cached '+d.cache_age+'s ago':''}</span>
+      <button class="act gh" onclick="refreshJira()">Refresh</button></div>
+    <div class=cards>${rows.map(r=>{
+      const t=r.totals||{}, tot=Object.values(t).reduce((a,b)=>a+b,0);
+      const segs=Object.entries(t).map(([k,v])=>[SC[k]||'#64748b',v]);
+      return `<div class=card>
+        <h4>${esc(r.label||r.flow)}</h4>
+        <div class=c>${(r.keys||[]).join(', ')||'no execution configured'}</div>
+        ${r.error?`<div class=fail style=font-size:12px>${esc(r.error)}</div>`
+         : !tot?'<div class=mut style=font-size:12px>No tests in this execution.</div>':`
+        <div class=nums>
+          <div><b class=pass>${t.PASSED||0}</b> <span class=mut>passed</span></div>
+          <div><b class=fail>${t.FAILED||0}</b> <span class=mut>failed</span></div>
+          <div><b>${t['TO DO']||0}</b> <span class=mut>to do</span></div></div>
+        ${bar(segs)}
+        <div class=lg>${Object.entries(t).map(([k,v])=>
+          `<span><s style=background:${SC[k]||'#64748b'}></s>${esc(k)} ${v}</span>`).join('')}
+          <span style=margin-left:auto>${tot} tests</span></div>
+        <div style=margin-top:10px><button class=act onclick="execDetail('${r.flow}')">View tests ▸</button></div>`}
+      </div>`}).join('')}</div>`;
+}
+function setSuite(x){ SUITE=x; execFlows() }
+
+async function execDetail(flow){
+  const m=$('#main'); m.innerHTML='<div class=mut>Loading…</div>';
+  const d=await jget('/api/jira/execution?flow='+encodeURIComponent(flow)+'&suite='+SUITE);
+  if(d.error){ m.innerHTML=apiErr(d); return }
+  m.innerHTML=`<div class=crumb><a onclick="execFlows()">Test executions</a> ▸
+      <b>${esc(d.label||flow)}</b> · ${SUITE.toUpperCase()}</div>
+    ${(d.executions||[]).map(x=>`
+      <div class=bar style=margin-top:14px><b>${esc(x.key)}</b>
+        <span class=mut>${esc(x.summary||'')}</span>
+        <a class=jira href="${esc(x.url||'#')}" target=_blank rel=noopener>Open ↗</a></div>
+      ${x.error?`<div class=err>${esc(x.error)}</div>`:`
+      <table><tr><th>Test</th><th>Summary</th><th>Status</th></tr>
+      ${(x.tests||[]).map(t=>`<tr><td><b>${esc(t.key||'')}</b></td><td>${esc(t.summary||'')}</td>
+        <td><span class="pill ${t.status==='PASSED'?'p-pass':t.status==='FAILED'?'p-fail':'p-todo'}">${esc(t.status)}</span></td>
+        </tr>`).join('')}</table>`}`).join('')}`;
+}
+async function refreshJira(){ await fetch('/api/jira/refresh',{method:'POST'});
+  (VIEW==='jira'?jiraFlows:execFlows)(); }
+
+// Load an env (int / crt / …): re-renders the env toggle, the flow tabs, and the run list.
+async function loadEnv(env){
+  const f=await jget('/api/flows'+(env?'?env='+encodeURIComponent(env):''));
+  ENVS=f.envs||[]; ENV=f.env||''; FLOWS=f.flows||[];
+  $('#who').innerHTML=(f.user?`Signed in: <b>👤 ${f.user}</b>`:'')
+    +(f.bucket?` &nbsp;·&nbsp; Source: <b>📦 ${f.bucket}</b>`:'');
+  $('#envbar').innerHTML=ENVS.map(s=>
+    `<button class="${s===ENV?'on':''}" onclick="loadEnv('${s}')">${esc(s)}</button>`).join('');
+  $('#nav').innerHTML=FLOWS.map(x=>`<button onclick="openFlow('${x}')">${esc(x)}</button>`).join('');
+  if(FLOWS.length) openFlow(FLOWS[0]);
+  else $('#main').innerHTML=`<div class=mut>No flows in <b>${esc(ENV)||'this environment'}</b> yet.</div>`;
+}
+function setNav(f){$('#nav').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.textContent===f))}
+const qs=(flow,run)=>`env=${encodeURIComponent(ENV)}&flow=${encodeURIComponent(flow)}`
+  +(run?`&run=${encodeURIComponent(run)}`:'')
+  +(SUITESEL?`&suite=${encodeURIComponent(SUITESEL)}`:'');
+// A flow's runs may sit directly under it (runs/int/fd/<run>/) or under a suite
+// (runs/int/fd/sit/<run>/). Both are supported: suites found under the flow become a toggle, and
+// anything still written the old way is listed under "unassigned" rather than disappearing.
+let SUITESEL='';
+async function openFlow(flow, suite){
+  setNav(flow); SUITESEL = suite===undefined ? '' : suite;
+  const m=$('#main');m.innerHTML='<div class=mut>Loading runs…</div>';
+  const d=await jget('/api/runs?'+qs(flow)+(SUITESEL?'&suite='+encodeURIComponent(SUITESEL):''));
+  const runs=d.runs||[], suites=d.suites||[];
+  const tabs = (suites.length||SUITESEL)
+    ? `<div class=seg style=margin-left:8px>
+        ${(suites.length?suites:[SUITESEL]).map(x=>
+          `<button class="${x===SUITESEL?'on':''}" onclick="openFlow('${flow}','${x}')">${esc(x.toUpperCase())}</button>`).join('')}
+        ${runs.length&&!SUITESEL?`<button class="${SUITESEL?'':'on'}" onclick="openFlow('${flow}')">UNASSIGNED</button>`:''}
+       </div>` : '';
+  const note = (!SUITESEL && runs.length && suites.length)
+    ? '<div class=mut style=font-size:12px;margin-bottom:8px>These runs were written without a suite level. New runs should land under SIT or UAT.</div>' : '';
+  m.innerHTML=`<div class=crumb><b>${flow}</b>${SUITESEL?' ▸ '+esc(SUITESEL.toUpperCase()):''}</div>
+    <div class=bar><b>${runs.length}</b> run(s) ${tabs}
+      <input id=q placeholder="🔍 filter runs…" oninput=filterRuns()></div>
+    ${note}
+    <table id=runs><tr><th>Run</th><th></th></tr>
+    ${runs.map(r=>`<tr data-r="${r}"><td><b>${esc(r)}</b></td>
+      <td><button class=act onclick="openRun('${flow}','${r}')">Open reports ▸</button></td></tr>`).join('')
+      ||'<tr><td colspan=2 class=mut>No runs here yet.</td></tr>'}</table>`;
+}
+function filterRuns(){const q=($('#q').value||'').toLowerCase();
+  document.querySelectorAll('#runs tr[data-r]').forEach(tr=>tr.style.display=tr.dataset.r.toLowerCase().includes(q)?'':'none')}
+async function openRun(flow,run){
+  const m=$('#main');m.innerHTML='<div class=mut>Loading…</div>';
+  const d=await jget('/api/files?'+qs(flow,run));
+  const html=(d.files||[]).filter(f=>f.name.endsWith('.html'));   // ONLY html reports
+  const dl='/download?'+qs(flow,run);
+  const idx=html.find(f=>f.name==='index.html');
+  const met=html.find(f=>f.name.endsWith('metrics/report.html'));
+  const byName=Object.fromEntries(html.map(f=>[f.name,f.key]));
+  // one row per TEST (its evidence file); quality paired in
+  const tests=html.filter(f=>f.name.endsWith('.evidence.html'))
+    .map(f=>({id:f.name.replace('.evidence.html',''), ev:f.key,
+              ql:byName[f.name.replace('.evidence.html','.quality.html')]}))
+    .sort((a,b)=>a.id.localeCompare(b.id));
+  window._T=tests; window._CUR={flow:flow, run:run, suite:SUITESEL};
+  if(SUITESEL) BUGSUITE=SUITESEL;   // path-derived suite wins over the dialog default
+  // which of these cases already have a Jira bug? drives the button label below
+  jget('/api/jira/casemap?flow='+encodeURIComponent(flow))
+    .then(d=>{ window._BUGMAP=(d&&d.map)||{}; if(tests.length) pick(window._SEL||0) })
+    .catch(()=>{ window._BUGMAP={} });
+  m.innerHTML=`<div class=crumb><a onclick="openFlow('${flow}')">${flow}</a> ▸ <b>${esc(run)}</b></div>
+    <div class=bar>
+      ${idx?`<button class=act onclick="loadIf('${idx.key}')">📄 Index</button>`:''}
+      ${met?`<button class="act gh" onclick="loadIf('${met.key}')">📊 Metrics</button>`:''}
+      <span style=margin-left:auto></span>
+      <button class=act onclick="location.href='${dl}&kind=all'">Download all ⬇</button>
+      <button class="act gh" onclick="location.href='${dl}&kind=evidence'">Evidence ⬇</button></div>
+    <div class=split>
+      <div class=side>
+        <div class=r style=cursor:default;color:var(--mut)><input id=ff placeholder="🔍 filter ${tests.length} tests…" oninput=filterFiles() style=width:100%></div>
+        ${tests.map((t,i)=>`<div class=r data-n="${t.id.toLowerCase()}" id=r_${i} onclick=pick(${i})>${esc(t.id)}</div>`).join('')
+          ||'<div class=r style=color:var(--mut)>No test reports.</div>'}
+      </div>
+      <div class=detail id=detail>${idx?'':'<div class=mut>Select a test on the left.</div>'}</div>
+    </div>`;
+  if(tests.length) pick(0); else if(idx) loadIf(idx.key);
+}
+function pick(i){
+  const t=window._T[i]; if(!t)return; window._SEL=i;
+  document.querySelectorAll('.side .r').forEach(r=>r.classList.remove('sel'));
+  const row=$('#r_'+i); if(row)row.classList.add('sel');
+  $('#detail').innerHTML=`<div class=dh><b>${esc(t.id)}</b>
+     <button class=act onclick="setSrc('${t.ev}',this)">Evidence</button>
+     ${(()=>{const b=(window._BUGMAP||{})[t.id]||{}; const k=b.bug_key;
+       return `<button class="act ${k?'gh':''}" onclick="jiraBug('${t.id}')" title="${k?'Update Jira bug '+k+' with this run\'s evidence':'Create a Jira bug for this test case'}">🐛 ${k?k:'Create bug'}</button>`})()}
+     <a href="/download?file=${t.ev}"><button class="act gh">Download ⬇</button></a></div>
+    <iframe id=vif src="/report/${t.ev}"></iframe>`;
+}
+function setSrc(key,btn){ $('#vif').src='/report/'+key;
+  if(btn){btn.parentElement.querySelectorAll('button').forEach(b=>b.className='act gh');btn.className='act'} }
+function loadIf(key){ $('#detail').innerHTML=`<iframe id=vif src="/report/${key}"></iframe>` }
+function filterFiles(){const q=($('#ff').value||'').toLowerCase();
+  document.querySelectorAll('.side .r[data-n]').forEach(r=>r.style.display=r.dataset.n.includes(q)?'':'none')}
+// ── Jira bug: preview then confirm ───────────────────────────────────────────
+// Two calls on purpose. The first is a preview (commit omitted) and shows the exact payload;
+// only pressing Confirm sends the second call with commit:true. Nothing reaches CHAI otherwise.
+function closeModal(){ const m=$('#modal'); if(m) m.remove() }
+function modal(title, bodyHtml, actions){
+  closeModal();
+  const d=document.createElement('div'); d.id='modal'; d.className='modal';
+  d.innerHTML=`<div class=box><div class=mh><b>${title}</b>
+      <button class="act gh" onclick="closeModal()">✕</button></div>
+    <div class=mb>${bodyHtml}</div><div class=mf>${actions}</div></div>`;
+  d.onclick=e=>{ if(e.target===d) closeModal() };
+  document.body.appendChild(d);
+}
+const kv=(k,v)=>`<div class=kv><span>${esc(k)}</span><b>${esc(v==null?'—':String(v))}</b></div>`;
+
+let BUGSUITE='sit';
+function setBugSuite(s,caseId){ BUGSUITE=s; jiraBug(caseId) }
+async function jiraBug(caseId){
+  const c=window._CUR||{};
+  modal('Jira', '<div class=mut>Checking this test case…</div>', '');
+  // the S3 run path has no SIT/UAT in it, so the suite is chosen here — it decides both the
+  // Testing Type stamped on the bug and which Test Execution the defect is linked into.
+  const r=await fetch('/api/jira/bug',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({env:ENV,flow:c.flow,run:c.run,case:caseId,suite:BUGSUITE,path_suite:c.suite||''})});
+  const d=await r.json();
+  if(d.error){ modal('Jira', apiErr(d), `<button class="act gh" onclick="closeModal()">Close</button>`); return }
+
+  if(d.action==='none'){
+    modal('Jira — nothing to do',
+      `<p class=mut>${esc(d.detail||'')}</p>`+kv('Test case',d.case)+kv('Result','Passed'),
+      `<button class="act gh" onclick="closeModal()">Close</button>`); return }
+
+  const f=(d.payload||{}).fields||{};
+  const lines=((f.description||{}).content||[]).map(n=>(n.content||[{}])[0].text||'');
+  let body =
+    `<div class=bar style=margin-bottom:12px><span class=mut>Suite</span>
+      <div class=seg>${['sit','uat'].map(x=>
+        `<button class="${x===BUGSUITE?'on':''}" onclick="setBugSuite('${x}','${esc(caseId)}')">${x.toUpperCase()}</button>`
+      ).join('')}</div>
+      <span class=mut style=font-size:12px>sets Testing Type and picks the Test Execution</span></div>` +
+    kv('Test case', d.case) + kv('Run', d.run) +
+    kv('Result', d.passed?'Passed':'Failed') +
+    kv('Existing bug', d.existing_bug || 'none — a new one will be created');
+  if(d.action==='create'){
+    body += `<h4>Will CREATE this issue</h4>`+
+      kv('Project', (f.project||{}).key) + kv('Type', (f.issuetype||{}).name) +
+      kv('Component', (f.components||[]).map(x=>x.name).join(', ')) +
+      kv('Labels', (f.labels||[]).join(', ')) +
+      kv('Testing Type', d.testing_type ? d.testing_type+'  ('+String(d.suite||'').toUpperCase()+')' : '—') +
+      `<div class=kv><span>Summary</span><b>${esc(f.summary||'')}</b></div>`+
+      `<pre>${esc(lines.join('\n'))}</pre>`;
+  } else if(d.action==='update'){
+    body += `<h4>Will UPDATE ${esc(d.issue)}</h4>`+`<p>${esc(d.comment||'')}</p>`;
+  } else if(d.action==='resolve'){
+    body += `<h4>Will comment on ${esc(d.issue)} and move it to ${esc(d.transition)}</h4>`+
+            `<p>${esc(d.comment||'')}</p>`+
+            `<p class=mut>CHAI's Bug workflow offers no transition to Closed, so this moves the
+             ticket to Monitor and leaves closing to a human.</p>`;
+  }
+  if(d.attachment) body += kv('Attach', d.attachment+'  ('+(d.evidence_bytes||0).toLocaleString()+' bytes)');
+  if(d.will_link) body += kv('Link to test case', d.xray_test+'  (added as a defect on its test run)');
+  else if(d.link_note) body += `<div class=err style=margin-top:10px>${esc(d.link_note)}</div>`;
+  if(!d.write_enabled) body += `<div class=err>JIRA_WRITE=0 — writes are disabled on this deployment.</div>`;
+
+  const act = d.write_enabled
+    ? `<button class="act gh" onclick="closeModal()">Cancel</button>
+       <button class=act onclick="jiraCommit('${esc(caseId)}')">Confirm — write to Jira</button>`
+    : `<button class="act gh" onclick="closeModal()">Close</button>`;
+  modal('Jira — confirm before writing', body, act);
+}
+
+async function jiraCommit(caseId){
+  const c=window._CUR||{};
+  modal('Jira', '<div class=mut>Writing to Jira…</div>', '');
+  const r=await fetch('/api/jira/bug',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({env:ENV,flow:c.flow,run:c.run,case:caseId,commit:true,suite:BUGSUITE,path_suite:c.suite||''})});
+  const d=await r.json();
+  if(d.error){ modal('Jira — failed', apiErr(d), `<button class="act gh" onclick="closeModal()">Close</button>`); return }
+  const res=d.result||{};
+  let body = kv('Action', d.action) +
+    (res.created?kv('Created', res.created):'') +
+    (res.attached?kv('Attached', res.attached.filename):'') +
+    (res.commented?kv('Comment', 'posted'):'') +
+    (res.linked?kv('Linked to test case', res.linked.ok
+       ? (res.linked.test+' in '+res.linked.execution)
+       : ('not linked — '+res.linked.reason)):'') +
+    (res.transition?kv('Transition', res.transition.ok
+       ? ('moved to '+res.transition.to)
+       : ('not moved — '+res.transition.reason)):'');
+  if(d.url) body += `<p><a class=jira href="${esc(d.url)}" target=_blank rel=noopener>Open ${esc(d.url.split('/').pop())} ↗</a></p>`;
+  modal('Jira — done', body, `<button class="act gh" onclick="closeModal()">Close</button>`);
+  if(res.created && window._CUR){ const d2=await jget('/api/jira/casemap?flow='+
+    encodeURIComponent(window._CUR.flow)); window._BUGMAP=(d2&&d2.map)||{};
+    pick(window._SEL||0); }
+}
+
+// ── view 4: case -> Xray test mapping (suggest, human confirms) ──────────────
+// S3 cases (FD_TC_001) and Xray tests ([FD-SIT-001] ...) share no identifier, so this screen
+// ranks candidates and records only what you pick. Nothing is auto-bound.
+let MAPFLOW='', MAPRUN='', MAPSUITE='sit';
+async function mapView(){
+  const m=$('#main');
+  if(!FLOWS.length){ await loadEnv(); }
+  MAPFLOW = MAPFLOW || (FLOWS[0]||'');
+  m.innerHTML='<div class=mut>Loading runs…</div>';
+  const rd=await jget('/api/runs?env='+encodeURIComponent(ENV)+'&flow='+encodeURIComponent(MAPFLOW));
+  const runs=rd.runs||[];
+  if(!MAPRUN || !runs.includes(MAPRUN)) MAPRUN = runs[0]||'';
+  m.innerHTML=`<div class=bar><b>Case → Xray test mapping</b>
+      <select id=mf onchange="MAPFLOW=this.value;MAPRUN='';mapView()">${FLOWS.map(f=>
+        `<option ${f===MAPFLOW?'selected':''}>${esc(f)}</option>`).join('')}</select>
+      <select id=mr onchange="MAPRUN=this.value;mapView()">${runs.map(r=>
+        `<option ${r===MAPRUN?'selected':''}>${esc(r)}</option>`).join('')||'<option>no runs</option>'}</select>
+      <div class=seg>${['sit','uat'].map(x=>
+        `<button class="${x===MAPSUITE?'on':''}" onclick="MAPSUITE='${x}';mapView()">${x.toUpperCase()}</button>`).join('')}</div>
+    </div><div id=mapbody class=mut>Loading suggestions…</div>`;
+  if(!MAPRUN){ $('#mapbody').innerHTML='<div class=mut>No runs for this flow.</div>'; return }
+  const d=await jget(`/api/jira/mapping?env=${encodeURIComponent(ENV)}&flow=${encodeURIComponent(MAPFLOW)}`
+    +`&run=${encodeURIComponent(MAPRUN)}&suite=${MAPSUITE}`);
+  if(d.error){ $('#mapbody').innerHTML=apiErr(d); return }
+  const cs=d.cases||[];
+  $('#mapbody').innerHTML=
+    `<div class=mut style=margin-bottom:10px>${cs.length} case(s) in this run ·
+      ${d.tests_available} Xray test(s) in the ${MAPSUITE.toUpperCase()} execution ·
+      pick the matching test and press Save</div>`+
+    (cs.length? `<table><tr><th>Case</th><th>Expected</th><th>Suggested Xray test</th><th></th></tr>
+    ${cs.map((c,i)=>{
+      const f=c.facts||{}, amt=f.expected_amount||{};
+      const exp=[f.regime,f.expected_status,f.expected_system_code,
+                 (amt.currency?amt.currency+' '+amt.value:'')].filter(Boolean).join(' · ');
+      return `<tr>
+        <td><b>${esc(c.case_id)}</b>${c.bug?`<br><span class="pill p-open">${esc(c.bug)}</span>`:''}</td>
+        <td class=mut style=font-size:12px>${esc(exp)}</td>
+        <td><select id=ms_${i} style=width:100%>
+          <option value="">— not mapped —</option>
+          ${(c.candidates||[]).map(r=>`<option value="${esc(r.key)}"
+            ${ (c.bound?c.bound===r.key:(c.confident&&r===c.candidates[0])) ?'selected':''}>
+            ${esc(r.key)} · ${r.score} · ${esc(r.summary.slice(0,60))}</option>`).join('')}
+        </select>
+        ${c.bound?`<div class=mut style=font-size:11px;margin-top:3px>saved: ${esc(c.bound)}</div>`:''}</td>
+        <td><button class=act onclick="mapSave(${i},'${esc(c.case_id)}')">Save</button></td>
+      </tr>`}).join('')}</table>`
+    : '<div class=mut>No result.json files in this run — nothing to map.</div>');
+}
+async function mapSave(i,caseId){
+  const key=$('#ms_'+i).value;
+  const r=await fetch('/api/jira/mapping',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({flow:MAPFLOW,case:caseId,xray_key:key})});
+  const d=await r.json();
+  modal(d.error?'Mapping — failed':'Mapping saved',
+    d.error?apiErr(d):kv('Case',caseId)+kv('Xray test',key||'cleared'),
+    `<button class="act gh" onclick="closeModal();mapView()">Close</button>`);
+}
+
+boot();
+</script></body></html>

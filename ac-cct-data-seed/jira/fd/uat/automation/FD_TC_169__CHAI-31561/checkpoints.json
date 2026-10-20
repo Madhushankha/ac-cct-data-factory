@@ -1,0 +1,603 @@
+{
+  "key": "CHAI-31561",
+  "test_id": "FD_TC_169",
+  "title": "ASL | No Determination | MSL Data Missing | 14-Day Polling Exhausted | Manual Handling",
+  "goal": "Israel-destination flight (YYZ?TLV) disrupted but critical MSL data is MISSING from backend � operating times, flight number details, and ALL disruption codes are unavailable. DDS cannot calculate delay, determine controllability, or assess any regime. System retried daily for 14 days with no data. Case forwarded for manual handling with 30-day SLA. ASL counterpart to APPR TC_072 (ND-05) and EU TC_145 (ND-05). Validates that the ND-05 pattern is consistent across all three regimes.",
+  "summary": {
+    "seed": 8,
+    "chat": 11,
+    "api": 20,
+    "email": 3,
+    "dashboard": 13,
+    "implied": 5,
+    "manual": 4,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Israel-destination flight (YYZ?TLV) disrupted but critical MSL data is MISSING from backend � operating times, flight number details, and ALL disruption codes are unavailable. DDS cannot calculate delay, determine controllability, or assess any regime. System retried daily for 14 days with no data. Case forwarded for manual handling with 30-day SLA. ASL counterpart to APPR TC_072 (ND-05) and EU TC_145 (ND-05). Validates that the ND-05 pattern is consistent across all three regimes.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: single passenger Oren Navon (Adult)",
+      "expected": "PNR: single passenger Oren Navon (Adult)",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Journey: 1 leg AC operated, Flight AC 084, YYZ?TLV",
+      "expected": "Journey: 1 leg AC operated, Flight AC 084, YYZ?TLV",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Flight date: May 5, 2026",
+      "expected": "Flight date: May 5, 2026",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Trip Tracer data status: INCOMPLETE � actual arrival time NOT populated; operating times MISSING; ALL codes (arrival, departure, cancellation) = NULL",
+      "expected": "Trip Tracer data status: INCOMPLETE � actual arrival time NOT populated; operating times MISSING; ALL codes (arrival, departure, cancellation) = NULL",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "14-day retry: EXHAUSTED (May 8�May 22, all polls returned \"data missing\")",
+      "expected": "14-day retry: EXHAUSTED (May 8�May 22, all polls returned \"data missing\")",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Regime: ASL (TLV destination) + APPR (YYZ origin)",
+      "expected": "Regime: ASL (TLV destination) + APPR (YYZ origin)",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Residence: Israel",
+      "expected": "Residence: Israel",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Filing date: May 28, 2026",
+      "expected": "Filing date: May 28, 2026",
+      "id": "CP009"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given a case was previously created for PNR: TC148",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case was placed in the System Processing Queue (case previously filed via chatbot, all identification/authentication/journey selection completed)",
+      "expected": "",
+      "id": "CP011"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And 72 hours have elapsed since last leg arrival",
+      "expected": "",
+      "id": "CP012"
+    },
+    {
+      "section": "BACKGROUND",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And the Rules Engine attempted to retrieve MSL data from backend systems",
+      "expected": "",
+      "id": "CP013"
+    },
+    {
+      "section": "MSL DATA RETRIEVAL",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the system attempts to retrieve critical MSL data on a scheduled basis",
+      "expected": "Day 1: RE queries backend ? Operating times: NULL, Flight number: NULL ? CRITICAL DATA MISSING ? retry Day 3: RE retries ? Operating times: NULL, Flight number: NULL ? CRITICAL DATA MISSING ? retry Day 7: RE retries ? Operating times: NULL, Flight number: NULL ? CRITICAL DATA MISSING ? retry Day 10: RE retries ? Operating times: NULL, Flight number: NULL ? CRITICAL DATA MISSING ? retry Day 14: RE final retry ? Operating times: NULL, Flight number: NULL ? 14-DAY WINDOW EXHAUSTED ? CRITICAL DATA STILL MISSING ? NO DETERMINATION ? ESCALATE TO AGENT",
+      "id": "CP014"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Promised Itinerary - Flight: MISSING (flight number not available in backend), Route: YYZ ? TLV",
+      "expected": "Promised Itinerary - Flight: MISSING (flight number not available in backend), Route: YYZ ? TLV",
+      "id": "CP015"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current Itinerary - Status: DISRUPTED (details incomplete)",
+      "expected": "Current Itinerary - Status: DISRUPTED (details incomplete)",
+      "id": "CP016"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Customer Status: Travel Completed (filed after travel)",
+      "expected": "Customer Status: Travel Completed (filed after travel)",
+      "id": "CP017"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: ASL (Israel) (Israel destination � TLV)",
+      "expected": "Regime: ASL (Israel) (Israel destination � TLV)",
+      "id": "CP018"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Destination: TLV (Israel)",
+      "expected": "Destination: TLV (Israel)",
+      "id": "CP019"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL DATA: CRITICAL DATA MISSING",
+      "expected": "MSL DATA: CRITICAL DATA MISSING",
+      "id": "CP020"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Operating Times: NULL (after 14 days)",
+      "expected": "Operating Times: NULL (after 14 days)",
+      "id": "CP021"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Flight Number: NULL (after 14 days � backend unable to resolve)",
+      "expected": "Flight Number: NULL (after 14 days � backend unable to resolve)",
+      "id": "CP022"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Disruption Code: CANNOT BE ASSESSED (no MSL flight identified)",
+      "expected": "Disruption Code: CANNOT BE ASSESSED (no MSL flight identified)",
+      "id": "CP023"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "14-Day Retry Window: EXHAUSTED",
+      "expected": "14-Day Retry Window: EXHAUSTED",
+      "id": "CP024"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Case Status: System Processing Queue ? 14 days exhausted ? ESCALATED TO AGENT",
+      "expected": "Case Status: System Processing Queue ? 14 days exhausted ? ESCALATED TO AGENT",
+      "id": "CP025"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "NOTE: Unlike ND-04 (codes missing), here the structural flight data itself is absent � RE cannot even identify which flight to query codes for",
+      "expected": "NOTE: Unlike ND-04 (codes missing), here the structural flight data itself is absent � RE cannot even identify which flight to query codes for",
+      "id": "CP026"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[PASSENGER] | NO DETERMINATION | MSL_DATA_MISSING_14_DAYS | PENDING AGENT REVIEW",
+      "expected": "[PASSENGER] | NO DETERMINATION | MSL_DATA_MISSING_14_DAYS | PENDING AGENT REVIEW",
+      "id": "CP027"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system updates the case status from \"System Processing Queue\" to \"Pending Agent Review\"",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And the system records: 14-day retry window exhausted, critical MSL data missing (operating times, flight number)",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case is routed to the manual review agent queue",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "NOTIFICATION � ESCALATION EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "NOTIFICATION � ESCALATION EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a No Determination notification email is sent to the customer's email on file",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "NOTIFICATION � ESCALATION EMAIL",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains:",
+      "expected": "Update on your Air Canada claim � [Case Reference] Your claim is currently under review by our Customer Relations team. We require additional time to assess your eligibility.",
+      "id": "CP033"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the case has been created for PNR \"TC148\" under ASL Israel destination TLV",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Case Header Topic/Sub-topic should be \"Travel Disruptions � Delay\"",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status should be \"Pending Agent Review\" escalated from System Processing Queue after 14 days",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Last Updated date should be Day 14",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Team assignment should be \"Manual Review Agent Queue\"",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Journey should show \"YYZ ? TLV\" as disrupted with details incomplete due to missing structural data",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the flight number and operating times should both be NULL meaning RE cannot even identify which flight to query codes for",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And this should differ from TC185 where the flight was identified but codes were missing",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility and Compensation section should be present and show \"NO DETERMINATION\" with reason \"Critical MSL data missing � operating times NULL, flight number NULL after 14 days\"",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And RE should have polled on Days 1, 3, 7, 10, and 14 and all returned NULL for operating times and flight number",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the 14-Day Retry Window should be exhausted",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the determination should be \"NO DETERMINATION\" escalated to agent",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Case Status History should show Created then System Processing Queue then Day 14 Pending Agent Review escalated due to MSL data missing",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And an escalation email should have been sent to the customer's email on file containing Case Reference and limited flight details YYZ to TLV with date and data gap and status under review and expected timeline",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the agent should not be able to access Case Search as it is for leads and management only",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given no determination was made due to critical MSL data missing after 14-day retry",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no automated payment flow should be triggered",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the case was created and sent to agent for manual handling",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence should have been asked",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record should have been created automatically",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no batch file should have been dispatched",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And if the agent later determines eligible manual compensation should be created and payment dispatched per type with cash to Unifier and e-credit to EIP",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard should show case status as \"No Determination\" with no payout section until manually resolved",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS returns FD-ASL-ND-05.",
+      "expected": "DDS returns FD-ASL-ND-05.",
+      "id": "CP057"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Tracer: Promise = available (scheduled); Actual = MISSING; Arrival Code = NULL; Departure Code = NULL; Cancellation Code = NULL; ALL codes MISSING; Delay = CANNOT CALCULATE; Controllability = CANNOT DETERMINE.",
+      "expected": "Trip Tracer: Promise = available (scheduled); Actual = MISSING; Arrival Code = NULL; Departure Code = NULL; Cancellation Code = NULL; ALL codes MISSING; Delay = CANNOT CALCULATE; Controllability = CANNOT DETERMINE.",
+      "id": "CP058"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Data Completeness Check: All critical data points missing; 14-day retry exhausted ? NO DETERMINATION.",
+      "expected": "Data Completeness Check: All critical data points missing; 14-day retry exhausted ? NO DETERMINATION.",
+      "id": "CP059"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Case Routing: Manual handling � 30-day SLA (May 28 ? June 27, 2026).",
+      "expected": "Case Routing: Manual handling � 30-day SLA (May 28 ? June 27, 2026).",
+      "id": "CP060"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Agent must contact operations for missing backend data.",
+      "expected": "Agent must contact operations for missing backend data.",
+      "id": "CP061"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Compensation: NOT CALCULATED.",
+      "expected": "Compensation: NOT CALCULATED.",
+      "id": "CP062"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Fraud Screening: NOT INVOKED.",
+      "expected": "Fraud Screening: NOT INVOKED.",
+      "id": "CP063"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime Assessment: ASL = ND-05 (data missing); APPR = ND (same gap); EU = N/A.",
+      "expected": "Regime Assessment: ASL = ND-05 (data missing); APPR = ND (same gap); EU = N/A.",
+      "id": "CP064"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Claims Dashboard: Case = CASE-FD-20260528-205; Status = Pending � Manual Investigation; 30-day SLA active; Agent Action = \"Contact operations for missing data, re-run DDS\"; DDS = FD-ASL-ND-05.",
+      "expected": "Claims Dashboard: Case = CASE-FD-20260528-205; Status = Pending � Manual Investigation; 30-day SLA active; Agent Action = \"Contact operations for missing data, re-run DDS\"; DDS = FD-ASL-ND-05.",
+      "id": "CP065"
+    }
+  ]
+}

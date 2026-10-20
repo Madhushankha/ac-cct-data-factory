@@ -1,0 +1,171 @@
+{
+  "key": "CHAI-31821",
+  "test_id": "FD_ED_TC_10",
+  "title": "Intent | Ambiguous Statement | Disambiguation Menu | Routes to FD Compensation",
+  "goal": "Customer uses vague language (\"my flight was messed up\") that could be FD compensation, FAQ about disruption, or general complaint. System must detect ambiguity, present disambiguation options, and route correctly based on customer selection. Tests the Intent Detection ? Disambiguation path from Miro.",
+  "summary": {
+    "seed": 1,
+    "chat": 11,
+    "api": 0,
+    "email": 0,
+    "dashboard": 0,
+    "implied": 4,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Customer uses vague language (\"my flight was messed up\") that could be FD compensation, FAQ about disruption, or general complaint. System must detect ambiguity, present disambiguation options, and route correctly based on customer selection. Tests the Intent Detection ? Disambiguation path from Miro.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "None � tests intent detection layer only before identification",
+      "expected": "None � tests intent detection layer only before identification",
+      "id": "CP002"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP003"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP004"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP007"
+    },
+    {
+      "section": "AMBIGUOUS USER INPUT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight was messed up and I'm really frustrated\"",
+      "expected": "My flight was messed up and I'm really frustrated",
+      "id": "CP008"
+    },
+    {
+      "section": "INTENT DETECTION � AMBIGUITY DETECTED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot's intent detection engine analyzes the input:",
+      "expected": "? Possible Intent 1: Flight Disruption Compensation (FD claim � \"flight was messed up\" could mean delay/cancellation) ? Possible Intent 2: FAQ / Information Request (customer may want to understand their rights or what happened) ? Possible Intent 3: General Complaint / Feedback (customer may want to lodge a complaint, not seek compensation) ? Confidence Score: BELOW THRESHOLD for any single intent (ambiguous) ? Result: DISAMBIGUATION REQUIRED",
+      "id": "CP009"
+    },
+    {
+      "section": "DISAMBIGUATION MENU",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I'm sorry to hear about your experience. I'd like to help you with the right thing. Could you tell me more about what you need? Here are some options: � File a compensation claim � If your flight was delayed, cancelled, or disrupted and you'd like to check if you're eligible for compensation � Learn about your rights � If you'd like to understand what you're entitled to when a flight is disrupted � Submit feedback or a complaint � If you'd like to share feedback about your experience Which of these best describes what you're looking for?",
+      "id": "CP010"
+    },
+    {
+      "section": "CUSTOMER SELECTS FD COMPENSATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"File a compensation claim\"",
+      "expected": "File a compensation claim",
+      "id": "CP011"
+    },
+    {
+      "section": "INTENT RESOLVED ? FD COMPENSATION FLOW",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot's intent detection engine updates:",
+      "expected": "? Resolved Intent: Flight Disruption Compensation ? Confidence: HIGH (customer explicitly selected) ? Routing: FD Compensation Flow",
+      "id": "CP012"
+    },
+    {
+      "section": "INTENT RESOLVED ? FD COMPENSATION FLOW",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP013"
+    },
+    {
+      "section": "INTENT RESOLVED ? FD COMPENSATION FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP014"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP015"
+    },
+    {
+      "section": "INTENT DETECTION VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? Input: \"My flight was messed up and I'm really frustrated\"",
+      "expected": "? Ambiguity Detected: YES ? ? Disambiguation Menu Presented: YES ? ? Options Offered: FD Compensation, FAQ/Rights, Complaint/Feedback ? ? Customer Selection: \"File a compensation claim\" ? ? Correct Routing: FD Compensation Flow ? ? No false positive (did not auto-route to wrong intent) ?",
+      "id": "CP016"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Ambiguous intent detected; System does NOT auto-route; Disambiguation menu presented with 3 options; Customer selection correctly routes to FD compensation flow; Intent transition logged in transcript",
+      "expected": "Ambiguous intent detected; System does NOT auto-route; Disambiguation menu presented with 3 options; Customer selection correctly routes to FD compensation flow; Intent transition logged in transcript",
+      "id": "CP017"
+    }
+  ]
+}

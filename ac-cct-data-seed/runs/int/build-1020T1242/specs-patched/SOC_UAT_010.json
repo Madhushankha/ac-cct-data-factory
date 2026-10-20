@@ -1,0 +1,125 @@
+{
+ "id": "SOC_UAT_010",
+ "family": "SOC",
+ "summary": "APPR SOC: 1 revenue pax, Jun 10: AC 845 YYZ-FRA on time, then LH 470 FRA-MUC (OAL) dep 14:00 actual 19:00 (+300 min); delay code unknown (OAL) -> NO DETERMINATION (SoC-APPR-ND-01)",
+ "passengers": [
+  {
+   "firstName": "MARC",
+   "lastName": "TREMBLAY",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "845",
+   "origin": "YYZ",
+   "destination": "FRA",
+   "depLocal": "08:00",
+   "arrLocal": "13:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "KL",
+   "number": "1741",
+   "origin": "FRA",
+   "destination": "MUC",
+   "depLocal": "17:00",
+   "arrLocal": "18:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "delay",
+   "arrDelayMin": 300,
+   "depDelayMin": 300,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "boarded"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NO_DETERMINATION",
+  "systemCode": "SoC-APPR-ND-01",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_2_TO_6_HOURS",
+  "delayMin": 300,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Trip Completed, Disruption Detected",
+   "Multi-segment trip YYZ\u2192FRA\u2192MUC: Seg 1 AC845 on time, Seg 2 LH470 (OAL) delayed +5H 00M",
+   "PASSENGERS: 1 SEGMENTS: 2",
+   "Promised: Seg 1 AC 845 YYZ\u2192FRA 10-Jun 08:00 | Seg 2 LH 470 FRA\u2192MUC 10-Jun 14:00",
+   "Current: Seg 1 AC 845 ON TIME | Seg 2 LH 470 ARRIVED LATE, Scheduled Dep 14:00 \u2192 Actual 19:00, +5H 00M",
+   "SOC Segment: LH 470 FRA\u2192MUC (OAL); Operating Carrier LH (OAL)",
+   "Departure Delay Code: Unknown (OAL, AC has no data)",
+   "PASSENGER | NO_DETERMINATION | DELAY_2_TO_6_HOURS",
+   "NO_DETERMINATION reason: OAL-operated SOC segment, AC cannot determine controllability"
+  ],
+  "soc": {
+   "eligibility": "NO_DETERMINATION",
+   "entitlements": "none determined; passenger redirected to OAL; case created for manual agent handling"
+  }
+ },
+ "assumed": [
+  "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+  "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+  "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+  "AC 845 arrival set to 13:30 (text schedules LH 470 to depart FRA at 14:00 the same day, so the transatlantic block time is shortened to fit; real YYZ-FRA block is ~7h40)",
+  "LH 470 arrival 15:05 (1h05)",
+  "no delay code on LH leg (unknown)",
+  "residence CA assumed"
+ ],
+ "unsupported": [
+  "OAL (LH) segment delay data/code unavailable to AC and cannot be simulated in the test environment (text: 'Cannot simulate OAL delays')",
+  "Itinerary timeline inconsistent (YYZ-FRA dep 08:00 cannot connect to FRA-MUC dep 14:00 same day); text times kept"
+ ]
+}

@@ -1,0 +1,127 @@
+{
+ "id": "SOC_UAT_073",
+ "family": "SOC",
+ "summary": "1 adult, AC 090 TLV-HFA operated, AC 091 HFA-VDA cancelled (crew shortage code 64), rebooked 12h later; stranded at HFA; ASL SOC eligible",
+ "passengers": [
+  {
+   "firstName": "ALON",
+   "lastName": "BARUCH",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "IL",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "090",
+   "origin": "TLV",
+   "destination": "HFA",
+   "depLocal": "08:00",
+   "arrLocal": "08:35",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "091",
+   "origin": "HFA",
+   "destination": "VDA",
+   "depLocal": "11:00",
+   "arrLocal": "12:15",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "cancel",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "CREW",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "ASL",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "SoC-ASL-EL-06",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_6_HOURS_OR_MORE",
+  "delayMin": 720,
+  "control": null,
+  "cause": "64",
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Regime: ASL",
+   "SOC section present",
+   "Geographic Check: Israel origin PASSED; Controllability NOT CHECKED (ASL)",
+   "CyberSource: GREEN",
+   "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - ELIGIBLE",
+   "DDS code SoC-ASL-EL-06",
+   "Trip Not Completed, Disruption Detected",
+   "Multi-segment trip TLV->HFA->VDA - Segment 2 AC091 HFA->VDA cancelled due to crew shortage. Passenger stranded at HFA for 12 hours.",
+   "PASSENGERS: 1 - SEGMENTS: 2",
+   "Promised: Seg 1 AC 090 TLV->HFA | Seg 2 AC 091 HFA->VDA",
+   "Current: Seg 1 ON TIME | Seg 2 CANCELLED",
+   "SOC Segment: AC 091 HFA->VDA; Departure Delay Code 64 (Flight Crew Shortage) - NOT CHECKED",
+   "Cancellation: YES | SOC Segment Delay: 720 min (12h) >= 2h",
+   "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL ILS 220.00 | ACCOMMODATION: Rate of day (max ILS 1,800) | GENERAL EXPENSES: Transport ILS 720 + Comm ILS 110 + Parking ILS 180 + Essentials ILS 110"
+  ],
+  "soc": {
+   "eligibility": "ELIGIBLE",
+   "entitlements": "Meals ILS 110/pax, hotel rate of day max 3 nights ILS 1,800 cap, transport ILS 720, communication ILS 110, parking ILS 180, essentials ILS 110"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "Times chosen: AC090 08:00-08:35; AC091 scheduled 11:00-12:15, rebooked 23:00-00:15 (12h later; arrival after midnight)",
+  "Cabin W (PY), class O",
+  "Residence IL",
+  "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+ ],
+ "unsupported": [
+  "Rebooked arrival after midnight (00:15) cannot carry its own day offset; arrLocal given as 00:15 with dayOffset 0 meaning the next calendar day"
+ ]
+}

@@ -1,0 +1,1996 @@
+{
+ "rules": [
+  {
+   "id": "R1",
+   "title": "Connecting itinerary (2+ segments, one bound) is built on the 2-segment round-trip seed ZZ6GMP: second flight stays in its own bound",
+   "severity": "high",
+   "scenarios": 49,
+   "evidence": "final PNR flightItineraries of every bulk booking vs spec: e.g. FD_TC_065 ZZEI03-2026-08-19 has bounds [YUL->YVR:ST-1][YYZ->YUL:ST-2]; spec_to_build.SEEDS (2,1)=ZZ6GMP is a round trip; Build only relabels bound[0] (builder.py ~540). Raptor then sees ORIGIN/REMAINED (NE-08/09, NE-27, EL-13) or an all-OAL bound (NE-05) instead of INTERMEDIATE (NE-12/13, EL-17), ND-01/02 etc. (builtins.rs destination_type 6511; appr-compensation-eligible-reason steps 20,21,26,27,51,52).",
+   "fix": "Generator: when a spec has N>1 segments in one bound, merge the seed's flightItineraries into one JOURNEY_SERVER_BOUND whose flights hold all N segments (or use connectedFlights) and drop the extra bound; or pick a seed with a 1-bound connection. Affected: 007 008 044 064-075 082-086 088 095 096 097 102 132-135 141 143 145 147 149 153 159 161 163 165 166 170 178 179 210 236."
+  },
+  {
+   "id": "R2",
+   "title": "Cancel code must be one of the 20 APPR_cancellation_lookup keys; delay codes / unknown codes / default 'WX' => disruption type OTHER => ND-X02",
+   "severity": "high",
+   "scenarios": 18,
+   "evidence": "dds-msl-flight-disruption-type step_2 (cancel code not_in APPR_cancellation_lookup => OTHER) + appr-compensation-eligible step_4/reason step_15 => FD-APPR-ND-X02. spec_to_build.py uses delayCode as cancelCode when kind=cancel; scenario_fdm.py cancel branch sends code or 'WX'. Keys: AIRS ARPT RUNW COMM HOLI OPER POSI REPO RTNS EQUI FUEL HDLG ROTA PERF TECH DAMA POLI INDU WEAT CREW. Controllability: SAFETY=PERF,TECH; UNCONTROLLABLE=AIRS ARPT RUNW RTNS DAMA POLI INDU WEAT; rest CONTROLLABLE.",
+   "fix": "Spec: cancelCode from that list (OPER for generic controllable; SOP/FOC/SKD/WXX are not valid). Generator: never default to 'WX'; if no code is given use OPER and mark cause as unverifiable. Cancel precedence: a cancelled MSL ignores arrival delay codes, so 'cause = delay code' on a cancelled promised flight cannot be reproduced."
+  },
+  {
+   "id": "R3",
+   "title": "Employee/staff bookings: passengers[].employee is not written to the PNR",
+   "severity": "high",
+   "scenarios": 8,
+   "evidence": "eds-booking-type steps 1-10 (rule-catalog.json); facts/dds/mod.rs classify_booking ~1308-1405: office id = tables.pnr.headers.office (processedPnr.creation.pointOfSale.office.id) must END WITH ES/OT/EP/EE/EC, or processedPnr.keywords[] with code STDP/STFD/STFS (subType SPECIAL_KEYWORD, status HK); OAL staff: office suffix EC AND keyword text starting 'SN-00000' => OAL_EMPLOYEE => NON_REVENUE_OAL. Reasons FD-APPR/EU/ASL-NE-01 / NE-02 (reason steps 2,3). The seed office is YULAC08AA so every booking is REVENUE (observed ELIGIBLE).",
+   "fix": "Generator: new plan.booking.officeId / plan.booking.keywords applied to every PNR version of the booking; employee=true => office YULAC08ES (+ keyword STFD); OAL employee => office YULAC08EC + keyword text 'SN-00000<digits>'. Affected: FD_TC_045 046 136 137 155."
+  },
+  {
+   "id": "R4",
+   "title": "Schedule change + delay double counting; net-vs-total delay",
+   "severity": "med",
+   "scenarios": 16,
+   "evidence": "FD_TC_009 manifest arr 22:00Z = original 18:00Z + 240 (PNR/FDM schedule moved) and FDM delay +240 => 480 vs promise (obs dm=480). Same 011 (600), 012 (540), 028 (840). Promise = pre-INVOL itinerary (itinerary.rs Promise::bounded ~1555-1750).",
+   "fix": "Generator: for flights with scheduleChanges set FDM minutes = expected total - sum(arrDeltaMin) (min 30 so the ARRIVAL_CODE record is emitted: scenario_fdm code_record requires minutes>0). Spec: shown per scenario. VOL-deduction cases (196-200) have no VOL history: use the net delay."
+  },
+  {
+   "id": "R5",
+   "title": "Sister-city / new-destination results need the flown arrival airport in the PNR's actual itinerary",
+   "severity": "high",
+   "scenarios": 20,
+   "evidence": "builtins.rs destination_type (6511-6620): SISTER_PROMISED = last flown segment arrival is in sister_cities_lookup partner of promised destination; arrival comes from the PNR segment (itinerary.rs Segment.to), not FDM. kind=divert / rebook-to-YHM is built as a delay at the original destination => PROMISED (EL-01/05, EU-EL-01/05/09/11/13/14) instead of SISTER (EL-04..06,10..12, EU-EL-03/04/07/08/10/12/15/16). Rule steps 41-46 (APPR), EU reason sister rows.",
+   "fix": "Generator: kind=divert => extra PNR version re-pointing the segment's destination to divertTo (promise at 14-day mark keeps the original), keep FDM flight id; rebook-to-sister => replacement flight must be checked-in+boarded (spec_to_build skips check_in/boarding for replacement flights)."
+  },
+  {
+   "id": "R6",
+   "title": "Fallback (departure-code) cases need a departure delay > 0 and no arrival code",
+   "severity": "high",
+   "scenarios": 10,
+   "evidence": "scenario_fdm.flight_messages emits the delay code only if dep_delay>0; spec_to_build sets depMinutes=outcome.depDelayMin (0 when absent) => FDM carries no code => dds-msl-flight-disruption-type step_7 => ND-04. Fallback EL-07..09/10..12, EU-EL-05..08,11,12,17-20 need is_fallback_code (steps 5/6: arrival codes empty).",
+   "fix": "Spec: depDelayMin = arrDelayMin and depDelayCode set, arrivalCode null (fallback:true). Also add a delay code whenever the scenario must produce a non-ND result (021, 139)."
+  },
+  {
+   "id": "R7",
+   "title": "Code controllability per Raptor tables differs from the scenario text",
+   "severity": "info",
+   "scenarios": 6,
+   "evidence": "APPR_delay_lookup: SAFETY = 3,43,44,45,46,47,52,69; 41 UNCONTROLLABLE; 81 UNCONTROLLABLE; 93,96,97 CONTROLLABLE in EU/ASL table but 93/97 UNCONTROLLABLE and 96 CONTROLLABLE in APPR; cancel TECH/PERF SAFETY in APPR but CONTROLLABLE in EU/ASL (EU_ASL_delay_code_controllability_lookup has no SAFETY value).",
+   "fix": "Report as expectation conflicts: 078, 088, 094, 236, 238."
+  },
+  {
+   "id": "R8",
+   "title": "Expected system codes that do not exist / are never emitted by Raptor",
+   "severity": "info",
+   "scenarios": 22,
+   "evidence": "FD_APPR_reason_codes_lookup (47 rows), FD_EU (56), FD_ASL (33), DDS_FD_SoC (268 rows): no FD-MIXED-*, FD-DUP-*, NE-TBC, NE-UC-01, ND-09, DB-01. FD-*-PE-01 and FD-APPR-NE-07 exist in tables but no rule step emits them (appr-compensation-eligible-reason has no NE-07/PE step).",
+   "fix": "Exceptions: 048 050 052 103 108 150 171 172-179 210. Do not force."
+  },
+  {
+   "id": "R9",
+   "title": "Expected code in the wrong delay band / wrong meaning (EL-01 for 6-9h, NE-01 for <3h, EU EL-01 for EU origin)",
+   "severity": "info",
+   "scenarios": 13,
+   "evidence": "FD_APPR_reason_codes_lookup: EL-01 3-<6h, EL-02 6-<9h, EL-03 9h+; NE-01 Employee AC; NE-27 'No delay on arrival' (reason steps 56/57). FD_EU: EL-01/02 UK only, EL-13/14 EU, EL-09 Guadeloupe. ASL needs >=480 min.",
+   "fix": "Conflicts: ED_08 ED_27 016 037 049 089-092 162 208; correct expect.systemCode as in perScenario."
+  },
+  {
+   "id": "R10",
+   "title": "Claim-side expectations (auth failure, outage, travel-agency manual handling)",
+   "severity": "info",
+   "scenarios": 5,
+   "evidence": "No Raptor input can yield NO_DETERMINATION for a clean controllable delay.",
+   "fix": "Gate should compare underlying data result; FD_ED_TC_07 09 21 22 25."
+  },
+  {
+   "id": "R11",
+   "title": "Regime names UK / UK+APPR / MIXED are not Raptor regimes",
+   "severity": "med",
+   "scenarios": 4,
+   "evidence": "eds-regimes steps 1-3: APPR always, EU if origin in EU/UK/Guadeloupe airports, ASL if origin/dest in Israel airports.",
+   "fix": "expect.regime EU for UK (003 004), APPR for 100."
+  },
+  {
+   "id": "R12",
+   "title": "EU table is chosen by bound ORIGIN country group",
+   "severity": "med",
+   "scenarios": 8,
+   "evidence": "eu-compensation-eligible requires bound_origin_location in UK/GUADELOUPE/REST_OF_EUROPE; reason codes: UK EL-01..08,21-22,33-34; Guadeloupe EL-09..12,23-24,35-36; EU EL-13..20,25-26,37-38; YYZ origin => NE-19.",
+   "fix": "Use LHR (UK), PTP (Guadeloupe), CDG/MAD (EU) origins to match the family."
+  },
+  {
+   "id": "R13",
+   "title": "Cancel+rebook chains: replacement flight not boarded, same-number collisions",
+   "severity": "high",
+   "scenarios": 14,
+   "evidence": "spec_to_build.build: replacement flights get no check_in/boarding phases and cancelled segments are skipped (loop `continue`), so passenger_boarding_status/coupon flown are empty => travelled_any false => ORIGIN/NO_TRAVEL (EL-13) with delay 0. MSL is always a PROMISED segment (builtins.rs msl_flight 6990-7090).",
+   "fix": "Owned by rebook lane; listed for dependency: 006 008 031 032 034 036 097 104 105 181-185."
+  },
+  {
+   "id": "R14",
+   "title": "Band label alias DELAY_9_HOURS_PLUS",
+   "severity": "low",
+   "scenarios": 1,
+   "evidence": "gate_compare.py maps it already.",
+   "fix": "none"
+  },
+  {
+   "id": "R15",
+   "title": "Mismatches that are only delayMin/amount bookkeeping (other lane)",
+   "severity": "low",
+   "scenarios": 4,
+   "evidence": "047 237 235 051",
+   "fix": "235 expect.amount per pax 700."
+  },
+  {
+   "id": "R15b",
+   "title": "'Below 3h or no cancellation' no-travel reasons (EU NE-13/15, ASL NE-14/16, APPR NE-20/22) need NO cancellation",
+   "severity": "med",
+   "scenarios": 5,
+   "evidence": "builtins.rs msl_flight_disruption_codes ~7185: qualifies = has_cancellation || delay>=180; a cancel always qualifies => EL-xx. NE-13/NE-15 come from the not-qualifying branch.",
+   "fix": "Model as delay (<180 min, controllable code) + not_travelled: 142 143 160 161."
+  },
+  {
+   "id": "R16",
+   "title": "OAL / STAR itineraries: reason by MSL operating carrier",
+   "severity": "med",
+   "scenarios": 9,
+   "evidence": "dds-msl-flight-operating-carrier: eds_ac_family_carriers (AC RV QK PB)=AC; STAR_carriers_lookup prefix match (LH UA SQ TK ...)=STAR else OAL; ND-01 OAL / ND-02 STAR (reason steps 11,12); ND-06 only for msl_oal_data_missing or is_all_oal; all-OAL bounds NE-05 (APPR) / NE-04 (EU) / NE-05 (ASL). WS and BA are OAL (not STAR).",
+   "fix": "With R1 fixed: 095 WS => ND-01, 096 LH => ND-02, 102 BA => ND-01 unless OAL leg unflown (ND-06)."
+  },
+  {
+   "id": "R17",
+   "title": "Not producible from booking data",
+   "severity": "info",
+   "scenarios": 8,
+   "evidence": "ND-05 needs promised_itinerary/msl_flight empty; PE-01 not emitted; ASL ND-04 vs observed NE-23.",
+   "fix": "Report as unsupported: 101 148 169 168 103 150 171."
+  }
+ ],
+ "perScenario": {
+  "FD_ED_TC_07": {
+   "specPatch": {
+    "expect": {
+     "eligibility": "ELIGIBLE",
+     "systemCode": "FD-APPR-EL-01"
+    }
+   },
+   "note": "Expectation is claim-side (auth failure/DDS outage/timeout): TripTracer data for this booking is a plain controllable delay and Raptor returns ELIGIBLE EL-01 (APPR_delay_lookup 42/64 CONTROLLABLE, 180-359 min => appr-compensation-eligible-reason step_35). Gate should not expect NO_DETERMINATION from booking data.",
+   "conflict": false,
+   "rules": [
+    "R10"
+   ]
+  },
+  "FD_ED_TC_21": {
+   "specPatch": {
+    "expect": {
+     "eligibility": "ELIGIBLE",
+     "systemCode": "FD-APPR-EL-01"
+    }
+   },
+   "note": "Expectation is claim-side (auth failure/DDS outage/timeout): TripTracer data for this booking is a plain controllable delay and Raptor returns ELIGIBLE EL-01 (APPR_delay_lookup 42/64 CONTROLLABLE, 180-359 min => appr-compensation-eligible-reason step_35). Gate should not expect NO_DETERMINATION from booking data.",
+   "conflict": false,
+   "rules": [
+    "R10"
+   ]
+  },
+  "FD_ED_TC_22": {
+   "specPatch": {
+    "expect": {
+     "eligibility": "ELIGIBLE",
+     "systemCode": "FD-APPR-EL-01"
+    }
+   },
+   "note": "Expectation is claim-side (auth failure/DDS outage/timeout): TripTracer data for this booking is a plain controllable delay and Raptor returns ELIGIBLE EL-01 (APPR_delay_lookup 42/64 CONTROLLABLE, 180-359 min => appr-compensation-eligible-reason step_35). Gate should not expect NO_DETERMINATION from booking data.",
+   "conflict": false,
+   "rules": [
+    "R10"
+   ]
+  },
+  "FD_ED_TC_25": {
+   "specPatch": {
+    "expect": {
+     "eligibility": "ELIGIBLE",
+     "systemCode": "FD-APPR-EL-01"
+    }
+   },
+   "note": "Expectation is claim-side (auth failure/DDS outage/timeout): TripTracer data for this booking is a plain controllable delay and Raptor returns ELIGIBLE EL-01 (APPR_delay_lookup 42/64 CONTROLLABLE, 180-359 min => appr-compensation-eligible-reason step_35). Gate should not expect NO_DETERMINATION from booking data.",
+   "conflict": false,
+   "rules": [
+    "R10"
+   ]
+  },
+  "FD_ED_TC_09": {
+   "specPatch": {
+    "expect": {
+     "regime": "APPR",
+     "eligibility": "ELIGIBLE",
+     "systemCode": "FD-APPR-EL-01"
+    }
+   },
+   "note": "Expected EU NO_DETERMINATION is manual-handling (travel agency) behaviour. Booking is YYZ->CDG: EU regime needs an EU/UK/Guadeloupe ORIGIN (eds-regimes step_2), so Raptor returns EU NE-19 and APPR EL-01. No data patch can yield NO_DETERMINATION.",
+   "conflict": false,
+   "rules": [
+    "R10",
+    "R12"
+   ]
+  },
+  "FD_ED_TC_08": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-EL-02",
+     "amount": 700
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: 420 min controllable delay is 6-<9h => FD-APPR-EL-02 ($700); FD-APPR-EL-01 is 3-<6h (FD_APPR_reason_codes_lookup; appr-compensation-eligible-reason steps 35/37).",
+   "conflict": true,
+   "rules": [
+    "R9"
+   ]
+  },
+  "FD_ED_TC_27": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-EU-EL-14"
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: FD-EU-EL-01 is 'UK Disruption 3-<4h'; flight is CDG->YYZ (EU origin) at 240 min => FD-EU-EL-14 (EU 4h+, EUR 600). To get EL-01 use a UK origin (LHR) with 180-239 min (EUR table then pays GBP 260).",
+   "conflict": true,
+   "rules": [
+    "R9",
+    "R12"
+   ]
+  },
+  "FD_TC_003": {
+   "specPatch": {
+    "expect": {
+     "regime": "EU"
+    }
+   },
+   "note": "Regime 'UK' does not exist in Raptor: UK-origin bookings are evaluated under regime EU (eds-regimes step_2 includes UK_airports_lookup; FD-EU-EL-01..08 are 'UK Disruption'). Observed EU row exists (EU EL-02 for 300 min => matches 520 GBP). Change expect.regime to EU.",
+   "conflict": false,
+   "rules": [
+    "R11"
+   ]
+  },
+  "FD_TC_004": {
+   "specPatch": {
+    "expect": {
+     "regime": "EU"
+    }
+   },
+   "note": "Regime 'UK' does not exist in Raptor: UK-origin bookings are evaluated under regime EU (eds-regimes step_2 includes UK_airports_lookup; FD-EU-EL-01..08 are 'UK Disruption'). Observed EU row exists (EU EL-02 for 300 min => matches 520 GBP). Change expect.regime to EU.",
+   "conflict": false,
+   "rules": [
+    "R11"
+   ]
+  },
+  "FD_TC_100": {
+   "specPatch": {
+    "expect": {
+     "regime": "APPR"
+    }
+   },
+   "note": "Regime 'UK+APPR' is not a Raptor regime; observed APPR ND-X02 (delay code UNKNOWN not in APPR_delay_lookup => type OTHER => step_15) matches the expected ND-X02. Set expect.regime=APPR.",
+   "conflict": false,
+   "rules": [
+    "R11",
+    "R2"
+   ]
+  },
+  "FD_TC_006": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "cancelCode": "OPER",
+      "noticeHours": 72
+     }
+    ]
+   },
+   "note": "Cancel outcome uses delay code 96 as cancel code: '96' is not in APPR_cancellation_lookup => OTHER => FD-APPR-ND-X02 (dds-msl-flight-disruption-type step_2). MSL is the cancelled promised flight so only a cancel code counts (cancel precedence). Use a controllable cancel code and let the delay come from the flown replacement. Cause '96' cannot be reproduced on a cancelled MSL. Chain/rebook handling belongs to the rebook lane.",
+   "conflict": false,
+   "rules": [
+    "R2",
+    "R13"
+   ]
+  },
+  "FD_TC_007": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "cancelCode": "OPER",
+      "noticeHours": 72
+     },
+     {
+      "seg": 2,
+      "kind": "cancel",
+      "cancelCode": "OPER",
+      "noticeHours": 72
+     }
+    ]
+   },
+   "note": "Both legs cancelled with no cancel code: scenario_fdm.py sends legCancelCodePrimary 'WX' by default (not in APPR_cancellation_lookup) => ND-X02 and NE-20 for the second bound (R1). Give seg 1/2 a controllable cancel code; expected cause 32 is a delay code and cannot be the MSL's cause.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R2",
+    "R13"
+   ]
+  },
+  "FD_TC_008": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "noticeHours": 72,
+      "cancelCode": "OPER"
+     },
+     {
+      "seg": 2,
+      "kind": "cancel",
+      "noticeHours": 72,
+      "cancelCode": "OPER",
+      "arrDelayMin": 300
+     }
+    ]
+   },
+   "note": "Cancel code '62' (delay code) copied into cancelCode => not in APPR_cancellation_lookup => ND-X02; plus R1 (YUL-YOW-YYZ built as two bounds) and rebook chain (rebook lane). Use cancelCode OPER on the cancelled promised leg 2.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R2",
+    "R13"
+   ]
+  },
+  "FD_TC_009": {
+   "specPatch": {
+    "scheduleChanges": [
+     {
+      "seg": 1,
+      "depDeltaMin": 120,
+      "arrDeltaMin": 120,
+      "noticeHours": 72,
+      "changeType": "INVOL"
+     }
+    ],
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 120,
+      "delayCode": "35"
+     }
+    ]
+   },
+   "note": "Schedule change double count: scenario_build moves the segment's scheduled times by the INVOL delta (PNR + FDM schedule) and spec_to_build then adds the full arrDelayMin on top, so DDS sees delta+delay vs the promise (observed 480/600/540/840 instead of 240/300/270/420). Make sum(arrDeltaMin of changes)+arrDelayMin equal the wanted total (keep arrDelayMin>=30 so the ARRIVAL_CODE record is still emitted).",
+   "conflict": false,
+   "rules": [
+    "R4"
+   ]
+  },
+  "FD_TC_011": {
+   "specPatch": {
+    "scheduleChanges": [
+     {
+      "seg": 1,
+      "depDeltaMin": 120,
+      "arrDeltaMin": 120,
+      "noticeHours": 72,
+      "changeType": "INVOL",
+      "changeSeq": 1
+     },
+     {
+      "seg": 1,
+      "depDeltaMin": 60,
+      "arrDeltaMin": 60,
+      "noticeHours": 48,
+      "changeType": "INVOL",
+      "changeSeq": 2
+     }
+    ],
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 120,
+      "delayCode": "32"
+     }
+    ]
+   },
+   "note": "Schedule change double count: scenario_build moves the segment's scheduled times by the INVOL delta (PNR + FDM schedule) and spec_to_build then adds the full arrDelayMin on top, so DDS sees delta+delay vs the promise (observed 480/600/540/840 instead of 240/300/270/420). Make sum(arrDeltaMin of changes)+arrDelayMin equal the wanted total (keep arrDelayMin>=30 so the ARRIVAL_CODE record is still emitted).",
+   "conflict": false,
+   "rules": [
+    "R4"
+   ]
+  },
+  "FD_TC_012": {
+   "specPatch": {
+    "scheduleChanges": [
+     {
+      "seg": 1,
+      "depDeltaMin": 120,
+      "arrDeltaMin": 120,
+      "noticeHours": 0,
+      "changeType": "DT"
+     }
+    ],
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 150,
+      "delayCode": "37"
+     }
+    ]
+   },
+   "note": "Schedule change double count: scenario_build moves the segment's scheduled times by the INVOL delta (PNR + FDM schedule) and spec_to_build then adds the full arrDelayMin on top, so DDS sees delta+delay vs the promise (observed 480/600/540/840 instead of 240/300/270/420). Make sum(arrDeltaMin of changes)+arrDelayMin equal the wanted total (keep arrDelayMin>=30 so the ARRIVAL_CODE record is still emitted).",
+   "conflict": false,
+   "rules": [
+    "R4"
+   ]
+  },
+  "FD_TC_028": {
+   "specPatch": {
+    "scheduleChanges": [
+     {
+      "seg": 1,
+      "depDeltaMin": 240,
+      "arrDeltaMin": 240,
+      "noticeHours": 48
+     }
+    ],
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 180,
+      "depDelayMin": 180,
+      "delayCode": "67"
+     }
+    ]
+   },
+   "note": "Schedule change double count: scenario_build moves the segment's scheduled times by the INVOL delta (PNR + FDM schedule) and spec_to_build then adds the full arrDelayMin on top, so DDS sees delta+delay vs the promise (observed 480/600/540/840 instead of 240/300/270/420). Make sum(arrDeltaMin of changes)+arrDelayMin equal the wanted total (keep arrDelayMin>=30 so the ARRIVAL_CODE record is still emitted).",
+   "conflict": false,
+   "rules": [
+    "R4"
+   ]
+  },
+  "FD_TC_010": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "delayCode": "36"
+     }
+    ],
+    "rebooking": []
+   },
+   "note": "Cancel code '36' (delay code) => not in cancel lookup => ND-X02; the rebooked flight reuses the same number so the cancelled flight and replacement collide. Scenario is a delayed arrival (code 36 controllable): model as a plain delay of 240 min with no cancel.",
+   "conflict": false,
+   "rules": [
+    "R2",
+    "R13"
+   ]
+  },
+  "FD_TC_013": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 270,
+      "delayCode": "61"
+     }
+    ],
+    "rebooking": []
+   },
+   "note": "Same-number auto-rebook is built as cancel+replacement; the replacement is never boarded so Raptor sees NO_TRAVEL (EL-13) and double delay 540. Model as a delay of 270 min code 61 with no rebooking entry (APPR_delay_lookup 61 CONTROLLABLE => EL-01).",
+   "conflict": false,
+   "rules": [
+    "R13"
+   ]
+  },
+  "FD_TC_016": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-EL-02"
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: 420 min controllable (code 31) is 6-<9h => FD-APPR-EL-02 ($700). The scenario itself states $700.",
+   "conflict": true,
+   "rules": [
+    "R9"
+   ]
+  },
+  "FD_TC_021": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": "14"
+     }
+    ]
+   },
+   "note": "No delay code in the booking (outcome has only depDelayMin): Raptor returns ND-04 (no arrival/departure code, dds-msl-flight-disruption-type step_7). Pending-state wording in the text is a controllable code not yet populated; give a controllable arrival code.",
+   "conflict": false,
+   "rules": [
+    "R6"
+   ]
+  },
+  "FD_TC_029": {
+   "specPatch": {
+    "expect": {
+     "delayBand": "DELAY_GTE_9_HOURS"
+    }
+   },
+   "note": "Only the band label differs (DELAY_9_HOURS_PLUS vs Raptor DELAY_GTE_9_HOURS); code/amount match. Normalise in gate (gate_compare already maps it).",
+   "conflict": false,
+   "rules": [
+    "R14"
+   ]
+  },
+  "FD_TC_031": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "cancelCode": "OPER"
+     }
+    ]
+   },
+   "note": "Sister-city destination (YHM vs promised YYZ) built as cancel+replacement; cancel code is the arrival delay code (31/18) which is not in APPR_cancellation_lookup => ND-X02, and replacement flight never boarded (NO_TRAVEL). Needs: valid controllable cancel code on the cancelled promised flight, replacement boarded to YHM (SISTER_PROMISED needs the flown arrival airport to be a sister_cities_lookup partner of YYZ). Expected cause 31/18 cannot be reproduced on a cancelled MSL (cancel code wins).",
+   "conflict": false,
+   "rules": [
+    "R2",
+    "R5",
+    "R13"
+   ]
+  },
+  "FD_TC_032": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "cancelCode": "OPER"
+     }
+    ]
+   },
+   "note": "Sister-city destination (YHM vs promised YYZ) built as cancel+replacement; cancel code is the arrival delay code (31/18) which is not in APPR_cancellation_lookup => ND-X02, and replacement flight never boarded (NO_TRAVEL). Needs: valid controllable cancel code on the cancelled promised flight, replacement boarded to YHM (SISTER_PROMISED needs the flown arrival airport to be a sister_cities_lookup partner of YYZ). Expected cause 31/18 cannot be reproduced on a cancelled MSL (cancel code wins).",
+   "conflict": false,
+   "rules": [
+    "R2",
+    "R5",
+    "R13"
+   ]
+  },
+  "FD_TC_036": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "cancelCode": "OPER"
+     }
+    ]
+   },
+   "note": "Sister-city destination (YHM vs promised YYZ) built as cancel+replacement; cancel code is the arrival delay code (31/18) which is not in APPR_cancellation_lookup => ND-X02, and replacement flight never boarded (NO_TRAVEL). Needs: valid controllable cancel code on the cancelled promised flight, replacement boarded to YHM (SISTER_PROMISED needs the flown arrival airport to be a sister_cities_lookup partner of YYZ). Expected cause 31/18 cannot be reproduced on a cancelled MSL (cancel code wins).",
+   "conflict": false,
+   "rules": [
+    "R2",
+    "R5",
+    "R13"
+   ]
+  },
+  "FD_TC_033": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "cancelCode": "OPER"
+     }
+    ]
+   },
+   "note": "Cancel code 'SOP'/'FOC' is not in APPR_cancellation_lookup (20 NetLine codes: AIRS ARPT RUNW COMM HOLI OPER POSI REPO RTNS EQUI FUEL HDLG ROTA PERF TECH DAMA POLI INDU WEAT CREW) => ND-X02. Use OPER (controllable). 035 also expects EL-13-like 'controllable cancellation entitlement' with delay 0 - reached only if the pax does not travel.",
+   "conflict": false,
+   "rules": [
+    "R2",
+    "R13"
+   ]
+  },
+  "FD_TC_035": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "cancelCode": "OPER"
+     }
+    ]
+   },
+   "note": "Cancel code 'SOP'/'FOC' is not in APPR_cancellation_lookup (20 NetLine codes: AIRS ARPT RUNW COMM HOLI OPER POSI REPO RTNS EQUI FUEL HDLG ROTA PERF TECH DAMA POLI INDU WEAT CREW) => ND-X02. Use OPER (controllable). 035 also expects EL-13-like 'controllable cancellation entitlement' with delay 0 - reached only if the pax does not travel.",
+   "conflict": false,
+   "rules": [
+    "R2",
+    "R13"
+   ]
+  },
+  "FD_TC_034": {
+   "specPatch": {},
+   "note": "Cancel HDLG is valid (CONTROLLABLE) but the replacement flight is not boarded, so Raptor reports NO_TRAVEL EL-13 ($400) instead of delay 420 => EL-02 ($700). Needs check_in/boarding on the replacement flight (rebook lane) so destination = PROMISED.",
+   "conflict": false,
+   "rules": [
+    "R13"
+   ]
+  },
+  "FD_TC_037": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-EL-07"
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: departure-code fallback, 240 min => FD-APPR-EL-07 (3-<6h fallback). FD-APPR-EL-02 is 6-<9h non-fallback (appr-compensation-eligible-reason steps 36/37). Converter already flagged the text conflict.",
+   "conflict": true,
+   "rules": [
+    "R9"
+   ]
+  },
+  "FD_TC_040": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 300,
+      "depDelayMin": 300,
+      "depDelayCode": "05"
+     }
+    ]
+   },
+   "note": "Fallback+sister: scenario_fdm.py emits the departure delay code only when depMinutes>0 (delay=...if code and dep_delay>0); manifest has dep=0 so no code reaches Raptor => ND-04. Set depDelayMin>0. Replacement to YHM must be boarded for SISTER_PROMISED (R5, rebook lane). Then EL-10/11/12 by delay band (steps 42/44/46).",
+   "conflict": false,
+   "rules": [
+    "R5",
+    "R6"
+   ]
+  },
+  "FD_TC_041": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": 420,
+      "depDelayCode": "42"
+     }
+    ]
+   },
+   "note": "Fallback+sister: scenario_fdm.py emits the departure delay code only when depMinutes>0 (delay=...if code and dep_delay>0); manifest has dep=0 so no code reaches Raptor => ND-04. Set depDelayMin>0. Replacement to YHM must be boarded for SISTER_PROMISED (R5, rebook lane). Then EL-10/11/12 by delay band (steps 42/44/46).",
+   "conflict": false,
+   "rules": [
+    "R5",
+    "R6"
+   ]
+  },
+  "FD_TC_042": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 600,
+      "depDelayMin": 600,
+      "depDelayCode": "67"
+     }
+    ]
+   },
+   "note": "Fallback+sister: scenario_fdm.py emits the departure delay code only when depMinutes>0 (delay=...if code and dep_delay>0); manifest has dep=0 so no code reaches Raptor => ND-04. Set depDelayMin>0. Replacement to YHM must be boarded for SISTER_PROMISED (R5, rebook lane). Then EL-10/11/12 by delay band (steps 42/44/46).",
+   "conflict": false,
+   "rules": [
+    "R5",
+    "R6"
+   ]
+  },
+  "FD_TC_044": {
+   "specPatch": {},
+   "note": "R1 (2 flights, one bound). After the fix: seg1 flown to YYZ (promised stop), seg2 cancelled EQUI (CONTROLLABLE) => INTERMEDIATE + no-travel qualifies => FD-APPR-EL-17.",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_045": {
+   "specPatch": {
+    "booking": {
+     "officeId": "YULAC08ES",
+     "keywords": [
+      {
+       "code": "STFD",
+       "text": "STAFF DUTY",
+       "subType": "SPECIAL_KEYWORD",
+       "status": "HK",
+       "serviceProvider": {
+        "code": "AC"
+       }
+      }
+     ]
+    }
+   },
+   "note": "Employee flag not written to the PNR: booking_type derives from PNR office id suffix (ES OT EP EE EC) or special keyword (STDP STFD STFS), eds-booking-type steps 3-10. Generator must set creation.pointOfSale.office.id to e.g. YULAC08ES (or add keyword code STFD) when passengers[].employee=true => NON_REVENUE_AC => FD-APPR-NE-01.",
+   "conflict": false,
+   "rules": [
+    "R3"
+   ]
+  },
+  "FD_TC_046": {
+   "specPatch": {
+    "booking": {
+     "officeId": "YULAC08EC",
+     "keywords": [
+      {
+       "code": "STFS",
+       "text": "SN-00000123456",
+       "subType": "SPECIAL_KEYWORD",
+       "status": "HK",
+       "serviceProvider": {
+        "code": "LH"
+       }
+      }
+     ]
+    }
+   },
+   "note": "OAL employee: eds-booking-type step_8 needs office id ending EC AND a keyword whose text starts with 'SN-00000'; classify_booking then yields NON_REVENUE_OAL => FD-APPR-NE-02. Generator must write both.",
+   "conflict": false,
+   "rules": [
+    "R3"
+   ]
+  },
+  "FD_TC_047": {
+   "specPatch": {},
+   "note": "Only delayMin (cancel minutes are not an arrival delay); code NE-05 matches. Outside this lane.",
+   "conflict": false,
+   "rules": [
+    "R15"
+   ]
+  },
+  "FD_TC_048": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-08"
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: 'FD-APPR-NE-TBC' is not a code in FD_APPR_reason_codes_lookup. Uncontrollable cancel DAMA, passenger rebooked and arriving => observed NE-08 is the table-consistent answer for no travel; delayMin is another lane.",
+   "conflict": true,
+   "rules": [
+    "R8"
+   ]
+  },
+  "FD_TC_049": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-27"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "cancelCode": "OPER"
+     }
+    ]
+   },
+   "note": "Expectation conflicts with Raptor reference data: FD-APPR-NE-01 means 'Employee booking AC'. A <3h delay is FD-APPR-NE-27 ('No delay on arrival', step_56/57) or NE-20 for no-travel. Also cancel code SKD is not in APPR_cancellation_lookup (=> ND-X02); use a valid code only if a cancel is wanted.",
+   "conflict": true,
+   "rules": [
+    "R8",
+    "R9",
+    "R2"
+   ]
+  },
+  "FD_TC_090": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-27"
+    },
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "cancelCode": "OPER"
+     }
+    ]
+   },
+   "note": "Expectation conflicts with Raptor reference data: FD-APPR-NE-01 means 'Employee booking AC'. A <3h delay is FD-APPR-NE-27 ('No delay on arrival', step_56/57) or NE-20 for no-travel. Also cancel code SKD is not in APPR_cancellation_lookup (=> ND-X02); use a valid code only if a cancel is wanted.",
+   "conflict": true,
+   "rules": [
+    "R8",
+    "R9",
+    "R2"
+   ]
+  },
+  "FD_TC_089": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-27"
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: delay <180 min with controllable code => FD-APPR-NE-27 (steps 56/57); FD-APPR-NE-01 is 'Employee booking AC' (appr-compensation-eligible-reason step_2).",
+   "conflict": true,
+   "rules": [
+    "R9"
+   ]
+  },
+  "FD_TC_091": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-27"
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: delay <180 min with controllable code => FD-APPR-NE-27 (steps 56/57); FD-APPR-NE-01 is 'Employee booking AC' (appr-compensation-eligible-reason step_2).",
+   "conflict": true,
+   "rules": [
+    "R9"
+   ]
+  },
+  "FD_TC_092": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-27"
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: delay <180 min with controllable code => FD-APPR-NE-27 (steps 56/57); FD-APPR-NE-01 is 'Employee booking AC' (appr-compensation-eligible-reason step_2).",
+   "conflict": true,
+   "rules": [
+    "R9"
+   ]
+  },
+  "FD_TC_050": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "cancelCode": "WEAT"
+     }
+    ],
+    "expect": {
+     "systemCode": "FD-APPR-NE-08"
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: 'FD-APPR-NE-UC-01' is not a table code and cancel code WXX is not in APPR_cancellation_lookup (WEAT is). With WEAT and a flown on-time rebooking Raptor gives NE-27/NE-28, no-travel NE-08.",
+   "conflict": true,
+   "rules": [
+    "R8",
+    "R2"
+   ]
+  },
+  "FD_TC_051": {
+   "specPatch": {
+    "expect": {
+     "cause": null
+    }
+   },
+   "note": "Only 'cause' text (DENIED_BOARDING_OVERSALES is not a delay/cancel code). Code NE-06 matches.",
+   "conflict": false,
+   "rules": [
+    "R15"
+   ]
+  },
+  "FD_TC_052": {
+   "specPatch": {
+    "expect": {
+     "eligibility": "ELIGIBLE",
+     "systemCode": "FD-APPR-EL-02"
+    }
+   },
+   "note": "Expectation not produced by Raptor rules: FD-APPR-NE-07 (limitation period) exists in the code table but no step of appr-compensation-eligible-reason emits it; the 366 days is only appr-compensation-expiration (date). Flight at 420+ days still evaluates ELIGIBLE EL-02.",
+   "conflict": true,
+   "rules": [
+    "R8"
+   ]
+  },
+  "FD_TC_064": {
+   "specPatch": {},
+   "note": "R1. Then seg1 flown to YYZ (promised stop), seg2 cancelled POLI (UNCONTROLLABLE) => INTERMEDIATE => FD-APPR-NE-12.",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_065": {
+   "specPatch": {},
+   "note": "R1: seg2 sits in its own bound (YYZ->YUL label), seg1 bound relabelled YUL->YVR, so destination type is ORIGIN/REMAINED => NE-08/NE-09 instead of INTERMEDIATE => NE-12/NE-13. Codes 82-87 UNCONTROLLABLE in APPR_delay_lookup, arrival code present => non-fallback NE-12 (step_20).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_066": {
+   "specPatch": {},
+   "note": "R1: seg2 sits in its own bound (YYZ->YUL label), seg1 bound relabelled YUL->YVR, so destination type is ORIGIN/REMAINED => NE-08/NE-09 instead of INTERMEDIATE => NE-12/NE-13. Codes 82-87 UNCONTROLLABLE in APPR_delay_lookup, arrival code present => non-fallback NE-12 (step_20).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_067": {
+   "specPatch": {},
+   "note": "R1: seg2 sits in its own bound (YYZ->YUL label), seg1 bound relabelled YUL->YVR, so destination type is ORIGIN/REMAINED => NE-08/NE-09 instead of INTERMEDIATE => NE-12/NE-13. Codes 82-87 UNCONTROLLABLE in APPR_delay_lookup, arrival code present => non-fallback NE-12 (step_20).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_068": {
+   "specPatch": {},
+   "note": "R1: seg2 sits in its own bound (YYZ->YUL label), seg1 bound relabelled YUL->YVR, so destination type is ORIGIN/REMAINED => NE-08/NE-09 instead of INTERMEDIATE => NE-12/NE-13. Codes 82-87 UNCONTROLLABLE in APPR_delay_lookup, arrival code present => non-fallback NE-12 (step_20).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_069": {
+   "specPatch": {},
+   "note": "R1: seg2 sits in its own bound (YYZ->YUL label), seg1 bound relabelled YUL->YVR, so destination type is ORIGIN/REMAINED => NE-08/NE-09 instead of INTERMEDIATE => NE-12/NE-13. Codes 82-87 UNCONTROLLABLE in APPR_delay_lookup, arrival code present => non-fallback NE-12 (step_20).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_070": {
+   "specPatch": {},
+   "note": "R1: seg2 sits in its own bound (YYZ->YUL label), seg1 bound relabelled YUL->YVR, so destination type is ORIGIN/REMAINED => NE-08/NE-09 instead of INTERMEDIATE => NE-12/NE-13. Codes 82-87 UNCONTROLLABLE in APPR_delay_lookup, arrival code present => non-fallback NE-12 (step_20).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_071": {
+   "specPatch": {},
+   "note": "R1 as above; only departure code (arrival code null) so is_fallback_code true => FD-APPR-NE-13 (step_21). Codes 88 89 93 97 98 are UNCONTROLLABLE in APPR_delay_lookup (note 93/97 are CONTROLLABLE in EU lookup).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_072": {
+   "specPatch": {},
+   "note": "R1 as above; only departure code (arrival code null) so is_fallback_code true => FD-APPR-NE-13 (step_21). Codes 88 89 93 97 98 are UNCONTROLLABLE in APPR_delay_lookup (note 93/97 are CONTROLLABLE in EU lookup).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_073": {
+   "specPatch": {},
+   "note": "R1 as above; only departure code (arrival code null) so is_fallback_code true => FD-APPR-NE-13 (step_21). Codes 88 89 93 97 98 are UNCONTROLLABLE in APPR_delay_lookup (note 93/97 are CONTROLLABLE in EU lookup).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_074": {
+   "specPatch": {},
+   "note": "R1 as above; only departure code (arrival code null) so is_fallback_code true => FD-APPR-NE-13 (step_21). Codes 88 89 93 97 98 are UNCONTROLLABLE in APPR_delay_lookup (note 93/97 are CONTROLLABLE in EU lookup).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_075": {
+   "specPatch": {},
+   "note": "R1 as above; only departure code (arrival code null) so is_fallback_code true => FD-APPR-NE-13 (step_21). Codes 88 89 93 97 98 are UNCONTROLLABLE in APPR_delay_lookup (note 93/97 are CONTROLLABLE in EU lookup).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_078": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-08",
+     "control": "UNCONTROLLABLE"
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: delay code 41 is UNCONTROLLABLE in APPR_delay_lookup (SAFETY set is 3,43,44,45,46,47,52,69) => FD-APPR-NE-08, not NE-14.",
+   "conflict": true,
+   "rules": [
+    "R7"
+   ]
+  },
+  "FD_TC_082": {
+   "specPatch": {},
+   "note": "R1. PERF cancel (SAFETY), codes 46/47 (SAFETY) on an INTERMEDIATE bound => FD-APPR-NE-18 (step_26).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_083": {
+   "specPatch": {},
+   "note": "R1. PERF cancel (SAFETY), codes 46/47 (SAFETY) on an INTERMEDIATE bound => FD-APPR-NE-18 (step_26).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_084": {
+   "specPatch": {},
+   "note": "R1. PERF cancel (SAFETY), codes 46/47 (SAFETY) on an INTERMEDIATE bound => FD-APPR-NE-18 (step_26).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_085": {
+   "specPatch": {},
+   "note": "R1. Departure-only codes 52/69 (SAFETY) on an INTERMEDIATE bound => FD-APPR-NE-19 (fallback, step_27).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_086": {
+   "specPatch": {},
+   "note": "R1. Departure-only codes 52/69 (SAFETY) on an INTERMEDIATE bound => FD-APPR-NE-19 (fallback, step_27).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_088": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-18",
+     "control": "SAFETY"
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: cancel code TECH is SAFETY in APPR_cancellation_lookup (CONTROLLABLE only in the EU/ASL table). INTERMEDIATE + SAFETY => FD-APPR-NE-18 (after R1), not NE-22 (NE-22 is 'delay below 3h or no cancellation').",
+   "conflict": true,
+   "rules": [
+    "R1",
+    "R7"
+   ]
+  },
+  "FD_TC_094": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-NE-28",
+     "control": "UNCONTROLLABLE"
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: delay code 81 is UNCONTROLLABLE (ATC) in APPR_delay_lookup => FD-APPR-NE-28, not NE-29 (safety).",
+   "conflict": true,
+   "rules": [
+    "R7"
+   ]
+  },
+  "FD_TC_095": {
+   "specPatch": {},
+   "note": "R1 + OAL: Raptor gives NE-05 because the second bound holds only the OAL flight (is_all_oal_itinerary). With one bound [AC, OAL] the MSL is the flown OAL leg => msl_flight_operating_carrier OAL (WS/BA) or STAR (LH) => ND-01 / ND-02 (steps 11/12). ND-06 (102, BA) needs msl_oal_data_missing: only when the OAL leg is the previous segment and has no oal_flights record, i.e. the passenger did not fly the BA leg.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R16"
+   ]
+  },
+  "FD_TC_096": {
+   "specPatch": {},
+   "note": "R1 + OAL: Raptor gives NE-05 because the second bound holds only the OAL flight (is_all_oal_itinerary). With one bound [AC, OAL] the MSL is the flown OAL leg => msl_flight_operating_carrier OAL (WS/BA) or STAR (LH) => ND-01 / ND-02 (steps 11/12). ND-06 (102, BA) needs msl_oal_data_missing: only when the OAL leg is the previous segment and has no oal_flights record, i.e. the passenger did not fly the BA leg.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R16"
+   ]
+  },
+  "FD_TC_102": {
+   "specPatch": {},
+   "note": "R1 + OAL: Raptor gives NE-05 because the second bound holds only the OAL flight (is_all_oal_itinerary). With one bound [AC, OAL] the MSL is the flown OAL leg => msl_flight_operating_carrier OAL (WS/BA) or STAR (LH) => ND-01 / ND-02 (steps 11/12). ND-06 (102, BA) needs msl_oal_data_missing: only when the OAL leg is the previous segment and has no oal_flights record, i.e. the passenger did not fly the BA leg.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R16"
+   ]
+  },
+  "FD_TC_097": {
+   "specPatch": {},
+   "note": "Expected ND-03 (new destination): needs the YYZ->YEG replacement boarded so the last flown arrival is neither the promised destination nor a sister (bound_destination_type OTHER, step_13). Currently R1 + replacement never boarded => EL-13. Cancel code CREW is fine.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R5"
+   ]
+  },
+  "FD_TC_101": {
+   "specPatch": {},
+   "note": "Expected ND-05 (data missing: promised itinerary or MSL empty) cannot be produced from a normal booking: the PNR segment always gives an MSL and an on-time flight evaluates NE-27/NE-22/NE-23. No supported spec patch.",
+   "conflict": false,
+   "rules": [
+    "R17"
+   ]
+  },
+  "FD_TC_148": {
+   "specPatch": {},
+   "note": "Expected ND-05 (data missing: promised itinerary or MSL empty) cannot be produced from a normal booking: the PNR segment always gives an MSL and an on-time flight evaluates NE-27/NE-22/NE-23. No supported spec patch.",
+   "conflict": false,
+   "rules": [
+    "R17"
+   ]
+  },
+  "FD_TC_169": {
+   "specPatch": {},
+   "note": "Expected ND-05 (data missing: promised itinerary or MSL empty) cannot be produced from a normal booking: the PNR segment always gives an MSL and an on-time flight evaluates NE-27/NE-22/NE-23. No supported spec patch.",
+   "conflict": false,
+   "rules": [
+    "R17"
+   ]
+  },
+  "FD_TC_103": {
+   "specPatch": {},
+   "note": "Expectation is not produced by Raptor: FD-*-PE-01 ('72 hours') is in the code tables but no rule in rule-catalog emits it (grep PE-01 in rust/src, rust/engine/src: none); the 72h window is DDS-service/Claims side. Raptor returns ND-04 (no code) for a flight delayed 240 min without code. Spec flightDaysAgo=1 was also moved to 2-5 days by the day-collision logic (still <72h only if <=2).",
+   "conflict": true,
+   "rules": [
+    "R8",
+    "R17"
+   ]
+  },
+  "FD_TC_150": {
+   "specPatch": {},
+   "note": "Expectation is not produced by Raptor: FD-*-PE-01 ('72 hours') is in the code tables but no rule in rule-catalog emits it (grep PE-01 in rust/src, rust/engine/src: none); the 72h window is DDS-service/Claims side. Raptor returns ND-04 (no code) for a flight delayed 240 min without code. Spec flightDaysAgo=1 was also moved to 2-5 days by the day-collision logic (still <72h only if <=2).",
+   "conflict": true,
+   "rules": [
+    "R8",
+    "R17"
+   ]
+  },
+  "FD_TC_171": {
+   "specPatch": {},
+   "note": "Expectation is not produced by Raptor: FD-*-PE-01 ('72 hours') is in the code tables but no rule in rule-catalog emits it (grep PE-01 in rust/src, rust/engine/src: none); the 72h window is DDS-service/Claims side. Raptor returns ND-04 (no code) for a flight delayed 240 min without code. Spec flightDaysAgo=1 was also moved to 2-5 days by the day-collision logic (still <72h only if <=2).",
+   "conflict": true,
+   "rules": [
+    "R8",
+    "R17"
+   ]
+  },
+  "FD_TC_104": {
+   "specPatch": {},
+   "note": "VOL-only / INVOL-same-flight promise cases: need PNR versions carrying the voluntary/involuntary change (rebook lane); generator builds delay vs the original promise (300 min no code => ND-04) or a cancel+replacement (NE-20). Expectation NE-27 needs promise = latest VOL (eds-promised-itinerary step_5).",
+   "conflict": false,
+   "rules": [
+    "R13"
+   ]
+  },
+  "FD_TC_105": {
+   "specPatch": {},
+   "note": "VOL-only / INVOL-same-flight promise cases: need PNR versions carrying the voluntary/involuntary change (rebook lane); generator builds delay vs the original promise (300 min no code => ND-04) or a cancel+replacement (NE-20). Expectation NE-27 needs promise = latest VOL (eds-promised-itinerary step_5).",
+   "conflict": false,
+   "rules": [
+    "R13"
+   ]
+  },
+  "FD_TC_108": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-ND-04"
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: FD-APPR-ND-09 is not in FD_APPR_reason_codes_lookup (ND-01..07, X02). A 240 min flight with no code is ND-04.",
+   "conflict": true,
+   "rules": [
+    "R8"
+   ]
+  },
+  "FD_TC_111": {
+   "specPatch": {},
+   "note": "Diverted-to-sister-city is not built: spec 'divert' becomes a plain delay at the promised airport so bound_destination_type=PROMISED (EL-01/05/06/09/11/13/14) instead of SISTER_PROMISED (EL-03/07/08/10/12/15/16/04). The sister airport must be the arrival airport of the booking's last (actual) PNR segment while the 14-day promise keeps YYZ (same_or_sister(), builtins.rs destination_type; sister_cities_lookup). Generator: for kind=divert add a PNR version re-pointing the segment to divertTo (or a rebooked segment, boarded) and keep the FDM flight id (carrier#number#day#origin). 112 additionally: EL-04 is the UK table, spec origin CDG => use LHR (AC858) or expect EL-16.",
+   "conflict": false,
+   "rules": [
+    "R5",
+    "R12"
+   ]
+  },
+  "FD_TC_115": {
+   "specPatch": {},
+   "note": "Diverted-to-sister-city is not built: spec 'divert' becomes a plain delay at the promised airport so bound_destination_type=PROMISED (EL-01/05/06/09/11/13/14) instead of SISTER_PROMISED (EL-03/07/08/10/12/15/16/04). The sister airport must be the arrival airport of the booking's last (actual) PNR segment while the 14-day promise keeps YYZ (same_or_sister(), builtins.rs destination_type; sister_cities_lookup). Generator: for kind=divert add a PNR version re-pointing the segment to divertTo (or a rebooked segment, boarded) and keep the FDM flight id (carrier#number#day#origin). 112 additionally: EL-04 is the UK table, spec origin CDG => use LHR (AC858) or expect EL-16.",
+   "conflict": false,
+   "rules": [
+    "R5",
+    "R12"
+   ]
+  },
+  "FD_TC_116": {
+   "specPatch": {},
+   "note": "Diverted-to-sister-city is not built: spec 'divert' becomes a plain delay at the promised airport so bound_destination_type=PROMISED (EL-01/05/06/09/11/13/14) instead of SISTER_PROMISED (EL-03/07/08/10/12/15/16/04). The sister airport must be the arrival airport of the booking's last (actual) PNR segment while the 14-day promise keeps YYZ (same_or_sister(), builtins.rs destination_type; sister_cities_lookup). Generator: for kind=divert add a PNR version re-pointing the segment to divertTo (or a rebooked segment, boarded) and keep the FDM flight id (carrier#number#day#origin). 112 additionally: EL-04 is the UK table, spec origin CDG => use LHR (AC858) or expect EL-16.",
+   "conflict": false,
+   "rules": [
+    "R5",
+    "R12"
+   ]
+  },
+  "FD_TC_118": {
+   "specPatch": {},
+   "note": "Diverted-to-sister-city is not built: spec 'divert' becomes a plain delay at the promised airport so bound_destination_type=PROMISED (EL-01/05/06/09/11/13/14) instead of SISTER_PROMISED (EL-03/07/08/10/12/15/16/04). The sister airport must be the arrival airport of the booking's last (actual) PNR segment while the 14-day promise keeps YYZ (same_or_sister(), builtins.rs destination_type; sister_cities_lookup). Generator: for kind=divert add a PNR version re-pointing the segment to divertTo (or a rebooked segment, boarded) and keep the FDM flight id (carrier#number#day#origin). 112 additionally: EL-04 is the UK table, spec origin CDG => use LHR (AC858) or expect EL-16.",
+   "conflict": false,
+   "rules": [
+    "R5",
+    "R12"
+   ]
+  },
+  "FD_TC_120": {
+   "specPatch": {},
+   "note": "Diverted-to-sister-city is not built: spec 'divert' becomes a plain delay at the promised airport so bound_destination_type=PROMISED (EL-01/05/06/09/11/13/14) instead of SISTER_PROMISED (EL-03/07/08/10/12/15/16/04). The sister airport must be the arrival airport of the booking's last (actual) PNR segment while the 14-day promise keeps YYZ (same_or_sister(), builtins.rs destination_type; sister_cities_lookup). Generator: for kind=divert add a PNR version re-pointing the segment to divertTo (or a rebooked segment, boarded) and keep the FDM flight id (carrier#number#day#origin). 112 additionally: EL-04 is the UK table, spec origin CDG => use LHR (AC858) or expect EL-16.",
+   "conflict": false,
+   "rules": [
+    "R5",
+    "R12"
+   ]
+  },
+  "FD_TC_123": {
+   "specPatch": {},
+   "note": "Diverted-to-sister-city is not built: spec 'divert' becomes a plain delay at the promised airport so bound_destination_type=PROMISED (EL-01/05/06/09/11/13/14) instead of SISTER_PROMISED (EL-03/07/08/10/12/15/16/04). The sister airport must be the arrival airport of the booking's last (actual) PNR segment while the 14-day promise keeps YYZ (same_or_sister(), builtins.rs destination_type; sister_cities_lookup). Generator: for kind=divert add a PNR version re-pointing the segment to divertTo (or a rebooked segment, boarded) and keep the FDM flight id (carrier#number#day#origin). 112 additionally: EL-04 is the UK table, spec origin CDG => use LHR (AC858) or expect EL-16.",
+   "conflict": false,
+   "rules": [
+    "R5",
+    "R12"
+   ]
+  },
+  "FD_TC_124": {
+   "specPatch": {},
+   "note": "Diverted-to-sister-city is not built: spec 'divert' becomes a plain delay at the promised airport so bound_destination_type=PROMISED (EL-01/05/06/09/11/13/14) instead of SISTER_PROMISED (EL-03/07/08/10/12/15/16/04). The sister airport must be the arrival airport of the booking's last (actual) PNR segment while the 14-day promise keeps YYZ (same_or_sister(), builtins.rs destination_type; sister_cities_lookup). Generator: for kind=divert add a PNR version re-pointing the segment to divertTo (or a rebooked segment, boarded) and keep the FDM flight id (carrier#number#day#origin). 112 additionally: EL-04 is the UK table, spec origin CDG => use LHR (AC858) or expect EL-16.",
+   "conflict": false,
+   "rules": [
+    "R5",
+    "R12"
+   ]
+  },
+  "FD_TC_112": {
+   "specPatch": {
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "858",
+      "origin": "LHR",
+      "destination": "YYZ"
+     }
+    ]
+   },
+   "note": "Diverted-to-sister-city is not built: spec 'divert' becomes a plain delay at the promised airport so bound_destination_type=PROMISED (EL-01/05/06/09/11/13/14) instead of SISTER_PROMISED (EL-03/07/08/10/12/15/16/04). The sister airport must be the arrival airport of the booking's last (actual) PNR segment while the 14-day promise keeps YYZ (same_or_sister(), builtins.rs destination_type; sister_cities_lookup). Generator: for kind=divert add a PNR version re-pointing the segment to divertTo (or a rebooked segment, boarded) and keep the FDM flight id (carrier#number#day#origin). 112 additionally: EL-04 is the UK table, spec origin CDG => use LHR (AC858) or expect EL-16.",
+   "conflict": false,
+   "rules": [
+    "R5",
+    "R12"
+   ]
+  },
+  "FD_TC_125": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 220,
+      "depDelayMin": 220,
+      "depDelayCode": "19",
+      "fallback": true
+     }
+    ]
+   },
+   "note": "Fallback via departure code: scenario_fdm emits the departure delay code only when depMinutes>0; spec has depDelayMin=0 so Raptor sees no code => ND-04. Set depDelayMin>0 (arrDelayMin stays, arrivalCode stays null). EU codes 19/11/25/37 are CONTROLLABLE in EU_ASL table. 127/128 are also sister-city (divert) => R5.",
+   "conflict": false,
+   "rules": [
+    "R6",
+    "R5"
+   ]
+  },
+  "FD_TC_126": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 275,
+      "depDelayMin": 275,
+      "depDelayCode": "11",
+      "fallback": true
+     }
+    ]
+   },
+   "note": "Fallback via departure code: scenario_fdm emits the departure delay code only when depMinutes>0; spec has depDelayMin=0 so Raptor sees no code => ND-04. Set depDelayMin>0 (arrDelayMin stays, arrivalCode stays null). EU codes 19/11/25/37 are CONTROLLABLE in EU_ASL table. 127/128 are also sister-city (divert) => R5.",
+   "conflict": false,
+   "rules": [
+    "R6",
+    "R5"
+   ]
+  },
+  "FD_TC_127": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "divert",
+      "arrDelayMin": 205,
+      "depDelayMin": 205,
+      "divertTo": "YTZ",
+      "depDelayCode": "25",
+      "fallback": true
+     }
+    ]
+   },
+   "note": "Fallback via departure code: scenario_fdm emits the departure delay code only when depMinutes>0; spec has depDelayMin=0 so Raptor sees no code => ND-04. Set depDelayMin>0 (arrDelayMin stays, arrivalCode stays null). EU codes 19/11/25/37 are CONTROLLABLE in EU_ASL table. 127/128 are also sister-city (divert) => R5.",
+   "conflict": false,
+   "rules": [
+    "R6",
+    "R5"
+   ]
+  },
+  "FD_TC_128": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "divert",
+      "arrDelayMin": 290,
+      "depDelayMin": 290,
+      "divertTo": "YTZ",
+      "depDelayCode": "37",
+      "fallback": true
+     }
+    ]
+   },
+   "note": "Fallback via departure code: scenario_fdm emits the departure delay code only when depMinutes>0; spec has depDelayMin=0 so Raptor sees no code => ND-04. Set depDelayMin>0 (arrDelayMin stays, arrivalCode stays null). EU codes 19/11/25/37 are CONTROLLABLE in EU_ASL table. 127/128 are also sister-city (divert) => R5.",
+   "conflict": false,
+   "rules": [
+    "R6",
+    "R5"
+   ]
+  },
+  "FD_TC_132": {
+   "specPatch": {},
+   "note": "R1: 2 flights in one bound => today EU NE-22/NE-19. After fix: seg1 flown, seg2 cancelled CREW (CONTROLLABLE in EU table), INTERMEDIATE, bound origin PTP/LHR/CDG => EU EL-35/33/37 (Guadeloupe/UK/EU no-travel incomplete) and the amounts (400 EUR/520 GBP/600 EUR).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_133": {
+   "specPatch": {},
+   "note": "R1: 2 flights in one bound => today EU NE-22/NE-19. After fix: seg1 flown, seg2 cancelled CREW (CONTROLLABLE in EU table), INTERMEDIATE, bound origin PTP/LHR/CDG => EU EL-35/33/37 (Guadeloupe/UK/EU no-travel incomplete) and the amounts (400 EUR/520 GBP/600 EUR).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_134": {
+   "specPatch": {},
+   "note": "R1: 2 flights in one bound => today EU NE-22/NE-19. After fix: seg1 flown, seg2 cancelled CREW (CONTROLLABLE in EU table), INTERMEDIATE, bound origin PTP/LHR/CDG => EU EL-35/33/37 (Guadeloupe/UK/EU no-travel incomplete) and the amounts (400 EUR/520 GBP/600 EUR).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_135": {
+   "specPatch": {},
+   "note": "R1: 2 flights in one bound => today EU NE-22/NE-19. After fix: seg1 flown, seg2 cancelled CREW (CONTROLLABLE in EU table), INTERMEDIATE, bound origin PTP/LHR/CDG => EU EL-35/33/37 (Guadeloupe/UK/EU no-travel incomplete) and the amounts (400 EUR/520 GBP/600 EUR).",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_136": {
+   "specPatch": {
+    "booking": {
+     "officeId": "YULAC08ES"
+    }
+   },
+   "note": "Employee flag not written to PNR (see R3). EU: step_2 of eu-compensation-eligible-reason => booking_type NON_REVENUE_AC => FD-EU-NE-01; OAL staff (needs EC office + 'SN-00000' keyword) => NE-02.",
+   "conflict": false,
+   "rules": [
+    "R3"
+   ]
+  },
+  "FD_TC_137": {
+   "specPatch": {
+    "booking": {
+     "officeId": "YULAC08EC",
+     "keywords": [
+      {
+       "code": "STFS",
+       "text": "SN-00000123456",
+       "subType": "SPECIAL_KEYWORD",
+       "status": "HK",
+       "serviceProvider": {
+        "code": "LH"
+       }
+      }
+     ]
+    }
+   },
+   "note": "Employee flag not written to PNR (see R3). EU: step_2 of eu-compensation-eligible-reason => booking_type NON_REVENUE_AC => FD-EU-NE-01; OAL staff (needs EC office + 'SN-00000' keyword) => NE-02.",
+   "conflict": false,
+   "rules": [
+    "R3"
+   ]
+  },
+  "FD_TC_138": {
+   "specPatch": {
+    "segments": [
+     {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "BA",
+      "number": "857",
+      "origin": "LHR",
+      "destination": "YYZ"
+     }
+    ]
+   },
+   "note": "EU NE-04 ('OAL Itinerary') needs an EU/UK origin bound with no AC-family flight (is_all_oal_itinerary). Spec route YYZ->LHR AC849 has a non-EU origin => EU NE-19. Patch: BA flight LHR->YYZ.",
+   "conflict": false,
+   "rules": [
+    "R12",
+    "R16"
+   ]
+  },
+  "FD_TC_139": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": "14"
+     }
+    ]
+   },
+   "note": "Denied boarding with rebooking: flight has a delay but no delay code, so the EU rule goes ND-04 before the denied-boarding NE-05 can apply (eu-compensation-eligible step_4 vs reason). Add a controllable delay code so disruption type is non-empty and denied boarding drives NOT_ELIGIBLE => EU NE-05.",
+   "conflict": false,
+   "rules": [
+    "R6"
+   ]
+  },
+  "FD_TC_141": {
+   "specPatch": {},
+   "note": "R1. Then WEAT cancel (UNCONTROLLABLE in EU table) on INTERMEDIATE => FD-EU-NE-11.",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_142": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 120,
+      "depDelayMin": 120,
+      "delayCode": "65"
+     }
+    ],
+    "rebooking": []
+   },
+   "note": "Expectation needs 'no cancellation, delay <3h, no travel' => NE-13: Raptor treats ANY cancellation as qualifying (msl_no_travel_delay_qualifies = has_cancellation || delay>=180, builtins.rs ~7190), so a CREW cancel gives EL-25. Model as a 120 min delay (controllable code 65) with not_travelled.",
+   "conflict": false,
+   "rules": [
+    "R15b"
+   ]
+  },
+  "FD_TC_143": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime"
+     },
+     {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 120,
+      "depDelayMin": 120,
+      "delayCode": "65"
+     }
+    ],
+    "rebooking": []
+   },
+   "note": "R1 + same as 142: cancel always qualifies; use 120 min delay on seg2, not_travelled, => FD-EU-NE-15.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R15b"
+   ]
+  },
+  "FD_TC_145": {
+   "specPatch": {},
+   "note": "R1: row selected is seg1 (120 min) instead of the last flight (90 min). After fix single bound; delay measured at the final arrival.",
+   "conflict": false,
+   "rules": [
+    "R1"
+   ]
+  },
+  "FD_TC_147": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime"
+     },
+     {
+      "seg": 2,
+      "kind": "cancel",
+      "cancelCode": "CREW"
+     }
+    ]
+   },
+   "note": "R1 + cancel code '42' (delay code) not in lookup (=> OTHER). ND-03 comes from bound_destination_type OTHER (rebook YYZ->YEG boarded); cause 42 can't be a cancel cause. Use CREW.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R2",
+    "R5"
+   ]
+  },
+  "FD_TC_149": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-EU-ND-01"
+    }
+   },
+   "note": "R1 + OAL (WS/Westjet seg after AC): EU only if bound origin EU; ND-05 'data missing' not producible (see R17). With R1 the MSL operating carrier is OAL => EU ND-01 (not ND-05).",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R16",
+    "R17"
+   ]
+  },
+  "FD_TC_153": {
+   "specPatch": {},
+   "note": "R1 (see R1): ASL rows for connecting itineraries come out as NE-21 because the Israel airport is in a different bound. After fix: 153 EL-09, 159 NE-12, 161/163 per delay<3h/threshold 480 min, 165/166/170 ND-01/02/06.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R16"
+   ]
+  },
+  "FD_TC_159": {
+   "specPatch": {},
+   "note": "R1 (see R1): ASL rows for connecting itineraries come out as NE-21 because the Israel airport is in a different bound. After fix: 153 EL-09, 159 NE-12, 161/163 per delay<3h/threshold 480 min, 165/166/170 ND-01/02/06.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R16"
+   ]
+  },
+  "FD_TC_161": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "ontime"
+     },
+     {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 120,
+      "depDelayMin": 120,
+      "delayCode": "65"
+     }
+    ],
+    "rebooking": []
+   },
+   "note": "R1 (see R1): ASL rows for connecting itineraries come out as NE-21 because the Israel airport is in a different bound. After fix: 153 EL-09, 159 NE-12, 161/163 per delay<3h/threshold 480 min, 165/166/170 ND-01/02/06.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R16"
+   ]
+  },
+  "FD_TC_163": {
+   "specPatch": {},
+   "note": "R1 (see R1): ASL rows for connecting itineraries come out as NE-21 because the Israel airport is in a different bound. After fix: 153 EL-09, 159 NE-12, 161/163 per delay<3h/threshold 480 min, 165/166/170 ND-01/02/06.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R16"
+   ]
+  },
+  "FD_TC_165": {
+   "specPatch": {},
+   "note": "R1 (see R1): ASL rows for connecting itineraries come out as NE-21 because the Israel airport is in a different bound. After fix: 153 EL-09, 159 NE-12, 161/163 per delay<3h/threshold 480 min, 165/166/170 ND-01/02/06.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R16"
+   ]
+  },
+  "FD_TC_166": {
+   "specPatch": {},
+   "note": "R1 (see R1): ASL rows for connecting itineraries come out as NE-21 because the Israel airport is in a different bound. After fix: 153 EL-09, 159 NE-12, 161/163 per delay<3h/threshold 480 min, 165/166/170 ND-01/02/06.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R16"
+   ]
+  },
+  "FD_TC_170": {
+   "specPatch": {},
+   "note": "R1 (see R1): ASL rows for connecting itineraries come out as NE-21 because the Israel airport is in a different bound. After fix: 153 EL-09, 159 NE-12, 161/163 per delay<3h/threshold 480 min, 165/166/170 ND-01/02/06.",
+   "conflict": false,
+   "rules": [
+    "R1",
+    "R16"
+   ]
+  },
+  "FD_TC_155": {
+   "specPatch": {
+    "booking": {
+     "officeId": "YULAC08EC",
+     "keywords": [
+      {
+       "code": "STFS",
+       "text": "SN-00000123456",
+       "subType": "SPECIAL_KEYWORD",
+       "status": "HK",
+       "serviceProvider": {
+        "code": "LH"
+       }
+      }
+     ]
+    }
+   },
+   "note": "ASL NE-02 (employee OAL) needs the OAL staff PNR markers (R3).",
+   "conflict": false,
+   "rules": [
+    "R3"
+   ]
+  },
+  "FD_TC_160": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 120,
+      "depDelayMin": 120,
+      "delayCode": "65"
+     }
+    ],
+    "rebooking": []
+   },
+   "note": "Same as 142: ASL cancel always qualifies => EL-05. Use 120 min delay + not_travelled => ASL NE-14.",
+   "conflict": false,
+   "rules": [
+    "R15b"
+   ]
+  },
+  "FD_TC_162": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-ASL-NE-23"
+    }
+   },
+   "note": "Expectation conflicts with Raptor reference data: ASL compensation needs >=480 min (asl-compensation-eligible step_2); 240 min with a code => FD-ASL-NE-23. NE-21 is 'Itinerary did not start/end in Israel' and the itinerary starts in TLV.",
+   "conflict": true,
+   "rules": [
+    "R9"
+   ]
+  },
+  "FD_TC_167": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "cancel",
+      "cancelCode": "OPER"
+     }
+    ]
+   },
+   "note": "ND-03 for ASL needs the rebooked TLV->YOW flight boarded (destination OTHER); no cancel code is sent so scenario_fdm uses default 'WX' (=> OTHER). Give OPER.",
+   "conflict": false,
+   "rules": [
+    "R2",
+    "R5"
+   ]
+  },
+  "FD_TC_168": {
+   "specPatch": {},
+   "note": "ASL delay 240 min without any code: catalog says ND-04 (asl reason: disruption type empty) but deployed Raptor returned NE-23 (below 480 min). Probe needed on the ASL threshold ordering; expectation otherwise consistent with catalog.",
+   "conflict": false,
+   "rules": [
+    "R17"
+   ]
+  },
+  "FD_TC_172": {
+   "specPatch": {},
+   "note": "Expectation conflicts with Raptor reference data: FD-MIXED-* codes do not exist (code tables are FD-APPR/FD-EU/FD-ASL); Raptor returns one row per regime (APPR EL-01 and EU EL-14 etc.). 'Most generous' selection is a DDS/dashboard layer concept. Compare each regime's own row (EU: 600 EUR EL-14 etc.). 176/177 also need LHR (UK) origin rows: 176 has no code (ND-04); 177 code 72 UNCONTROLLABLE => EU NE-23.",
+   "conflict": true,
+   "rules": [
+    "R8"
+   ]
+  },
+  "FD_TC_173": {
+   "specPatch": {},
+   "note": "Expectation conflicts with Raptor reference data: FD-MIXED-* codes do not exist (code tables are FD-APPR/FD-EU/FD-ASL); Raptor returns one row per regime (APPR EL-01 and EU EL-14 etc.). 'Most generous' selection is a DDS/dashboard layer concept. Compare each regime's own row (EU: 600 EUR EL-14 etc.). 176/177 also need LHR (UK) origin rows: 176 has no code (ND-04); 177 code 72 UNCONTROLLABLE => EU NE-23.",
+   "conflict": true,
+   "rules": [
+    "R8"
+   ]
+  },
+  "FD_TC_174": {
+   "specPatch": {},
+   "note": "Expectation conflicts with Raptor reference data: FD-MIXED-* codes do not exist (code tables are FD-APPR/FD-EU/FD-ASL); Raptor returns one row per regime (APPR EL-01 and EU EL-14 etc.). 'Most generous' selection is a DDS/dashboard layer concept. Compare each regime's own row (EU: 600 EUR EL-14 etc.). 176/177 also need LHR (UK) origin rows: 176 has no code (ND-04); 177 code 72 UNCONTROLLABLE => EU NE-23.",
+   "conflict": true,
+   "rules": [
+    "R8"
+   ]
+  },
+  "FD_TC_175": {
+   "specPatch": {},
+   "note": "Expectation conflicts with Raptor reference data: FD-MIXED-* codes do not exist (code tables are FD-APPR/FD-EU/FD-ASL); Raptor returns one row per regime (APPR EL-01 and EU EL-14 etc.). 'Most generous' selection is a DDS/dashboard layer concept. Compare each regime's own row (EU: 600 EUR EL-14 etc.). 176/177 also need LHR (UK) origin rows: 176 has no code (ND-04); 177 code 72 UNCONTROLLABLE => EU NE-23.",
+   "conflict": true,
+   "rules": [
+    "R8"
+   ]
+  },
+  "FD_TC_176": {
+   "specPatch": {},
+   "note": "Expectation conflicts with Raptor reference data: FD-MIXED-* codes do not exist (code tables are FD-APPR/FD-EU/FD-ASL); Raptor returns one row per regime (APPR EL-01 and EU EL-14 etc.). 'Most generous' selection is a DDS/dashboard layer concept. Compare each regime's own row (EU: 600 EUR EL-14 etc.). 176/177 also need LHR (UK) origin rows: 176 has no code (ND-04); 177 code 72 UNCONTROLLABLE => EU NE-23.",
+   "conflict": true,
+   "rules": [
+    "R8"
+   ]
+  },
+  "FD_TC_177": {
+   "specPatch": {},
+   "note": "Expectation conflicts with Raptor reference data: FD-MIXED-* codes do not exist (code tables are FD-APPR/FD-EU/FD-ASL); Raptor returns one row per regime (APPR EL-01 and EU EL-14 etc.). 'Most generous' selection is a DDS/dashboard layer concept. Compare each regime's own row (EU: 600 EUR EL-14 etc.). 176/177 also need LHR (UK) origin rows: 176 has no code (ND-04); 177 code 72 UNCONTROLLABLE => EU NE-23.",
+   "conflict": true,
+   "rules": [
+    "R8"
+   ]
+  },
+  "FD_TC_178": {
+   "specPatch": {},
+   "note": "Expectation conflicts with Raptor reference data: FD-MIXED-* codes do not exist (code tables are FD-APPR/FD-EU/FD-ASL); Raptor returns one row per regime (APPR EL-01 and EU EL-14 etc.). 'Most generous' selection is a DDS/dashboard layer concept. Compare each regime's own row (EU: 600 EUR EL-14 etc.). 176/177 also need LHR (UK) origin rows: 176 has no code (ND-04); 177 code 72 UNCONTROLLABLE => EU NE-23.",
+   "conflict": true,
+   "rules": [
+    "R8"
+   ]
+  },
+  "FD_TC_179": {
+   "specPatch": {},
+   "note": "Expectation conflicts with Raptor reference data: FD-DUP-NE-01 (duplicate claim) is not a Raptor code; duplicates are Claims Dashboard logic. Also R1 (ORD-DEN-YYZ two bounds).",
+   "conflict": true,
+   "rules": [
+    "R8",
+    "R1"
+   ]
+  },
+  "FD_TC_181": {
+   "specPatch": {},
+   "note": "Schedule-change-only cases: scenario_build shifts the scheduled time so the delay vs the 14-day promise is 180-300 min with no delay code => ND-04 (expected NOT_ELIGIBLE dm 0). Whether Raptor takes a notice>=72h/14d schedule change as the new promise depends on itinerary_change classification (eds-promised-itinerary: only INVOL locks, latest VOL moves the promise). Probe needed; to get NE-27 with current data model the change must be a voluntary/accepted retime so promise = latest.",
+   "conflict": false,
+   "rules": [
+    "R4",
+    "R13"
+   ]
+  },
+  "FD_TC_182": {
+   "specPatch": {},
+   "note": "Schedule-change-only cases: scenario_build shifts the scheduled time so the delay vs the 14-day promise is 180-300 min with no delay code => ND-04 (expected NOT_ELIGIBLE dm 0). Whether Raptor takes a notice>=72h/14d schedule change as the new promise depends on itinerary_change classification (eds-promised-itinerary: only INVOL locks, latest VOL moves the promise). Probe needed; to get NE-27 with current data model the change must be a voluntary/accepted retime so promise = latest.",
+   "conflict": false,
+   "rules": [
+    "R4",
+    "R13"
+   ]
+  },
+  "FD_TC_183": {
+   "specPatch": {},
+   "note": "Schedule-change-only cases: scenario_build shifts the scheduled time so the delay vs the 14-day promise is 180-300 min with no delay code => ND-04 (expected NOT_ELIGIBLE dm 0). Whether Raptor takes a notice>=72h/14d schedule change as the new promise depends on itinerary_change classification (eds-promised-itinerary: only INVOL locks, latest VOL moves the promise). Probe needed; to get NE-27 with current data model the change must be a voluntary/accepted retime so promise = latest.",
+   "conflict": false,
+   "rules": [
+    "R4",
+    "R13"
+   ]
+  },
+  "FD_TC_184": {
+   "specPatch": {},
+   "note": "Schedule-change-only cases: scenario_build shifts the scheduled time so the delay vs the 14-day promise is 180-300 min with no delay code => ND-04 (expected NOT_ELIGIBLE dm 0). Whether Raptor takes a notice>=72h/14d schedule change as the new promise depends on itinerary_change classification (eds-promised-itinerary: only INVOL locks, latest VOL moves the promise). Probe needed; to get NE-27 with current data model the change must be a voluntary/accepted retime so promise = latest.",
+   "conflict": false,
+   "rules": [
+    "R4",
+    "R13"
+   ]
+  },
+  "FD_TC_185": {
+   "specPatch": {},
+   "note": "Schedule-change-only cases: scenario_build shifts the scheduled time so the delay vs the 14-day promise is 180-300 min with no delay code => ND-04 (expected NOT_ELIGIBLE dm 0). Whether Raptor takes a notice>=72h/14d schedule change as the new promise depends on itinerary_change classification (eds-promised-itinerary: only INVOL locks, latest VOL moves the promise). Probe needed; to get NE-27 with current data model the change must be a voluntary/accepted retime so promise = latest.",
+   "conflict": false,
+   "rules": [
+    "R4",
+    "R13"
+   ]
+  },
+  "FD_TC_196": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": "42"
+     }
+    ]
+   },
+   "note": "Spec outcome minutes are the total delay (360/420) while the scenario's tier depends on the NET delay after the positive-VOL deduction (240/300). Raptor's expected result is derived from net delay; generator has no VOL deduction history. Use the net delay as the flown delay.",
+   "conflict": false,
+   "rules": [
+    "R4"
+   ]
+  },
+  "FD_TC_197": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": "42"
+     }
+    ]
+   },
+   "note": "Spec outcome minutes are the total delay (360/420) while the scenario's tier depends on the NET delay after the positive-VOL deduction (240/300). Raptor's expected result is derived from net delay; generator has no VOL deduction history. Use the net delay as the flown delay.",
+   "conflict": false,
+   "rules": [
+    "R4"
+   ]
+  },
+  "FD_TC_198": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": "42"
+     }
+    ]
+   },
+   "note": "Spec outcome minutes are the total delay (360/420) while the scenario's tier depends on the NET delay after the positive-VOL deduction (240/300). Raptor's expected result is derived from net delay; generator has no VOL deduction history. Use the net delay as the flown delay.",
+   "conflict": false,
+   "rules": [
+    "R4"
+   ]
+  },
+  "FD_TC_199": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 300,
+      "depDelayMin": 300,
+      "delayCode": "42"
+     }
+    ]
+   },
+   "note": "Spec outcome minutes are the total delay (360/420) while the scenario's tier depends on the NET delay after the positive-VOL deduction (240/300). Raptor's expected result is derived from net delay; generator has no VOL deduction history. Use the net delay as the flown delay.",
+   "conflict": false,
+   "rules": [
+    "R4"
+   ]
+  },
+  "FD_TC_200": {
+   "specPatch": {
+    "outcomes": [
+     {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": "42"
+     }
+    ]
+   },
+   "note": "Spec outcome minutes are the total delay (360/420) while the scenario's tier depends on the NET delay after the positive-VOL deduction (240/300). Raptor's expected result is derived from net delay; generator has no VOL deduction history. Use the net delay as the flown delay.",
+   "conflict": false,
+   "rules": [
+    "R4"
+   ]
+  },
+  "FD_TC_208": {
+   "specPatch": {
+    "expect": {
+     "systemCode": "FD-APPR-EL-13"
+    }
+   },
+   "note": "Spec-internal conflict: pax is not_travelled with a CREW cancel (controllable) => Raptor no-travel FD-APPR-EL-13 ($400). EL-01 is a delay band.",
+   "conflict": true,
+   "rules": [
+    "R9"
+   ]
+  },
+  "FD_TC_209#1": {
+   "specPatch": {},
+   "note": "Time zone problem already fixed in converter (tz_extra); 210 additionally expects FD-APPR-DB-01 (not a table code).",
+   "conflict": false,
+   "rules": [
+    "R8"
+   ]
+  },
+  "FD_TC_209#2": {
+   "specPatch": {},
+   "note": "Time zone problem already fixed in converter (tz_extra); 210 additionally expects FD-APPR-DB-01 (not a table code).",
+   "conflict": false,
+   "rules": [
+    "R8"
+   ]
+  },
+  "FD_TC_210": {
+   "specPatch": {},
+   "note": "Time zone problem already fixed in converter (tz_extra); 210 additionally expects FD-APPR-DB-01 (not a table code).",
+   "conflict": true,
+   "rules": [
+    "R8"
+   ]
+  },
+  "FD_TC_235": {
+   "specPatch": {
+    "expect": {
+     "amount": 700
+    }
+   },
+   "note": "Per-passenger vs total: expected 2100 is 3 x 700; Raptor amount is per passenger row (700, EL-02). Set expect.amount=700 (passenger count 3). A second APPR EL-13 row appears from R1-type extra bound? (single seg: it is the extra pax row).",
+   "conflict": false,
+   "rules": [
+    "R15"
+   ]
+  },
+  "FD_TC_236": {
+   "specPatch": {
+    "expect": {
+     "eligibility": "ELIGIBLE"
+    }
+   },
+   "note": "Expected NO_DETERMINATION for code 96 (industrial action). Raptor reference: 96 is CONTROLLABLE in APPR_delay_lookup and EU_ASL table, so the data yields ELIGIBLE. 236 also R1.",
+   "conflict": true,
+   "rules": [
+    "R7"
+   ]
+  },
+  "FD_TC_238": {
+   "specPatch": {
+    "expect": {
+     "eligibility": "ELIGIBLE"
+    }
+   },
+   "note": "Expected NO_DETERMINATION for code 96 (industrial action). Raptor reference: 96 is CONTROLLABLE in APPR_delay_lookup and EU_ASL table, so the data yields ELIGIBLE. 236 also R1.",
+   "conflict": true,
+   "rules": [
+    "R7"
+   ]
+  },
+  "FD_TC_237": {
+   "specPatch": {},
+   "note": "Only delayMin (cancel minutes) - outside lane; cancel code WXX not in lookup (=> ND-X02 matches expected ND).",
+   "conflict": false,
+   "rules": [
+    "R15"
+   ]
+  }
+ }
+}

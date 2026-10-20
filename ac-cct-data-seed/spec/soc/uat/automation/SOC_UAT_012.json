@@ -1,0 +1,93 @@
+{
+  "id": "SOC_UAT_012",
+  "family": "SOC",
+  "summary": "APPR SOC: 1 revenue pax on AC 301 YYZ-YVR May 15, dep 08:00 actual 14:00 (+360 min), NO departure delay code even after 14-day RE retrigger -> NO DETERMINATION (SoC-APPR-ND-03)",
+  "passengers": [
+    {
+      "firstName": "JULIEN",
+      "lastName": "CARON",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "301",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "08:00",
+      "arrLocal": "09:40",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 30,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 360,
+      "depDelayMin": 360,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "SoC-APPR-ND-03",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 360,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment domestic trip YYZ→YVR on AC301 delayed +6H 00M, departure delay code missing after 14-day retrigger",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Promised Itinerary: AC 301 YYZ→YVR Scheduled Dep 15-May 08:00",
+      "Current Itinerary: AC 301 YYZ→YVR ARRIVED LATE, Scheduled Dep 08:00 → Actual 14:00, +6H 00M",
+      "Departure Delay Code: NONE (not populated after 14-day RE retrigger)",
+      "14-Day RE Retrigger: COMPLETED, code still not populated",
+      "PASSENGER | NO_DETERMINATION | DELAY_6_HOURS_OR_MORE"
+    ],
+    "soc": {
+      "eligibility": "NO_DETERMINATION",
+      "entitlements": "none determined; case created for manual review"
+    }
+  },
+  "assumed": [
+    "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "flightDaysAgo 30 (text: journey well beyond 14 days; RE retrigger at 14 days already completed)",
+    "arrival 09:40 (4h40 block, tz -3h)",
+    "residence CA assumed"
+  ],
+  "unsupported": [
+    "Departure delay code must be absent and a completed 14-day RE retrigger must be recorded (retrigger state is not booking data)"
+  ]
+}

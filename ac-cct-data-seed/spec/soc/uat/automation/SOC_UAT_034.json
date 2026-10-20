@@ -1,0 +1,103 @@
+{
+  "id": "SOC_UAT_034",
+  "family": "SOC",
+  "summary": "EU SOC: 1 regular revenue pax on AC 871 CDG-YYZ Jun 8 11:00 diverted back to origin CDG, rebooked with 90 min dep delay -> NOT ELIGIBLE, below 2 h no-travel threshold (SoC-EU-NE-10)",
+  "passengers": [
+    {
+      "firstName": "ANTOINE",
+      "lastName": "MOREAU",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "871",
+      "origin": "CDG",
+      "destination": "YYZ",
+      "depLocal": "11:00",
+      "arrLocal": "13:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HX"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "divert",
+      "arrDelayMin": null,
+      "depDelayMin": 90,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": "CDG"
+    }
+  ],
+  "rebooking": [
+    {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "873",
+      "origin": "CDG",
+      "destination": "YYZ",
+      "depLocal": "12:30",
+      "arrLocal": "14:30",
+      "dayOffset": 0,
+      "accepted": false
+    }
+  ],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-EU-NE-10",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_LESS_THAN_2_HOURS",
+    "delayMin": 90,
+    "control": "CONTROLLABLE",
+    "cause": "64",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Not Completed, Disruption Detected",
+      "Single-segment trip CDG→YYZ on AC871 diverted, returned to origin, rebooked with SOC segment departure delay +1H 30M; passenger returned to CDG",
+      "Regime: EU (CDG departure)",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Promised Itinerary: AC 871 CDG→YYZ Scheduled Dep 08-Jun 11:00",
+      "Current Itinerary: AC 871 CDG→YYZ DIVERTED, returned to origin (CDG), rebooked, SOC Segment Departure Delay +1H 30M",
+      "SOC Segment Departure Delay: 90 min, below 2h threshold",
+      "Departure Delay Code: 64 (Flight Crew Shortage), Controllable (not checked under EU)",
+      "PASSENGER | NOT_ELIGIBLE | DELAY_LESS_THAN_2_HOURS"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none; no travel (return to origin), delay below 2 h"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "rebooked AC 873 CDG-YYZ dep 12:30 arr 14:30 invented; accepted=false (returned to CDG)",
+    "arrival 13:00 EDT (8h block, tz -6h)"
+  ],
+  "unsupported": []
+}

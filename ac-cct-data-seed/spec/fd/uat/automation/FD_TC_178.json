@@ -1,0 +1,108 @@
+{
+  "id": "FD_TC_178",
+  "family": "FD",
+  "summary": "Triple regime CDG-YYZ-TLV: AC871 on time, AC085 YYZ-TLV 4h late (code 42): EU EUR 400 and APPR eligible, ASL No Determination (missing Israeli data); EU selected",
+  "passengers": [
+    {
+      "firstName": "SYLVAIN",
+      "lastName": "MOREAU",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "871",
+      "origin": "CDG",
+      "destination": "YYZ",
+      "depLocal": "13:30",
+      "arrLocal": "16:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "85",
+      "origin": "YYZ",
+      "destination": "TLV",
+      "depLocal": "23:00",
+      "arrLocal": "16:00",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": null,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "MIXED",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "FD-MIXED-ND-01",
+    "amount": 400,
+    "currency": "EUR",
+    "delayBand": null,
+    "delayMin": 240,
+    "control": "CONTROLLABLE",
+    "cause": "42",
+    "ttUi": [
+      "Segment 1: AC 871 CDG->YYZ COMPLETED (on time)",
+      "Segment 2: AC 085 YYZ->TLV ARRIVED LATE +4H 00M",
+      "Triple Regime: EU 261 + APPR + ASL",
+      "EU 261: ELIGIBLE EUR 400 - DATA COMPLETE",
+      "APPR: ELIGIBLE CAD 400 - DATA COMPLETE",
+      "ASL: NO DETERMINATION - DATA INCOMPLETE (Israeli regulatory data missing)",
+      "ASL ND Blocking: NO - does not block EU/APPR eligible assessment",
+      "Eligible regimes: EU 261 + APPR -> fixed priority: EU first",
+      "Most Generous (from determined regimes): EU 261 EUR 400 (fixed priority)",
+      "MSL FLIGHT: AC 085 YYZ->TLV - 42",
+      "CONTROLLABLE (Code 42)",
+      "Flight Compensation: MR SYLVAIN MOREAU | ELIGIBLE | EU261_3_PLUS_HOURS_MEDIUM_HAUL (FIXED PRIORITY from determined regimes) | EUR 400"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "times chosen: AC871 13:30-16:00, AC085 23:00 YYZ -> 16:00+1 TLV (scheduled; 4h late arrival 20:00)",
+    "regime \"MIXED\" (EU + APPR + ASL); selected = EU 261 EUR 400 (Expected Results say 1500-3500 km band, which does not fit CDG-YYZ/YYZ-TLV distances - amount taken verbatim from the text); APPR CAD 400 secondary; ASL = ND logged",
+    "flight date June 6, 2026; flightDaysAgo=10"
+  ],
+  "unsupported": [
+    "ASL \"Israeli regulatory data missing\" (DDS reference data gap producing the ND component) is rules-engine data, not booking data; builder cannot create it from a booking"
+  ]
+}

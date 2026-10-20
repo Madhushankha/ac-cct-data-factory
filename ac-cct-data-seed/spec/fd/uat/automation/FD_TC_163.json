@@ -1,0 +1,105 @@
+{
+  "id": "FD_TC_163",
+  "family": "FD",
+  "summary": "ASL YYZ-FRA-TLV: leg 1 AC873 +2h (code 42), final arrival at TLV +1.5h -> Not Eligible ILS 0 (below all thresholds)",
+  "passengers": [
+    {
+      "firstName": "SHAI",
+      "lastName": "BENVENISTI",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "873",
+      "origin": "YYZ",
+      "destination": "FRA",
+      "depLocal": "18:00",
+      "arrLocal": "08:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "9042",
+      "origin": "FRA",
+      "destination": "TLV",
+      "depLocal": "12:40",
+      "arrLocal": "18:00",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 120,
+      "depDelayMin": null,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 90,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "FD-ASL-NE-23",
+    "amount": 0,
+    "currency": "ILS",
+    "delayBand": null,
+    "delayMin": 90,
+    "control": "CONTROLLABLE",
+    "cause": "42",
+    "ttUi": [
+      "Segment 1: AC 873 YYZ->FRA scheduled arrival 08:00, actual 10:00, +2H 00M (MSL)",
+      "Arrival Delay Code on Leg 1: 42 (Not Extraordinary Circumstance, controllable)",
+      "Segment 2: AC 9042 FRA->TLV scheduled arrival 18:00, actual 19:30, +1H 30M",
+      "Final Destination: TLV",
+      "Final Arrival Delay: promised 18:00, actual 19:30, +1H 30M",
+      "MSL Delay: 2H 00M (Leg 1 YYZ->FRA), below 3h and well below 8h",
+      "Regime: ASL (Israel destination TLV)",
+      "ASL Travel Completed Threshold: arrival delay must be >= 8 hours; 1.5h < 8h -> NOT ELIGIBLE",
+      "Fallback: FALSE (arrival delay code 42 available)",
+      "Flight Compensation: MR SHAI BENVENISTI | NOT ELIGIBLE | ARRIVAL_DELAY_BELOW_8_HOURS | ILS 0.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "Leg 1 arrives at FRA 08:00 next day (dayOffset 1 relative to YYZ departure 18:00 day 0); leg 2 departs FRA 12:40 same day as leg-1 arrival (dayOffset 1), arrives TLV 18:00 (given); other times chosen. NOTE: leg 1 arrival is on dayOffset 1 but written dayOffset 0 on the segment row; builder should treat arrLocal < depLocal as next-day arrival",
+    "Prerequisites say leg 2 \"on time\" but also final TLV arrival 19:30 vs 18:00 (+1.5h); chatbot says \"ARRIVED ON TIME\". Followed the numbers: leg 2 arrival delay 90 min, no delay code given for leg 2",
+    "flight date June 9, 2026 in text; flightDaysAgo=10",
+    "APPR also applies (NE)"
+  ],
+  "unsupported": []
+}

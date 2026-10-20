@@ -1,0 +1,1206 @@
+{
+  "key": "CHAI-31937",
+  "test_id": "SOC_UAT_022",
+  "title": "APPR � Eligible � 1 Adult Pax � Delay Code 61 (Flight Plan) � Booker Basic Member � Accommodation Exceeds $500 Hotel Cap -> Pending Agent Review (Manual)",
+  "goal": "Verify APPR SOC eligibility, hotel cap evaluation, OCR extraction, and manual review escalation for a single adult passenger with Basic Aeroplan membership experiencing a 7-hour controllable flight plan delay (Code 61), where a submitted hotel receipt of $580.00 CAD exceeds the $500.00 CAD policy hotel cap, triggering routing to the Manual Handling Queue for agent review before any Interac payout issuance.",
+  "summary": {
+    "seed": 15,
+    "chat": 45,
+    "api": 6,
+    "email": 2,
+    "dashboard": 40,
+    "implied": 20,
+    "manual": 3,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Verify APPR SOC eligibility, hotel cap evaluation, OCR extraction, and manual review escalation for a single adult passenger with Basic Aeroplan membership experiencing a 7-hour controllable flight plan delay (Code 61), where a submitted hotel receipt of $580.00 CAD exceeds the $500.00 CAD policy hotel cap, triggering routing to the Manual Handling Queue for agent review before any Interac payout issuance.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Regime: APPR",
+      "expected": "� Regime: APPR",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Itinerary: Single segment � AC 301 YYZ -> YVR",
+      "expected": "� Itinerary: Single segment � AC 301 YYZ -> YVR",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� SOC Segment (per SoC Flight Identifier): AC 301 YYZ -> YVR",
+      "expected": "� SOC Segment (per SoC Flight Identifier): AC 301 YYZ -> YVR",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Promised Itinerary: AC 301 YYZ -> YVR, Dep: 15-Jun 08:00",
+      "expected": "� Promised Itinerary: AC 301 YYZ -> YVR, Dep: 15-Jun 08:00",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Actual Itinerary: AC 301 YYZ -> YVR, Dep: 15-Jun 15:00",
+      "expected": "� Actual Itinerary: AC 301 YYZ -> YVR, Dep: 15-Jun 15:00",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Departure Delay: 420 min (7 hours)",
+      "expected": "� Departure Delay: 420 min (7 hours)",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Departure Delay Code: 61 (Flight Operations / Flight Plan Preparation) � Controllable",
+      "expected": "� Departure Delay Code: 61 (Flight Operations / Flight Plan Preparation) � Controllable",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Controllability: Controllable (Code 61)",
+      "expected": "� Controllability: Controllable (Code 61)",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Passenger Count & Types (1 Adult Pax on PNR):",
+      "expected": "� Passenger Count & Types (1 Adult Pax on PNR):",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "- Pax 1 (Claimant / Booker): Regular Adult / Aeroplan Basic Member",
+      "expected": "- Pax 1 (Claimant / Booker): Regular Adult / Aeroplan Basic Member",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Check Order: 1. Pax Type -> Regular Adult PASS -> 2. Controllability -> Controllable (Code 61) PASS -> ELIGIBLE",
+      "expected": "� Check Order: 1. Pax Type -> Regular Adult PASS -> 2. Controllability -> Controllable (Code 61) PASS -> ELIGIBLE",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� PAX Count: 1 adult / Class: PY / Revenue: YES / ACR: No / Journey: > 72h",
+      "expected": "� PAX Count: 1 adult / Class: PY / Revenue: YES / ACR: No / Journey: > 72h",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Overnight Eligible: YES (delay > 360 min)",
+      "expected": "� Overnight Eligible: YES (delay > 360 min)",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Entitlements: Hotel: Rate of day, 3 nights max, $500.00 CAD cap / Meals: $30.00 CAD / Transport: $200.00 CAD / Comm: $30.00 CAD / Parking: $50.00 CAD / Essentials: $30.00 CAD",
+      "expected": "� Entitlements: Hotel: Rate of day, 3 nights max, $500.00 CAD cap / Meals: $30.00 CAD / Transport: $200.00 CAD / Comm: $30.00 CAD / Parking: $50.00 CAD / Essentials: $30.00 CAD",
+      "id": "CP015"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "� Submitted Expense: Accommodation only � 1 receipt of $580.00 CAD (Exceeds $500.00 hotel cap -> Routes to Manual Handling Queue)",
+      "expected": "� Submitted Expense: Accommodation only � 1 receipt of $580.00 CAD (Exceeds $500.00 hotel cap -> Routes to Manual Handling Queue)",
+      "id": "CP016"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP017"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP018"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "When the user selects English",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed:",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP020"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks: \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP021"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says: \"My flight from Toronto to Vancouver was delayed by 7 hours due to flight plan issues. I had to stay overnight at a hotel and paid out of pocket. Can I get reimbursed?\"",
+      "expected": "My flight from Toronto to Vancouver was delayed by 7 hours due to flight plan issues. I had to stay overnight at a hotel and paid out of pocket. Can I get reimbursed?",
+      "id": "CP022"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies Standards of Care (SoC) intent",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? -> NO",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "SOC ENTRY",
+      "requirement": "SoC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays the case opening legal disclaimer (GenUC-24):",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP025"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP026"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP027"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"[First Name] [Last Name]\"",
+      "expected": "[First Name] [Last Name]",
+      "id": "CP028"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, [First Name]! And, what is your booking reference number?",
+      "id": "CP029"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: [PNR Code]\"",
+      "expected": "PNR: [PNR Code]",
+      "id": "CP030"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: [PNR Code]",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND (1 Passenger on booking)",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP033"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "* Email: t***@gmail.com * Phone: +1***789",
+      "id": "CP034"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "When the user selects \"Email: t***@gmail.com\"",
+      "expected": "Email: t***@gmail.com",
+      "id": "CP035"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP036"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"546879\"",
+      "expected": "546879",
+      "id": "CP037"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code -> CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful. Let's proceed to the next step.",
+      "id": "CP039"
+    },
+    {
+      "section": "PASSENGER & JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if this PNR is a group booking -> No",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "PASSENGER & JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if there are multiple PAX on PNR? -> No (1 PAX)",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "PASSENGER & JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot retrieves booking details and displays:",
+      "expected": "I found the following journey: * Flight: AC 301 * Route: Toronto (YYZ) -> Vancouver (YVR) * Date: June 15, 2026 * Departure Delay: 7 hours (420 minutes) * Passengers: 1 Adult Is this the journey you'd like to check?",
+      "id": "CP042"
+    },
+    {
+      "section": "PASSENGER & JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP043"
+    },
+    {
+      "section": "PASSENGER & JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if there is more than 1 segment -> No",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "ELIGIBILITY & TIME LIMIT CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot sends request to Case Services for duplicate check (GenUC-10)",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "ELIGIBILITY & TIME LIMIT CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Case Services returns: NO existing case found for this passenger + journey combination",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "ELIGIBILITY & TIME LIMIT CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks 72-hour window passed -> YES",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "ELIGIBILITY & TIME LIMIT CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot verifies Filing deadline limitation:",
+      "expected": "* Origin: YYZ (Ontario) -> Limitation = 730 days * Destination: YVR (British Columbia) -> Limitation = 1,095 days * Elapsed: Within limitation period -> PROCEED",
+      "id": "CP048"
+    },
+    {
+      "section": "ELIGIBILITY & TIME LIMIT CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if triage data is available -> YES",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "TRIAGE AND DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then DDS evaluates backend rules:",
+      "expected": "* Delay Code: 61 (Flight Operations / Flight Plan Preparation) -> Controllable * Passenger Type: 1 Regular Adult -> Standard handling * Booker Status: Aeroplan Basic Member * Delay Band: DELAY_6_HOURS_OR_MORE (Overnight eligible) * Operating Airline: Air Canada (AC)",
+      "id": "CP050"
+    },
+    {
+      "section": "TRIAGE AND DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS assigns Response Code: SoC-APPR-EL-08",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "FRAUD SCREENING",
+      "requirement": "GLOB-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system sends case data to CyberSource for fraud screening",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "FRAUD SCREENING",
+      "requirement": "GLOB-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "And CyberSource returns: GREEN (no fraud indicators detected)",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "ELIGIBLE RESULT & ENTITLEMENT DISPLAY",
+      "requirement": "SoC-03b",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays:",
+      "expected": "Great news! Based on the details of your flight, you are eligible for expense reimbursement. Your flight AC 301 from Toronto to Vancouver was delayed by approximately 7 hours due to flight planning operations. Under the applicable regulations (APPR), you may be reimbursed for reasonable expenses incurred during this disruption.",
+      "id": "CP054"
+    },
+    {
+      "section": "ELIGIBLE RESULT & ENTITLEMENT DISPLAY",
+      "requirement": "SoC-03b",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays the entitlements for 1 passenger:",
+      "expected": "Based on the length of your disruption (7 hours), you may be eligible for reimbursement in the following categories: * Hotel accommodation: Rate of the day (up to 3 nights, $500.00 maximum per room) * Meals: up to $30.00 CAD * Ground transportation: up to $200.00 CAD * Essential items: up to $30.00 CAD * Communication: up to $30.00 CAD * Parking: up to $50.00 CAD (1 day maximum) Please note that all expenses must have been incurred during the disruption period and supported by valid receipts.",
+      "id": "CP055"
+    },
+    {
+      "section": "RECEIPT UPLOAD & OCR VALIDATION",
+      "requirement": "RR-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To process your claim, I'll need you to upload your receipts. Please upload photos or scans of your receipts for any expenses you incurred during the disruption.",
+      "id": "CP056"
+    },
+    {
+      "section": "RECEIPT UPLOAD & OCR VALIDATION",
+      "requirement": "RR-01",
+      "kind": "system",
+      "method": "implied",
+      "step": "When the user uploads the hotel receipt ($580.00 CAD):",
+      "expected": "* Receipt 1: Hotel receipt � $580.00 CAD (1 night accommodation, exceeds $500 cap)",
+      "id": "CP057"
+    },
+    {
+      "section": "RECEIPT UPLOAD & OCR VALIDATION",
+      "requirement": "RR-01",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then OCR engine extracts and validates line items:",
+      "expected": "* Receipt 1 � Hotel Accommodation: - Line item: Hotel stay, 1 night � $580.00 CAD - Date: June 15, 2026 | Category: Hotel | Within disruption window: YES - Cap check: $580.00 > $500.00 max cap -> Exceeds $500.00 hotel cap limit - OCR Result: REVIEW NEEDED (Exceeds $500.00 hotel cap)",
+      "id": "CP058"
+    },
+    {
+      "section": "RECEIPT VALIDATION & HOTEL CAP CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system evaluates hotel claim value:",
+      "expected": "* Total Claimed Hotel Amount: $580.00 CAD * Policy Maximum Hotel Cap: $500.00 CAD * System Rule Check: Submitted hotel amount ($580.00 CAD) EXCEEDS the $500.00 CAD auto-approval hotel cap * Outcome: Case flagged for Manual Review (exceeds $500 hotel cap)",
+      "id": "CP059"
+    },
+    {
+      "section": "CASE CREATION & MANUAL ROUTING",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system creates a case in Case Services:",
+      "expected": "* DDS response code: SoC-APPR-EL-08 * Eligibility: ELIGIBLE (Pending Review) * Status: Pending Agent Review * Queue: Manual Handling Queue * Reason: Hotel expense exceeds $500.00 cap limit * Receipt images attached: 1 * Fraud screening result: GREEN",
+      "id": "CP060"
+    },
+    {
+      "section": "CASE CREATION & MANUAL ROUTING",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case reference number is provided to the passenger",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "CASE CREATION & MANUAL ROUTING",
+      "requirement": "GLOB-09",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your claim has been received and submitted for agent review. Here's a summary: * Case Reference: [Case Number] * Total submitted claim amount: $580.00 CAD * Categories: Hotel ($580.00) * Claimed for: 1 Passenger Because your hotel accommodation claim exceeds our automated cap of $500.00 CAD, a customer service agent will review your receipt manually within 30 days.",
+      "id": "CP062"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a manual review confirmation email is sent to the passenger at t***@gmail.com",
+      "expected": "",
+      "id": "CP064"
+    },
+    {
+      "section": "CLAIMS PAYMENT PRE-COLLECTION FLOW",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot prompts to collect payment information in advance:",
+      "expected": "\"To ensure prompt payment once your claim is reviewed and approved, please confirm your payment details.\"",
+      "id": "CP065"
+    },
+    {
+      "section": "CLAIMS PAYMENT PRE-COLLECTION FLOW",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the chatbot collects:",
+      "expected": "Country of residence: Canada Payment method: Interac Email address for Interac transfer: [t***@gmail.com]",
+      "id": "CP066"
+    },
+    {
+      "section": "CLAIMS PAYMENT PRE-COLLECTION FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thank you. Your payment details have been saved. If approved by our review team, funds will be sent via Interac e-Transfer to your email.",
+      "id": "CP067"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Is there anything else I can help you with?\"",
+      "expected": "Is there anything else I can help you with?",
+      "id": "CP068"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "When the user selects \"No\"",
+      "expected": "No",
+      "id": "CP069"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP070"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Scenario: Claims Dashboard validation for SoC-APPR-EL-08 � 1 Adult Pax Delay Code 61 Hotel Exceeds $500 Cap Manual Review",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the agent opens the Claims Dashboard for the case",
+      "expected": "",
+      "id": "CP072"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the Topic/Sub-topic is \"Travel Disruptions � Expenses\"",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Status is \"Pending Agent Review\"",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Created date and Last Updated date are populated",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the SLA countdown is tracking correctly (30-day target)",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "manual",
+      "step": "And the Team assignment is \"Manual Handling Queue\"",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Name is populated (Pax 1)",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claimant Type is \"Regular\"",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Authentication is \"Pass\"",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the PNR is populated with 1 passenger",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Regime is \"APPR\"",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Full Name is populated",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Tags include \"Claimant\", \"Adult\", \"High Value (> $500 Hotel)\"",
+      "expected": "",
+      "id": "CP084"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Email is \"t***@gmail.com\"",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Phone is \"+1***789\"",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Tier Status is \"Basic Member\"",
+      "expected": "",
+      "id": "CP087"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Itinerary shows Journey AC 301 YYZ -> YVR as the claimed flight",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Flight Status is \"DELAYED (7 hours)\"",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility section shows Journey = AC 301 YYZ -> YVR",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Flight Leg at Fault is AC 301",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Operating Carrier is AC",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Disruption Reason is \"Flight Operations / Flight Plan Preparation (Departure delay code 61 � CONTROLLABLE)\"",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Delay Minutes is 420 min (7 hours)",
+      "expected": "",
+      "id": "CP094"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Travel Status is \"Travelled (delayed)\"",
+      "expected": "",
+      "id": "CP095"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Passenger Evaluation Order shows:",
+      "expected": "| Order | Check Step               | Result                                | | 1     | Passenger Exception Type | Regular Adult PASS                    | | 2     | Controllability          | WITHIN CARRIER CONTROL (Code 61) PASS |",
+      "id": "CP096"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Overnight Eligible is \"YES (delay > 360 min)\"",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Class of Booking is \"PY\"",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Revenue Booking is \"YES\"",
+      "expected": "",
+      "id": "CP099"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the ACR Issued shows Hotel No, Transport No, Meal No",
+      "expected": "",
+      "id": "CP100"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Denied Boarding is \"No\"",
+      "expected": "",
+      "id": "CP101"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the DDS Response Code is \"SoC-APPR-EL-08\"",
+      "expected": "",
+      "id": "CP102"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Fraud Screening is \"CyberSource GREEN\"",
+      "expected": "",
+      "id": "CP103"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Eligibility is \"ELIGIBLE\"",
+      "expected": "",
+      "id": "CP104"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Entitlements for 1 adult PY show:",
+      "expected": "| Category      | Entitlement Limit                   | | Hotel         | Rate of day, max 3 nights, $500 cap | | Meals         | $30.00 CAD                          | | Transport     | $200.00 CAD                         | | Essentials    | $30.00 CAD                          | | Communication | $30.00 CAD                          | | Parking       | $50.00 CAD                          |",
+      "id": "CP105"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Receipt Validator shows:",
+      "expected": "| Category      | Claimed Amount | Policy Cap   | Flag / Status                                         | | Hotel         | $580.00 CAD    | $500.00 CAD  | REVIEW NEEDED (Claimed $580.00 > $500.00 hotel cap)   | | Meals         | $0.00          | $0.00        | No receipt                                            | | Transport     | $0.00          | $0.00        | No receipt                                            | | Essentials    | $0.00          | $0.00        | No receipt                                            | | Communication | $0.00          | $0.00        | No receipt                                            | | Parking       | $0.00          | $0.00        | No receipt                                            |",
+      "id": "CP106"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Total Claimed Amount is \"$580.00 CAD\"",
+      "expected": "",
+      "id": "CP107"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the System Threshold Banner displays: \"Hotel expense exceeds $500.00 cap - Manual review required\"",
+      "expected": "",
+      "id": "CP108"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Items Flagged for Review is 1",
+      "expected": "",
+      "id": "CP109"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Duplicate Check result is \"No duplicate found\"",
+      "expected": "",
+      "id": "CP110"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And CyberSource result is \"GREEN\"",
+      "expected": "",
+      "id": "CP111"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Decision Assist panel is unlocked for agent review",
+      "expected": "",
+      "id": "CP112"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Scenario: Payment validation for SoC-APPR-EL-08 � 1 Adult Pax Code 61 Hotel Exceeds $500 Cap Manual Routing (Interac)",
+      "expected": "",
+      "id": "CP113"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the case SoC-APPR-EL-08 is evaluated for 1 adult passenger",
+      "expected": "",
+      "id": "CP114"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then SOC payment mode is validated as CASH ONLY",
+      "expected": "",
+      "id": "CP115"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the total submitted hotel receipt amounts to $580.00 CAD",
+      "expected": "",
+      "id": "CP116"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the system verifies the hotel amount exceeds the $500.00 CAD policy hotel cap threshold",
+      "expected": "",
+      "id": "CP117"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "Then automated payment dispatch to Unifier is blocked pending agent review",
+      "expected": "",
+      "id": "CP118"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the payment status is set to \"Pending Agent Review\"",
+      "expected": "",
+      "id": "CP119"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And Case Services verifies payment method determination for Canada:",
+      "expected": "| Country of Residence | Payment Method Determination | Pre-collected Detail    | | Canada               | Interac (E-Transfer)         | Recipient Email ID only |",
+      "id": "CP120"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the bot confirms email \"t***@gmail.com\" is recorded without collecting bank account details",
+      "expected": "",
+      "id": "CP121"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And upon manual agent adjudication and approval up to allowable policy caps, Interac issuance will be triggered",
+      "expected": "",
+      "id": "CP122"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "SoC-APPR-EL-08.",
+      "expected": "SoC-APPR-EL-08.",
+      "id": "CP123"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "ELIGIBLE (Routed to Manual Review).",
+      "expected": "ELIGIBLE (Routed to Manual Review).",
+      "id": "CP124"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Controllable delay >= 2h (7 hours, Code 61 Flight Operations / Flight Plan Preparation).",
+      "expected": "Controllable delay >= 2h (7 hours, Code 61 Flight Operations / Flight Plan Preparation).",
+      "id": "CP125"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Passenger type checked FIRST (1 Regular Adult), then controllability checked SECOND (Code 61 Controllable).",
+      "expected": "Passenger type checked FIRST (1 Regular Adult), then controllability checked SECOND (Code 61 Controllable).",
+      "id": "CP126"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Booker holds Aeroplan Basic membership.",
+      "expected": "Booker holds Aeroplan Basic membership.",
+      "id": "CP127"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Operating carrier correctly identified as AC.",
+      "expected": "Operating carrier correctly identified as AC.",
+      "id": "CP128"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Fraud screening GREEN.",
+      "expected": "Fraud screening GREEN.",
+      "id": "CP129"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Entitlement applied for 1 passenger with hotel cap at $500.00 CAD.",
+      "expected": "Entitlement applied for 1 passenger with hotel cap at $500.00 CAD.",
+      "id": "CP130"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Submitted hotel receipt of $580.00 CAD exceeds the $500.00 CAD hotel policy cap.",
+      "expected": "Submitted hotel receipt of $580.00 CAD exceeds the $500.00 CAD hotel policy cap.",
+      "id": "CP131"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "System blocks auto-payout, transitions case status to \"Pending Agent Review\", assigns to Manual Handling Queue, pre-collects recipient email for Interac transfer, and sends manual review confirmation email via Adobe.",
+      "expected": "System blocks auto-payout, transitions case status to \"Pending Agent Review\", assigns to Manual Handling Queue, pre-collects recipient email for Interac transfer, and sends manual review confirmation email via Adobe.",
+      "id": "CP132"
+    }
+  ]
+}

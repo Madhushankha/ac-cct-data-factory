@@ -1,0 +1,122 @@
+{
+  "id": "SOC_UAT_011",
+  "family": "SOC",
+  "summary": "APPR SOC: 1 revenue pax, Jun 2: AC 789 YYZ-ORD on time, then UA 8765 ORD-SFO (STAR) dep 14:00 actual 18:00 (+240 min); delay code unknown -> NO DETERMINATION (SoC-APPR-ND-02)",
+  "passengers": [
+    {
+      "firstName": "PAUL",
+      "lastName": "ROY",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "789",
+      "origin": "YYZ",
+      "destination": "ORD",
+      "depLocal": "08:00",
+      "arrLocal": "08:50",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "UA",
+      "number": "8765",
+      "origin": "ORD",
+      "destination": "SFO",
+      "depLocal": "14:00",
+      "arrLocal": "16:30",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    },
+    {
+      "seg": 2,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "SoC-APPR-ND-02",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_2_TO_6_HOURS",
+    "delayMin": 240,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Multi-segment trip YYZ→ORD→SFO: Seg 1 AC789 on time, Seg 2 UA8765 (STAR) delayed +4H 00M",
+      "PASSENGERS: 1 SEGMENTS: 2",
+      "Promised: Seg 1 AC 789 YYZ→ORD 02-Jun 08:00 | Seg 2 UA 8765 ORD→SFO 02-Jun 14:00",
+      "Current: Seg 1 AC 789 ON TIME | Seg 2 UA 8765 ARRIVED LATE, Scheduled Dep 14:00 → Actual 18:00, +4H 00M",
+      "SOC Segment: UA 8765 ORD→SFO (STAR); Operating Carrier UA (STAR Alliance)",
+      "Departure Delay Code: Unknown (STAR, AC has limited data)",
+      "PASSENGER | NO_DETERMINATION | DELAY_2_TO_6_HOURS"
+    ],
+    "soc": {
+      "eligibility": "NO_DETERMINATION",
+      "entitlements": "none determined; case created for agent review; receipt collection initiated"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "arrivals 08:50 (seg 1) and 16:30 (seg 2) chosen from block times",
+    "UA 8765 is the STAR operating carrier; no delay code",
+    "residence CA assumed"
+  ],
+  "unsupported": [
+    "STAR (UA) segment delay code/data unavailable to AC; cannot be set in booking data"
+  ]
+}

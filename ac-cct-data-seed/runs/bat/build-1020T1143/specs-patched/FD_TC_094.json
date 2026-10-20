@@ -1,0 +1,92 @@
+{
+ "id": "FD_TC_094",
+ "family": "FD",
+ "summary": "Single adult MARIE-CLAIRE DUBOIS, AC 366 YUL-YYZ arriving scheduled 10:00, actual 16:00 (360 min late), arrival delay code 81 (safety regulation); no booking changes; travelled",
+ "passengers": [
+  {
+   "firstName": "MARIE-CLAIRE",
+   "lastName": "DUBOIS",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "496",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "10:35",
+   "arrLocal": "12:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 360,
+   "depDelayMin": 360,
+   "delayCode": "43",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "depDelayCode": "43"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-29",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 360,
+  "control": "SAFETY",
+  "cause": "43",
+  "fallback": false,
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 496, Route: YUL->YYZ, Scheduled Arrival: 12:00",
+   "Current Itinerary - Flight: AC 496, Route: YUL->YYZ, Status: ARRIVED LATE, Scheduled Arrival: 12:00 - Actual: 18:00, Delay: +6H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 496 - YUL->YYZ - 43",
+   "\"Delayed due to non-scheduled maintenance / mechanical safety inspection\"",
+   "Delay: +6H 00M - SAFETY",
+   "APPR Gate 8: Delay 6h - 3h - PASSES threshold",
+   "APPR Gate 9: Code 43 = Safety - NOT ELIGIBLE under APPR",
+   "Fallback: FALSE",
+   "Flight Compensation: MS MARIE-CLAIRE DUBOIS | NOT ELIGIBLE | SAFETY | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "cabin Y and booking class T on every segment (text gives none)",
+  "source conflict: prerequisites/description/expected results = AC 366, arrival 10:00 -> 16:00, code 81; journey selection and TT UI = AC 496, arrival 12:00 -> 18:00, code 43 (non-scheduled maintenance, also Safety). Used the prerequisites (AC 366, code 81); ttUi lines are kept verbatim from the text and show the other variant. Outcome (NE-29, SAFETY) is the same",
+  "YUL-YYZ departure assumed 08:35",
+  "departure delay assumed equal to arrival delay (360 min); departure code 81 also assumed",
+  "Aeroplan not linked",
+  "band set from the 6h = Tier 2 (6 to <9h) statement"
+ ],
+ "unsupported": [],
+ "_note": "expect systemCode FD-APPR-NE-29 / control SAFETY / NOT_ELIGIBLE / delayMin 360 stay unchanged"
+}

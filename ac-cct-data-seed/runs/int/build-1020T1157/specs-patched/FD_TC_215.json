@@ -1,0 +1,83 @@
+{
+ "id": "FD_TC_215",
+ "family": "FD",
+ "summary": "EU-origin booking for the manual-handoff path: adult LUCAS PEETERS (Belgium) on AC 876 BRU-YYZ arriving 5h late, code 42 controllable, EU 261 EUR 600",
+ "passengers": [
+  {
+   "firstName": "LUCAS",
+   "lastName": "PEETERS",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "BE",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "876",
+   "origin": "BRU",
+   "destination": "YYZ",
+   "depLocal": "10:30",
+   "arrLocal": "12:45",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 16,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 300,
+   "depDelayMin": 300,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-EU-EL-14",
+  "amount": 600,
+  "currency": "EUR",
+  "delayBand": "EU261_TRAVEL_COMPLETED_REST_OF_EUROPE_GTE_4HR",
+  "delayMin": 300,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 876 BRU->YYZ Scheduled Arrival 12:45",
+   "Current: AC 876 BRU->YYZ ARRIVED LATE, 12:45 -> 17:45, Delay +5H 00M",
+   "Regime: EU 261 (EU origin BRU) + APPR (Canada arrival)",
+   "Distance: long-haul (>3500 km)",
+   "MSL FLIGHT: AC 876 BRU->YYZ 42 Delayed due to scheduled maintenance - CONTROLLABLE",
+   "Delay: +5H 00M - CONTROLLABLE",
+   "Fallback: FALSE",
+   "Flight Compensation: MR LUCAS PEETERS | ELIGIBLE | EU261_TRAVEL_COMPLETED_REST_OF_EUROPE_GTE_4HR | EUR 600.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flight AC 876 BRU-YYZ dep 10:30 arr 12:45 assumed (text gives no flight); EU-origin long-haul flight chosen because the scenario hinges on an EU country of origin",
+  "300-min arrival delay, code 42 (CONTROLLABLE), cabin Y class T assumed; expectation mirrors the closest existing EU spec (FD_TC_122: CDG-YYZ 4h+ travel completed, FD-EU-EL-14, EUR 600)",
+  "dual regime: APPR EL-01 (CAD 400) also assessed for the Canada arrival; EU 261 EUR 600 is the more generous",
+  "PNR names/ids in the text are labels, not real locators",
+  "text gives only country of origin Belgium (no passenger name or flight); passenger name LUCAS PEETERS assumed; BRU origin flight chosen",
+  "if the BAT flight builder cannot place a BRU origin, substitute CDG-YYZ (AC 873) - same EU 261 result"
+ ],
+ "unsupported": [
+  "claim-side behaviour (chatbot, third-party classification, manual handoff, case creation) is Claims Dashboard / chatbot behaviour, not booking data; no claim opened by the passenger, so no case exists to look up"
+ ]
+}

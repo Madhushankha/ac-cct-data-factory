@@ -1,0 +1,91 @@
+{
+ "id": "FD_TC_182",
+ "family": "FD",
+ "summary": "APPR YUL-YYZ AC403 voluntary change via Volantio (SK VOLY): promise updates 09:00 -> 12:00, flight on time -> Not Eligible (no delay)",
+ "passengers": [
+  {
+   "firstName": "BRIGITTE",
+   "lastName": "LAVOIE",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "403",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "07:40",
+   "arrLocal": "09:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "Y",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [
+  {
+   "seg": 1,
+   "depDeltaMin": 180,
+   "arrDeltaMin": 180,
+   "noticeHours": 360,
+   "changeType": "VOL"
+  }
+ ],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": null,
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": 0,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Promised Itinerary: AC 403 YUL->YYZ scheduled arrival 12:00 (updated by Volantio VOL)",
+   "Current Itinerary: AC 403 YUL->YYZ ON TIME, actual 12:00",
+   "Change 1: Volantio (SK VOLY) at D-6 - VOL - arrival 09:00 -> 12:00",
+   "Promise = 12:00 (updated by VOL)",
+   "Delay from promise = 0 hours",
+   "Regime: APPR",
+   "Result: NOT ELIGIBLE (no delay)",
+   "No MSL (no disruption)",
+   "No disruption code",
+   "Flight Compensation: MS BRIGITTE LAVOIE | NOT ELIGIBLE | NO_DELAY_FROM_PROMISE | $0"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "segments hold the ORIGINAL 14-day schedule; the Pre-Move/VOL change is modelled as a scheduleChange moving the arrival; flight then operates on time against the CHANGED schedule (arrDelayMin 0)",
+  "flight date June 10, 2026 in text; flightDaysAgo=10 (72 hrs elapsed)",
+  "dep time = original arrival minus 1h20 (YUL-YYZ ~1h20 block)",
+  "currency of \"$0\" taken as CAD (APPR)"
+ ],
+ "unsupported": [
+  "PNR history marker \"SK VOLY\" (Volantio tool) and its VOL classification - scheduleChanges schema has no initiator/tool field"
+ ]
+}

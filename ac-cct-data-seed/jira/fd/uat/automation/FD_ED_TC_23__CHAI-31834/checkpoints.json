@@ -1,0 +1,783 @@
+{
+  "key": "CHAI-31834",
+  "test_id": "FD_ED_TC_23",
+  "title": "Channel | WhatsApp | Component Rendering | Fallback to Text | Full Flow |",
+  "goal": "Customer accesses chatbot via WhatsApp. Rich UI components (flight cards, interactive buttons, seat maps) may not render on WhatsApp. System must fall back to text-based alternatives. Per call transcript: \"Cards, buttons, dropdowns may not display on WhatsApp.\"",
+  "summary": {
+    "seed": 1,
+    "chat": 37,
+    "api": 6,
+    "email": 3,
+    "dashboard": 3,
+    "implied": 34,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Customer accesses chatbot via WhatsApp. Rich UI components (flight cards, interactive buttons, seat maps) may not render on WhatsApp. System must fall back to text-based alternatives. Per call transcript: \"Cards, buttons, dropdowns may not display on WhatsApp.\"",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Channel: WhatsApp; PNR: TCED23; 1 leg AC (YUL?YYZ); Delay 4 hrs; APPR EL-01",
+      "expected": "Channel: WhatsApp; PNR: TCED23; 1 leg AC (YUL?YYZ); Delay 4 hrs; APPR EL-01",
+      "id": "CP002"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot via WhatsApp (not web, not mobile app)",
+      "expected": "",
+      "id": "CP003"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system detects: Channel = WhatsApp",
+      "expected": "",
+      "id": "CP004"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system applies: WhatsApp rendering rules (text-based fallbacks for rich UI components)",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01) � WhatsApp text format:",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today? Reply with: 1 - English 2 - French",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then user replies \"1\"",
+      "expected": "",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "Then the chatbot sends a text message: \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP008"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP009"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Montreal to Toronto was delayed 4 hours due to a crew issue. I'd like to check if I'm eligible for compensation\"",
+      "expected": "My flight from Montreal to Toronto was delayed 4 hours due to a crew issue. I'd like to check if I'm eligible for compensation",
+      "id": "CP010"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP011"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP012"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP013"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "expected": "Reply with: 1 - Yes 2 - No\"",
+      "id": "CP014"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user replies \"1\"",
+      "expected": "IDENTIFICATION (GenUC-01) � WhatsApp:",
+      "id": "CP015"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP016"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP017"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"Olivier Bergeron\"",
+      "expected": "Olivier Bergeron",
+      "id": "CP018"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, Olivier! And, what is your booking reference number?",
+      "id": "CP019"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"TC243\"",
+      "expected": "TC243",
+      "id": "CP020"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC243",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND (Auth Flow 1)",
+      "expected": "",
+      "id": "CP022"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer data (passenger info, journey details) is revealed to the customer",
+      "expected": "AUTHENTICATION (GenUC-05) � WhatsApp:",
+      "id": "CP023"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it? Reply with: 1 - Email: o***@gmail.com 2 - Phone: +1***234",
+      "id": "CP024"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user replies \"1\"",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP026"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"518293\"",
+      "expected": "518293",
+      "id": "CP027"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful. Let's proceed to the next step.",
+      "id": "CP029"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the system checks Trip Tracer for group booking identifier",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And group booking identifier = NOT PRESENT",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And system proceeds to passenger selection",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "PASSENGER SELECTION � WhatsApp",
+      "requirement": "GenUC-06",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "How many people are on your claim? I found 1 passenger on this booking: Olivier Bergeron (Adult) Is this who you'd like to include? Reply with: 1 - Yes 2 - No",
+      "id": "CP033"
+    },
+    {
+      "section": "PASSENGER SELECTION � WhatsApp",
+      "requirement": "GenUC-06",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user replies \"1\"",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "PASSENGER SELECTION � WhatsApp",
+      "requirement": "GenUC-06",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: PAX count on PNR = 1 ? ?9 ? NOT a group booking ? PROCEED",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "JOURNEY SELECTION � WhatsApp",
+      "requirement": "GenUC-08",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot retrieves booking details and displays in text format (no flight card rendering on WhatsApp):",
+      "expected": "I found the following journey: Flight: AC 422 Route: Montreal (YUL) ? Toronto (YYZ) Date: June 1, 2026 Arrival Delay: 4 hours Is this the journey you'd like to check? Reply with: 1 - Yes 2 - No",
+      "id": "CP036"
+    },
+    {
+      "section": "JOURNEY SELECTION � WhatsApp",
+      "requirement": "GenUC-08",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user replies \"1\"",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "SEGMENT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: More than 1 segment on selected journey? ? NO (single leg) ? skip GenUC-18",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot sends request to Case Services for duplicate check",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK",
+      "requirement": "GenUC-10",
+      "kind": "system",
+      "method": "implied",
+      "step": "And Case Services returns: NO existing case found for this passenger + journey combination",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "72-HOUR CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Hours since last leg arrival ? >72 hours ? PROCEED",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "CLAIM TIME LIMIT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Filing deadline ? within limitation ? PROCEED",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "REGIME DETERMINATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system determines: Origin = YUL (Canada) ? APPR",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "REGIME DETERMINATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system checks: Distance YUL?YYZ = ~505 km ? Short-haul",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the DDS evaluation is done in backend",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS Evaluates:",
+      "expected": "APPR: Delay 3�6h, Controllable ? ELIGIBLE Compensation: CAD $400",
+      "id": "CP046"
+    },
+    {
+      "section": "FRAUD SCREENING � CYBERSOURCE",
+      "requirement": "GLOB-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot sends case details to CyberSource for fraud screening",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "FRAUD SCREENING � CYBERSOURCE",
+      "requirement": "GLOB-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "And CyberSource evaluates and returns: GREEN LIGHT (no fraud detected)",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "FRAUD SCREENING � CYBERSOURCE",
+      "requirement": "GLOB-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the customer is cleared to proceed to payment",
+      "expected": "ELIGIBLE RESULT (FD-05a) � WhatsApp:",
+      "id": "CP049"
+    },
+    {
+      "section": "FRAUD SCREENING � CYBERSOURCE",
+      "requirement": "GLOB-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays (text format):",
+      "expected": "I've checked your flight details, and it looks like flight AC 422 from Montreal (YUL) to Toronto (YYZ) was delayed by about 4 hours. Based on the Canadian Air Passenger Protection Regulations (APPR), you may be eligible for compensation of $400 CAD for this delay. I'll guide you through the next steps so we can get your claim submitted and processed as quickly as possible.",
+      "id": "CP050"
+    },
+    {
+      "section": "CLAIM PAYMENT: COUNTRY OF RESIDENCE FLOW � WhatsApp",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks:",
+      "expected": "Thank you for confirming. In which country will your reimbursement be deposited? Reply with: 1 - Canada 2 - United States 3 - Other (please type your country)",
+      "id": "CP051"
+    },
+    {
+      "section": "CLAIM PAYMENT: COUNTRY OF RESIDENCE FLOW � WhatsApp",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user replies \"1\"",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "CLAIM PAYMENT: COUNTRY OF RESIDENCE FLOW � WhatsApp",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system determines: Country = Canada ? Currency = CAD",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "CASH vs AC WALLET CHECK",
+      "requirement": "FD-06b",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Does customer have Aeroplan number on booking? ? No",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "CASH vs AC WALLET CHECK",
+      "requirement": "FD-06b",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks if the claim is for multiple pax ? No",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "CASH vs AC WALLET CHECK",
+      "requirement": "FD-06b",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"You are entitled to receive a $400 CAD compensation. Please note that it will take 5 to 10 business days to process payment. Would you like to proceed?",
+      "expected": "Reply with: 1 - Yes 2 - No\"",
+      "id": "CP056"
+    },
+    {
+      "section": "CASH vs AC WALLET CHECK",
+      "requirement": "FD-06b",
+      "kind": "alert",
+      "method": "chat",
+      "step": "And an alert information is displayed (text): \"Please note that payments will be deposited in your local currency.\"",
+      "expected": "Please note that payments will be deposited in your local currency.",
+      "id": "CP057"
+    },
+    {
+      "section": "CASH vs AC WALLET CHECK",
+      "requirement": "FD-06b",
+      "kind": "system",
+      "method": "implied",
+      "step": "And user replies \"1\"",
+      "expected": "",
+      "id": "CP058"
+    },
+    {
+      "section": "CASH vs AC WALLET CHECK",
+      "requirement": "FD-06b",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then system checks which payment method is mapped based on country of residence ? Interac e-Transfer (Canada)",
+      "expected": "",
+      "id": "CP059"
+    },
+    {
+      "section": "PAYMENT METHOD � INTERAC E-TRANSFER � WhatsApp",
+      "requirement": "FD-07",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your payment will be made through Interac e-Transfer. Before we move forward, please provide the email address where you'd like to receive the transfer.",
+      "id": "CP060"
+    },
+    {
+      "section": "PAYMENT METHOD � INTERAC E-TRANSFER � WhatsApp",
+      "requirement": "FD-07",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"olivier.bergeron@gmail.com\"",
+      "expected": "olivier.bergeron@gmail.com",
+      "id": "CP061"
+    },
+    {
+      "section": "PAYMENT METHOD � INTERAC E-TRANSFER � WhatsApp",
+      "requirement": "FD-07",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot confirms: \"Thank you. Your Interac e-Transfer details have been recorded.\"",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "PAYMENT METHOD � INTERAC E-TRANSFER � WhatsApp",
+      "requirement": "FD-07",
+      "kind": "idv",
+      "method": "chat",
+      "step": "Then system checks that IDV is not completed",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA � WhatsApp",
+      "requirement": "FD-07b",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I must verify your identity for payment security. Please click the link below to get started: [Persona Verification Link] Open this link in your mobile browser to complete the verification. Get verified",
+      "id": "CP064"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA � WhatsApp",
+      "requirement": "FD-07b",
+      "kind": "customer",
+      "method": "chat",
+      "step": "When user clicks on the link",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA � WhatsApp",
+      "requirement": "FD-07b",
+      "kind": "idv",
+      "method": "chat",
+      "step": "Then the user is redirected to Persona IDV in their mobile browser",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA � WhatsApp",
+      "requirement": "FD-07b",
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the customer completes identity verification via Persona",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA � WhatsApp",
+      "requirement": "FD-07b",
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Persona returns: IDV PASS",
+      "expected": "",
+      "id": "CP068"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA � WhatsApp",
+      "requirement": "FD-07b",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds (back in WhatsApp):",
+      "expected": "Your identity has been verified successfully. Let's proceed to finalize your claim.",
+      "id": "CP069"
+    },
+    {
+      "section": "CLAIM AMOUNT CONFIRMATION FLOW � WhatsApp",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please review your compensation details:",
+      "expected": "Deposit Amount: $400 CAD Payment Method: Interac e-Transfer After submission, you will receive a confirmation email summarizing your eligibility, claim details and next steps. Would you like me to submit your claim? Reply with: 1 - Yes, submit 2 - No, cancel Please note that the payment details cannot be changed after submission.\"",
+      "id": "CP070"
+    },
+    {
+      "section": "CLAIM AMOUNT CONFIRMATION FLOW � WhatsApp",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the user replies \"1\"",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Thank you. Your claim has been submitted and will now be processed within the next 15 days. Please check your email for: A confirmation email summarizing your claim details, and a second email that will include the secure link where you'll provide your information.\"",
+      "expected": "Thank you. Your claim has been submitted and will now be processed within the next 15 days. Please check your email for: A confirmation email summarizing your claim details, and a second email that will include the secure link where you'll provide your information.",
+      "id": "CP072"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the chatbot sends: \"Claim submission successful!\"",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system appends the booking record to the case automatically",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And an eligible notification email is sent to o***@gmail.com",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains: Case Reference, compensation amount ($400 CAD), regulation (APPR), flight details, channel (WhatsApp), next steps, tracking link",
+      "expected": "END FLOW (GLOB-11) � WhatsApp:",
+      "id": "CP077"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers:",
+      "expected": "Is there anything I can help you with? Reply with: 1 - Yes, I have another request 2 - No, I'm done",
+      "id": "CP078"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user replies \"2\"",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP080"
+    },
+    {
+      "section": "WHATSAPP COMPONENT RENDERING VALIDATION",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "? Language selection: Numbered text options (not buttons) ?",
+      "expected": "? Legal disclaimer confirmation: Numbered text options ? ? OTP delivery selection: Numbered text options ? ? Passenger selection: Text list with numbered confirmation ? ? Flight card: Plain text format (no visual card) ? ? Journey confirmation: Numbered text options ? ? Country selection: Numbered text + free-text fallback ? ? Payment confirmation: Numbered text options ? ? IDV link: Clickable URL (not embedded button) ? ? Claim submission: Numbered text options ? ? End flow: Numbered text options ? ? All information conveyed accurately despite text-only format ? ? No rendering errors or broken components ?",
+      "id": "CP081"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "When the agent navigates to Claims Dashboard",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the agent searches for the case by PNR",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the dashboard displays:",
+      "expected": "� Case Title: \"Travel Disruptions � Delay\" � Status: in review/done � Channel: WhatsApp � Rendering Mode: Text Fallback � Regime: APPR",
+      "id": "CP084"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "WhatsApp channel detected; All rich UI components (cards, buttons, dropdowns) replaced with text-based alternatives; Numbered options used instead of buttons; Flight details displayed as text instead of flight card; Full flow completed successfully via text; Channel logged as WhatsApp in dashboard",
+      "expected": "WhatsApp channel detected; All rich UI components (cards, buttons, dropdowns) replaced with text-based alternatives; Numbered options used instead of buttons; Flight details displayed as text instead of flight card; Full flow completed successfully via text; Channel logged as WhatsApp in dashboard",
+      "id": "CP085"
+    }
+  ]
+}

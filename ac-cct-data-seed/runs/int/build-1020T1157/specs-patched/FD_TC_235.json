@@ -1,0 +1,119 @@
+{
+ "id": "FD_TC_235",
+ "family": "FD",
+ "summary": "3 pax (Catherine adult claimant Basic Aeroplan, Alexandre adult, Sophie child) on AC 412 YUL-YYZ Jul 20, arrived 7h late, code 96 controllable; not a group booking; DDS CAD 700 each = CAD 2,100",
+ "passengers": [
+  {
+   "firstName": "CATHERINE",
+   "lastName": "BOUCHARD",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  },
+  {
+   "firstName": "ALEXANDRE",
+   "lastName": "BOUCHARD",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  },
+  {
+   "firstName": "SOPHIE",
+   "lastName": "BOUCHARD",
+   "type": "CHD",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "412",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "10:45",
+   "arrLocal": "12:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 420,
+   "depDelayMin": 420,
+   "delayCode": "96",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 1,
+   "pax": 2,
+   "event": "boarded"
+  },
+  {
+   "seg": 1,
+   "pax": 3,
+   "event": "boarded"
+  }
+ ],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-02",
+  "amount": 700,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "CONTROLLABLE",
+  "cause": "96",
+  "ttUi": [
+   "Promised: AC 412 YUL\u2192YYZ 12:00",
+   "Current: AC 412 ARRIVED LATE 12:00\u219219:00 +7H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL: AC 412 YUL\u2192YYZ 96 \"Delayed due to operations control\" CONTROLLABLE",
+   "MS CATHERINE BOUCHARD | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet",
+   "MR ALEXANDRE BOUCHARD | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet",
+   "MISS SOPHIE BOUCHARD | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet",
+   "Total: CAD 2,100.00 Cash / CAD 2,520.00 AC Wallet"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "cabin Y, booking class T (not stated)",
+  "AC 412 departure 10:45 (text gives only scheduled arrival 12:00; 1h15 block time)",
+  "depDelayMin 420 assumed equal to arrival delay (text gives only arrival times)",
+  "flightDaysAgo 10 default (flight Jul 20, claim Jul 28 = 8 days after; only needs >72h and <366 days)",
+  "only the claimant has an Aeroplan number; companions have none",
+  "residence CA applied to all three pax",
+  "Sophie typed CHD (text: 'Child', TT shows MISS)"
+ ],
+ "unsupported": [
+  "Prior legacy payments LEG-APPR-55831/55832/55833 (CAD 700 each, Jul 22, outside Claims Dashboard) are not booking data; seed them separately",
+  "Users with/without case.render_decision are Claims Dashboard permissions, not booking data"
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "vouchers": [],
+ "bags": [],
+ "flightDaysAgo": 10
+}

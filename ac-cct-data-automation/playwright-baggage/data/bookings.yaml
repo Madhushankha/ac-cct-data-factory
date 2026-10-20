@@ -1,0 +1,5967 @@
+# Booking pools (guide section 12). Scenarios pick by pool + state tags:
+#   booking: { pool: any, pick: next-unused, need: [open], avoid: [partner, waiting] }
+# or name one:  booking: { pnr: WESDIF }
+#
+# otp.provider:
+#   mailinator  the shared private inbox; codes fetched automatically (needs MAILINATOR_API_TOKEN or AWS creds)
+#   manual      the code goes to a real mailbox; the run waits for `npm run otp -- <PNR> <code>`
+#
+# Usage (used / reserved / claimConfirmed) is NOT kept here: see state/booking-ledger.json.
+# Regenerate a pool from a seed report: npm run import-seed -- ../../baggage/<file>.html
+#
+# The guide's v77 set (all IDRIS, codes to the shared Mailinator inbox) is not on this machine. Add it like:
+#   v77:
+#     dataset: baggage-sit-int-v77
+#     otp: { provider: mailinator, domain: ae-qa1-aircanada.mailinator.com, inbox: lahiru }
+#     first: Idris
+#     bookings:
+#       - { pnr: FYO4TS, last: Sorvaswen, flight: AC9803, landed: 2026-09-13, tags: [open, lost] }
+pools:
+  diana-v25:
+    dataset: baggage-sit-int-v25
+    source: diana-bag-sit-test-bookings.html
+    otp:
+      provider: manual
+      sentTo: diana.elhaddad@aircanada.ca
+    bookings:
+      - pnr: VFLBMP
+        first: Maya
+        last: Malostbre
+        tags:
+          - open
+          - two-journeys
+        flight: AC9894
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00000 open, raised the day of arrival.
+      - pnr: Z24CUT
+        first: Arjun
+        last: Sormortav
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9259
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_2
+        note: Another airline operated it, or Air Canada is not the last carrier. | One bag, AHL YVRAC00024 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: A2DOJY
+        first: Leila
+        last: Percasren
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9519
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_3
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00002 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: GPX4GE
+        first: Omar
+        last: Wenbreril
+        tags:
+          - 58-days-ago
+          - open
+        flight: AC9829
+        landed: 2026-07-25
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_4
+        note: Outside the 21-day reporting window. | One bag, AHL YVRAC00004 open. Within 21 days = false.
+      - pnr: OD2NN9
+        first: Freya
+        last: Lunkelhov
+        tags:
+          - 58-days-ago
+          - open
+        flight: AC9650
+        landed: 2026-07-25
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_5
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00029 open. Within 21 days = false.
+      - pnr: MZA796
+        first: Diego
+        last: Quihaldor
+        tags:
+          - open
+        flight: AC9513
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_6
+        note: A bag file is open, not closed — the happy path into the case. | One bag, AHL YVRAC00796 open.
+      - pnr: U8DTHZ
+        first: Nora
+        last: Dorlunwen
+        tags:
+          - no-ahl
+        flight: AC9418
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_7
+        note: No open file to work from. | One bag, last seen at station. No AHL raised.
+      - pnr: P9XIE9
+        first: Kai
+        last: Volzarbre
+        tags:
+          - open
+          - two-journeys
+        flight: AC9198
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00099 open.
+      - pnr: AVLA1V
+        first: Anya
+        last: Kelkeltav
+        tags:
+          - delivered
+        flight: AC9173
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_2
+        note: A case already exists for this bound. | One bag, AHL YVRAC00001, delivered 2026-09-18.
+      - pnr: N2WZLL
+        first: Tobias
+        last: Halmormal
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9587
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00002 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: P3GR3R
+        first: Zara
+        last: Jarbremor
+        tags:
+          - no-ahl
+        flight: AC9731
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_4
+        note: No AHL on the booking. | One bag, last seen at station. No AHL raised.
+      - pnr: PI4R84
+        first: Hugo
+        last: Tavdorhal
+        tags:
+          - closed
+        flight: AC9484
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_5
+        note: The only file is closed — nothing open to continue. | One bag, AHL YVRAC00484 created then closed.
+      - pnr: B2N36S
+        first: Iris
+        last: Ostzardor
+        tags:
+          - closed
+        flight: AC9494
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_6
+        note: Closed file, and the customer chooses tracking. | One bag, AHL YVRAC00236 created then closed.
+      - pnr: ADSX3J
+        first: Sami
+        last: Pavgilren
+        tags:
+          - open
+          - two-bags
+        flight: AC9860
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_7
+        note: More than one open AHL on the booking. | Two bags, AHL YVRAC00003 and YVRAC00004, both open.
+      - pnr: GUCA47
+        first: Elin
+        last: Wenjarmor
+        tags:
+          - delivered
+        flight: AC9159
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_8
+        note: The bag has already been delivered. | One bag, AHL YVRAC00047, delivered 2026-09-18.
+      - pnr: IC4BYV
+        first: Ravi
+        last: Lunhovmor
+        tags:
+          - delivered
+        flight: AC9775
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_9
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00004, delivered 2026-09-18.
+      - pnr: XRJO9V
+        first: Luca
+        last: Brefenbre
+        tags:
+          - 24-days-ago
+          - delivered
+        flight: AC9820
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_10
+        note: Delivered, and more than 21 days since the journey. | One bag, AHL YVRAC00009, delivered 2026-08-30.
+      - pnr: LBDRII
+        first: Amara
+        last: Rengilcas
+        tags:
+          - 58-days-ago
+          - open
+        flight: AC9595
+        landed: 2026-07-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_11
+        note: Outside the 51-day submission window. | One bag, AHL YVRAC00000 open.
+      - pnr: NSMAT1
+        first: Jonas
+        last: Ostbarkel
+        tags:
+          - 58-days-ago
+          - open
+        flight: AC9342
+        landed: 2026-07-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_12
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00001 open.
+      - pnr: JP58NH
+        first: Pilar
+        last: Nalquigil
+        tags:
+          - open
+          - recent
+        flight: AC9790
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_13
+        note: Lost-bag reimbursement comes back not eligible. | One bag, AHL YVRAC00058 open, 10 days since arrival.
+      - pnr: CGFICM
+        first: Esme
+        last: Barpavkor
+        tags:
+          - lost
+          - open
+        flight: AC9591
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_14
+        note: Eligible, and the receipt-readiness question is never asked. | One bag, AHL YVRAC00000 open, 24 days since arrival.
+      - pnr: ZPBT2D
+        first: Niko
+        last: Denbrebar
+        tags:
+          - open
+        flight: AC9642
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_15
+        note: Receipt readiness answered “no”. | One bag, AHL YVRAC00002 open.
+      - pnr: BVS207
+        first: Rania
+        last: Quikordor
+        tags:
+          - open
+        flight: AC9602
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_16
+        note: Receipt readiness declined, then the customer comes back. | One bag, AHL YVRAC00207 open.
+      - pnr: LB8PDH
+        first: Bruno
+        last: Tavdorkor
+        tags:
+          - open
+        flight: AC9414
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_17
+        note: Receipt readiness answered “yes”. | One bag, AHL YVRAC00008 open.
+      - pnr: FFFEFK
+        first: Sofia
+        last: Ostwendor
+        tags:
+          - open
+        flight: AC9232
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_18
+        note: Customer gives a delivery date themselves. | One bag, AHL YVRAC00000 open, not delivered in the data.
+      - pnr: HNHF7X
+        first: Idris
+        last: Mornalvol
+        tags:
+          - open
+        flight: AC9110
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_19
+        note: Receipts mentioned — interim expenses only. | One bag, AHL YVRAC00007 open.
+      - pnr: IZAGVS
+        first: Marit
+        last: Nalhovnev
+        tags:
+          - open
+        flight: AC9294
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_20
+        note: Receipts mentioned — interim and lost together. | One bag, AHL YVRAC00000 open.
+      - pnr: E5UKO5
+        first: Pavel
+        last: Wenfenwen
+        tags:
+          - open
+        flight: AC9807
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_21
+        note: Delivery not confirmed — the ADD-02 branch. | One bag, AHL YVRAC00055 open.
+      - pnr: UYU65J
+        first: Tessa
+        last: Casgilkel
+        tags:
+          - open
+        flight: AC9731
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_22
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00065 open.
+      - pnr: YI8BUC
+        first: Yusuf
+        last: Ostgildor
+        tags:
+          - cap-spent
+          - open
+        flight: AC9205
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_23
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00008 open.
+      - pnr: ZVESM3
+        first: Clara
+        last: Keltavkor
+        tags:
+          - open
+          - two-journeys
+        flight: AC9874
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00003 open.
+      - pnr: PPQU3O
+        first: Dmitri
+        last: Quitulnal
+        tags:
+          - delivered
+        flight: AC9505
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_2
+        note: A case already exists for this booking. | One bag, AHL YVRAC00003, delivered 2026-09-18.
+      - pnr: XIFBBQ
+        first: Aisha
+        last: Vasmalper
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9443
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00000 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: JOYS9T
+        first: Lars
+        last: Dorperzar
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9478
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_4
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00009 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: HAJF70
+        first: Nadia
+        last: Denhovlun
+        tags:
+          - no-ahl
+        flight: AC9130
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_5
+        note: No AHL on the booking. | One bag, last seen at station. No AHL raised.
+      - pnr: J9V44F
+        first: Otto
+        last: Vasgilnal
+        tags:
+          - closed
+        flight: AC9160
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_6
+        note: The only file is closed — nothing open to continue. | One bag, AHL YVRAC00944 created then closed.
+      - pnr: B8MZGV
+        first: Priya
+        last: Pavvolzar
+        tags:
+          - closed
+        flight: AC9384
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_7
+        note: Closed file, and the customer chooses to report a new bag. | One bag, AHL YVRAC00008 created then closed.
+      - pnr: KCWRAN
+        first: Quinn
+        last: Giltulkor
+        tags:
+          - closed
+        flight: AC9786
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_8
+        note: Closed file, and the customer chooses tracking. | One bag, AHL YVRAC00000 created then closed.
+      - pnr: C9UB78
+        first: Rosa
+        last: Hovdenbre
+        tags:
+          - open
+          - two-bags
+        flight: AC9199
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_9
+        note: More than one open AHL on the booking. | Two bags, AHL YVRAC00978 and YVRAC00979, both open.
+      - pnr: AEFR5F
+        first: Sven
+        last: Dordenmal
+        tags:
+          - open
+        flight: AC9231
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_10
+        note: Bag not delivered, and the customer leaves it undecided. | One bag, AHL YVRAC00005 open.
+      - pnr: CFU8W9
+        first: Tara
+        last: Quijarhal
+        tags:
+          - 29-days-ago
+          - delivered
+        flight: AC9149
+        landed: 2026-08-23
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_11
+        note: Delivered, and the interim verdict is not eligible. | One bag, AHL YVRAC00089, delivered 2026-08-26.
+      - pnr: MBYFKL
+        first: Ulrik
+        last: Cashalbre
+        tags:
+          - delivered
+        flight: AC9537
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_12
+        note: The interim verdict is eligible. | One bag, AHL YVRAC00000, delivered 2026-09-18.
+      - pnr: A54OTB
+        first: Vera
+        last: Gilzarbre
+        tags:
+          - delivered
+        flight: AC9284
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_13
+        note: Customer declines the invitation to send receipts. | One bag, AHL YVRAC00054, delivered 2026-09-18.
+      - pnr: NFEKX6
+        first: Willem
+        last: Barmornev
+        tags:
+          - open
+        flight: AC9318
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_14
+        note: Customer gives a delivery date themselves. | One bag, AHL YVRAC00006 open, not delivered in the data.
+      - pnr: N5F4NG
+        first: Ximena
+        last: Rilgilper
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+        flight: AC9532
+        landed: 2026-08-28
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_15
+        note: Still undelivered past the point where the bag counts as lost. | One bag, AHL YVRAC00054 open.
+      - pnr: IDJ10A
+        first: Yara
+        last: Wennaltul
+        tags:
+          - open
+        flight: AC9770
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_16
+        note: Delivery not confirmed — the ADD-02 branch. | One bag, AHL YVRAC00010 open.
+      - pnr: S8TIL7
+        first: Zeke
+        last: Rilwenkel
+        tags:
+          - open
+        flight: AC9411
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_17
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00087 open.
+      - pnr: XQ205O
+        first: Alma
+        last: Hovpavqui
+        tags:
+          - delivered
+        flight: AC9326
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_18
+        note: Receipt readiness is never asked. | One bag, AHL YVRAC00205, delivered 2026-09-18.
+      - pnr: V6TNYV
+        first: Boris
+        last: Vaslungil
+        tags:
+          - delivered
+        flight: AC9177
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_19
+        note: Receipt readiness declined. | One bag, AHL YVRAC00006, delivered 2026-09-18.
+      - pnr: E1SP22
+        first: Celia
+        last: Nalvolbre
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - open
+        flight: AC9847
+        landed: 2026-08-28
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_20
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00122 open.
+  diana-v68:
+    dataset: baggage-sit-int-v68
+    source: diana-v68-bag-sit-test-bookings.html
+    otp:
+      provider: manual
+      sentTo: Diana.ElHaddad@aircanada.ca
+    first: Diana
+    last: Elhaddad
+    bookings:
+      - pnr: AKQ6D1
+        tags:
+          - open
+          - two-journeys
+        flight: AC9228
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00061 open.
+      - pnr: STZ6LL
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9805
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_2
+        note: Another airline operated it, or Air Canada is not the last carrier. | One bag, AHL YVRAC00006 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: GL8XRZ
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9513
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_3
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00008 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: P2KJ81
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9332
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_4
+        note: Outside the 21-day reporting window. | One bag, AHL YVRAC00281 open. 58 days since arrival.
+      - pnr: WDYUFA
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9367
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_5
+        note: Disputed finding on a booking that is also outside the window — GenUC-27. | One bag, AHL YVRAC00000 open. 58 days since arrival.
+      - pnr: TGNQZS
+        tags:
+          - open
+        flight: AC9540
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_6
+        note: A bag file is open rather than closed — the plain path through the entry checks. | One bag, AHL YVRAC00000 open.
+      - pnr: S5KMPC
+        tags:
+          - no-ahl
+        flight: AC9230
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_7
+        note: No open file to continue from. | One bag, scanned at the station, no AHL raised.
+      - pnr: TSCYCB
+        tags:
+          - open
+          - two-journeys
+        flight: AC9894
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00000 open.
+      - pnr: ZJOGYC
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9612
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: IQQ4U2
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9580
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00042 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: ZTW6BD
+        tags:
+          - no-ahl
+        flight: AC9361
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_4
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: Y4AHXD
+        tags:
+          - closed
+        flight: AC9429
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_5
+        note: A closed file and nothing open. | AHL YVRAC00004, closed a day ago. Bag never delivered.
+      - pnr: BKVM7C
+        tags:
+          - closed
+        flight: AC9287
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_6
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00007, closed a day ago. Bag never delivered.
+      - pnr: J99A5Q
+        tags:
+          - open
+          - two-bags
+        flight: AC9642
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_7
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00995 and YVRAC00996, both open.
+      - pnr: HRY44X
+        tags:
+          - delivered
+        flight: AC9735
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_8
+        note: The bag has already been delivered. | AHL YVRAC00044, delivered to carousel 2026-10-02.
+      - pnr: QB8RVP
+        tags:
+          - delivered
+        flight: AC9565
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_9
+        note: Customer disputes the finding — hands off to GenUC-27. | AHL YVRAC00008, delivered to carousel 2026-10-02.
+      - pnr: BWTXPO
+        tags:
+          - 24-days-ago
+          - delivered
+          - outside-21
+        flight: AC9756
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_10
+        note: Delivered and more than 21 days since the journey. | AHL YVRAC00000, delivered to carousel 2026-09-13.
+      - pnr: AEYQKV
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9822
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_11
+        note: Outside the 51-day submission window. | One bag, AHL YVRAC00000 open. 58 days since arrival.
+      - pnr: BV60R4
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9621
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_12
+        note: Disputed finding on an out-of-window booking — GenUC-27. | One bag, AHL YVRAC00604 open. 58 days since arrival.
+      - pnr: HUQ54T
+        tags:
+          - open
+          - recent
+        flight: AC9785
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_13
+        note: Lost-bag reimbursement comes back not eligible. | One bag, AHL YVRAC00054 open. 10 days since arrival.
+      - pnr: WT784G
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9267
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_14
+        note: Interim eligible, and receipt readiness is never asked. | One bag, AHL YVRAC00784 open. 24 days since arrival.
+      - pnr: FFP873
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9778
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_15
+        note: Receipt readiness answered no. | One bag, AHL YVRAC00873 open. 24 days since arrival.
+      - pnr: RFFRG2
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9385
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_16
+        note: Receipt readiness declined, then the customer comes back to it. | One bag, AHL YVRAC00002 open. 24 days since arrival.
+      - pnr: J527HF
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9193
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_17
+        note: Receipt readiness answered yes. | One bag, AHL YVRAC00527 open. 24 days since arrival.
+      - pnr: GJZZ9V
+        tags:
+          - open
+          - recent
+        flight: AC9693
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_18
+        note: The customer volunteers a delivery date the data does not have. | One bag, AHL YVRAC00009 open. 10 days since arrival.
+      - pnr: T9ZH2R
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9158
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_19
+        note: Receipts mentioned, interim expenses only. | One bag, AHL YVRAC00092 open. 24 days since arrival.
+      - pnr: DX4TAR
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9232
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_20
+        note: Receipts mentioned for both interim expenses and the lost bag. | One bag, AHL YVRAC00004 open. 24 days since arrival.
+      - pnr: QQ8I7N
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9865
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_21
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00087 open. 10 days since arrival.
+      - pnr: YC2BQH
+        tags:
+          - open
+          - recent
+        flight: AC9410
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_22
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00002 open. 10 days since arrival.
+      - pnr: A0QNLZ
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9671
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_23
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: CJAFZA
+        tags:
+          - open
+          - sp-03-24
+          - waiting
+        flight: AC9484
+        landed: 2026-10-02
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_24
+        note: Open file, bag not back, and the flight landed 3 days ago — the six-day hold. | One bag, AHL YVRAC00000 open. | Still inside the 72-hour Air Canada wait — 56 hours since arrival.
+      - pnr: S249DJ
+        tags:
+          - 36-days-ago
+          - closed
+          - outside-21
+          - sp-03-25
+        flight: AC9113
+        landed: 2026-08-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_25
+        note: The file was closed 30 days ago — both deadlines have passed. | AHL YVRAC00249, closed 30 days ago. Bag never delivered.
+      - pnr: Y2QCP7
+        tags:
+          - open
+          - recent
+          - sp-03-26
+        flight: AC9655
+        landed: 2026-09-22
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_26
+        note: A prior case on this booking already carries lost content — the S14 path. | One bag, AHL YVRAC00027 open. 13 days since arrival.
+      - pnr: LWPD5V
+        tags:
+          - 29-days-ago
+          - closed
+          - delivered
+          - outside-21
+          - sp-03-27
+        flight: AC9885
+        landed: 2026-09-06
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_27
+        note: Traced 25 days ago but handed back after that — the later clock wins. | AHL YVRAC00005, closed 25 days ago, bag delivered 2026-10-02.
+      - pnr: GWM3GP
+        tags:
+          - 34-days-ago
+          - closed
+          - outside-21
+          - sp-03-28
+          - two-bags
+        flight: AC9557
+        landed: 2026-09-01
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_28
+        note: Two bags, one file closed 30 days ago and the other 3 days ago. | Two bags under AHL YVRAC00003, closed 3 and 30 days ago. Neither delivered.
+      - pnr: LCSXMQ
+        tags:
+          - open
+          - two-journeys
+        flight: AC9119
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00000 open.
+      - pnr: O7JAQD
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9603
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00007, delivered to carousel 2026-10-02.
+      - pnr: CP8E7T
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9405
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00087 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: FHC2HT
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9532
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_4
+        note: Customer disputes the finding — hands off to GenUC-27. | One bag, AHL YVRAC00002 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: KGLHXU
+        tags:
+          - no-ahl
+        flight: AC9472
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_5
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: ZCYJSX
+        tags:
+          - closed
+        flight: AC9161
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_6
+        note: A closed file and nothing open. | AHL YVRAC00000, closed a day ago. Bag never delivered.
+      - pnr: JINT4R
+        tags:
+          - closed
+        flight: AC9481
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_7
+        note: Closed file, and the customer picks reporting. | AHL YVRAC00004, closed a day ago. Bag never delivered.
+      - pnr: KBRWDY
+        tags:
+          - closed
+        flight: AC9311
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_8
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00000, closed a day ago. Bag never delivered.
+      - pnr: NGTPVZ
+        tags:
+          - open
+          - two-bags
+        flight: AC9589
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_9
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00000 and YVRAC00001, both open.
+      - pnr: BLLJFG
+        tags:
+          - open
+          - recent
+        flight: AC9159
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_10
+        note: Bag not delivered, and the customer stays undecided. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: W5RV4P
+        tags:
+          - 29-days-ago
+          - delivered
+          - outside-21
+        flight: AC9753
+        landed: 2026-09-06
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_11
+        note: Bag delivered, interim verdict not eligible. | AHL YVRAC00054, delivered to carousel 2026-09-09.
+      - pnr: I9HWUH
+        tags:
+          - delivered
+        flight: AC9609
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_12
+        note: Interim verdict eligible. | AHL YVRAC00009, delivered to carousel 2026-10-02.
+      - pnr: YAJD08
+        tags:
+          - delivered
+        flight: AC9103
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_13
+        note: The customer declines the receipt invitation. | AHL YVRAC00008, delivered to carousel 2026-10-02.
+      - pnr: QJIDVY
+        tags:
+          - open
+          - recent
+        flight: AC9644
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_14
+        note: The customer volunteers a delivery date. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: F16VJ8
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9682
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_15
+        note: Still undelivered past the point where the bag counts as lost. | One bag, AHL YVRAC00168 open. 24 days since arrival.
+      - pnr: R3TP0Y
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9666
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_16
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00030 open. 10 days since arrival.
+      - pnr: AVJ7GN
+        tags:
+          - open
+          - recent
+        flight: AC9730
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_17
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00007 open. 10 days since arrival.
+      - pnr: FULMER
+        tags:
+          - delivered
+        flight: AC9850
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_18
+        note: Receipt readiness is never asked. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: WATW45
+        tags:
+          - delivered
+        flight: AC9822
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_19
+        note: Receipt readiness declined. | AHL YVRAC00045, delivered to carousel 2026-10-02.
+      - pnr: JSY13N
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9899
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_20
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00013 open. 24 days since arrival.
+  doha-v24:
+    dataset: baggage-sit-int-v24
+    source: doha-bag-sit-test-bookings.html
+    otp:
+      provider: manual
+      sentTo: doha.al-dujaili@aircanada.ca
+    bookings:
+      - pnr: O3LWUZ
+        first: Maya
+        last: Lundenmor
+        tags:
+          - open
+          - two-journeys
+        flight: AC9322
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00003 open, raised the day of arrival.
+      - pnr: T6QKLF
+        first: Arjun
+        last: Nalrilril
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9877
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_2
+        note: Another airline operated it, or Air Canada is not the last carrier. | One bag, AHL YVRAC00006 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: GU3LD2
+        first: Leila
+        last: Barhovlun
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9704
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_3
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00032 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: VXWASM
+        first: Omar
+        last: Caspersor
+        tags:
+          - 58-days-ago
+          - open
+        flight: AC9670
+        landed: 2026-07-25
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_4
+        note: Outside the 21-day reporting window. | One bag, AHL YVRAC00000 open. Within 21 days = false.
+      - pnr: DT9ADD
+        first: Freya
+        last: Gilbarril
+        tags:
+          - 58-days-ago
+          - open
+        flight: AC9114
+        landed: 2026-07-25
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_5
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00009 open. Within 21 days = false.
+      - pnr: A5E9FI
+        first: Diego
+        last: Nalperzar
+        tags:
+          - open
+        flight: AC9302
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_6
+        note: A bag file is open, not closed — the happy path into the case. | One bag, AHL YVRAC00059 open.
+      - pnr: ZBN14M
+        first: Nora
+        last: Renhovwen
+        tags:
+          - no-ahl
+        flight: AC9763
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_7
+        note: No open file to work from. | One bag, last seen at station. No AHL raised.
+      - pnr: UZNQ07
+        first: Kai
+        last: Tavostlun
+        tags:
+          - open
+          - two-journeys
+        flight: AC9743
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00007 open.
+      - pnr: Y7I1QD
+        first: Anya
+        last: Tavmortav
+        tags:
+          - delivered
+        flight: AC9413
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_2
+        note: A case already exists for this bound. | One bag, AHL YVRAC00071, delivered 2026-09-18.
+      - pnr: TZ81UW
+        first: Tobias
+        last: Dendorhal
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9382
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00081 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: TQ750T
+        first: Zara
+        last: Caswenpav
+        tags:
+          - no-ahl
+        flight: AC9719
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_4
+        note: No AHL on the booking. | One bag, last seen at station. No AHL raised.
+      - pnr: V68RQ0
+        first: Hugo
+        last: Tuljarvas
+        tags:
+          - closed
+        flight: AC9350
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_5
+        note: The only file is closed — nothing open to continue. | One bag, AHL YVRAC00680 created then closed.
+      - pnr: UXAWFK
+        first: Iris
+        last: Rilmaltul
+        tags:
+          - closed
+        flight: AC9200
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_6
+        note: Closed file, and the customer chooses tracking. | One bag, AHL YVRAC00000 created then closed.
+      - pnr: YL8UL6
+        first: Sami
+        last: Volperdor
+        tags:
+          - open
+          - two-bags
+        flight: AC9179
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_7
+        note: More than one open AHL on the booking. | Two bags, AHL YVRAC00086 and YVRAC00087, both open.
+      - pnr: WRBE3Z
+        first: Elin
+        last: Perwenpav
+        tags:
+          - delivered
+        flight: AC9585
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_8
+        note: The bag has already been delivered. | One bag, AHL YVRAC00003, delivered 2026-09-18.
+      - pnr: QLID8G
+        first: Ravi
+        last: Kelquivas
+        tags:
+          - delivered
+        flight: AC9609
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_9
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00008, delivered 2026-09-18.
+      - pnr: RHV4PU
+        first: Luca
+        last: Pavpavfen
+        tags:
+          - 24-days-ago
+          - delivered
+        flight: AC9152
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_10
+        note: Delivered, and more than 21 days since the journey. | One bag, AHL YVRAC00004, delivered 2026-08-30.
+      - pnr: IFKJJR
+        first: Amara
+        last: Tulwenzar
+        tags:
+          - 58-days-ago
+          - open
+        flight: AC9374
+        landed: 2026-07-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_11
+        note: Outside the 51-day submission window. | One bag, AHL YVRAC00000 open.
+      - pnr: NEEMVX
+        first: Jonas
+        last: Vasdenpav
+        tags:
+          - 58-days-ago
+          - open
+        flight: AC9368
+        landed: 2026-07-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_12
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00000 open.
+      - pnr: CDHN5Y
+        first: Pilar
+        last: Morpavbre
+        tags:
+          - open
+          - recent
+        flight: AC9666
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_13
+        note: Lost-bag reimbursement comes back not eligible. | One bag, AHL YVRAC00005 open, 10 days since arrival.
+      - pnr: T4S80Y
+        first: Esme
+        last: Casmalsor
+        tags:
+          - lost
+          - open
+        flight: AC9855
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_14
+        note: Eligible, and the receipt-readiness question is never asked. | One bag, AHL YVRAC00480 open, 24 days since arrival.
+      - pnr: I0OCMK
+        first: Niko
+        last: Ostwenlun
+        tags:
+          - open
+        flight: AC9627
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_15
+        note: Receipt readiness answered “no”. | One bag, AHL YVRAC00000 open.
+      - pnr: IGW0VM
+        first: Rania
+        last: Pavgilwen
+        tags:
+          - open
+        flight: AC9245
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_16
+        note: Receipt readiness declined, then the customer comes back. | One bag, AHL YVRAC00000 open.
+      - pnr: J076N8
+        first: Bruno
+        last: Nevhovhal
+        tags:
+          - open
+        flight: AC9639
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_17
+        note: Receipt readiness answered “yes”. | One bag, AHL YVRAC00768 open.
+      - pnr: V1GJKA
+        first: Sofia
+        last: Volquimor
+        tags:
+          - open
+        flight: AC9633
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_18
+        note: Customer gives a delivery date themselves. | One bag, AHL YVRAC00001 open, not delivered in the data.
+      - pnr: C8RJQW
+        first: Idris
+        last: Dencasmal
+        tags:
+          - open
+        flight: AC9892
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_19
+        note: Receipts mentioned — interim expenses only. | One bag, AHL YVRAC00008 open.
+      - pnr: ROSBMZ
+        first: Marit
+        last: Kelnevdor
+        tags:
+          - open
+        flight: AC9333
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_20
+        note: Receipts mentioned — interim and lost together. | One bag, AHL YVRAC00000 open.
+      - pnr: R9FQ2J
+        first: Pavel
+        last: Densorbre
+        tags:
+          - open
+        flight: AC9858
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_21
+        note: Delivery not confirmed — the ADD-02 branch. | One bag, AHL YVRAC00092 open.
+      - pnr: YFNHLM
+        first: Tessa
+        last: Malfenwen
+        tags:
+          - open
+        flight: AC9669
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_22
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00000 open.
+      - pnr: SWYGMO
+        first: Yusuf
+        last: Renpavcas
+        tags:
+          - cap-spent
+          - open
+        flight: AC9874
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_23
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00000 open.
+      - pnr: SK2XG2
+        first: Clara
+        last: Kornaltav
+        tags:
+          - open
+          - two-journeys
+        flight: AC9818
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00022 open.
+      - pnr: GYIH4O
+        first: Dmitri
+        last: Lunhovgil
+        tags:
+          - delivered
+        flight: AC9117
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_2
+        note: A case already exists for this booking. | One bag, AHL YVRAC00004, delivered 2026-09-18.
+      - pnr: J3B0DQ
+        first: Aisha
+        last: Barbrenal
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9771
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00030 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: KK3KQL
+        first: Lars
+        last: Dorrengil
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9584
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_4
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00003 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: YF6CNI
+        first: Nadia
+        last: Gilwenvas
+        tags:
+          - no-ahl
+        flight: AC9600
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_5
+        note: No AHL on the booking. | One bag, last seen at station. No AHL raised.
+      - pnr: B6HLLM
+        first: Otto
+        last: Pavjarwen
+        tags:
+          - closed
+        flight: AC9495
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_6
+        note: The only file is closed — nothing open to continue. | One bag, AHL YVRAC00006 created then closed.
+      - pnr: KS2X3N
+        first: Priya
+        last: Morcasmor
+        tags:
+          - closed
+        flight: AC9343
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_7
+        note: Closed file, and the customer chooses to report a new bag. | One bag, AHL YVRAC00023 created then closed.
+      - pnr: OG2QH5
+        first: Quinn
+        last: Voltulqui
+        tags:
+          - closed
+        flight: AC9759
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_8
+        note: Closed file, and the customer chooses tracking. | One bag, AHL YVRAC00025 created then closed.
+      - pnr: QRR6CF
+        first: Rosa
+        last: Mordorcas
+        tags:
+          - open
+          - two-bags
+        flight: AC9723
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_9
+        note: More than one open AHL on the booking. | Two bags, AHL YVRAC00006 and YVRAC00007, both open.
+      - pnr: LWTAH0
+        first: Sven
+        last: Pavfenlun
+        tags:
+          - open
+        flight: AC9347
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_10
+        note: Bag not delivered, and the customer leaves it undecided. | One bag, AHL YVRAC00000 open.
+      - pnr: LUJPMZ
+        first: Tara
+        last: Vasrilgil
+        tags:
+          - 29-days-ago
+          - delivered
+        flight: AC9596
+        landed: 2026-08-23
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_11
+        note: Delivered, and the interim verdict is not eligible. | One bag, AHL YVRAC00000, delivered 2026-08-26.
+      - pnr: TERVGM
+        first: Ulrik
+        last: Kelrilbre
+        tags:
+          - delivered
+        flight: AC9178
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_12
+        note: The interim verdict is eligible. | One bag, AHL YVRAC00000, delivered 2026-09-18.
+      - pnr: FH397X
+        first: Vera
+        last: Gilnalvas
+        tags:
+          - delivered
+        flight: AC9425
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_13
+        note: Customer declines the invitation to send receipts. | One bag, AHL YVRAC00397, delivered 2026-09-18.
+      - pnr: E86WFZ
+        first: Willem
+        last: Rentulfen
+        tags:
+          - open
+        flight: AC9106
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_14
+        note: Customer gives a delivery date themselves. | One bag, AHL YVRAC00086 open, not delivered in the data.
+      - pnr: DI2GDW
+        first: Ximena
+        last: Naltavren
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+        flight: AC9877
+        landed: 2026-08-28
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_15
+        note: Still undelivered past the point where the bag counts as lost. | One bag, AHL YVRAC00002 open.
+      - pnr: SGMHY4
+        first: Yara
+        last: Mormorvol
+        tags:
+          - open
+        flight: AC9898
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_16
+        note: Delivery not confirmed — the ADD-02 branch. | One bag, AHL YVRAC00004 open.
+      - pnr: BYU34H
+        first: Zeke
+        last: Gilostgil
+        tags:
+          - open
+        flight: AC9587
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_17
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00034 open.
+      - pnr: KZ8JF8
+        first: Alma
+        last: Sorvaskor
+        tags:
+          - delivered
+        flight: AC9664
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_18
+        note: Receipt readiness is never asked. | One bag, AHL YVRAC00088, delivered 2026-09-18.
+      - pnr: N4FHSB
+        first: Boris
+        last: Denvolfen
+        tags:
+          - delivered
+        flight: AC9582
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_19
+        note: Receipt readiness declined. | One bag, AHL YVRAC00004, delivered 2026-09-18.
+      - pnr: Q6KI5G
+        first: Celia
+        last: Wenrilost
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - open
+        flight: AC9780
+        landed: 2026-08-28
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_20
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00065 open.
+  doha-v65:
+    dataset: baggage-sit-int-v65
+    source: doha-v65-bag-sit-test-bookings.html
+    otp:
+      provider: manual
+      sentTo: doha.al-dujaili@aircanada.ca
+    first: Doha
+    last: Al-Dujaili
+    bookings:
+      - pnr: P2EUPP
+        tags:
+          - open
+          - two-journeys
+        flight: AC9876
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00002 open.
+      - pnr: CCWF17
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9399
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_2
+        note: Another airline operated it, or Air Canada is not the last carrier. | One bag, AHL YVRAC00017 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: QH7PB3
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9612
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_3
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00073 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: DZ17QC
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9550
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_4
+        note: Outside the 21-day reporting window. | One bag, AHL YVRAC00017 open. 58 days since arrival.
+      - pnr: G30VQL
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9745
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_5
+        note: Disputed finding on a booking that is also outside the window — GenUC-27. | One bag, AHL YVRAC00030 open. 58 days since arrival.
+      - pnr: FECS5Y
+        tags:
+          - open
+        flight: AC9639
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_6
+        note: A bag file is open rather than closed — the plain path through the entry checks. | One bag, AHL YVRAC00005 open.
+      - pnr: M6EY83
+        tags:
+          - no-ahl
+        flight: AC9173
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_7
+        note: No open file to continue from. | One bag, scanned at the station, no AHL raised.
+      - pnr: O1N4T7
+        tags:
+          - open
+          - two-journeys
+        flight: AC9405
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00147 open.
+      - pnr: R8U6IT
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9340
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00086, delivered to carousel 2026-10-02.
+      - pnr: UGTBXD
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9822
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00000 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: YFAEJY
+        tags:
+          - no-ahl
+        flight: AC9514
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_4
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: Z937KZ
+        tags:
+          - closed
+        flight: AC9216
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_5
+        note: A closed file and nothing open. | AHL YVRAC00937, closed a day ago. Bag never delivered.
+      - pnr: C0OMEE
+        tags:
+          - closed
+        flight: AC9522
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_6
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00000, closed a day ago. Bag never delivered.
+      - pnr: Y9QC1T
+        tags:
+          - open
+          - two-bags
+        flight: AC9461
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_7
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00091 and YVRAC00092, both open.
+      - pnr: UCC1WU
+        tags:
+          - delivered
+        flight: AC9527
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_8
+        note: The bag has already been delivered. | AHL YVRAC00001, delivered to carousel 2026-10-02.
+      - pnr: AHIH99
+        tags:
+          - delivered
+        flight: AC9723
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_9
+        note: Customer disputes the finding — hands off to GenUC-27. | AHL YVRAC00099, delivered to carousel 2026-10-02.
+      - pnr: OJCXSB
+        tags:
+          - 24-days-ago
+          - delivered
+          - outside-21
+        flight: AC9573
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_10
+        note: Delivered and more than 21 days since the journey. | AHL YVRAC00000, delivered to carousel 2026-09-13.
+      - pnr: Q2F0A5
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9884
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_11
+        note: Outside the 51-day submission window. | One bag, AHL YVRAC00205 open. 58 days since arrival.
+      - pnr: L2C3N9
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9458
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_12
+        note: Disputed finding on an out-of-window booking — GenUC-27. | One bag, AHL YVRAC00239 open. 58 days since arrival.
+      - pnr: VYNFNO
+        tags:
+          - open
+          - recent
+        flight: AC9869
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_13
+        note: Lost-bag reimbursement comes back not eligible. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: RFX665
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9292
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_14
+        note: Interim eligible, and receipt readiness is never asked. | One bag, AHL YVRAC00665 open. 24 days since arrival.
+      - pnr: ZXX4TC
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9407
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_15
+        note: Receipt readiness answered no. | One bag, AHL YVRAC00004 open. 24 days since arrival.
+      - pnr: EBF6AD
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9859
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_16
+        note: Receipt readiness declined, then the customer comes back to it. | One bag, AHL YVRAC00006 open. 24 days since arrival.
+      - pnr: V9MR17
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9820
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_17
+        note: Receipt readiness answered yes. | One bag, AHL YVRAC00917 open. 24 days since arrival.
+      - pnr: X1MX4G
+        tags:
+          - open
+          - recent
+        flight: AC9336
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_18
+        note: The customer volunteers a delivery date the data does not have. | One bag, AHL YVRAC00014 open. 10 days since arrival.
+      - pnr: FVLT3R
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9741
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_19
+        note: Receipts mentioned, interim expenses only. | One bag, AHL YVRAC00003 open. 24 days since arrival.
+      - pnr: EPNM0T
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9807
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_20
+        note: Receipts mentioned for both interim expenses and the lost bag. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: W3EBJ5
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9570
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_21
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00035 open. 10 days since arrival.
+      - pnr: UQUOX9
+        tags:
+          - open
+          - recent
+        flight: AC9430
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_22
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00009 open. 10 days since arrival.
+      - pnr: C7OWS1
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9211
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_23
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00071 open. 24 days since arrival.
+      - pnr: EL9PCV
+        tags:
+          - open
+          - sp-03-24
+          - waiting
+        flight: AC9128
+        landed: 2026-10-02
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_24
+        note: Open file, bag not back, and the flight landed 3 days ago — the six-day hold. | One bag, AHL YVRAC00009 open. | Still inside the 72-hour Air Canada wait — 52 hours since arrival.
+      - pnr: V9ITFX
+        tags:
+          - 36-days-ago
+          - closed
+          - outside-21
+          - sp-03-25
+        flight: AC9293
+        landed: 2026-08-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_25
+        note: The file was closed 30 days ago — both deadlines have passed. | AHL YVRAC00009, closed 30 days ago. Bag never delivered.
+      - pnr: GMJ69T
+        tags:
+          - open
+          - recent
+          - sp-03-26
+        flight: AC9413
+        landed: 2026-09-22
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_26
+        note: A prior case on this booking already carries lost content — the S14 path. | One bag, AHL YVRAC00069 open. 13 days since arrival.
+      - pnr: NRHXKF
+        tags:
+          - 29-days-ago
+          - closed
+          - delivered
+          - outside-21
+          - sp-03-27
+        flight: AC9700
+        landed: 2026-09-06
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_27
+        note: Traced 25 days ago but handed back after that — the later clock wins. | AHL YVRAC00000, closed 25 days ago, bag delivered 2026-10-02.
+      - pnr: YISW86
+        tags:
+          - 34-days-ago
+          - closed
+          - outside-21
+          - sp-03-28
+          - two-bags
+        flight: AC9665
+        landed: 2026-09-01
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_28
+        note: Two bags, one file closed 30 days ago and the other 3 days ago. | Two bags under AHL YVRAC00086, closed 3 and 30 days ago. Neither delivered.
+      - pnr: TEC4BJ
+        tags:
+          - open
+          - two-journeys
+        flight: AC9729
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00004 open. | AC9729 on 2026-09-30 is also on DU9O7V.
+      - pnr: U2NFDP
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9530
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00002, delivered to carousel 2026-10-02.
+      - pnr: WXHTHE
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9866
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00000 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: NU13HE
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9587
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_4
+        note: Customer disputes the finding — hands off to GenUC-27. | One bag, AHL YVRAC00013 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: KBF3OS
+        tags:
+          - no-ahl
+        flight: AC9825
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_5
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: IV25S7
+        tags:
+          - closed
+        flight: AC9439
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_6
+        note: A closed file and nothing open. | AHL YVRAC00257, closed a day ago. Bag never delivered.
+      - pnr: CU7DZ2
+        tags:
+          - closed
+        flight: AC9416
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_7
+        note: Closed file, and the customer picks reporting. | AHL YVRAC00072, closed a day ago. Bag never delivered.
+      - pnr: PNF8Y4
+        tags:
+          - closed
+        flight: AC9303
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_8
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00084, closed a day ago. Bag never delivered.
+      - pnr: G0GH36
+        tags:
+          - open
+          - two-bags
+        flight: AC9234
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_9
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00036 and YVRAC00037, both open.
+      - pnr: CZ6OJI
+        tags:
+          - open
+          - recent
+        flight: AC9653
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_10
+        note: Bag not delivered, and the customer stays undecided. | One bag, AHL YVRAC00006 open. 10 days since arrival.
+      - pnr: XW8YQ7
+        tags:
+          - 29-days-ago
+          - delivered
+          - outside-21
+        flight: AC9323
+        landed: 2026-09-06
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_11
+        note: Bag delivered, interim verdict not eligible. | AHL YVRAC00087, delivered to carousel 2026-09-09.
+      - pnr: RZ4LL0
+        tags:
+          - delivered
+        flight: AC9157
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_12
+        note: Interim verdict eligible. | AHL YVRAC00040, delivered to carousel 2026-10-02.
+      - pnr: J49856
+        tags:
+          - delivered
+        flight: AC9363
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_13
+        note: The customer declines the receipt invitation. | AHL YVRAC49856, delivered to carousel 2026-10-02.
+      - pnr: WNUEKA
+        tags:
+          - open
+          - recent
+        flight: AC9865
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_14
+        note: The customer volunteers a delivery date. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: LI2ZCI
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9534
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_15
+        note: Still undelivered past the point where the bag counts as lost. | One bag, AHL YVRAC00002 open. 24 days since arrival.
+      - pnr: CHARO3
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9693
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_16
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00003 open. 10 days since arrival.
+      - pnr: Q4EVPU
+        tags:
+          - open
+          - recent
+        flight: AC9688
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_17
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00004 open. 10 days since arrival.
+      - pnr: DH5KC4
+        tags:
+          - delivered
+        flight: AC9370
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_18
+        note: Receipt readiness is never asked. | AHL YVRAC00054, delivered to carousel 2026-10-02.
+      - pnr: DU9O7V
+        tags:
+          - delivered
+        flight: AC9729
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_19
+        note: Receipt readiness declined. | AHL YVRAC00097, delivered to carousel 2026-10-02. | AC9729 on 2026-09-30 is also on TEC4BJ.
+      - pnr: HNDHSW
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9439
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_20
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+  fady-v26:
+    dataset: baggage-sit-int-v26
+    source: fady-bag-sit-test-bookings.html
+    otp:
+      provider: manual
+      sentTo: fady.riad@aircanada.ca
+    bookings:
+      - pnr: BO9ZI5
+        first: Maya
+        last: Rilgilgil
+        tags:
+          - open
+          - two-journeys
+        flight: AC9604
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00095 open, raised the day of arrival.
+      - pnr: PZAX32
+        first: Arjun
+        last: Quigilril
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9727
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_2
+        note: Another airline operated it, or Air Canada is not the last carrier. | One bag, AHL YVRAC00032 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: LVECCA
+        first: Leila
+        last: Mortulcas
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9210
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_3
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00000 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: HW51XO
+        first: Omar
+        last: Wenmorwen
+        tags:
+          - 58-days-ago
+          - open
+        flight: AC9128
+        landed: 2026-07-25
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_4
+        note: Outside the 21-day reporting window. | One bag, AHL YVRAC00051 open. Within 21 days = false.
+      - pnr: F85Q6H
+        first: Freya
+        last: Fenjardor
+        tags:
+          - 58-days-ago
+          - open
+        flight: AC9832
+        landed: 2026-07-25
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_5
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00856 open. Within 21 days = false.
+      - pnr: JZZM2D
+        first: Diego
+        last: Nevjarwen
+        tags:
+          - open
+        flight: AC9749
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_6
+        note: A bag file is open, not closed — the happy path into the case. | One bag, AHL YVRAC00002 open.
+      - pnr: DKZXKD
+        first: Nora
+        last: Rilosttav
+        tags:
+          - no-ahl
+        flight: AC9682
+        landed: 2026-09-16
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_7
+        note: No open file to work from. | One bag, last seen at station. No AHL raised.
+      - pnr: MIQA6J
+        first: Kai
+        last: Quifenvas
+        tags:
+          - open
+          - two-journeys
+        flight: AC9259
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00006 open.
+      - pnr: OYGZFL
+        first: Anya
+        last: Kelpavkor
+        tags:
+          - delivered
+        flight: AC9678
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_2
+        note: A case already exists for this bound. | One bag, AHL YVRAC00000, delivered 2026-09-18.
+      - pnr: BTQHM6
+        first: Tobias
+        last: Dormalnev
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9574
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00006 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: HDYUBI
+        first: Zara
+        last: Quirilhov
+        tags:
+          - no-ahl
+        flight: AC9825
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_4
+        note: No AHL on the booking. | One bag, last seen at station. No AHL raised.
+      - pnr: RS5QKK
+        first: Hugo
+        last: Kordorzar
+        tags:
+          - closed
+        flight: AC9689
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_5
+        note: The only file is closed — nothing open to continue. | One bag, AHL YVRAC00005 created then closed.
+      - pnr: LFLOUK
+        first: Iris
+        last: Dorkorhov
+        tags:
+          - closed
+        flight: AC9225
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_6
+        note: Closed file, and the customer chooses tracking. | One bag, AHL YVRAC00000 created then closed.
+      - pnr: MWT3SE
+        first: Sami
+        last: Osttulden
+        tags:
+          - open
+          - two-bags
+        flight: AC9272
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_7
+        note: More than one open AHL on the booking. | Two bags, AHL YVRAC00003 and YVRAC00004, both open.
+      - pnr: COD046
+        first: Elin
+        last: Tavrenkel
+        tags:
+          - delivered
+        flight: AC9298
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_8
+        note: The bag has already been delivered. | One bag, AHL YVRAC00046, delivered 2026-09-18.
+      - pnr: W5JLW9
+        first: Ravi
+        last: Nalvasvas
+        tags:
+          - delivered
+        flight: AC9281
+        landed: 2026-09-16
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_9
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00059, delivered 2026-09-18.
+      - pnr: ROJZ78
+        first: Luca
+        last: Vaswenbar
+        tags:
+          - 24-days-ago
+          - delivered
+        flight: AC9862
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_10
+        note: Delivered, and more than 21 days since the journey. | One bag, AHL YVRAC00078, delivered 2026-08-30.
+      - pnr: TMPJI7
+        first: Amara
+        last: Sornevvas
+        tags:
+          - 58-days-ago
+          - open
+        flight: AC9416
+        landed: 2026-07-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_11
+        note: Outside the 51-day submission window. | One bag, AHL YVRAC00007 open.
+      - pnr: WNIPF3
+        first: Jonas
+        last: Casbartul
+        tags:
+          - 58-days-ago
+          - open
+        flight: AC9198
+        landed: 2026-07-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_12
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00003 open.
+      - pnr: AGV5U0
+        first: Pilar
+        last: Gilbrebre
+        tags:
+          - open
+          - recent
+        flight: AC9252
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_13
+        note: Lost-bag reimbursement comes back not eligible. | One bag, AHL YVRAC00050 open, 10 days since arrival.
+      - pnr: Y9P7IL
+        first: Esme
+        last: Korrengil
+        tags:
+          - lost
+          - open
+        flight: AC9416
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_14
+        note: Eligible, and the receipt-readiness question is never asked. | One bag, AHL YVRAC00097 open, 24 days since arrival.
+      - pnr: CNT2YT
+        first: Niko
+        last: Pavjarmal
+        tags:
+          - open
+        flight: AC9305
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_15
+        note: Receipt readiness answered “no”. | One bag, AHL YVRAC00002 open.
+      - pnr: OYI3YY
+        first: Rania
+        last: Maltulqui
+        tags:
+          - open
+        flight: AC9599
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_16
+        note: Receipt readiness declined, then the customer comes back. | One bag, AHL YVRAC00003 open.
+      - pnr: T63KJW
+        first: Bruno
+        last: Gillunlun
+        tags:
+          - open
+        flight: AC9654
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_17
+        note: Receipt readiness answered “yes”. | One bag, AHL YVRAC00063 open.
+      - pnr: YDHS2H
+        first: Sofia
+        last: Barnalsor
+        tags:
+          - open
+        flight: AC9820
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_18
+        note: Customer gives a delivery date themselves. | One bag, AHL YVRAC00002 open, not delivered in the data.
+      - pnr: TV1DY8
+        first: Idris
+        last: Keltavvol
+        tags:
+          - open
+        flight: AC9347
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_19
+        note: Receipts mentioned — interim expenses only. | One bag, AHL YVRAC00018 open.
+      - pnr: JCKY2X
+        first: Marit
+        last: Brerilvol
+        tags:
+          - open
+        flight: AC9498
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_20
+        note: Receipts mentioned — interim and lost together. | One bag, AHL YVRAC00002 open.
+      - pnr: EK3QBL
+        first: Pavel
+        last: Brepavmor
+        tags:
+          - open
+        flight: AC9517
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_21
+        note: Delivery not confirmed — the ADD-02 branch. | One bag, AHL YVRAC00003 open.
+      - pnr: S2Q8CN
+        first: Tessa
+        last: Dordenhal
+        tags:
+          - open
+        flight: AC9296
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_22
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00028 open.
+      - pnr: UJ7UXZ
+        first: Yusuf
+        last: Pernevhov
+        tags:
+          - cap-spent
+          - open
+        flight: AC9787
+        landed: 2026-08-28
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_23
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00007 open.
+      - pnr: CIVZW7
+        first: Clara
+        last: Dorjartul
+        tags:
+          - open
+          - two-journeys
+        flight: AC9592
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00007 open.
+      - pnr: SOYCNI
+        first: Dmitri
+        last: Zarrencas
+        tags:
+          - delivered
+        flight: AC9416
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_2
+        note: A case already exists for this booking. | One bag, AHL YVRAC00000, delivered 2026-09-18.
+      - pnr: UPOCSR
+        first: Aisha
+        last: Caskorwen
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9628
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00000 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: V44WVI
+        first: Lars
+        last: Zarvasnev
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9293
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_4
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00044 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: TO0RPJ
+        first: Nadia
+        last: Korwenhov
+        tags:
+          - no-ahl
+        flight: AC9581
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_5
+        note: No AHL on the booking. | One bag, last seen at station. No AHL raised.
+      - pnr: B5G8PX
+        first: Otto
+        last: Haldorbre
+        tags:
+          - closed
+        flight: AC9715
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_6
+        note: The only file is closed — nothing open to continue. | One bag, AHL YVRAC00058 created then closed.
+      - pnr: FL24WO
+        first: Priya
+        last: Morwenril
+        tags:
+          - closed
+        flight: AC9789
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_7
+        note: Closed file, and the customer chooses to report a new bag. | One bag, AHL YVRAC00024 created then closed.
+      - pnr: VB9UTJ
+        first: Quinn
+        last: Ostdennal
+        tags:
+          - closed
+        flight: AC9408
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_8
+        note: Closed file, and the customer chooses tracking. | One bag, AHL YVRAC00009 created then closed.
+      - pnr: EUZC9R
+        first: Rosa
+        last: Zarbarvas
+        tags:
+          - open
+          - two-bags
+        flight: AC9319
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_9
+        note: More than one open AHL on the booking. | Two bags, AHL YVRAC00009 and YVRAC00010, both open.
+      - pnr: IG8MPD
+        first: Sven
+        last: Tulperwen
+        tags:
+          - open
+        flight: AC9564
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_10
+        note: Bag not delivered, and the customer leaves it undecided. | One bag, AHL YVRAC00008 open.
+      - pnr: H6L3EL
+        first: Tara
+        last: Denjarvol
+        tags:
+          - 29-days-ago
+          - delivered
+        flight: AC9793
+        landed: 2026-08-23
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_11
+        note: Delivered, and the interim verdict is not eligible. | One bag, AHL YVRAC00063, delivered 2026-08-26.
+      - pnr: DNW5CI
+        first: Ulrik
+        last: Vasjarper
+        tags:
+          - delivered
+        flight: AC9568
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_12
+        note: The interim verdict is eligible. | One bag, AHL YVRAC00005, delivered 2026-09-18.
+      - pnr: A5VB9F
+        first: Vera
+        last: Barbrewen
+        tags:
+          - delivered
+        flight: AC9124
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_13
+        note: Customer declines the invitation to send receipts. | One bag, AHL YVRAC00059, delivered 2026-09-18.
+      - pnr: CILOSQ
+        first: Willem
+        last: Ostpavmor
+        tags:
+          - open
+        flight: AC9179
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_14
+        note: Customer gives a delivery date themselves. | One bag, AHL YVRAC00000 open, not delivered in the data.
+      - pnr: QS0IFI
+        first: Ximena
+        last: Nevmalfen
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+        flight: AC9270
+        landed: 2026-08-28
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_15
+        note: Still undelivered past the point where the bag counts as lost. | One bag, AHL YVRAC00000 open.
+      - pnr: TLTSD5
+        first: Yara
+        last: Zarbrehov
+        tags:
+          - open
+        flight: AC9523
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_16
+        note: Delivery not confirmed — the ADD-02 branch. | One bag, AHL YVRAC00005 open.
+      - pnr: X5G009
+        first: Zeke
+        last: Fendenhov
+        tags:
+          - open
+        flight: AC9103
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_17
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC05009 open.
+      - pnr: SATMTX
+        first: Alma
+        last: Tulrilvol
+        tags:
+          - delivered
+        flight: AC9184
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_18
+        note: Receipt readiness is never asked. | One bag, AHL YVRAC00000, delivered 2026-09-18.
+      - pnr: GBI0NX
+        first: Boris
+        last: Renhallun
+        tags:
+          - delivered
+        flight: AC9620
+        landed: 2026-09-16
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_19
+        note: Receipt readiness declined. | One bag, AHL YVRAC00000, delivered 2026-09-18.
+      - pnr: TUDVPP
+        first: Celia
+        last: Nalkelvas
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - open
+        flight: AC9195
+        landed: 2026-08-28
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_20
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00000 open.
+  fady-v66:
+    dataset: baggage-sit-int-v66
+    source: fady-v66-bag-sit-test-bookings.html
+    otp:
+      provider: manual
+      sentTo: fady.riad@aircanada.ca
+    first: Fady
+    last: Riad
+    bookings:
+      - pnr: ZRUCG8
+        tags:
+          - open
+          - two-journeys
+        flight: AC9559
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00008 open.
+      - pnr: KVOLYR
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9251
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_2
+        note: Another airline operated it, or Air Canada is not the last carrier. | One bag, AHL YVRAC00000 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: FCRTUF
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9433
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_3
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00000 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: VP81AU
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9664
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_4
+        note: Outside the 21-day reporting window. | One bag, AHL YVRAC00081 open. 58 days since arrival.
+      - pnr: YG6MLJ
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9283
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_5
+        note: Disputed finding on a booking that is also outside the window — GenUC-27. | One bag, AHL YVRAC00006 open. 58 days since arrival.
+      - pnr: MHSNSF
+        tags:
+          - open
+        flight: AC9457
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_6
+        note: A bag file is open rather than closed — the plain path through the entry checks. | One bag, AHL YVRAC00000 open.
+      - pnr: WZIVVX
+        tags:
+          - no-ahl
+        flight: AC9864
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_7
+        note: No open file to continue from. | One bag, scanned at the station, no AHL raised.
+      - pnr: R4W9Q2
+        tags:
+          - open
+          - two-journeys
+        flight: AC9156
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00492 open.
+      - pnr: GES3FI
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9821
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00003, delivered to carousel 2026-10-02.
+      - pnr: I1U6CD
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9350
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00016 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: D4DZHH
+        tags:
+          - no-ahl
+        flight: AC9320
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_4
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: XF3AJT
+        tags:
+          - closed
+        flight: AC9508
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_5
+        note: A closed file and nothing open. | AHL YVRAC00003, closed a day ago. Bag never delivered.
+      - pnr: BIF1F4
+        tags:
+          - closed
+        flight: AC9140
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_6
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00014, closed a day ago. Bag never delivered.
+      - pnr: JNV67A
+        tags:
+          - open
+          - two-bags
+        flight: AC9547
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_7
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00067 and YVRAC00068, both open.
+      - pnr: EIE7OX
+        tags:
+          - delivered
+        flight: AC9365
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_8
+        note: The bag has already been delivered. | AHL YVRAC00007, delivered to carousel 2026-10-02.
+      - pnr: AGYIKL
+        tags:
+          - delivered
+        flight: AC9564
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_9
+        note: Customer disputes the finding — hands off to GenUC-27. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: UD3BS4
+        tags:
+          - 24-days-ago
+          - delivered
+          - outside-21
+        flight: AC9720
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_10
+        note: Delivered and more than 21 days since the journey. | AHL YVRAC00034, delivered to carousel 2026-09-13.
+      - pnr: DWO10Q
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9299
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_11
+        note: Outside the 51-day submission window. | One bag, AHL YVRAC00010 open. 58 days since arrival.
+      - pnr: UNZ018
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9207
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_12
+        note: Disputed finding on an out-of-window booking — GenUC-27. | One bag, AHL YVRAC00018 open. 58 days since arrival.
+      - pnr: UPRBK2
+        tags:
+          - open
+          - recent
+        flight: AC9466
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_13
+        note: Lost-bag reimbursement comes back not eligible. | One bag, AHL YVRAC00002 open. 10 days since arrival.
+      - pnr: MUWJDU
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9795
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_14
+        note: Interim eligible, and receipt readiness is never asked. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: EK9BPO
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9581
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_15
+        note: Receipt readiness answered no. | One bag, AHL YVRAC00009 open. 24 days since arrival.
+      - pnr: F0THMX
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9159
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_16
+        note: Receipt readiness declined, then the customer comes back to it. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: HWG0II
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9254
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_17
+        note: Receipt readiness answered yes. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: AQZZEB
+        tags:
+          - open
+          - recent
+        flight: AC9230
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_18
+        note: The customer volunteers a delivery date the data does not have. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: K48SYK
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9280
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_19
+        note: Receipts mentioned, interim expenses only. | One bag, AHL YVRAC00048 open. 24 days since arrival.
+      - pnr: P0RSIE
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9308
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_20
+        note: Receipts mentioned for both interim expenses and the lost bag. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: UVZ00S
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9724
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_21
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: STNAGA
+        tags:
+          - open
+          - recent
+        flight: AC9784
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_22
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: CLNHBF
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9829
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_23
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: KJWS33
+        tags:
+          - open
+          - sp-03-24
+          - waiting
+        flight: AC9613
+        landed: 2026-10-02
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_24
+        note: Open file, bag not back, and the flight landed 3 days ago — the six-day hold. | One bag, AHL YVRAC00033 open. | Still inside the 72-hour Air Canada wait — 53 hours since arrival.
+      - pnr: YTVW1C
+        tags:
+          - 36-days-ago
+          - closed
+          - outside-21
+          - sp-03-25
+        flight: AC9673
+        landed: 2026-08-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_25
+        note: The file was closed 30 days ago — both deadlines have passed. | AHL YVRAC00001, closed 30 days ago. Bag never delivered.
+      - pnr: T5BP8D
+        tags:
+          - open
+          - recent
+          - sp-03-26
+        flight: AC9704
+        landed: 2026-09-22
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_26
+        note: A prior case on this booking already carries lost content — the S14 path. | One bag, AHL YVRAC00058 open. 13 days since arrival.
+      - pnr: GT1ROW
+        tags:
+          - 29-days-ago
+          - closed
+          - delivered
+          - outside-21
+          - sp-03-27
+        flight: AC9618
+        landed: 2026-09-06
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_27
+        note: Traced 25 days ago but handed back after that — the later clock wins. | AHL YVRAC00001, closed 25 days ago, bag delivered 2026-10-02.
+      - pnr: OBLCR2
+        tags:
+          - 34-days-ago
+          - closed
+          - outside-21
+          - sp-03-28
+          - two-bags
+        flight: AC9785
+        landed: 2026-09-01
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_28
+        note: Two bags, one file closed 30 days ago and the other 3 days ago. | Two bags under AHL YVRAC00002, closed 3 and 30 days ago. Neither delivered.
+      - pnr: QVAALE
+        tags:
+          - open
+          - two-journeys
+        flight: AC9802
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00000 open.
+      - pnr: D8FFSF
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9445
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00008, delivered to carousel 2026-10-02.
+      - pnr: RLM343
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9761
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00343 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: WNMI8B
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9225
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_4
+        note: Customer disputes the finding — hands off to GenUC-27. | One bag, AHL YVRAC00008 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: GT96W0
+        tags:
+          - no-ahl
+        flight: AC9125
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_5
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: PWUEST
+        tags:
+          - closed
+        flight: AC9596
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_6
+        note: A closed file and nothing open. | AHL YVRAC00000, closed a day ago. Bag never delivered.
+      - pnr: RGPP04
+        tags:
+          - closed
+        flight: AC9444
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_7
+        note: Closed file, and the customer picks reporting. | AHL YVRAC00004, closed a day ago. Bag never delivered.
+      - pnr: AKKV6O
+        tags:
+          - closed
+        flight: AC9419
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_8
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00006, closed a day ago. Bag never delivered.
+      - pnr: FB35ZF
+        tags:
+          - open
+          - two-bags
+        flight: AC9668
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_9
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00035 and YVRAC00036, both open.
+      - pnr: L3WXKM
+        tags:
+          - open
+          - recent
+        flight: AC9579
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_10
+        note: Bag not delivered, and the customer stays undecided. | One bag, AHL YVRAC00003 open. 10 days since arrival.
+      - pnr: LZRF6Z
+        tags:
+          - 29-days-ago
+          - delivered
+          - outside-21
+        flight: AC9580
+        landed: 2026-09-06
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_11
+        note: Bag delivered, interim verdict not eligible. | AHL YVRAC00006, delivered to carousel 2026-09-09.
+      - pnr: SQ81O8
+        tags:
+          - delivered
+        flight: AC9352
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_12
+        note: Interim verdict eligible. | AHL YVRAC00818, delivered to carousel 2026-10-02.
+      - pnr: FUKFYG
+        tags:
+          - delivered
+        flight: AC9560
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_13
+        note: The customer declines the receipt invitation. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: YHHE0F
+        tags:
+          - open
+          - recent
+        flight: AC9767
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_14
+        note: The customer volunteers a delivery date. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: JC6UI5
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9516
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_15
+        note: Still undelivered past the point where the bag counts as lost. | One bag, AHL YVRAC00065 open. 24 days since arrival.
+      - pnr: S491AM
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9832
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_16
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00491 open. 10 days since arrival.
+      - pnr: NP3151
+        tags:
+          - open
+          - recent
+        flight: AC9657
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_17
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC03151 open. 10 days since arrival.
+      - pnr: IX335V
+        tags:
+          - delivered
+        flight: AC9550
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_18
+        note: Receipt readiness is never asked. | AHL YVRAC00335, delivered to carousel 2026-10-02.
+      - pnr: G914GT
+        tags:
+          - delivered
+        flight: AC9300
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_19
+        note: Receipt readiness declined. | AHL YVRAC00914, delivered to carousel 2026-10-02.
+      - pnr: EVP1AL
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9109
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_20
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00001 open. 24 days since arrival.
+  marc-v71:
+    dataset: baggage-sit-int-v71
+    source: marc-tavio-v71-bag-sit-test-bookings.html
+    otp:
+      provider: manual
+      sentTo: Marc-Tavio.Folly@aircanada.ca
+    first: Marc-Tavio
+    last: Folly
+    bookings:
+      - pnr: KDF6PK
+        tags:
+          - open
+          - two-journeys
+        flight: AC9849
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00006 open.
+      - pnr: WSQXVN
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9611
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_2
+        note: Another airline operated it, or Air Canada is not the last carrier. | One bag, AHL YVRAC00000 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: YNR72N
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9606
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_3
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00072 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: Y8RBSW
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9490
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_4
+        note: Outside the 21-day reporting window. | One bag, AHL YVRAC00008 open. 58 days since arrival.
+      - pnr: X6XA1K
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9189
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_5
+        note: Disputed finding on a booking that is also outside the window — GenUC-27. | One bag, AHL YVRAC00061 open. 58 days since arrival.
+      - pnr: F7OBXZ
+        tags:
+          - open
+        flight: AC9282
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_6
+        note: A bag file is open rather than closed — the plain path through the entry checks. | One bag, AHL YVRAC00007 open.
+      - pnr: UVCU0J
+        tags:
+          - no-ahl
+        flight: AC9508
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_7
+        note: No open file to continue from. | One bag, scanned at the station, no AHL raised.
+      - pnr: LY0CVQ
+        tags:
+          - open
+          - two-journeys
+        flight: AC9815
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00000 open.
+      - pnr: X66K6M
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9406
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00666, delivered to carousel 2026-10-02.
+      - pnr: X7SI5S
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9602
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00075 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: XMEZP0
+        tags:
+          - no-ahl
+        flight: AC9600
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_4
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: D9STS5
+        tags:
+          - closed
+        flight: AC9487
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_5
+        note: A closed file and nothing open. | AHL YVRAC00095, closed a day ago. Bag never delivered.
+      - pnr: L084VG
+        tags:
+          - closed
+        flight: AC9180
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_6
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00084, closed a day ago. Bag never delivered.
+      - pnr: S1QCDM
+        tags:
+          - open
+          - two-bags
+        flight: AC9853
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_7
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00001 and YVRAC00002, both open.
+      - pnr: DGQO3R
+        tags:
+          - delivered
+        flight: AC9163
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_8
+        note: The bag has already been delivered. | AHL YVRAC00003, delivered to carousel 2026-10-02.
+      - pnr: EWL9YH
+        tags:
+          - delivered
+        flight: AC9574
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_9
+        note: Customer disputes the finding — hands off to GenUC-27. | AHL YVRAC00009, delivered to carousel 2026-10-02.
+      - pnr: KO53OC
+        tags:
+          - 24-days-ago
+          - delivered
+          - outside-21
+        flight: AC9280
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_10
+        note: Delivered and more than 21 days since the journey. | AHL YVRAC00053, delivered to carousel 2026-09-13.
+      - pnr: YMTV2M
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9888
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_11
+        note: Outside the 51-day submission window. | One bag, AHL YVRAC00002 open. 58 days since arrival.
+      - pnr: VQJ85O
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9137
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_12
+        note: Disputed finding on an out-of-window booking — GenUC-27. | One bag, AHL YVRAC00085 open. 58 days since arrival.
+      - pnr: LJTON7
+        tags:
+          - open
+          - recent
+        flight: AC9708
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_13
+        note: Lost-bag reimbursement comes back not eligible. | One bag, AHL YVRAC00007 open. 10 days since arrival.
+      - pnr: T62H3Z
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9754
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_14
+        note: Interim eligible, and receipt readiness is never asked. | One bag, AHL YVRAC00623 open. 24 days since arrival.
+      - pnr: NPNHVD
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9184
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_15
+        note: Receipt readiness answered no. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: YD4JHL
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9419
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_16
+        note: Receipt readiness declined, then the customer comes back to it. | One bag, AHL YVRAC00004 open. 24 days since arrival.
+      - pnr: EKTQ59
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9201
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_17
+        note: Receipt readiness answered yes. | One bag, AHL YVRAC00059 open. 24 days since arrival.
+      - pnr: CSSQ4O
+        tags:
+          - open
+          - recent
+        flight: AC9886
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_18
+        note: The customer volunteers a delivery date the data does not have. | One bag, AHL YVRAC00004 open. 10 days since arrival.
+      - pnr: HOELDA
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9506
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_19
+        note: Receipts mentioned, interim expenses only. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: FDGGMH
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9292
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_20
+        note: Receipts mentioned for both interim expenses and the lost bag. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: FFOXRF
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9881
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_21
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: DNSS6I
+        tags:
+          - open
+          - recent
+        flight: AC9539
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_22
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00006 open. 10 days since arrival.
+      - pnr: DQ4C1V
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9538
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_23
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00041 open. 24 days since arrival.
+      - pnr: O4MBP1
+        tags:
+          - open
+          - sp-03-24
+          - waiting
+        flight: AC9725
+        landed: 2026-10-02
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_24
+        note: Open file, bag not back, and the flight landed 3 days ago — the six-day hold. | One bag, AHL YVRAC00041 open. | Still inside the 72-hour Air Canada wait — 58 hours since arrival.
+      - pnr: H4V4KV
+        tags:
+          - 36-days-ago
+          - closed
+          - outside-21
+          - sp-03-25
+        flight: AC9690
+        landed: 2026-08-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_25
+        note: The file was closed 30 days ago — both deadlines have passed. | AHL YVRAC00044, closed 30 days ago. Bag never delivered.
+      - pnr: AMHJAM
+        tags:
+          - open
+          - recent
+          - sp-03-26
+        flight: AC9387
+        landed: 2026-09-22
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_26
+        note: A prior case on this booking already carries lost content — the S14 path. | One bag, AHL YVRAC00000 open. 13 days since arrival.
+      - pnr: EN2MO6
+        tags:
+          - 29-days-ago
+          - closed
+          - delivered
+          - outside-21
+          - sp-03-27
+        flight: AC9190
+        landed: 2026-09-06
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_27
+        note: Traced 25 days ago but handed back after that — the later clock wins. | AHL YVRAC00026, closed 25 days ago, bag delivered 2026-10-02.
+      - pnr: CWSX90
+        tags:
+          - 34-days-ago
+          - closed
+          - outside-21
+          - sp-03-28
+          - two-bags
+        flight: AC9767
+        landed: 2026-09-01
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_28
+        note: Two bags, one file closed 30 days ago and the other 3 days ago. | Two bags under AHL YVRAC00090, closed 3 and 30 days ago. Neither delivered.
+      - pnr: EK6MS4
+        tags:
+          - open
+          - two-journeys
+        flight: AC9177
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00064 open.
+      - pnr: H114QI
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9792
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00114, delivered to carousel 2026-10-02.
+      - pnr: BRTCD0
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9164
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00000 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: VH3Q0A
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9547
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_4
+        note: Customer disputes the finding — hands off to GenUC-27. | One bag, AHL YVRAC00030 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: QDPJFM
+        tags:
+          - no-ahl
+        flight: AC9273
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_5
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: W29E60
+        tags:
+          - closed
+        flight: AC9698
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_6
+        note: A closed file and nothing open. | AHL YVRAC02960, closed a day ago. Bag never delivered.
+      - pnr: PBYML5
+        tags:
+          - closed
+        flight: AC9846
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_7
+        note: Closed file, and the customer picks reporting. | AHL YVRAC00005, closed a day ago. Bag never delivered.
+      - pnr: Q95EA0
+        tags:
+          - closed
+        flight: AC9392
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_8
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00950, closed a day ago. Bag never delivered.
+      - pnr: E2UAWQ
+        tags:
+          - open
+          - two-bags
+        flight: AC9843
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_9
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00002 and YVRAC00003, both open.
+      - pnr: C2WL7M
+        tags:
+          - open
+          - recent
+        flight: AC9305
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_10
+        note: Bag not delivered, and the customer stays undecided. | One bag, AHL YVRAC00027 open. 10 days since arrival.
+      - pnr: PIUDFT
+        tags:
+          - 29-days-ago
+          - delivered
+          - outside-21
+        flight: AC9797
+        landed: 2026-09-06
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_11
+        note: Bag delivered, interim verdict not eligible. | AHL YVRAC00000, delivered to carousel 2026-09-09.
+      - pnr: EK7PY5
+        tags:
+          - delivered
+        flight: AC9124
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_12
+        note: Interim verdict eligible. | AHL YVRAC00075, delivered to carousel 2026-10-02.
+      - pnr: BZ11R2
+        tags:
+          - delivered
+        flight: AC9776
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_13
+        note: The customer declines the receipt invitation. | AHL YVRAC00112, delivered to carousel 2026-10-02.
+      - pnr: D8D71M
+        tags:
+          - open
+          - recent
+        flight: AC9535
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_14
+        note: The customer volunteers a delivery date. | One bag, AHL YVRAC00871 open. 10 days since arrival.
+      - pnr: YHQLQ4
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9403
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_15
+        note: Still undelivered past the point where the bag counts as lost. | One bag, AHL YVRAC00004 open. 24 days since arrival.
+      - pnr: VW9WRI
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9341
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_16
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00009 open. 10 days since arrival.
+      - pnr: JJOHBL
+        tags:
+          - open
+          - recent
+        flight: AC9764
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_17
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: TPSBME
+        tags:
+          - delivered
+        flight: AC9772
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_18
+        note: Receipt readiness is never asked. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: VTAL0G
+        tags:
+          - delivered
+        flight: AC9836
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_19
+        note: Receipt readiness declined. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: JCDYDP
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9698
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_20
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+  patricia-v70:
+    dataset: baggage-sit-int-v70
+    source: patricia-v70-bag-sit-test-bookings.html
+    otp:
+      provider: manual
+      sentTo: patricia.legris@aircanada.ca
+    first: Patricia
+    last: Legris
+    bookings:
+      - pnr: OHZ5DM
+        tags:
+          - open
+          - two-journeys
+        flight: AC9550
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00005 open.
+      - pnr: OZL5YK
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9555
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_2
+        note: Another airline operated it, or Air Canada is not the last carrier. | One bag, AHL YVRAC00005 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: KIQBN1
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9825
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_3
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00001 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: GCVKMZ
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9160
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_4
+        note: Outside the 21-day reporting window. | One bag, AHL YVRAC00000 open. 58 days since arrival.
+      - pnr: Z0XAMM
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9344
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_5
+        note: Disputed finding on a booking that is also outside the window — GenUC-27. | One bag, AHL YVRAC00000 open. 58 days since arrival.
+      - pnr: VWK4PA
+        tags:
+          - open
+        flight: AC9705
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_6
+        note: A bag file is open rather than closed — the plain path through the entry checks. | One bag, AHL YVRAC00004 open.
+      - pnr: CTXZHF
+        tags:
+          - no-ahl
+        flight: AC9608
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_7
+        note: No open file to continue from. | One bag, scanned at the station, no AHL raised.
+      - pnr: FDKT5W
+        tags:
+          - open
+          - two-journeys
+        flight: AC9850
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00005 open.
+      - pnr: YRAIYR
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9511
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: KXZ16T
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9414
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00016 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: TG3PN0
+        tags:
+          - no-ahl
+        flight: AC9512
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_4
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: KNC848
+        tags:
+          - closed
+        flight: AC9801
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_5
+        note: A closed file and nothing open. | AHL YVRAC00848, closed a day ago. Bag never delivered.
+      - pnr: UFJOY8
+        tags:
+          - closed
+        flight: AC9697
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_6
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00008, closed a day ago. Bag never delivered.
+      - pnr: PT7P4F
+        tags:
+          - open
+          - two-bags
+        flight: AC9681
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_7
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00074 and YVRAC00075, both open.
+      - pnr: YNBTT5
+        tags:
+          - delivered
+        flight: AC9460
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_8
+        note: The bag has already been delivered. | AHL YVRAC00005, delivered to carousel 2026-10-02.
+      - pnr: FHL0WD
+        tags:
+          - delivered
+        flight: AC9185
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_9
+        note: Customer disputes the finding — hands off to GenUC-27. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: J7TSE5
+        tags:
+          - 24-days-ago
+          - delivered
+          - outside-21
+        flight: AC9214
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_10
+        note: Delivered and more than 21 days since the journey. | AHL YVRAC00075, delivered to carousel 2026-09-13.
+      - pnr: J7BQD7
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9806
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_11
+        note: Outside the 51-day submission window. | One bag, AHL YVRAC00077 open. 58 days since arrival.
+      - pnr: PJDYFR
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9394
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_12
+        note: Disputed finding on an out-of-window booking — GenUC-27. | One bag, AHL YVRAC00000 open. 58 days since arrival.
+      - pnr: C4324A
+        tags:
+          - open
+          - recent
+        flight: AC9723
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_13
+        note: Lost-bag reimbursement comes back not eligible. | One bag, AHL YVRAC04324 open. 10 days since arrival.
+      - pnr: IVG0VH
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9302
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_14
+        note: Interim eligible, and receipt readiness is never asked. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: K6KFB5
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9116
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_15
+        note: Receipt readiness answered no. | One bag, AHL YVRAC00065 open. 24 days since arrival.
+      - pnr: YMM7OE
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9101
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_16
+        note: Receipt readiness declined, then the customer comes back to it. | One bag, AHL YVRAC00007 open. 24 days since arrival.
+      - pnr: ZODNS6
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9279
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_17
+        note: Receipt readiness answered yes. | One bag, AHL YVRAC00006 open. 24 days since arrival.
+      - pnr: IT6XGU
+        tags:
+          - open
+          - recent
+        flight: AC9230
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_18
+        note: The customer volunteers a delivery date the data does not have. | One bag, AHL YVRAC00006 open. 10 days since arrival.
+      - pnr: K1P8YD
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9579
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_19
+        note: Receipts mentioned, interim expenses only. | One bag, AHL YVRAC00018 open. 24 days since arrival.
+      - pnr: FAOZCF
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9157
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_20
+        note: Receipts mentioned for both interim expenses and the lost bag. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: KNIK9Z
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9650
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_21
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00009 open. 10 days since arrival.
+      - pnr: BFDVTD
+        tags:
+          - open
+          - recent
+        flight: AC9328
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_22
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: DS592C
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9694
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_23
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00592 open. 24 days since arrival.
+      - pnr: AO6RRE
+        tags:
+          - open
+          - sp-03-24
+          - waiting
+        flight: AC9454
+        landed: 2026-10-02
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_24
+        note: Open file, bag not back, and the flight landed 3 days ago — the six-day hold. | One bag, AHL YVRAC00006 open. | Still inside the 72-hour Air Canada wait — 57 hours since arrival.
+      - pnr: ATAX6B
+        tags:
+          - 36-days-ago
+          - closed
+          - outside-21
+          - sp-03-25
+        flight: AC9594
+        landed: 2026-08-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_25
+        note: The file was closed 30 days ago — both deadlines have passed. | AHL YVRAC00006, closed 30 days ago. Bag never delivered.
+      - pnr: P509HW
+        tags:
+          - open
+          - recent
+          - sp-03-26
+        flight: AC9802
+        landed: 2026-09-22
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_26
+        note: A prior case on this booking already carries lost content — the S14 path. | One bag, AHL YVRAC00509 open. 13 days since arrival.
+      - pnr: Q8I5FX
+        tags:
+          - 29-days-ago
+          - closed
+          - delivered
+          - outside-21
+          - sp-03-27
+        flight: AC9777
+        landed: 2026-09-06
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_27
+        note: Traced 25 days ago but handed back after that — the later clock wins. | AHL YVRAC00085, closed 25 days ago, bag delivered 2026-10-02.
+      - pnr: RCH5JU
+        tags:
+          - 34-days-ago
+          - closed
+          - outside-21
+          - sp-03-28
+          - two-bags
+        flight: AC9735
+        landed: 2026-09-01
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_28
+        note: Two bags, one file closed 30 days ago and the other 3 days ago. | Two bags under AHL YVRAC00005, closed 3 and 30 days ago. Neither delivered.
+      - pnr: M7YPWF
+        tags:
+          - open
+          - two-journeys
+        flight: AC9310
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00007 open.
+      - pnr: ZFDOXF
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9707
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: FDCLOL
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9669
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00000 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: WA5CMM
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9765
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_4
+        note: Customer disputes the finding — hands off to GenUC-27. | One bag, AHL YVRAC00005 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: TG7JT4
+        tags:
+          - no-ahl
+        flight: AC9415
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_5
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: F6P1JK
+        tags:
+          - closed
+        flight: AC9692
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_6
+        note: A closed file and nothing open. | AHL YVRAC00061, closed a day ago. Bag never delivered.
+      - pnr: C58TE8
+        tags:
+          - closed
+        flight: AC9204
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_7
+        note: Closed file, and the customer picks reporting. | AHL YVRAC00588, closed a day ago. Bag never delivered.
+      - pnr: HPQ1T8
+        tags:
+          - closed
+        flight: AC9279
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_8
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00018, closed a day ago. Bag never delivered.
+      - pnr: LQLFOW
+        tags:
+          - open
+          - two-bags
+        flight: AC9733
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_9
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00000 and YVRAC00001, both open.
+      - pnr: G6903B
+        tags:
+          - open
+          - recent
+        flight: AC9584
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_10
+        note: Bag not delivered, and the customer stays undecided. | One bag, AHL YVRAC06903 open. 10 days since arrival.
+      - pnr: T4H44F
+        tags:
+          - 29-days-ago
+          - delivered
+          - outside-21
+        flight: AC9597
+        landed: 2026-09-06
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_11
+        note: Bag delivered, interim verdict not eligible. | AHL YVRAC00444, delivered to carousel 2026-09-09.
+      - pnr: OLSGBS
+        tags:
+          - delivered
+        flight: AC9677
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_12
+        note: Interim verdict eligible. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: NZCAYE
+        tags:
+          - delivered
+        flight: AC9712
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_13
+        note: The customer declines the receipt invitation. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: DO8V0M
+        tags:
+          - open
+          - recent
+        flight: AC9591
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_14
+        note: The customer volunteers a delivery date. | One bag, AHL YVRAC00080 open. 10 days since arrival.
+      - pnr: Y2NLCY
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9441
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_15
+        note: Still undelivered past the point where the bag counts as lost. | One bag, AHL YVRAC00002 open. 24 days since arrival.
+      - pnr: CF4PFE
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9532
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_16
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00004 open. 10 days since arrival.
+      - pnr: KI46A1
+        tags:
+          - open
+          - recent
+        flight: AC9218
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_17
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00461 open. 10 days since arrival.
+      - pnr: XI47XY
+        tags:
+          - delivered
+        flight: AC9820
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_18
+        note: Receipt readiness is never asked. | AHL YVRAC00047, delivered to carousel 2026-10-02.
+      - pnr: LPWOIC
+        tags:
+          - delivered
+        flight: AC9264
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_19
+        note: Receipt readiness declined. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: LL5IPQ
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9152
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_20
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00005 open. 24 days since arrival.
+  shankave-v69:
+    dataset: baggage-sit-int-v69
+    source: shankave-v69-bag-sit-test-bookings.html
+    otp:
+      provider: manual
+      sentTo: Shankave.Tharmapala@aircanada.ca
+    first: Shankave
+    last: Tharmapala
+    bookings:
+      - pnr: E7G3ZP
+        tags:
+          - open
+          - two-journeys
+        flight: AC9486
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00073 open.
+      - pnr: I7J32V
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9364
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_2
+        note: Another airline operated it, or Air Canada is not the last carrier. | One bag, AHL YVRAC00732 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: Q8SYTZ
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9582
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_3
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00008 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: KLXMLH
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9176
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_4
+        note: Outside the 21-day reporting window. | One bag, AHL YVRAC00000 open. 58 days since arrival.
+      - pnr: AXG0C4
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9854
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_5
+        note: Disputed finding on a booking that is also outside the window — GenUC-27. | One bag, AHL YVRAC00004 open. 58 days since arrival.
+      - pnr: YIR7C4
+        tags:
+          - open
+        flight: AC9403
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_6
+        note: A bag file is open rather than closed — the plain path through the entry checks. | One bag, AHL YVRAC00074 open.
+      - pnr: CF32U4
+        tags:
+          - no-ahl
+        flight: AC9786
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_7
+        note: No open file to continue from. | One bag, scanned at the station, no AHL raised.
+      - pnr: RIHNRS
+        tags:
+          - open
+          - two-journeys
+        flight: AC9884
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00000 open.
+      - pnr: O0PRMV
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9799
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: LS065C
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9390
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00065 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: PMTYVJ
+        tags:
+          - no-ahl
+        flight: AC9551
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_4
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: MER3JF
+        tags:
+          - closed
+        flight: AC9682
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_5
+        note: A closed file and nothing open. | AHL YVRAC00003, closed a day ago. Bag never delivered.
+      - pnr: HTG7Z7
+        tags:
+          - closed
+        flight: AC9341
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_6
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00077, closed a day ago. Bag never delivered.
+      - pnr: VAMP6L
+        tags:
+          - open
+          - two-bags
+        flight: AC9102
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_7
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00006 and YVRAC00007, both open.
+      - pnr: Z3UOA3
+        tags:
+          - delivered
+        flight: AC9355
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_8
+        note: The bag has already been delivered. | AHL YVRAC00033, delivered to carousel 2026-10-02.
+      - pnr: N6Q5GH
+        tags:
+          - delivered
+        flight: AC9125
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_9
+        note: Customer disputes the finding — hands off to GenUC-27. | AHL YVRAC00065, delivered to carousel 2026-10-02.
+      - pnr: LWLKX1
+        tags:
+          - 24-days-ago
+          - delivered
+          - outside-21
+        flight: AC9447
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_10
+        note: Delivered and more than 21 days since the journey. | AHL YVRAC00001, delivered to carousel 2026-09-13.
+      - pnr: S22X9L
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9333
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_11
+        note: Outside the 51-day submission window. | One bag, AHL YVRAC00229 open. 58 days since arrival.
+      - pnr: XECZCM
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9713
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_12
+        note: Disputed finding on an out-of-window booking — GenUC-27. | One bag, AHL YVRAC00000 open. 58 days since arrival.
+      - pnr: S63MP7
+        tags:
+          - open
+          - recent
+        flight: AC9346
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_13
+        note: Lost-bag reimbursement comes back not eligible. | One bag, AHL YVRAC00637 open. 10 days since arrival.
+      - pnr: PSCL1W
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9287
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_14
+        note: Interim eligible, and receipt readiness is never asked. | One bag, AHL YVRAC00001 open. 24 days since arrival.
+      - pnr: CEMVDG
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9795
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_15
+        note: Receipt readiness answered no. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: NFZZLI
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9360
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_16
+        note: Receipt readiness declined, then the customer comes back to it. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: JWZZF1
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9791
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_17
+        note: Receipt readiness answered yes. | One bag, AHL YVRAC00001 open. 24 days since arrival.
+      - pnr: J1NRL1
+        tags:
+          - open
+          - recent
+        flight: AC9487
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_18
+        note: The customer volunteers a delivery date the data does not have. | One bag, AHL YVRAC00011 open. 10 days since arrival.
+      - pnr: AD9GGZ
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9503
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_19
+        note: Receipts mentioned, interim expenses only. | One bag, AHL YVRAC00009 open. 24 days since arrival.
+      - pnr: O7JNJP
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9657
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_20
+        note: Receipts mentioned for both interim expenses and the lost bag. | One bag, AHL YVRAC00007 open. 24 days since arrival.
+      - pnr: C18YJ1
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9578
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_21
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00181 open. 10 days since arrival.
+      - pnr: Q37AG5
+        tags:
+          - open
+          - recent
+        flight: AC9698
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_22
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00375 open. 10 days since arrival.
+      - pnr: NMQU4R
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9226
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_23
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00004 open. 24 days since arrival.
+      - pnr: YPRI4O
+        tags:
+          - open
+          - sp-03-24
+          - waiting
+        flight: AC9418
+        landed: 2026-10-02
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_24
+        note: Open file, bag not back, and the flight landed 3 days ago — the six-day hold. | One bag, AHL YVRAC00004 open. | Still inside the 72-hour Air Canada wait — 57 hours since arrival.
+      - pnr: XTZ1OB
+        tags:
+          - 36-days-ago
+          - closed
+          - outside-21
+          - sp-03-25
+        flight: AC9767
+        landed: 2026-08-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_25
+        note: The file was closed 30 days ago — both deadlines have passed. | AHL YVRAC00001, closed 30 days ago. Bag never delivered.
+      - pnr: U8UJ49
+        tags:
+          - open
+          - recent
+          - sp-03-26
+        flight: AC9253
+        landed: 2026-09-22
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_26
+        note: A prior case on this booking already carries lost content — the S14 path. | One bag, AHL YVRAC00849 open. 13 days since arrival.
+      - pnr: IKFYBD
+        tags:
+          - 29-days-ago
+          - closed
+          - delivered
+          - outside-21
+          - sp-03-27
+        flight: AC9793
+        landed: 2026-09-06
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_27
+        note: Traced 25 days ago but handed back after that — the later clock wins. | AHL YVRAC00000, closed 25 days ago, bag delivered 2026-10-02.
+      - pnr: HK8GWR
+        tags:
+          - 34-days-ago
+          - closed
+          - outside-21
+          - sp-03-28
+          - two-bags
+        flight: AC9308
+        landed: 2026-09-01
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_28
+        note: Two bags, one file closed 30 days ago and the other 3 days ago. | Two bags under AHL YVRAC00008, closed 3 and 30 days ago. Neither delivered.
+      - pnr: SMW70K
+        tags:
+          - open
+          - two-journeys
+        flight: AC9262
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00070 open.
+      - pnr: QJLVI4
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9387
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00004, delivered to carousel 2026-10-02.
+      - pnr: ASBY7O
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9270
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00007 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: G2EU7A
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9368
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_4
+        note: Customer disputes the finding — hands off to GenUC-27. | One bag, AHL YVRAC00027 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: T9QFV2
+        tags:
+          - no-ahl
+        flight: AC9210
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_5
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: R8JXTA
+        tags:
+          - closed
+        flight: AC9136
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_6
+        note: A closed file and nothing open. | AHL YVRAC00008, closed a day ago. Bag never delivered.
+      - pnr: AIJVF3
+        tags:
+          - closed
+        flight: AC9133
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_7
+        note: Closed file, and the customer picks reporting. | AHL YVRAC00003, closed a day ago. Bag never delivered.
+      - pnr: DNBV49
+        tags:
+          - closed
+        flight: AC9509
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_8
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00049, closed a day ago. Bag never delivered.
+      - pnr: J8QT8P
+        tags:
+          - open
+          - two-bags
+        flight: AC9500
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_9
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00088 and YVRAC00089, both open.
+      - pnr: TWCQLH
+        tags:
+          - open
+          - recent
+        flight: AC9784
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_10
+        note: Bag not delivered, and the customer stays undecided. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: F8XTPM
+        tags:
+          - 29-days-ago
+          - delivered
+          - outside-21
+        flight: AC9324
+        landed: 2026-09-06
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_11
+        note: Bag delivered, interim verdict not eligible. | AHL YVRAC00008, delivered to carousel 2026-09-09.
+      - pnr: ZRX5ZA
+        tags:
+          - delivered
+        flight: AC9257
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_12
+        note: Interim verdict eligible. | AHL YVRAC00005, delivered to carousel 2026-10-02.
+      - pnr: KQB7DE
+        tags:
+          - delivered
+        flight: AC9633
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_13
+        note: The customer declines the receipt invitation. | AHL YVRAC00007, delivered to carousel 2026-10-02.
+      - pnr: HIXQI5
+        tags:
+          - open
+          - recent
+        flight: AC9204
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_14
+        note: The customer volunteers a delivery date. | One bag, AHL YVRAC00005 open. 10 days since arrival.
+      - pnr: VEA7FF
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9695
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_15
+        note: Still undelivered past the point where the bag counts as lost. | One bag, AHL YVRAC00007 open. 24 days since arrival.
+      - pnr: DYIM8B
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9232
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_16
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00008 open. 10 days since arrival.
+      - pnr: YXH62B
+        tags:
+          - open
+          - recent
+        flight: AC9266
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_17
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00062 open. 10 days since arrival.
+      - pnr: U7T1SD
+        tags:
+          - delivered
+        flight: AC9129
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_18
+        note: Receipt readiness is never asked. | AHL YVRAC00071, delivered to carousel 2026-10-02.
+      - pnr: GQ3KB3
+        tags:
+          - delivered
+        flight: AC9544
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_19
+        note: Receipt readiness declined. | AHL YVRAC00033, delivered to carousel 2026-10-02.
+      - pnr: ZJO2NO
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9270
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_20
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00002 open. 24 days since arrival.
+  toula-v72:
+    dataset: baggage-sit-int-v72
+    source: toula-v72-bag-sit-test-bookings.html
+    otp:
+      provider: manual
+      sentTo: toula.voulgaris@aircanada.ca
+    first: Toula
+    last: Voulgaris
+    bookings:
+      - pnr: V7LCFZ
+        tags:
+          - open
+          - two-journeys
+        flight: AC9657
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00007 open.
+      - pnr: E2G6I2
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9421
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_2
+        note: Another airline operated it, or Air Canada is not the last carrier. | One bag, AHL YVRAC00262 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: OO76HS
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9156
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_3
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00076 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: UDBIAX
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9326
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_4
+        note: Outside the 21-day reporting window. | One bag, AHL YVRAC00000 open. 58 days since arrival.
+      - pnr: UYXZL3
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9510
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_5
+        note: Disputed finding on a booking that is also outside the window — GenUC-27. | One bag, AHL YVRAC00003 open. 58 days since arrival.
+      - pnr: WESDIF
+        tags:
+          - open
+        flight: AC9411
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_6
+        note: A bag file is open rather than closed — the plain path through the entry checks. | One bag, AHL YVRAC00000 open.
+      - pnr: UB94J7
+        tags:
+          - no-ahl
+        flight: AC9286
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_7
+        note: No open file to continue from. | One bag, scanned at the station, no AHL raised.
+      - pnr: W38YFA
+        tags:
+          - open
+          - two-journeys
+        flight: AC9454
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00038 open.
+      - pnr: GF5M6N
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9365
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00056, delivered to carousel 2026-10-02.
+      - pnr: U4BCNM
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9297
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00004 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: MS75AC
+        tags:
+          - no-ahl
+        flight: AC9695
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_4
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: GCIHNK
+        tags:
+          - closed
+        flight: AC9700
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_5
+        note: A closed file and nothing open. | AHL YVRAC00000, closed a day ago. Bag never delivered.
+      - pnr: S0J9Y8
+        tags:
+          - closed
+        flight: AC9894
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_6
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00098, closed a day ago. Bag never delivered.
+      - pnr: DHAZ26
+        tags:
+          - open
+          - two-bags
+        flight: AC9625
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_7
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00026 and YVRAC00027, both open.
+      - pnr: K0WX16
+        tags:
+          - delivered
+        flight: AC9349
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_8
+        note: The bag has already been delivered. | AHL YVRAC00016, delivered to carousel 2026-10-02.
+      - pnr: EOAUHI
+        tags:
+          - delivered
+        flight: AC9182
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_9
+        note: Customer disputes the finding — hands off to GenUC-27. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: GSBPQE
+        tags:
+          - 24-days-ago
+          - delivered
+          - outside-21
+        flight: AC9341
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_10
+        note: Delivered and more than 21 days since the journey. | AHL YVRAC00000, delivered to carousel 2026-09-13.
+      - pnr: AZ2YAM
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9534
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_11
+        note: Outside the 51-day submission window. | One bag, AHL YVRAC00002 open. 58 days since arrival.
+      - pnr: UB2DHW
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9477
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_12
+        note: Disputed finding on an out-of-window booking — GenUC-27. | One bag, AHL YVRAC00002 open. 58 days since arrival.
+      - pnr: GH87Q8
+        tags:
+          - open
+          - recent
+        flight: AC9463
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_13
+        note: Lost-bag reimbursement comes back not eligible. | One bag, AHL YVRAC00878 open. 10 days since arrival.
+      - pnr: H66B6Y
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9639
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_14
+        note: Interim eligible, and receipt readiness is never asked. | One bag, AHL YVRAC00666 open. 24 days since arrival.
+      - pnr: WQXUII
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9489
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_15
+        note: Receipt readiness answered no. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: PKU1QU
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9294
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_16
+        note: Receipt readiness declined, then the customer comes back to it. | One bag, AHL YVRAC00001 open. 24 days since arrival.
+      - pnr: NFKEOT
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9866
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_17
+        note: Receipt readiness answered yes. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: OKLC0Q
+        tags:
+          - open
+          - recent
+        flight: AC9444
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_18
+        note: The customer volunteers a delivery date the data does not have. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: JCNC9P
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9620
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_19
+        note: Receipts mentioned, interim expenses only. | One bag, AHL YVRAC00009 open. 24 days since arrival.
+      - pnr: CLNQ7F
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9699
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_20
+        note: Receipts mentioned for both interim expenses and the lost bag. | One bag, AHL YVRAC00007 open. 24 days since arrival.
+      - pnr: J8YHXB
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9270
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_21
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00008 open. 10 days since arrival.
+      - pnr: GLTXHO
+        tags:
+          - open
+          - recent
+        flight: AC9700
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_22
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: HKGZGO
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9357
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_23
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: A2LDXE
+        tags:
+          - open
+          - sp-03-24
+          - waiting
+        flight: AC9368
+        landed: 2026-10-02
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_24
+        note: Open file, bag not back, and the flight landed 3 days ago — the six-day hold. | One bag, AHL YVRAC00002 open. | Still inside the 72-hour Air Canada wait — 58 hours since arrival.
+      - pnr: PYLHPU
+        tags:
+          - 36-days-ago
+          - closed
+          - outside-21
+          - sp-03-25
+        flight: AC9333
+        landed: 2026-08-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_25
+        note: The file was closed 30 days ago — both deadlines have passed. | AHL YVRAC00000, closed 30 days ago. Bag never delivered.
+      - pnr: ZQIYT8
+        tags:
+          - open
+          - recent
+          - sp-03-26
+        flight: AC9363
+        landed: 2026-09-22
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_26
+        note: A prior case on this booking already carries lost content — the S14 path. | One bag, AHL YVRAC00008 open. 13 days since arrival.
+      - pnr: OPQN7T
+        tags:
+          - 29-days-ago
+          - closed
+          - delivered
+          - outside-21
+          - sp-03-27
+        flight: AC9507
+        landed: 2026-09-06
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_27
+        note: Traced 25 days ago but handed back after that — the later clock wins. | AHL YVRAC00007, closed 25 days ago, bag delivered 2026-10-02.
+      - pnr: HF34QP
+        tags:
+          - 34-days-ago
+          - closed
+          - outside-21
+          - sp-03-28
+          - two-bags
+        flight: AC9370
+        landed: 2026-09-01
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_28
+        note: Two bags, one file closed 30 days ago and the other 3 days ago. | Two bags under AHL YVRAC00034, closed 3 and 30 days ago. Neither delivered.
+      - pnr: SCWNBB
+        tags:
+          - open
+          - two-journeys
+        flight: AC9769
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00000 open.
+      - pnr: X7JQYZ
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9323
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00007, delivered to carousel 2026-10-02.
+      - pnr: LMQZXY
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9569
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00000 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: LX72RS
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9590
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_4
+        note: Customer disputes the finding — hands off to GenUC-27. | One bag, AHL YVRAC00072 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: F3F8VQ
+        tags:
+          - no-ahl
+        flight: AC9383
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_5
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: D62FSE
+        tags:
+          - closed
+        flight: AC9496
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_6
+        note: A closed file and nothing open. | AHL YVRAC00062, closed a day ago. Bag never delivered.
+      - pnr: UT6WDF
+        tags:
+          - closed
+        flight: AC9281
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_7
+        note: Closed file, and the customer picks reporting. | AHL YVRAC00006, closed a day ago. Bag never delivered.
+      - pnr: FZWXIE
+        tags:
+          - closed
+        flight: AC9140
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_8
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00000, closed a day ago. Bag never delivered.
+      - pnr: DUAB40
+        tags:
+          - open
+          - two-bags
+        flight: AC9181
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_9
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00040 and YVRAC00041, both open.
+      - pnr: SJ5UJW
+        tags:
+          - open
+          - recent
+        flight: AC9126
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_10
+        note: Bag not delivered, and the customer stays undecided. | One bag, AHL YVRAC00005 open. 10 days since arrival.
+      - pnr: JPAU7C
+        tags:
+          - 29-days-ago
+          - delivered
+          - outside-21
+        flight: AC9460
+        landed: 2026-09-06
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_11
+        note: Bag delivered, interim verdict not eligible. | AHL YVRAC00007, delivered to carousel 2026-09-09.
+      - pnr: V06S0Y
+        tags:
+          - delivered
+        flight: AC9847
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_12
+        note: Interim verdict eligible. | AHL YVRAC00060, delivered to carousel 2026-10-02.
+      - pnr: Y74F0X
+        tags:
+          - delivered
+        flight: AC9531
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_13
+        note: The customer declines the receipt invitation. | AHL YVRAC00740, delivered to carousel 2026-10-02.
+      - pnr: KU0WMU
+        tags:
+          - open
+          - recent
+        flight: AC9143
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_14
+        note: The customer volunteers a delivery date. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: UR5WW0
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9247
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_15
+        note: Still undelivered past the point where the bag counts as lost. | One bag, AHL YVRAC00050 open. 24 days since arrival.
+      - pnr: XH0N2W
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9114
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_16
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00002 open. 10 days since arrival.
+      - pnr: BB7QGU
+        tags:
+          - open
+          - recent
+        flight: AC9258
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_17
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00007 open. 10 days since arrival.
+      - pnr: N39EHX
+        tags:
+          - delivered
+        flight: AC9212
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_18
+        note: Receipt readiness is never asked. | AHL YVRAC00039, delivered to carousel 2026-10-02.
+      - pnr: IHMNMR
+        tags:
+          - delivered
+        flight: AC9525
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_19
+        note: Receipt readiness declined. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: WS9B2R
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9486
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_20
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00092 open. 24 days since arrival.
+  valerie-v67:
+    dataset: baggage-sit-int-v67
+    source: valerie-v67-bag-sit-test-bookings.html
+    otp:
+      provider: manual
+      sentTo: valerie.kalanian@aircanada.ca
+    first: Valerie
+    last: Kalanian
+    bookings:
+      - pnr: CFZCWE
+        tags:
+          - open
+          - two-journeys
+        flight: AC9565
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00000 open.
+      - pnr: M720Y6
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9303
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_2
+        note: Another airline operated it, or Air Canada is not the last carrier. | One bag, AHL YVRAC07206 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: I93LC7
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9832
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_3
+        note: Customer disputes what the assistant found — hands off to GenUC-27. | One bag, AHL YVRAC00937 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: E0Z2BC
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9693
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_4
+        note: Outside the 21-day reporting window. | One bag, AHL YVRAC00002 open. 58 days since arrival.
+      - pnr: G2NZV9
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9586
+        landed: 2026-08-08
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_5
+        note: Disputed finding on a booking that is also outside the window — GenUC-27. | One bag, AHL YVRAC00029 open. 58 days since arrival.
+      - pnr: LOX8D7
+        tags:
+          - open
+        flight: AC9106
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_6
+        note: A bag file is open rather than closed — the plain path through the entry checks. | One bag, AHL YVRAC00087 open.
+      - pnr: DYOV1D
+        tags:
+          - no-ahl
+        flight: AC9359
+        landed: 2026-09-30
+        card: BAG-02
+        caseId: BAG_SIT_SD_02_7
+        note: No open file to continue from. | One bag, scanned at the station, no AHL raised.
+      - pnr: WGL2PT
+        tags:
+          - open
+          - two-journeys
+        flight: AC9443
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00002 open.
+      - pnr: NIZLPT
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9226
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: GSEERW
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9389
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00000 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: FLT5NP
+        tags:
+          - no-ahl
+        flight: AC9717
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_4
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: I8HFIA
+        tags:
+          - closed
+        flight: AC9108
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_5
+        note: A closed file and nothing open. | AHL YVRAC00008, closed a day ago. Bag never delivered.
+      - pnr: TG1Z14
+        tags:
+          - closed
+        flight: AC9290
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_6
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00114, closed a day ago. Bag never delivered.
+      - pnr: ZUIWK2
+        tags:
+          - open
+          - two-bags
+        flight: AC9687
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_7
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00002 and YVRAC00003, both open.
+      - pnr: DRLTJS
+        tags:
+          - delivered
+        flight: AC9206
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_8
+        note: The bag has already been delivered. | AHL YVRAC00000, delivered to carousel 2026-10-02.
+      - pnr: XZX6L5
+        tags:
+          - delivered
+        flight: AC9727
+        landed: 2026-09-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_9
+        note: Customer disputes the finding — hands off to GenUC-27. | AHL YVRAC00065, delivered to carousel 2026-10-02.
+      - pnr: JND63T
+        tags:
+          - 24-days-ago
+          - delivered
+          - outside-21
+        flight: AC9728
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_10
+        note: Delivered and more than 21 days since the journey. | AHL YVRAC00063, delivered to carousel 2026-09-13.
+      - pnr: HFZ7J1
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9873
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_11
+        note: Outside the 51-day submission window. | One bag, AHL YVRAC00071 open. 58 days since arrival.
+      - pnr: LU8SLU
+        tags:
+          - 58-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9470
+        landed: 2026-08-08
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_12
+        note: Disputed finding on an out-of-window booking — GenUC-27. | One bag, AHL YVRAC00008 open. 58 days since arrival.
+      - pnr: RYKVAR
+        tags:
+          - open
+          - recent
+        flight: AC9342
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_13
+        note: Lost-bag reimbursement comes back not eligible. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: HZ82V0
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9719
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_14
+        note: Interim eligible, and receipt readiness is never asked. | One bag, AHL YVRAC00820 open. 24 days since arrival.
+      - pnr: IY7LDB
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9603
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_15
+        note: Receipt readiness answered no. | One bag, AHL YVRAC00007 open. 24 days since arrival.
+      - pnr: EPEM7K
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9415
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_16
+        note: Receipt readiness declined, then the customer comes back to it. | One bag, AHL YVRAC00007 open. 24 days since arrival.
+      - pnr: P58A7F
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9498
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_17
+        note: Receipt readiness answered yes. | One bag, AHL YVRAC00587 open. 24 days since arrival.
+      - pnr: OZGMZ1
+        tags:
+          - open
+          - recent
+        flight: AC9106
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_18
+        note: The customer volunteers a delivery date the data does not have. | One bag, AHL YVRAC00001 open. 10 days since arrival.
+      - pnr: F52RUR
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9308
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_19
+        note: Receipts mentioned, interim expenses only. | One bag, AHL YVRAC00052 open. 24 days since arrival.
+      - pnr: C8UNE2
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9423
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_20
+        note: Receipts mentioned for both interim expenses and the lost bag. | One bag, AHL YVRAC00082 open. 24 days since arrival.
+      - pnr: RUWDD3
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9636
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_21
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00003 open. 10 days since arrival.
+      - pnr: H52QKZ
+        tags:
+          - open
+          - recent
+        flight: AC9206
+        landed: 2026-09-25
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_22
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00052 open. 10 days since arrival.
+      - pnr: HMTMBW
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9406
+        landed: 2026-09-11
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_23
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00000 open. 24 days since arrival.
+      - pnr: WM6FZN
+        tags:
+          - open
+          - sp-03-24
+          - waiting
+        flight: AC9188
+        landed: 2026-10-02
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_24
+        note: Open file, bag not back, and the flight landed 3 days ago — the six-day hold. | One bag, AHL YVRAC00006 open. | Still inside the 72-hour Air Canada wait — 56 hours since arrival.
+      - pnr: Y33HF2
+        tags:
+          - 36-days-ago
+          - closed
+          - outside-21
+          - sp-03-25
+        flight: AC9475
+        landed: 2026-08-30
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_25
+        note: The file was closed 30 days ago — both deadlines have passed. | AHL YVRAC00332, closed 30 days ago. Bag never delivered.
+      - pnr: RUDX0M
+        tags:
+          - open
+          - recent
+          - sp-03-26
+        flight: AC9376
+        landed: 2026-09-22
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_26
+        note: A prior case on this booking already carries lost content — the S14 path. | One bag, AHL YVRAC00000 open. 13 days since arrival.
+      - pnr: GA7U6R
+        tags:
+          - 29-days-ago
+          - closed
+          - delivered
+          - outside-21
+          - sp-03-27
+        flight: AC9790
+        landed: 2026-09-06
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_27
+        note: Traced 25 days ago but handed back after that — the later clock wins. | AHL YVRAC00076, closed 25 days ago, bag delivered 2026-10-02.
+      - pnr: KEQ3ZD
+        tags:
+          - 34-days-ago
+          - closed
+          - outside-21
+          - sp-03-28
+          - two-bags
+        flight: AC9348
+        landed: 2026-09-01
+        card: BAG-03
+        caseId: BAG_SIT_SD_03_28
+        note: Two bags, one file closed 30 days ago and the other 3 days ago. | Two bags under AHL YVRAC00003, closed 3 and 30 days ago. Neither delivered.
+      - pnr: SV1J2I
+        tags:
+          - open
+          - two-journeys
+        flight: AC9349
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_1
+        note: More than one bound on the booking. | One bag, AHL YVRAC00012 open.
+      - pnr: SHC54Z
+        tags:
+          - delivered
+          - duplicate
+        flight: AC9751
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_2
+        note: A case already exists for this bound — duplicate. | AHL YVRAC00054, delivered to carousel 2026-10-02.
+      - pnr: I4NTCA
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9709
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_3
+        note: Air Canada is not the last carrier. | One bag, AHL YVRAC00004 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: D8X0UD
+        tags:
+          - open
+          - partner
+          - waiting
+          - westjet
+        flight: WS9882
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_4
+        note: Customer disputes the finding — hands off to GenUC-27. | One bag, AHL YVRAC00080 open. isLastCarrierAC = false. | Still inside the 168-hour partner wait.
+      - pnr: U24AB7
+        tags:
+          - no-ahl
+        flight: AC9730
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_5
+        note: No AHL on the booking. | One bag, scanned at the station, no AHL raised.
+      - pnr: HIDBDW
+        tags:
+          - closed
+        flight: AC9779
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_6
+        note: A closed file and nothing open. | AHL YVRAC00000, closed a day ago. Bag never delivered.
+      - pnr: GTIV6F
+        tags:
+          - closed
+        flight: AC9187
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_7
+        note: Closed file, and the customer picks reporting. | AHL YVRAC00006, closed a day ago. Bag never delivered.
+      - pnr: VDHUEC
+        tags:
+          - closed
+        flight: AC9828
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_8
+        note: Closed file, and the customer picks tracking. | AHL YVRAC00000, closed a day ago. Bag never delivered.
+      - pnr: BGTVNN
+        tags:
+          - open
+          - two-bags
+        flight: AC9548
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_9
+        note: Two open files — the assistant has to ask which bag. | Two bags, AHL YVRAC00000 and YVRAC00001, both open.
+      - pnr: ONTXDM
+        tags:
+          - open
+          - recent
+        flight: AC9722
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_10
+        note: Bag not delivered, and the customer stays undecided. | One bag, AHL YVRAC00000 open. 10 days since arrival.
+      - pnr: E9Y376
+        tags:
+          - 29-days-ago
+          - delivered
+          - outside-21
+        flight: AC9135
+        landed: 2026-09-06
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_11
+        note: Bag delivered, interim verdict not eligible. | AHL YVRAC09376, delivered to carousel 2026-09-09.
+      - pnr: Q6NOND
+        tags:
+          - delivered
+        flight: AC9546
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_12
+        note: Interim verdict eligible. | AHL YVRAC00006, delivered to carousel 2026-10-02.
+      - pnr: YL95UN
+        tags:
+          - delivered
+        flight: AC9425
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_13
+        note: The customer declines the receipt invitation. | AHL YVRAC00095, delivered to carousel 2026-10-02.
+      - pnr: A765XY
+        tags:
+          - open
+          - recent
+        flight: AC9318
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_14
+        note: The customer volunteers a delivery date. | One bag, AHL YVRAC00765 open. 10 days since arrival.
+      - pnr: Z615XZ
+        tags:
+          - 24-days-ago
+          - lost
+          - open
+          - outside-21
+        flight: AC9745
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_15
+        note: Still undelivered past the point where the bag counts as lost. | One bag, AHL YVRAC00615 open. 24 days since arrival.
+      - pnr: JGL4EE
+        tags:
+          - add-02
+          - open
+          - recent
+        flight: AC9525
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_16
+        note: Delivery is not confirmed — the ADD-02 follow-up. | One bag, AHL YVRAC00004 open. 10 days since arrival.
+      - pnr: DO5CJW
+        tags:
+          - open
+          - recent
+        flight: AC9570
+        landed: 2026-09-25
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_17
+        note: The delivery question is left unanswered. | One bag, AHL YVRAC00005 open. 10 days since arrival.
+      - pnr: S57ML3
+        tags:
+          - delivered
+        flight: AC9476
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_18
+        note: Receipt readiness is never asked. | AHL YVRAC00573, delivered to carousel 2026-10-02.
+      - pnr: IQP5C3
+        tags:
+          - delivered
+        flight: AC9232
+        landed: 2026-09-30
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_19
+        note: Receipt readiness declined. | AHL YVRAC00053, delivered to carousel 2026-10-02.
+      - pnr: OBZQMN
+        tags:
+          - 24-days-ago
+          - cap-spent
+          - lost
+          - open
+          - outside-21
+        flight: AC9807
+        landed: 2026-09-11
+        card: BAG-05
+        caseId: BAG_SIT_SD_05_20
+        note: The treaty cap has already been spent. | One bag, AHL YVRAC00000 open. 24 days since arrival.

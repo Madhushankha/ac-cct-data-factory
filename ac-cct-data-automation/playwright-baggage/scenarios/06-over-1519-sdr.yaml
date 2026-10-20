@@ -1,0 +1,16 @@
+id: over-1519-sdr
+title: Contents above the 1,519 SDR treaty limit
+booking: { pool: any, pick: next-unused, need: [lost], avoid: [partner, waiting, two-bags, two-journeys, cap-spent, duplicate, closed] }
+first_message: "My bag is lost and everything in it was expensive. I want to claim for the contents."
+steps:
+  - notice: "yes"
+  - identify: true
+  - verify: true
+  - journey: one
+  - delivery: "no"
+  - readiness: "yes"
+  - contents: { category: Clothing, cad: true, items: [ { item: "Formal wear", qty: 1, amount: 2500 }, { item: "Jacket / Coat", qty: 1, amount: 1200 } ] }
+  - expect: { step: BAG-06.S16, board: amount above the Montreal Convention limit, any_of: ["1,?519", "limit", "maximum", "Montreal"] }
+  - expect: { step: BAG-06.S16.link, board: '"Montreal convention" as a link', any_of: ["Montreal"], links: ["Montreal"] }
+  - stop: end
+known: [I-11]

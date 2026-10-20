@@ -1,0 +1,121 @@
+{
+ "id": "SOC_UAT_035",
+ "family": "SOC",
+ "summary": "EU SOC: 1 regular revenue pax, Jun 5: AC 849 LHR-FRA operated, AC 847 FRA-YYZ 14:00 cancelled, rebooked with 90 min dep delay; stranded at FRA -> NOT ELIGIBLE, below 2 h no-travel threshold (SoC-EU-NE-11)",
+ "passengers": [
+  {
+   "firstName": "THOMAS",
+   "lastName": "SCHMIDT",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "849",
+   "origin": "LHR",
+   "destination": "FRA",
+   "depLocal": "08:00",
+   "arrLocal": "10:40",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "PY",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "847",
+   "origin": "FRA",
+   "destination": "YYZ",
+   "depLocal": "14:00",
+   "arrLocal": "16:40",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "PY",
+   "status": "HX"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "delay",
+   "arrDelayMin": 90,
+   "depDelayMin": 90,
+   "delayCode": "64",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "SoC-EU-NE-11",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_LESS_THAN_2_HOURS",
+  "delayMin": 90,
+  "control": "CONTROLLABLE",
+  "cause": "64",
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Trip Not Completed, Disruption Detected",
+   "Multi-segment trip LHR\u2192FRA\u2192YYZ, Segment 2 AC847 FRA\u2192YYZ cancelled, rebooked with SOC segment departure delay +1H 30M; passenger stranded at FRA",
+   "Regime: EU (LHR departure)",
+   "PASSENGERS: 1 SEGMENTS: 2",
+   "Promised: Seg 1 AC 849 LHR\u2192FRA 05-Jun 08:00 | Seg 2 AC 847 FRA\u2192YYZ 05-Jun 14:00",
+   "Current: Seg 1 AC 849 ON TIME | Seg 2 AC 847 CANCELLED, rebooked, SOC Segment Departure Delay +1H 30M",
+   "SOC Segment: AC 847 FRA\u2192YYZ; delay 90 min below 2h threshold",
+   "Departure Delay Code: 64, Controllable (not checked under EU)",
+   "PASSENGER | NOT_ELIGIBLE | DELAY_LESS_THAN_2_HOURS"
+  ],
+  "soc": {
+   "eligibility": "NOT_ELIGIBLE",
+   "entitlements": "none; no travel (incomplete), delay below 2 h"
+  }
+ },
+ "assumed": [
+  "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+  "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+  "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+  "arrivals 10:40 CEST and 16:40 EDT chosen from block times",
+  "rebooked AC 845 FRA-YYZ dep 15:30 arr 18:10 invented; accepted=false (stranded at FRA)",
+  "cancel code CREW = NetLine equivalent of code 64"
+ ],
+ "unsupported": []
+}

@@ -1,0 +1,95 @@
+{
+ "id": "FD_TC_104",
+ "family": "FD",
+ "summary": "Single adult; original AC505 YUL-YYZ arr 10:00; customer voluntarily moved to a later flight arr 15:00 (5 days before flight) and arrived 15:00 exactly on the VOL schedule: promise = VOL arrival, no delay",
+ "passengers": [
+  {
+   "firstName": "OLIVIER",
+   "lastName": "DESCHAMPS",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "505",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:45",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "505",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "13:45",
+   "arrLocal": "15:00",
+   "dayOffset": 0,
+   "accepted": true,
+   "voluntary": true,
+   "changeDaysBeforeFlight": 5
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-27",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": 0,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 505, Route: YUL → YYZ, Scheduled Arrival: 15:00 (VOL-updated promise, NOT 10:00 original)",
+   "Current Itinerary - Flight: AC 505, Route: YUL → YYZ, Status: ARRIVED ON TIME, Actual Arrival: 15:00, Delay: 0H 00M",
+   "History - Original booking: arr 10:00 | Change 1 (Day -5): VOL - customer changed flight → arr 15:00",
+   "Promise Rule: VOL only (no INVOL) → promise = VOL arrival (15:00)",
+   "Delay = Actual (15:00) - Promise (15:00) = 0h",
+   "Regime: APPR (1 regime)",
+   "CRITICAL: Promise = 15:00 (VOL), NOT 10:00 (original/14-day mark)",
+   "DDS: NO DELAY → NOT ELIGIBLE",
+   "Flight Compensation: MR OLIVIER DESCHAMPS | NOT ELIGIBLE | NO_DELAY | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "original dep 08:45 / VOL flight dep 13:45 (text gives only arrivals 10:00 and 15:00)",
+  "VOL replacement keeps flight number AC 505 (Trip Tracer lines show AC 505 for both promised and current)",
+  "change made 5 days before flight date (History: Change 1 (Day -5))"
+ ],
+ "unsupported": [
+  "rebooking[].voluntary=true and changeDaysBeforeFlight=5 are non-schema extra fields on the rebooking entry (the schema has no voluntary/involuntary flag)"
+ ]
+}

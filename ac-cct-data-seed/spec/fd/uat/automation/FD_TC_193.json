@@ -1,0 +1,82 @@
+{
+ "id": "FD_TC_193",
+ "family": "FD",
+ "summary": "Single pax YUL-YYZ AC 425; CC VOL (ADDCOL, no ACNP) moved promise to 14:00, DT/COP INVOL does not; actual arrival 18:30 (+4h30 from promise), code 42",
+ "passengers": [
+  {
+   "firstName": "NICOLAS",
+   "lastName": "CHARTRAND",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "425",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:00",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 270,
+   "depDelayMin": 270,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "APPR_3_TO_6_HOURS",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 270,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 425 YUL→YYZ Scheduled Arrival 14:00 (updated by CC VOL, NOT further updated by DT)",
+   "Current: AC 425 YUL→YYZ ARRIVED LATE, Actual 18:30, Delay +4H 30M",
+   "Change 1: Contact Center (ADDCOL, no ACNP) at D-7 VOL arrival 10:00→14:00 PROMISE UPDATED",
+   "Change 2: DT/COP (YTOAC0652 + I/S indicator) at D-0 INVOL arrival 14:00→18:30 PROMISE NOT UPDATED",
+   "Promise = 14:00 (last VOL before first INVOL); Delay from promise = 4.5 hours",
+   "Regime: APPR",
+   "APPR: Delay 3-<6h, Controllable -> ELIGIBLE",
+   "MSL FLIGHT: AC 425 YUL→YYZ 42",
+   "CONTROLLABLE (Code 42)",
+   "Flight Compensation: MR NICOLAS CHARTRAND | ELIGIBLE | APPR_3_TO_6_HOURS | CAD $400"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "PNR name accents dropped (GDS ASCII)",
+  "dep time 12:00 (text gives only arrival)",
+  "original 14-day arrival 10:00 not modelled; segment at VOL-updated 14:00 promise"
+ ],
+ "unsupported": [
+  "PNR change-history identifiers/classification (VOL/INVOL tool markers, D-n change timing) cannot be expressed in booking data; segment is modelled at the final promise time and delay measured from it; CC ADDCOL (no ACNP) VOL then DT/COP YTOAC0652 + I/S INVOL sequence"
+ ]
+}

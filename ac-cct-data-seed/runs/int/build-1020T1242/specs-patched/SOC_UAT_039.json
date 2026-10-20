@@ -1,0 +1,113 @@
+{
+ "id": "SOC_UAT_039",
+ "family": "SOC",
+ "summary": "1 adult, LHR-FRA on AC 849 on time then FRA-MUC on LH 470 (other airline) delayed 5h; SOC segment is the OAL segment",
+ "passengers": [
+  {
+   "firstName": "EMMA",
+   "lastName": "SCHMIDT",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "GB",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "849",
+   "origin": "LHR",
+   "destination": "FRA",
+   "depLocal": "08:00",
+   "arrLocal": "10:30",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "KL",
+   "number": "1741",
+   "origin": "FRA",
+   "destination": "MUC",
+   "depLocal": "14:00",
+   "arrLocal": "15:00",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "delay",
+   "arrDelayMin": 300,
+   "depDelayMin": 300,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NO_DETERMINATION",
+  "systemCode": "SoC-EU-ND-01",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_2_TO_6_HOURS",
+  "delayMin": 300,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Trip Completed, Disruption Detected",
+   "Multi-segment trip LHR->FRA->MUC - Segment 1 AC849 on time, Segment 2 LH470 (OAL) delayed +5H 00M",
+   "Regime: EU (LHR departure)",
+   "PASSENGERS: 1 - SEGMENTS: 2",
+   "Promised: Seg 1 AC 849 LHR->FRA Dep 08:00 | Seg 2 LH 470 FRA->MUC Dep 14:00",
+   "Current: Seg 1 ON TIME | Seg 2 LH 470 ARRIVED LATE, Sched Dep 14:00, Actual 19:00, Delay +5H 00M",
+   "SOC section present - SOC Segment: LH 470 FRA->MUC (OAL); Operating Carrier: LH (OAL)",
+   "Departure Delay Code: Unknown (OAL - AC has no data)",
+   "PASSENGER STATUS: NO_DETERMINATION | BAND: DELAY_2_TO_6_HOURS",
+   "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NO DETERMINATION (or redirected to OAL); DDS code SoC-EU-ND-01"
+  ],
+  "soc": {
+   "eligibility": null,
+   "entitlements": "none - no determination (OAL operated), case/redirect to OAL"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "Arrival times chosen (FRA-MUC arr 15:10 sched; actual 5h late)",
+  "Cabin W (PY), class O",
+  "Residence GB",
+  "Arrival delay assumed equal to the stated 300 min departure delay",
+  "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+  "Text lists LH 470 as OAL (Lufthansa) - chatbot message wrongly says United; ignored"
+ ],
+ "unsupported": [
+  "Actual operation / delay of the Lufthansa segment normally comes from OAL data AC does not hold; the 5 h late actual (19:00) must be injected as flight data if TT is to show 'ARRIVED LATE +5H 00M'. Delay code intentionally left unknown."
+ ]
+}

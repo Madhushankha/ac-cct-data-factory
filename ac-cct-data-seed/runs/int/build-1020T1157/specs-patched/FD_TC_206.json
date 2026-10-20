@@ -1,0 +1,109 @@
+{
+ "id": "FD_TC_206",
+ "family": "FD",
+ "summary": "AC-sold itinerary: VIA Rail train YOW-YUL 07:00-09:00 delayed 4h (actual arr 13:00), customer misses AC 848 YUL-LHR 12:30 (arr 00:30+1) which departs on time; only the train segment is disrupted",
+ "passengers": [
+  {
+   "firstName": "ELISE",
+   "lastName": "BEAUCHEMIN",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "2R",
+   "number": "1",
+   "origin": "YOW",
+   "destination": "YUL",
+   "depLocal": "07:00",
+   "arrLocal": "09:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "848",
+   "origin": "YUL",
+   "destination": "LHR",
+   "depLocal": "12:30",
+   "arrLocal": "00:30",
+   "dayOffset": 1,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "no_show"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "NON_FLIGHT_SEGMENT_DISRUPTION",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": null,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Segment 1 = Train (VIA Rail) YOW\u2192YUL, delayed 4hrs (track maintenance)",
+   "Segment 2 = Flight AC 848 YUL\u2192LHR, operated on time",
+   "Journey: Bound 1: YOW\u2192YUL (Train/VIA Rail) + YUL\u2192LHR (Flight AC 848)",
+   "Eligibility NOT ELIGIBLE: non-flight segment disruption (train); APPR/EU/ASL all NOT ELIGIBLE; compensation $0"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "PNR name accents dropped (GDS ASCII)",
+  "train modelled as carrier 2R (VIA Rail) with placeholder number 1; flight AC 848 cabin Y class T",
+  "train dep/arr 07:00-09:00 and delayed arrival 13:00 from the text; delay 240 min on seg 1",
+  "AC 848 outcome ontime (departed on time); customer no_show at the airport as a paxEvent because the connection was missed"
+ ],
+ "unsupported": [
+  "Train (rail) segment mode cannot be expressed in the flight booking data (modelled as a 2R carrier segment); goodwill (GW) discretion not modelled",
+  "Cause of train delay (track maintenance) has no delay-code representation"
+ ],
+ "pinDaysAgo": true
+}

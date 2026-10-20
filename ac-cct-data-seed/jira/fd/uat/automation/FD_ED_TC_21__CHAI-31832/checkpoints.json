@@ -1,0 +1,504 @@
+{
+  "key": "CHAI-31832",
+  "test_id": "FD_ED_TC_21",
+  "title": "System | Session Expiration | Customer Returns | Resume or Restart",
+  "goal": "Customer starts FD flow, gets distracted, returns 2 hours later. Tests session timeout handling and whether customer can resume or must restart. Per call transcript: session expiration and inactivity conditions need testing.",
+  "summary": {
+    "seed": 1,
+    "chat": 34,
+    "api": 5,
+    "email": 0,
+    "dashboard": 0,
+    "implied": 13,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Customer starts FD flow, gets distracted, returns 2 hours later. Tests session timeout handling and whether customer can resume or must restart. Per call transcript: session expiration and inactivity conditions need testing.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Session timeout configured (e.g., 30 minutes of inactivity); Customer starts flow, completes identification, then goes inactive",
+      "expected": "Session timeout configured (e.g., 30 minutes of inactivity); Customer starts flow, completes identification, then goes inactive",
+      "id": "CP002"
+    },
+    {
+      "section": "PHASE 1 � INITIAL SESSION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot at 14:00",
+      "expected": "",
+      "id": "CP003"
+    },
+    {
+      "section": "PHASE 1 � INITIAL SESSION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP004"
+    },
+    {
+      "section": "PHASE 1 � INITIAL SESSION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "PHASE 1 � INITIAL SESSION",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP006"
+    },
+    {
+      "section": "PHASE 1 � INITIAL SESSION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP007"
+    },
+    {
+      "section": "PHASE 1 � INITIAL SESSION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Montreal to Toronto was delayed 4 hours. I'd like to file a compensation claim\"",
+      "expected": "My flight from Montreal to Toronto was delayed 4 hours. I'd like to file a compensation claim",
+      "id": "CP008"
+    },
+    {
+      "section": "PHASE 1 � INITIAL SESSION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "PHASE 1 � INITIAL SESSION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP010"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process...\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process...",
+      "id": "CP011"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP012"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"Nathalie C�t�\"",
+      "expected": "Nathalie C�t�",
+      "id": "CP013"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, Nathalie! And, what is your booking reference number?",
+      "id": "CP014"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: TC242\"",
+      "expected": "PNR: TC242",
+      "id": "CP015"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC242",
+      "expected": "",
+      "id": "CP016"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND (Auth Flow 1)",
+      "expected": "",
+      "id": "CP017"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer data is revealed",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "SESSION STATE AT 14:05",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? Session ID: SES-20260615-1400-001",
+      "expected": "? Session Status: ACTIVE ? Last Activity: 14:05 ? Progress: Identification COMPLETED (name + PNR found) ? Next Step: Authentication (OTP) ? Session Timeout: 30 minutes of inactivity",
+      "id": "CP019"
+    },
+    {
+      "section": "PHASE 2 � INACTIVITY",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "At 14:05, the customer gets distracted and stops interacting with the chatbot.",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "INACTIVITY MONITORING",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? 14:05 � Last customer interaction",
+      "expected": "? 14:15 � 10 minutes inactive (no action) ? 14:25 � 20 minutes inactive (no action) ? 14:30 � 25 minutes inactive � WARNING THRESHOLD APPROACHING",
+      "id": "CP021"
+    },
+    {
+      "section": "INACTIVITY WARNING",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays an inactivity warning:",
+      "expected": "Are you still there? Your session will expire in 5 minutes due to inactivity. Please respond to continue.",
+      "id": "CP022"
+    },
+    {
+      "section": "SESSION EXPIRATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system determines: SESSION EXPIRED (30 minutes of inactivity)",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "SESSION EXPIRATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system takes the following actions:",
+      "expected": "? Session ID: SES-20260615-1400-001 ? EXPIRED ? Session data: CLEARED (for security � PNR data, passenger info purged from active session) ? Authentication state: RESET (OTP not completed � must re-authenticate) ? Progress saved: PARTIAL � system records that PNR TC242 was looked up but authentication was not completed ? No case created (flow not completed)",
+      "id": "CP024"
+    },
+    {
+      "section": "SESSION EXPIRATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays:",
+      "expected": "Your session has expired due to inactivity. For your security, you'll need to start a new session. Don't worry � you can return anytime to file your claim.",
+      "id": "CP025"
+    },
+    {
+      "section": "PHASE 3 � CUSTOMER RETURNS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "At 16:05, the customer returns to the chatbot (2 hours after session expired).",
+      "expected": "",
+      "id": "CP026"
+    },
+    {
+      "section": "PHASE 3 � CUSTOMER RETURNS",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot at 16:05",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "PHASE 3 � CUSTOMER RETURNS",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today? resume",
+      "id": "CP028"
+    },
+    {
+      "section": "PHASE 3 � CUSTOMER RETURNS",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "PHASE 3 � CUSTOMER RETURNS",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP030"
+    },
+    {
+      "section": "PHASE 3 � CUSTOMER RETURNS",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP031"
+    },
+    {
+      "section": "PHASE 3 � CUSTOMER RETURNS",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"I was trying to file a compensation claim earlier but got distracted. Can I continue?\"",
+      "expected": "I was trying to file a compensation claim earlier but got distracted. Can I continue?",
+      "id": "CP032"
+    },
+    {
+      "section": "SESSION RESUME CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system checks: Is there an active session for this user? ? NO (session expired)",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "SESSION RESUME CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system checks: Is there a saved progress state? ? PARTIAL (PNR TC242 looked up, but authentication not completed)",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "SESSION RESUME CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system determines: CANNOT RESUME � AUTHENTICATION NOT COMPLETED ? MUST RESTART",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "RESTART FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I see you started a claim earlier but your session expired due to inactivity. For security reasons, since your identity wasn't fully verified, you'll need to start the process again. Don't worry � it won't take long! Let's get started.",
+      "id": "CP036"
+    },
+    {
+      "section": "RESTART FLOW",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "RESTART FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP038"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process...\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process...",
+      "id": "CP039"
+    },
+    {
+      "section": "IDENTIFICATION � RESTART",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP040"
+    },
+    {
+      "section": "IDENTIFICATION � RESTART",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"Nathalie C�t�\"",
+      "expected": "Nathalie C�t�",
+      "id": "CP041"
+    },
+    {
+      "section": "IDENTIFICATION � RESTART",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, Nathalie! And, what is your booking reference number?",
+      "id": "CP042"
+    },
+    {
+      "section": "IDENTIFICATION � RESTART",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: TC242\"",
+      "expected": "PNR: TC242",
+      "id": "CP043"
+    },
+    {
+      "section": "IDENTIFICATION � RESTART",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC242",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "IDENTIFICATION � RESTART",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND",
+      "expected": "NOTE: From this point, the standard FD flow continues from the beginning (authentication ? passenger selection ? journey selection ? DDS ? result). The customer must complete the entire flow again.",
+      "id": "CP045"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP046"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: n***@gmail.com � Phone: +1***789",
+      "id": "CP047"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: n***@gmail.com\"",
+      "expected": "Email: n***@gmail.com",
+      "id": "CP048"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP049"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"482917\"",
+      "expected": "482917",
+      "id": "CP050"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful. Let's proceed to the next step.",
+      "id": "CP052"
+    },
+    {
+      "section": "SESSION EXPIRATION VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? Session timeout: 30 minutes ?",
+      "expected": "? Inactivity warning at 25 minutes: YES ? ? Session expired at 30 minutes: YES ? ? Session data cleared (security): YES ? ? Authentication state reset: YES ? ? Customer returns 2 hours later: YES ? ? Resume possible: NO (authentication not completed) ? ? Full restart required: YES ? ? Re-greeting displayed: YES ? ? Duplicate claim check: Will pass (no case created in expired session) ?",
+      "id": "CP053"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Session timeout detected after 30 min inactivity; 5-minute warning sent; Session expired; Data preserved; Customer returns and offered resume option; Re-authentication required; Session restored from saved state; Full flow completed; Both session transcripts merged",
+      "expected": "Session timeout detected after 30 min inactivity; 5-minute warning sent; Session expired; Data preserved; Customer returns and offered resume option; Re-authentication required; Session restored from saved state; Full flow completed; Both session transcripts merged",
+      "id": "CP054"
+    }
+  ]
+}

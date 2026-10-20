@@ -1,0 +1,459 @@
+{
+  "key": "CHAI-31609",
+  "test_id": "FD_TC_217",
+  "title": "3rd Party � Claims Company � Claim Opened � Exists in CS � Case < 30 Days � No Resolution � Wait Message",
+  "goal": "Validates that when a claims company provides a case number that exists in CS, the case is less than 30 days old with no resolution, the system tells them to wait and the user accepts.",
+  "summary": {
+    "seed": 6,
+    "chat": 21,
+    "api": 0,
+    "email": 0,
+    "dashboard": 12,
+    "implied": 8,
+    "manual": 1,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Validates that when a claims company provides a case number that exists in CS, the case is less than 30 days old with no resolution, the system tells them to wait and the user accepts.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Third-party caller type: Claims Company",
+      "expected": "Third-party caller type: Claims Company",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Passenger has opened a claim",
+      "expected": "Passenger has opened a claim",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Case number exists in CS",
+      "expected": "Case number exists in CS",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Case opened 15 days ago",
+      "expected": "Case opened 15 days ago",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No resolution on the case",
+      "expected": "No resolution on the case",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "User does NOT dispute",
+      "expected": "User does NOT dispute",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP008"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01)",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP011"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"I'm from a claims company following up on a flight disruption claim for a passenger\"",
+      "expected": "I'm from a claims company following up on a flight disruption claim for a passenger",
+      "id": "CP012"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP013"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? YES",
+      "expected": "",
+      "id": "CP014"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot identifies third-party type ? Claims Company",
+      "expected": "",
+      "id": "CP015"
+    },
+    {
+      "section": "CLAIM OPENED CHECK",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks: \"Has a claim been opened by the passenger?\"",
+      "expected": "Has a claim been opened by the passenger?",
+      "id": "CP016"
+    },
+    {
+      "section": "CLAIM OPENED CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds: \"Yes\"",
+      "expected": "",
+      "id": "CP017"
+    },
+    {
+      "section": "CASE NUMBER COLLECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please provide a case number and the name of one of the passengers on the claim.\"",
+      "expected": "Please provide a case number and the name of one of the passengers on the claim.",
+      "id": "CP018"
+    },
+    {
+      "section": "CASE NUMBER COLLECTION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides: Case number \"CLM-77889\" and passenger name \"Fran�ois Bergeron\"",
+      "expected": "CLM-77889 Fran�ois Bergeron",
+      "id": "CP019"
+    },
+    {
+      "section": "CS LOOKUP",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system checks if the claim exists in Case Services ? YES (found)",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "30-DAY CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system checks: Has the case been opened for more than 30 days? ? NO (15 days old)",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "RESOLUTION CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system checks: Was there a resolution on the case? ? NO",
+      "expected": "",
+      "id": "CP022"
+    },
+    {
+      "section": "WAIT MESSAGE",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please wait for the resolution on the case. The passenger should receive an email within 30 days of the case opening.\"",
+      "expected": "Please wait for the resolution on the case. The passenger should receive an email within 30 days of the case opening.",
+      "id": "CP023"
+    },
+    {
+      "section": "USER ACCEPTS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds: \"Okay, we'll wait\"",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Is there anything I can help you with?\"",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP025"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP026"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP027"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the system correctly identifies the third-party as a Claims Company",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the claim has been opened as YES",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the case number \"CLM-77889\" and passenger name \"Fran�ois Bergeron\" have been collected",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the CS lookup returns FOUND",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the case has been opened for 15 days which is less than 30 days",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And there is no resolution on the case",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the system should display the wait message \"Please wait for the resolution on the case. The passenger should receive an email within 30 days of the case opening.\"",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the user accepts the wait message",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the flow should end with no manual handoff",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no new case should be created in Claims Dashboard",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the existing case should remain unchanged in Claims Dashboard",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And when searching Claims Dashboard by case number \"CLM-77889\" only the original case should exist with no new entries",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the existing case is still within the 30-day SLA and the user accepted the wait message",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no payment flow should be triggered",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no new compensation record should have been created",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no new batch file should have been dispatched",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence should have been asked",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no payment method should have been determined",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no IDV should have been triggered",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no CyberSource fraud screening should have been triggered",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the original case's compensation status should remain unchanged",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no new Claims Dashboard entry should exist for this third-party follow-up",
+      "expected": "",
+      "id": "CP049"
+    }
+  ]
+}

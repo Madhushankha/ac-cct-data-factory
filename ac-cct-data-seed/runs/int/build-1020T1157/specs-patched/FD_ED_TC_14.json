@@ -1,0 +1,94 @@
+{
+ "id": "FD_ED_TC_14",
+ "family": "FD",
+ "summary": "Two pax: Sarah Miller (adult) and Baby Miller (lap infant, no seat, DOB Jan 2025) on AC 422 YUL-YYZ arriving 4h late, code 42; adult eligible $400, infant not eligible",
+ "passengers": [
+  {
+   "firstName": "SARAH",
+   "lastName": "MILLER",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  },
+  {
+   "firstName": "BABY",
+   "lastName": "MILLER",
+   "type": "INF",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "422",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": null,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "APPR_3_TO_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 422, Route: YUL-YYZ, Scheduled Arrival: 10:00",
+   "Current Itinerary - Flight: AC 422, Route: YUL-YYZ, Status: ARRIVED LATE, Actual: 14:00, Delay: +4H 00M",
+   "Regime: APPR (Canadian origin - YUL)",
+   "MSL FLIGHT: AC 422 - YUL-YYZ - 42",
+   "CONTROLLABLE (Code 42)",
+   "Passenger 1: MS SARAH MILLER (Adult) - ELIGIBLE",
+   "Passenger 2: BABY MILLER (Infant - No Seat, DOB: Jan 2025) - NOT ELIGIBLE (Infant No Seat)",
+   "APPR: Delay 3-6h, Controllable, Short-haul - ELIGIBLE (adult only)",
+   "Compensation: CAD $400 (Sarah Miller only)",
+   "MS SARAH MILLER | ELIGIBLE | APPR_3_TO_6_HOURS | CAD $400",
+   "BABY MILLER | NOT ELIGIBLE | INFANT_NO_SEAT | CAD $0"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 08:40",
+  "infant has no seat (lap infant)",
+  "systemCode FD-APPR-EL-01 for the adult (inferred)",
+  "amount 400 is for the adult only; infant row INFANT_NO_SEAT CAD 0"
+ ],
+ "unsupported": [
+  "infant date of birth (Jan 2025) and the no-seat flag may not be expressible beyond passenger type INF",
+  "flight date June 2 2026 in text; run uses flightDaysAgo=10"
+ ]
+}

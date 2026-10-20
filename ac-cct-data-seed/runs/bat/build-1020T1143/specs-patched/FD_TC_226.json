@@ -1,0 +1,83 @@
+{
+ "id": "FD_TC_226",
+ "family": "FD",
+ "summary": "Unaccompanied minor: CHD age 14 OLIVIA BRENNAN (UMNR) on AC 111 YYZ-YVR arriving 4h late, code 42 controllable, APPR CAD 400, same amount as an adult (parent passes OTP, standard automated flow)",
+ "passengers": [
+  {
+   "firstName": "OLIVIA",
+   "lastName": "BRENNAN",
+   "type": "CHD",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false,
+   "age": 14,
+   "umnr": true
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "111",
+   "origin": "YYZ",
+   "destination": "YVR",
+   "depLocal": "07:00",
+   "arrLocal": "09:10",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 27,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 111 YYZ->YVR Scheduled Arrival 09:10",
+   "Current: AC 111 YYZ->YVR ARRIVED LATE, 09:10 -> 13:10, Delay +4H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 111 YYZ->YVR 42 Delayed due to scheduled maintenance - CONTROLLABLE",
+   "Cancellation code: NONE; Fallback: FALSE",
+   "Delay: +4H 00M - CONTROLLABLE",
+   "Flight Compensation: MS OLIVIA BRENNAN | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flight number AC 111 YYZ-YVR dep 07:00 arr 09:10 assumed (text gives no flight); realistic domestic APPR flight chosen so the booking has an eligible 240-min controllable delay",
+  "delay code 42 (scheduled maintenance, CONTROLLABLE), 240 min arrival delay, cabin Y class T assumed",
+  "PNR names/ids in the text are labels, not real locators",
+  "text gives only 'my 14-year-old child' travelling as an unaccompanied minor and a disrupted flight; passenger named OLIVIA BRENNAN, type CHD age 14, umnr true; domestic APPR flight with a 240-min controllable delay (code 42) chosen",
+  "compensation for a minor equals an adult's under APPR, so expectation is the standard EL-01 CAD 400"
+ ],
+ "unsupported": [
+  "'age' and 'umnr' passenger fields are outside the standard schema (the unaccompanied-minor service request/SSR may not be buildable); parent OTP and parent-as-claimant are claim-side behaviour"
+ ]
+}

@@ -1,0 +1,83 @@
+{
+ "id": "FD_TC_212",
+ "family": "FD",
+ "summary": "EU-origin booking for the manual-handoff path: adult SOPHIE LEFEVRE (France) on AC 873 CDG-YYZ arriving 5h late, code 42 controllable, EU 261 EUR 600",
+ "passengers": [
+  {
+   "firstName": "SOPHIE",
+   "lastName": "LEFEVRE",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "FR",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "873",
+   "origin": "CDG",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "12:30",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 13,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 300,
+   "depDelayMin": 300,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-EU-EL-14",
+  "amount": 600,
+  "currency": "EUR",
+  "delayBand": "EU261_TRAVEL_COMPLETED_REST_OF_EUROPE_GTE_4HR",
+  "delayMin": 300,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 873 CDG->YYZ Scheduled Arrival 12:30",
+   "Current: AC 873 CDG->YYZ ARRIVED LATE, 12:30 -> 17:30, Delay +5H 00M",
+   "Regime: EU 261 (EU origin CDG) + APPR (Canada arrival)",
+   "Distance: long-haul (>3500 km)",
+   "MSL FLIGHT: AC 873 CDG->YYZ 42 Delayed due to scheduled maintenance - CONTROLLABLE",
+   "Delay: +5H 00M - CONTROLLABLE",
+   "Fallback: FALSE",
+   "Flight Compensation: MS SOPHIE LEFEVRE | ELIGIBLE | EU261_TRAVEL_COMPLETED_REST_OF_EUROPE_GTE_4HR | EUR 600.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flight AC 873 CDG-YYZ dep 10:00 arr 12:30 assumed (text gives no flight); EU-origin long-haul flight chosen because the scenario hinges on an EU country of origin",
+  "300-min arrival delay, code 42 (CONTROLLABLE), cabin Y class T assumed; expectation mirrors the closest existing EU spec (FD_TC_122: CDG-YYZ 4h+ travel completed, FD-EU-EL-14, EUR 600)",
+  "dual regime: APPR EL-01 (CAD 400) also assessed for the Canada arrival; EU 261 EUR 600 is the more generous",
+  "PNR names/ids in the text are labels, not real locators",
+  "passenger name SOPHIE LEFEVRE from the text (accent dropped, GDS ASCII); country of origin France -> CDG origin",
+  "case number CLM-11223 does not exist in Case Services (nothing to create)"
+ ],
+ "unsupported": [
+  "claim-side behaviour (chatbot, third-party classification, manual handoff, case creation) is Claims Dashboard / chatbot behaviour, not booking data; the claim-opened flag, power-of-attorney upload and manual-review status are not booking data"
+ ]
+}

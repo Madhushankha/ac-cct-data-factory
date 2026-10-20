@@ -1,0 +1,117 @@
+{
+  "id": "FD_TC_095",
+  "family": "FD",
+  "summary": "Single adult THIERRY ROUSSEAU, 2 legs: AC 497 YUL-YYZ on time (sched arr 10:30, actual 10:28) then WestJet WS 3456 YYZ-YVR (sched arr 16:00, actual 21:00, 300 min late, MSL) - a non-Star-Alliance other-airline leg; DDS must redirect to WestJet, no case, no assessment",
+  "passengers": [
+    {
+      "firstName": "THIERRY",
+      "lastName": "ROUSSEAU",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "497",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "09:05",
+      "arrLocal": "10:30",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "WS",
+      "number": "3456",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "13:55",
+      "arrLocal": "16:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": -2,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 300,
+      "depDelayMin": 300,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    },
+    {
+      "seg": 2,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "FD-APPR-ND-01",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": 300,
+    "control": null,
+    "cause": null,
+    "outcome": "OAL REDIRECT to WestJet; no case created",
+    "ttUi": [
+      "Segment 1 (AC 497): Scheduled arrival 10:30, Actual arrival 10:28 - no delay",
+      "Segment 2 (WS 3456): Scheduled arrival 16:00, Actual arrival 21:00 - 5hr delay",
+      "MSL = Segment 2 (WS 3456), carrier WestJet (WS), not Star Alliance",
+      "AC responsibility = NONE; outcome OAL REDIRECT; DDS code FD-APPR-ND-01",
+      "Claims Dashboard: no case/entry for the PNR"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "cabin Y and booking class T on every segment (text gives none)",
+    "this scenario has NO Trip Tracer UI validation block (OAL redirect); ttUi built from the expected-results MSL lines",
+    "leg times assumed (AC 497 dep 09:05; WS 3456 dep 13:55 so Pacific arrival is 16:00); WS 3456 delay minutes are arrival-only, depDelayMin assumed 300",
+    "AC 497 arrives 2 min early: arrDelayMin -2",
+    "no delay/cancel codes given for either leg",
+    "Aeroplan not stated: none",
+    "WS 3456 is a WestJet-operated leg: needs OAL flight data supplied (carrier WS) in the seed"
+  ],
+  "unsupported": [
+    "the redirect message, absence of a case and Claims Dashboard entry are chatbot/dashboard behaviour, not booking data"
+  ]
+}

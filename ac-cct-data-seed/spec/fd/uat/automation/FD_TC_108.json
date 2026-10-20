@@ -1,0 +1,84 @@
+{
+ "id": "FD_TC_108",
+ "family": "FD",
+ "summary": "Single adult, AC509 YUL-YYZ sched arr 12:00, arrived 16:00 (+4h), ALL disruption codes (arrival/departure/cancel) NULL and never arrive: No Determination after 14 days",
+ "passengers": [
+  {
+   "firstName": "GAETAN",
+   "lastName": "RIVARD",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "509",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "10:45",
+   "arrLocal": "12:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 20,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NO_DETERMINATION",
+  "systemCode": "FD-APPR-ND-09",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": 240,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 509, Route: YUL → YYZ, Scheduled Arrival: 12:00",
+   "Current Itinerary - Flight: AC 509, Route: YUL → YYZ, Status: ARRIVED LATE, Scheduled Arrival: 12:00 → Actual: 16:00, Delay: +4H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 509 - YUL → YYZ - NO CODE",
+   "Arrival Code: NULL (after 14 days)",
+   "Departure Code: NULL (after 14 days)",
+   "Cancellation Code: NULL (after 14 days)",
+   "Fallback: ATTEMPTED → ALL CODES NULL → NO FALLBACK AVAILABLE",
+   "14-Day Retry Window: EXHAUSTED",
+   "Case Status: System Processing Queue → 14 days exhausted → ESCALATED TO CR AGENT",
+   "Flight Compensation: MR/MS [PASSENGER] | NO DETERMINATION | NO_CODE_14_DAYS | PENDING CR AGENT"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 10:45 (text gives only arrival)",
+  "prerequisites say sched 14:00 / actual 18:00; Trip Tracer lines say 12:00 / 16:00 - Trip Tracer lines used (both +4h)",
+  "flightDaysAgo=20 so the 14-day retry window is plausibly exhausted",
+  "Passenger name accents dropped"
+ ],
+ "unsupported": [
+  "14 days of daily polling history; the 'Escalated to CR agent' case status is Claims Dashboard behaviour"
+ ]
+}

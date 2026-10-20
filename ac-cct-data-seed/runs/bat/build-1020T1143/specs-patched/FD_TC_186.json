@@ -1,0 +1,84 @@
+{
+  "id": "FD_TC_186",
+  "family": "FD",
+  "summary": "APPR YUL-YYZ AC421 involuntary change via REACC (MUC1A06AC / YMQAC05IN): promise stays at 10:00, arrives 270 min late (code 42, controllable) -> Eligible CAD 400",
+  "passengers": [
+    {
+      "firstName": "LAURENT",
+      "lastName": "TREMBLAY",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "421",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "08:40",
+      "arrLocal": "10:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 270,
+      "depDelayMin": null,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "ELIGIBLE",
+    "systemCode": null,
+    "amount": 400,
+    "currency": "CAD",
+    "delayBand": "DELAY_3_TO_LT_6_HOURS",
+    "delayMin": 270,
+    "control": "CONTROLLABLE",
+    "cause": "42",
+    "ttUi": [
+      "Promised Itinerary: AC 421 YUL->YYZ scheduled arrival 10:00 (14-day mark, NOT updated by REACC)",
+      "Current Itinerary: AC 421 YUL->YYZ ARRIVED LATE, actual 14:30, +4H 30M",
+      "Change 1: REACC (MUC1A06AC / YMQAC05IN) at D-2 - INVOL - arrival 10:00 -> 14:30",
+      "Promise = 10:00 (REACC did NOT update it)",
+      "Delay from promise = 4.5 hours",
+      "Regime: APPR",
+      "APPR: Delay 3-6h, Controllable -> ELIGIBLE",
+      "MSL FLIGHT: AC 421 YUL->YYZ - 42",
+      "CONTROLLABLE (Code 42)",
+      "Flight Compensation: MR LAURENT TREMBLAY | ELIGIBLE | APPR_3_TO_6_HOURS | CAD 400"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "segments hold the ORIGINAL 14-day schedule (promise stays at the 14-day mark); the INVOL change is NOT modelled as a scheduleChange (that would update the promise) - the resulting lateness is the outcome delay measured against the original promise",
+    "dep time = original arrival minus 1h20 (YUL-YYZ ~1h20 block)",
+    "flight date June 10, 2026 in text; flightDaysAgo=10 (72 hrs elapsed)",
+    "DDS code not stated in text (APPR EL-01 is the CAD 400 tier code in sibling scenarios) -> systemCode null",
+    "delayBand name inferred from the schema example pattern"
+  ],
+  "unsupported": [
+    "PNR change-history marker REACC (MUC1A06AC or YMQAC05IN) at D-2 classifying the auto-rebooking as INVOL (promise stays at the 14-day mark) - no initiator/tool field in the schema; auto-rebook at D-2 itself not modelled"
+  ]
+}

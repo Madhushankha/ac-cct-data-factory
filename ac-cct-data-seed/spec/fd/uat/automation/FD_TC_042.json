@@ -1,0 +1,99 @@
+{
+ "id": "FD_TC_042",
+ "family": "FD",
+ "summary": "Single pax Olivier Deschamps; AC 444 YUL-YYZ (sched arr 08:00) delayed, arrival delay code MISSING, departure delay code 67 (cabin crew shortage, controllable) = Fallback; accepted INVOL rebooking to AC 445 YUL-YHM (sister city) arriving 18:00 (+10h vs promise); APPR Tier 3",
+ "passengers": [
+  {
+   "firstName": "OLIVIER",
+   "lastName": "DESCHAMPS",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "444",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "06:40",
+   "arrLocal": "08:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 600,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "depDelayCode": "67"
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "445",
+   "origin": "YUL",
+   "destination": "YHM",
+   "depLocal": "16:30",
+   "arrLocal": "18:00",
+   "dayOffset": 0,
+   "accepted": true
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-12",
+  "amount": 1000,
+  "currency": "CAD",
+  "delayBand": "DELAY_GTE_9_HOURS",
+  "delayMin": 600,
+  "control": "CONTROLLABLE",
+  "cause": "67",
+  "ttUi": [
+   "Promised: AC 444 YUL->YYZ Scheduled Arrival 08:00 at YYZ (original flight DELAYED)",
+   "Current: AC 445 YUL->YHM (rebooked to sister city), ARRIVED, Actual Arrival 18:00 at YHM",
+   "History: Change 1 INVOL - AC 444 YUL->YYZ delayed (arrival delay code NULL - MISSING); customer accepted rebooking to AC 445 YUL->YHM",
+   "Delay Calculation: promise 08:00 at YYZ (AC 444); actual 18:00 at YHM (AC 445); Delay = 10hrs",
+   "Sister City Check: YHM<->YYZ VALID PAIR; accepted as equivalent destination",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 444 YUL->YYZ ARRIVAL DELAY CODE: NULL (MISSING)",
+   "FALLBACK TRIGGERED: arrival code NULL -> using departure code",
+   "Departure Code (per Expected Results: 67 Cabin Crew Shortage; TT line text shows 42)",
+   "Fallback Flag: TRUE",
+   "CONTROLLABLE",
+   "Delay: +10H 00M CONTROLLABLE",
+   "Flight Compensation: MR OLIVIER DESCHAMPS | ELIGIBLE | DELAY_GTE_9_HOURS (SISTER CITY + FALLBACK) | CAD 1000.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "orig dep 06:40; rebooked dep 16:30",
+  "Text conflict: description/prerequisites/expected say departure code 67, one TT UI line says 'Departure Code: 42 (Scheduled Maintenance)' - 67 used",
+  "Expected-results sentence mentions 'MSL = Leg 1 (AC 315, AC operated)' which contradicts AC 444 - ignored",
+  "no Aeroplan; original-flight depDelayMin unknown"
+ ],
+ "unsupported": [
+  "Departure delay code is distinct from the arrival delay code (arrival code NULL -> fallback to first departure delay code, Fallback=TRUE); the schema has no field for it, so it is given as extra key outcomes[].depDelayCode and delayCode is null"
+ ]
+}

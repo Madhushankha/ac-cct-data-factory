@@ -1,0 +1,432 @@
+{
+  "key": "CHAI-31814",
+  "test_id": "FD_ED_TC_03",
+  "title": "Identification | Complete Failure | All Methods Exhausted | Shell Case Created | Manual Handling |",
+  "goal": "Customer cannot be identified through any method (name doesn't match, PNR not found, e-ticket not found, Aeroplan not found). System creates a shell case with whatever information was collected for tracing purposes. Validates the No Match Identification ? Manual Handling path from Miro.",
+  "summary": {
+    "seed": 1,
+    "chat": 26,
+    "api": 7,
+    "email": 3,
+    "dashboard": 3,
+    "implied": 5,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Customer cannot be identified through any method (name doesn't match, PNR not found, e-ticket not found, Aeroplan not found). System creates a shell case with whatever information was collected for tracing purposes. Validates the No Match Identification ? Manual Handling path from Miro.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Customer provides name that doesn't match any record; PNR provided doesn't exist; No e-ticket match; No Aeroplan match",
+      "expected": "Customer provides name that doesn't match any record; PNR provided doesn't exist; No e-ticket match; No Aeroplan match",
+      "id": "CP002"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP003"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP004"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight was delayed 5 hours. I'd like to file a compensation claim\"",
+      "expected": "My flight was delayed 5 hours. I'd like to file a compensation claim",
+      "id": "CP008"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP011"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP012"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 1 � PNR",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP013"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 1 � PNR",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP014"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 1 � PNR",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"John Smithson\"",
+      "expected": "John Smithson",
+      "id": "CP015"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 1 � PNR",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, John! And, what is your booking reference number?",
+      "id": "CP016"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 1 � PNR",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: XYZABC\"",
+      "expected": "PNR: XYZABC",
+      "id": "CP017"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 1 � PNR",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: XYZABC",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 1 � PNR",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR NOT FOUND",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 1 � PNR",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I wasn't able to find a booking with that reference number. Let me try another way to locate your booking.",
+      "id": "CP020"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 2 � E-TICKET",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Can you provide your e-ticket number instead? It's a 13-digit number starting with 014 that you can find on your booking confirmation email or receipt.",
+      "id": "CP021"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 2 � E-TICKET",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"014-9999999999\"",
+      "expected": "014-9999999999",
+      "id": "CP022"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 2 � E-TICKET",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for e-ticket: 014-9999999999",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 2 � E-TICKET",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: E-TICKET NOT FOUND",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 2 � E-TICKET",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I wasn't able to find a booking with that e-ticket number either. Let me try one more option.",
+      "id": "CP025"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 3 � AEROPLAN",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Do you have an Aeroplan number associated with your booking?",
+      "id": "CP026"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 3 � AEROPLAN",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"9999999999\"",
+      "expected": "9999999999",
+      "id": "CP027"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 3 � AEROPLAN",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for Aeroplan: 9999999999",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "IDENTIFICATION ATTEMPT 3 � AEROPLAN",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: AEROPLAN NOT FOUND",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "ALL IDENTIFICATION METHODS EXHAUSTED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system determines: ALL IDENTIFICATION METHODS EXHAUSTED",
+      "expected": "? PNR: XYZABC ? NOT FOUND ? E-ticket: 014-9999999999 ? NOT FOUND ? Aeroplan: 9999999999 ? NOT FOUND ? Name: John Smithson ? NO MATCH in any system",
+      "id": "CP030"
+    },
+    {
+      "section": "SHELL CASE CREATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I'm sorry, but I wasn't able to locate your booking using the information provided. I'll create a case with the details you've shared so our Customer Relations team can assist you further. They will reach out to you to help resolve this.",
+      "id": "CP031"
+    },
+    {
+      "section": "SHELL CASE CREATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot collects additional contact information:",
+      "expected": "\"To ensure our team can reach you, could you please provide your email address and phone number?\"",
+      "id": "CP032"
+    },
+    {
+      "section": "SHELL CASE CREATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides:",
+      "expected": "� Email: john.smithson@email.com � Phone: +1-555-123-4567",
+      "id": "CP033"
+    },
+    {
+      "section": "SHELL CASE CREATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system creates a SHELL CASE with the following information:",
+      "expected": "� Customer Name (as provided): John Smithson � PNR Attempted: XYZABC (not found) � E-ticket Attempted: 014-9999999999 (not found) � Aeroplan Attempted: 9999999999 (not found) � Contact Email: john.smithson@email.com � Contact Phone: +1-555-123-4567 � Disruption Description: Flight delayed 5 hours � Identification Status: ALL METHODS EXHAUSTED � NO MATCH � Case Status: PENDING MANUAL HANDLING",
+      "id": "CP034"
+    },
+    {
+      "section": "SHELL CASE CREATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "I've created a case for you. Our Customer Relations team will review your information and contact you within 15 business days. Your case reference number is [SHELL-CASE-REF]. Please keep this for your records.",
+      "id": "CP035"
+    },
+    {
+      "section": "SHELL CASE CREATION",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "And an alert information is displayed: \"Case created for manual review.\"",
+      "expected": "Case created for manual review.",
+      "id": "CP036"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a Shell Case notification email is sent to john.smithson@email.com",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains:",
+      "expected": "Your Air Canada claim has been received � [SHELL-CASE-REF] Our Customer Relations team will review your case and contact you within 15 business days.",
+      "id": "CP039"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers:",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP040"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP041"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP042"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "When the agent navigates to Claims Dashboard",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the agent searches for the shell case",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the dashboard displays:",
+      "expected": "� Case Title: \"Travel Disruptions � Identification Failure\" � Status: Pending Manual Handling � Created: � Last updated at � SLA � Team: Customer Relations CASE OVERVIEW � Customer Name (as provided): John Smithson � Identification Status: ALL METHODS EXHAUSTED � PNR Attempted: XYZABC (NOT FOUND) � E-ticket Attempted: 014-9999999999 (NOT FOUND) � Aeroplan Attempted: 9999999999 (NOT FOUND) � Contact Email: john.smithson@email.com � Contact Phone: +1-555-123-4567 � Disruption Description: Flight delayed 5 hours � Regime: UNKNOWN (no booking identified)",
+      "id": "CP045"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "All 3 identification methods attempted and failed; Shell case created with ALL collected values preserved; Customer given reference number; Contact email captured for follow-up; Case routed to manual identification queue; No authentication attempted; No DDS triggered; Full transcript preserved",
+      "expected": "All 3 identification methods attempted and failed; Shell case created with ALL collected values preserved; Customer given reference number; Contact email captured for follow-up; Case routed to manual identification queue; No authentication attempted; No DDS triggered; Full transcript preserved",
+      "id": "CP046"
+    }
+  ]
+}

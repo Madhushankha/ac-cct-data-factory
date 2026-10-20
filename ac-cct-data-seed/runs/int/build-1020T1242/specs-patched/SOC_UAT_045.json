@@ -1,0 +1,103 @@
+{
+ "id": "SOC_UAT_045",
+ "family": "SOC",
+ "summary": "1 adult, AC 856 CDG-YUL 14:00-18:00 diverted back to CDG then cancelled, rebooked next day 16h later; EU SOC eligible",
+ "passengers": [
+  {
+   "firstName": "JULIEN",
+   "lastName": "BERNARD",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "FR",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "856",
+   "origin": "CDG",
+   "destination": "YUL",
+   "depLocal": "14:00",
+   "arrLocal": "18:00",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "OPER",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "9856",
+   "origin": "CDG",
+   "destination": "CDG",
+   "depLocal": "14:20",
+   "arrLocal": "15:50",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded",
+   "changeDaysBeforeDeparture": 0.1
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "SoC-EU-EL-05",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_6_HOURS_OR_MORE",
+  "delayMin": 960,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Trip Not Completed, Disruption Detected",
+   "Single-segment trip CDG->YUL on AC856 diverted - returned to origin (CDG), then cancelled. Passenger returned to CDG, rebooked 16 hours later.",
+   "Regime: EU (CDG departure)",
+   "PASSENGERS: 1 - SEGMENTS: 1",
+   "Promised: AC 856 CDG->YUL Sched Dep 14:00",
+   "Current: AC 856 CDG->YUL Status: DIVERTED - Returned to origin (CDG), CANCELLED, rebooked",
+   "Diversion + cancellation | SOC Segment Delay: 960 min (16h) >= 2h; Controllability NOT CHECKED",
+   "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 60.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+   "CyberSource: GREEN",
+   "DDS code SoC-EU-EL-05"
+  ],
+  "soc": {
+   "eligibility": "ELIGIBLE",
+   "entitlements": "Meals 60, hotel rate of day max 3 nights cap 500, transport 200, communication 30, parking 50, essentials 30"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "Rebooked flight AC 856 next day 06:00-10:00 so that departure delay is 960 min (16h)",
+  "cancelCode null (irrelevant under EU SOC)",
+  "Cabin W (PY), class O",
+  "Residence FR",
+  "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+  "Gherkin date June 21 same as prerequisite"
+ ],
+ "unsupported": [
+  "'Diverted back to origin AND cancelled' is expressed as kind divert (divertTo CDG) plus a next-day rebooking; there is no combined divert+cancel outcome"
+ ]
+}

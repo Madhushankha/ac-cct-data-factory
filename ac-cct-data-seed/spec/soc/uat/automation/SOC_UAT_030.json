@@ -1,0 +1,95 @@
+{
+  "id": "SOC_UAT_030",
+  "family": "SOC",
+  "summary": "EU SOC gate test: 1 regular revenue pax on AC 848 YYZ-LHR Jun 5 19:00 actual Jun 6 01:00 (+360), code 64; origin YYZ is not EU/EEA/UK -> EU result NOT ELIGIBLE (SoC-EU-NE-06) although TT routes the trip to APPR",
+  "passengers": [
+    {
+      "firstName": "JOHN",
+      "lastName": "TAYLOR",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "848",
+      "origin": "YYZ",
+      "destination": "LHR",
+      "depLocal": "19:00",
+      "arrLocal": "07:00",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 360,
+      "depDelayMin": 360,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-EU-NE-06",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 360,
+    "control": "CONTROLLABLE",
+    "cause": "64",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip YYZ→LHR on AC848 delayed +6H 00M, origin NOT in EU (YYZ = Canada)",
+      "Regime: APPR (system determines; EU does not apply to non-EU departures)",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Promised Itinerary: AC 848 YYZ→LHR Scheduled Dep 05-Jun 19:00",
+      "Current Itinerary: AC 848 YYZ→LHR ARRIVED LATE, Scheduled Dep 19:00 → Actual 06-Jun 01:00, +6H 00M",
+      "Geographic Check: Origin YYZ (Canada) not EU/EEA/UK -> EU regime does NOT apply",
+      "Regime applied: APPR; Departure Delay Code 64 (Crew Shortage), Controllable",
+      "PASSENGER status depends on regime routing (ELIGIBLE under APPR / NOT_ELIGIBLE if evaluated under EU only)"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none under EU (geographic gate); would be eligible under APPR"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "arrival 07:00 BST next day (7h block, tz +5h)",
+    "expect.regime set to EU because the test targets the EU geographic gate (SoC-EU-NE-06); the text's own prerequisite and TT regime line say APPR - APPR would make the pax ELIGIBLE",
+    "residence CA assumed"
+  ],
+  "unsupported": [
+    "Text contradiction: prerequisite Regime 'APPR' and TT shows APPR (pax would be ELIGIBLE under APPR), yet DDS code SoC-EU-NE-06 and Expected Result NOT ELIGIBLE under EU"
+  ]
+}

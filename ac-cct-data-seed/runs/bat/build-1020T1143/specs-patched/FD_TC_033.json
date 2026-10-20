@@ -1,0 +1,92 @@
+{
+ "id": "FD_TC_033",
+ "family": "FD",
+ "summary": "Single pax Dominique Arsenault (Basic Aeroplan 9876543210); AC 435 YUL-YYZ (sched arr 10:00) cancelled, SOP Ops Control (controllable); accepted rebooking to AC 436 YUL-YHM (sister city) arriving 17:00 (+7h); APPR Tier 2, Cash 700 / Wallet 840",
+ "passengers": [
+  {
+   "firstName": "DOMINIQUE",
+   "lastName": "ARSENAULT",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "435",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:30",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "cancelCode": "OPER"
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "436",
+   "origin": "YUL",
+   "destination": "YHM",
+   "depLocal": "15:30",
+   "arrLocal": "17:00",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": null,
+  "amount": 700,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "CONTROLLABLE",
+  "cause": "OPER",
+  "ttUi": [
+   "Promised: AC 435 YUL->YYZ Scheduled Arrival 10:00 at YYZ (original flight CANCELLED)",
+   "Current: AC 436 YUL->YHM (rebooked to sister city), ARRIVED, Actual Arrival 17:00 at YHM",
+   "History: Change 1 INVOL - AC 435 YUL->YYZ cancelled (SOP Ops Control); customer accepted rebooking to AC 436 YUL->YHM",
+   "Sister City Check: YHM<->YYZ VALID PAIR; accepted as equivalent destination",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 435 YUL->YYZ Cancellation Code: SOP Ops Control",
+   "Rebooked Flight: AC 436 YUL->YHM (sister city)",
+   "Delay Calculation: promise 10:00 at YYZ; actual 17:00 at YHM; Delay = 7hrs",
+   "Delay: +7H 00M CONTROLLABLE (SOP Ops Control)",
+   "Aeroplan: 9876543210 (Basic Member linked)",
+   "Flight Compensation: MS DOMINIQUE ARSENAULT | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet (+20%)"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "orig dep 08:30; rebooked dep 15:30 (only arrivals given)",
+  "cancelCode 'SOP' chosen for 'SOP Ops Control' (text gives the description, not the NetLine code)",
+  "noticeHours null",
+  "systemCode not stated (null)",
+  "Aeroplan Basic 9876543210 active, good standing",
+  "arrDelayMin 420 = actual at YHM minus original promise at YYZ"
+ ],
+ "unsupported": []
+}

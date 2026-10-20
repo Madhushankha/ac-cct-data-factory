@@ -1,0 +1,72 @@
+{
+  "id": "FD_TC_101",
+  "family": "FD",
+  "summary": "Single adult JACQUES FORTIER, AC 502 YUL-YYZ 10:00-12:00; flight data INCOMPLETE: actual arrival time and flight status never ingested (null) and the 14-day retry window is exhausted; no disruption code can be assessed",
+  "passengers": [
+    {
+      "firstName": "JACQUES",
+      "lastName": "FORTIER",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "502",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "10:00",
+      "arrLocal": "12:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 30,
+  "outcomes": [],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "FD-APPR-ND-05",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": null,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Promised Itinerary - Flight: AC 502, Route: YUL->YYZ, Scheduled Departure: 10:00, Scheduled Arrival: 12:00",
+      "Current Itinerary - Flight: AC 502, Route: YUL->YYZ, Status: INCOMPLETE DATA",
+      "Actual Arrival: NULL (MISSING)",
+      "Flight Status: MISSING or NOT UPDATED",
+      "Delay: CANNOT CALCULATE (actual arrival unknown)",
+      "Disruption Code: N/A (DDS cannot run without flight data)",
+      "14-Day Retry Window: Disruption May 16 - Window ended May 30 - EXHAUSTED",
+      "DDS: CANNOT RUN ASSESSMENT - CRITICAL DATA MISSING",
+      "Determination: NO DETERMINATION - SENT TO AGENT",
+      "Flight Compensation: MR JACQUES FORTIER | NO DETERMINATION | DATA_MISSING | PENDING AGENT REVIEW"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "cabin Y and booking class T on every segment (text gives none)",
+    "flightDaysAgo=30: disruption May 16 per journey/TT UI, \"current date June 15\" per DDS step (14-day window ended May 30); the prerequisites instead say flight AC 377 on April 25, 2026 (conflict, flight number 502 and the May 16 date used)",
+    "no outcome entry on purpose: the booking is seeded without actual arrival/departure times or status",
+    "Aeroplan not linked"
+  ],
+  "unsupported": [
+    "\"actual arrival null / flight status missing\" is the ABSENCE of an outcome row; the seeder must leave segment 1 without any actuals (outcomes is empty). Retry-window polling is system behaviour"
+  ]
+}

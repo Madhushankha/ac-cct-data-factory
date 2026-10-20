@@ -1,0 +1,103 @@
+{
+  "id": "SOC_UAT_027",
+  "family": "SOC",
+  "summary": "EU SOC: 1 revenue pax on AC 871 CDG-YUL Jun 20 11:00, rescheduled to Jun 21 08:00 (delay 1080 min per prerequisites), code 64; informed 18 days before departure (>=14 days EU threshold) -> NOT ELIGIBLE (SoC-EU-NE-03)",
+  "passengers": [
+    {
+      "firstName": "JEAN",
+      "lastName": "MARTIN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "871",
+      "origin": "CDG",
+      "destination": "YUL",
+      "depLocal": "11:00",
+      "arrLocal": "12:30",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 1080,
+      "depDelayMin": 1080,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": 432,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [
+    {
+      "seg": 1,
+      "depDeltaMin": 1080,
+      "arrDeltaMin": 1080,
+      "noticeHours": 432
+    }
+  ],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-EU-NE-03",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 1080,
+    "control": "CONTROLLABLE",
+    "cause": "64",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip CDG→YUL on AC871 delayed +18H 00M, passenger notified 18 days before departure",
+      "Regime: EU (CDG departure)",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Promised Itinerary: AC 871 CDG→YUL Scheduled Dep 20-Jun 11:00",
+      "Current Itinerary: AC 871 CDG→YUL ARRIVED LATE, Scheduled Dep 11:00 → Actual Dep 21-Jun 08:00, +18H 00M",
+      "Notification: 18 days before departure >= 14 days threshold -> NOT ELIGIBLE",
+      "PASSENGER | NOT_ELIGIBLE | DELAY_6_HOURS_OR_MORE",
+      "NOT_ELIGIBLE reason: Notified >=14 days before departure (EU threshold)"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none; notified >=14 days before departure (EU)"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "delay 1080 min per prerequisites (the times 11:00 -> next day 08:00 would be 21 h: text inconsistency)",
+    "18-day notice modelled as scheduleChange noticeHours 432 (18 x 24)",
+    "arrival 12:30 EDT (7h30 block, tz -6h)",
+    "residence null"
+  ],
+  "unsupported": [
+    "Text inconsistency: stated delay 18 h vs times implying 21 h; spec uses 1080 min"
+  ]
+}

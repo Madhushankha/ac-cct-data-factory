@@ -1,0 +1,105 @@
+{
+ "id": "SOC_UAT_026",
+ "family": "SOC",
+ "summary": "EU SOC: 1 OAL (Lufthansa) employee pax on LH 470 FRA-YYZ Jun 2 10:00 actual 16:00/17:00 (prerequisite 420 min), code 64; employee first -> NOT ELIGIBLE (SoC-EU-NE-02)",
+ "passengers": [
+  {
+   "firstName": "HANS",
+   "lastName": "BAUER",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": true
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "872",
+   "origin": "FRA",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "13:00",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 420,
+   "depDelayMin": 420,
+   "delayCode": "64",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "SoC-EU-NE-02",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_6_HOURS_OR_MORE",
+  "delayMin": 420,
+  "control": null,
+  "cause": "64",
+  "ttUi": [
+   "TYPE: EMPLOYEE (non-revenue)",
+   "Trip Completed, Disruption Detected",
+   "Single-segment trip FRA\u2192YYZ on LH470 delayed +7H 00M",
+   "Regime: EU (FRA departure)",
+   "PASSENGERS: 1 SEGMENTS: 1",
+   "Promised Itinerary: LH 470 FRA\u2192YYZ Scheduled Dep 02-Jun 10:00",
+   "Current Itinerary: LH 470 FRA\u2192YYZ ARRIVED LATE, Scheduled Dep 10:00 \u2192 Actual 16:00, +7H 00M",
+   "SOC section present",
+   "PASSENGER | NOT_ELIGIBLE | DELAY_6_HOURS_OR_MORE",
+   "NOT_ELIGIBLE reason: Employee booking (OAL)"
+  ],
+  "soc": {
+   "eligibility": "NOT_ELIGIBLE",
+   "entitlements": "none; OAL employee booking"
+  }
+ },
+ "assumed": [
+  "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+  "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+  "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+  "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+  "delay 420 min per prerequisites (text's own actual time 16:00 = +360; flagged inconsistency in the text)",
+  "arrival 12:40 EDT (8h40, tz -6h)",
+  "control left null (employee not eligible regardless)"
+ ],
+ "unsupported": [
+  "Text inconsistency: actual dep 16:00 (= +6h) vs prerequisites 420 min (7h); spec uses 420",
+  "Non-revenue OAL employee ticket not expressible beyond employee=true"
+ ],
+ "booking": {
+  "officeId": "YULAC08EC",
+  "specialKeywords": [
+   {
+    "code": "STFD",
+    "text": "SN-0000012345"
+   }
+  ]
+ }
+}

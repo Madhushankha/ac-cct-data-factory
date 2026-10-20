@@ -1,0 +1,103 @@
+{
+ "id": "SOC_UAT_037",
+ "family": "SOC",
+ "summary": "1 adult, single AC 871 CDG-YYZ recorded as operated (not cancelled) although the passenger went back to origin and did not travel",
+ "passengers": [
+  {
+   "firstName": "CLAIRE",
+   "lastName": "DUBOIS",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "FR",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "871",
+   "origin": "CDG",
+   "destination": "YYZ",
+   "depLocal": "14:00",
+   "arrLocal": "16:00",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "9871",
+   "origin": "CDG",
+   "destination": "CDG",
+   "depLocal": "14:20",
+   "arrLocal": "15:50",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded",
+   "changeDaysBeforeDeparture": 0.1
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "SoC-EU-NE-13",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": null,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Trip Not Completed - Passenger returned to origin",
+   "Single-segment trip CDG->YYZ on AC871 - flight operated (departed and returned to CDG). System records as 'operated' not 'cancelled'.",
+   "Regime: EU (CDG departure)",
+   "PASSENGERS: 1 - SEGMENTS: 1",
+   "Promised: AC 871 CDG->YYZ Sched Dep 14:00",
+   "Current: AC 871 CDG->YYZ Status: OPERATED (departed and returned to origin - not recorded as cancelled)",
+   "SOC section present; Flight Status: OPERATED (not cancelled in system - departed + returned)",
+   "PASSENGER STATUS: NOT_ELIGIBLE",
+   "NOT_ELIGIBLE reason: Flight not recorded as cancelled (dispute relevant; agent may reclassify as de facto cancellation)",
+   "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE; DDS code SoC-EU-NE-13"
+  ],
+  "soc": {
+   "eligibility": "NOT_ELIGIBLE",
+   "entitlements": "none (flight recorded operated, not cancelled)"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "Arrival 16:00 local YYZ (text gives only departure)",
+  "Cabin W (PY), class O",
+  "Residence FR",
+  "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+  "Flight modelled as ontime (system records it as operated), passenger as not_travelled",
+  "Gherkin journey date June 6 vs prerequisite 10-Jun; ignored"
+ ],
+ "unsupported": [
+  "The aircraft departing then returning to origin while still being recorded as 'operated' (no divert/cancel record) is only approximated by an on-time outcome plus not_travelled pax event"
+ ]
+}

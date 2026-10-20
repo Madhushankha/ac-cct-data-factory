@@ -1,0 +1,94 @@
+{
+  "id": "FD_TC_167",
+  "family": "FD",
+  "summary": "ASL TLV-YYZ AC084 cancelled, customer rebooked to a new destination YOW (AC083) not configured in DDS -> No Determination",
+  "passengers": [
+    {
+      "firstName": "OMRI",
+      "lastName": "TAL",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "84",
+      "origin": "TLV",
+      "destination": "YYZ",
+      "depLocal": "12:00",
+      "arrLocal": "16:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [
+    {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "83",
+      "origin": "TLV",
+      "destination": "YOW",
+      "depLocal": "15:00",
+      "arrLocal": "19:30",
+      "dayOffset": 0,
+      "accepted": true
+    }
+  ],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "FD-ASL-ND-03",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": null,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Original Itinerary: AC 084 TLV->YYZ Status CANCELLED",
+      "Current Itinerary: AC 083 TLV->YOW Status COMPLETED (new destination)",
+      "Original Destination: YYZ (Toronto); Current Destination: YOW (Ottawa) - DIFFERENT CITY",
+      "Sister City Check: YOW<->YYZ = NOT A VALID PAIR",
+      "Contract Status: original contract VOIDED; new contract issued for TLV->YOW",
+      "Regime: ASL (Israel origin TLV)",
+      "DDS: CANNOT ASSESS - NEW DESTINATION / NEW CONTRACT",
+      "Determination: NO DETERMINATION - SENT TO AGENT",
+      "Flight Compensation: MR OMRI TAL | NO DETERMINATION | NEW_DESTINATION | PENDING AGENT REVIEW"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "Journey from TT UI/chatbot: AC 084 TLV->YYZ cancelled, rebooked AC 083 TLV->YOW; Prerequisites only say \"new destination recently added\"",
+    "original dep 12:00 / arr 16:00 and rebooking dep 15:00 / arr 19:30 chosen",
+    "cancellation code not stated -> null; noticeHours null",
+    "flight date June 1, 2026; flightDaysAgo=10"
+  ],
+  "unsupported": [
+    "DDS rules-engine route configuration missing/incomplete for the new destination (\"not yet onboarded\") is system configuration, not booking data; the builder can only approximate by rebooking to a different destination (YOW)"
+  ]
+}

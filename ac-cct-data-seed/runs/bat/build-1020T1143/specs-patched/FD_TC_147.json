@@ -1,0 +1,113 @@
+{
+ "id": "FD_TC_147",
+ "family": "FD",
+ "summary": "EU 261 LHR-YYZ-YVR, leg 2 cancelled, customer rebooked to YEG instead of YVR -> No Determination (new destination)",
+ "passengers": [
+  {
+   "firstName": "BRIGITTE",
+   "lastName": "PELLETIER",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "849",
+   "origin": "LHR",
+   "destination": "YYZ",
+   "depLocal": "09:00",
+   "arrLocal": "11:30",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "Y",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "105",
+   "origin": "YYZ",
+   "destination": "YVR",
+   "depLocal": "13:45",
+   "arrLocal": "15:50",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "Y",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime"
+  },
+  {
+   "seg": 2,
+   "kind": "cancel",
+   "cancelCode": "CREW"
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 2,
+   "carrier": "AC",
+   "number": "107",
+   "origin": "YYZ",
+   "destination": "YEG",
+   "depLocal": "17:00",
+   "arrLocal": "19:10",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NO_DETERMINATION",
+  "systemCode": "FD-EU-ND-03",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": null,
+  "control": "CONTROLLABLE",
+  "cause": "CREW",
+  "ttUi": [
+   "Original Itinerary: leg 2 CANCELLED",
+   "Current Itinerary: rebooked to a different destination, COMPLETED (new destination)",
+   "Original destination YVR (Vancouver); current destination YEG (Edmonton) - DIFFERENT CITY",
+   "Sister City check: NOT A VALID PAIR",
+   "Contract Status: original contract VOIDED; new contract issued",
+   "Regime: EU 261 (EU origin)",
+   "DDS: CANNOT ASSESS - NEW DESTINATION / NEW CONTRACT",
+   "Determination: NO DETERMINATION - SENT TO AGENT",
+   "Flight Compensation: MS BRIGITTE PELLETIER | NO DETERMINATION | NEW_DESTINATION | PENDING AGENT REVIEW"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "Text is internally inconsistent: Description/Prerequisites/Expected Results use LHR-YYZ-YVR rebooked to YEG; TT UI lines and chatbot use AC 871/872 CDG-YYZ/YOW. Followed Prerequisites + Expected Results (LHR, YVR->YEG).",
+  "flight numbers AC 849 / AC 105, all times chosen",
+  "rebooked flight YYZ-YEG AC 107 17:00-19:10 chosen",
+  "cancellation code given as \"42\" (numeric, Controllable) - used verbatim in cancelCode; no NetLine 4-char equivalent in text (CREW would be an equivalent controllable code)",
+  "noticeHours not stated -> null"
+ ],
+ "unsupported": []
+}

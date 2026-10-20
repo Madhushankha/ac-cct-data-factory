@@ -1,0 +1,80 @@
+{
+ "id": "FD_TC_214",
+ "family": "FD",
+ "summary": "Domestic Canada booking for the rejection path: adult ISABELLE ROY on AC 458 YYZ-YUL arriving 4h late, code 42 controllable, APPR CAD 400 (claims company, no claim opened, Canada)",
+ "passengers": [
+  {
+   "firstName": "ISABELLE",
+   "lastName": "ROY",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "458",
+   "origin": "YYZ",
+   "destination": "YUL",
+   "depLocal": "15:10",
+   "arrLocal": "16:30",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 15,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 458 YYZ->YUL Scheduled Arrival 16:30",
+   "Current: AC 458 YYZ->YUL ARRIVED LATE, 16:30 -> 20:30, Delay +4H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 458 YYZ->YUL 42 Delayed due to scheduled maintenance - CONTROLLABLE",
+   "Cancellation code: NONE; Fallback: FALSE",
+   "Delay: +4H 00M - CONTROLLABLE",
+   "Flight Compensation: MS ISABELLE ROY | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flight number AC 458 YYZ-YUL dep 15:10 arr 16:30 assumed (text gives no flight); realistic domestic APPR flight chosen so the booking has an eligible 240-min controllable delay",
+  "delay code 42 (scheduled maintenance, CONTROLLABLE), 240 min arrival delay, cabin Y class T assumed",
+  "PNR names/ids in the text are labels, not real locators",
+  "text gives no passenger name, no flight; passenger name ISABELLE ROY assumed; domestic APPR flight (240 min, code 42) chosen"
+ ],
+ "unsupported": [
+  "claim-side behaviour (chatbot, third-party classification, manual handoff, case creation) is Claims Dashboard / chatbot behaviour, not booking data"
+ ]
+}

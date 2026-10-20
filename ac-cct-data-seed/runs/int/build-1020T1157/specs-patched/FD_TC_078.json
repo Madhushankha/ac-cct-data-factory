@@ -1,0 +1,105 @@
+{
+ "id": "FD_TC_078",
+ "family": "FD",
+ "summary": "Single adult EMILE GAGNON (linked Aeroplan Basic, tier A), AC 470 YUL-YYZ 10:00-12:00 departed 14:15 (255 late) arrived 16:20 (260 late); first arrival and departure delay code 41 (TD, aircraft defects (hydraulic leak found at YUL)); no cancellation; customer did not board and stayed at YUL (No Travel Origin)",
+ "passengers": [
+  {
+   "firstName": "EMILE",
+   "lastName": "GAGNON",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "470",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "12:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 260,
+   "depDelayMin": 255,
+   "delayCode": "41",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "depDelayCode": "41",
+   "delayCodeAlpha": "TD"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-08",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": 260,
+  "control": "UNCONTROLLABLE",
+  "cause": "41",
+  "noTravel": "ORIGIN",
+  "fallback": false,
+  "refundEntitlement": "full ticket refund + expenses (none claimed), CAD 0 cash",
+  "expenses": "applicable, none claimed",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 470, Route: YUL->YYZ, Date: May 31, 2026, Scheduled Departure: 10:00, Scheduled Arrival: 12:00",
+   "Actual Itinerary - Flight: AC 470, Route: YUL->YYZ, Actual Departure: 14:15, Actual Arrival: 16:20, Status: DELAYED (operated)",
+   "Departure delay = 255 min (>=180) ; Arrival delay = 260 min (>=180)",
+   "Customer Status: NO TRAVEL - ORIGIN (not boarded, coupon not flown, remained at YUL)",
+   "History - No rebooking accepted",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 470 - YUL->YYZ (only segment)",
+   "Cancellation code: NONE",
+   "First arrival delay code: 41 (TD) - \"Aircraft defects\"",
+   "First departure delay code: 41 (TD)",
+   "No additional delay codes on MSL",
+   "Controllability source = first arrival delay code (no cancellation code)",
+   "Fallback: FALSE (arrival delay code available)",
+   "APPR causal category: Within carrier control - For Safety - SAFETY",
+   "Disruption Type: DELAY",
+   "No Travel Branch A (Remained at Origin) + MSL delayed 3+ hours - controllability check - Safety",
+   "Aeroplan: LINKED | Tier code A | Aeroplan Basic",
+   "DDS outcome code: FD-APPR-NE-14",
+   "Compensation outcome: NOT ELIGIBLE (no cash compensation)",
+   "Ticket refund entitlement: FULL refund (Branch A - Safety)",
+   "Expenses: APPLICABLE under Branch A - Safety (none claimed in this test)",
+   "Flight Compensation: MR EMILE GAGNON | NOT ELIGIBLE | SAFETY | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "cabin Y and booking class T on every segment (text gives none)",
+  "first name given as \"?mile\" (character lost in source), taken as EMILE",
+  "Aeroplan number not stated for this scenario: used 9876543210 (the number used in sibling Basic-Aeroplan scenarios); tier A = Basic",
+  "two-letter alpha delay code given in text is carried in delayCodeAlpha (extra key)"
+ ],
+ "unsupported": []
+}

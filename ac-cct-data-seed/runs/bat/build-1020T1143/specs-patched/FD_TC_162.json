@@ -1,0 +1,80 @@
+{
+ "id": "FD_TC_162",
+ "family": "FD",
+ "summary": "ASL TLV-YYZ AC084 arrived 4h late, controllable code 66; itinerary does not end in Israel and delay below 8h -> Not Eligible ILS 0",
+ "passengers": [
+  {
+   "firstName": "MAYA",
+   "lastName": "STEIN",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "84",
+   "origin": "TLV",
+   "destination": "YYZ",
+   "depLocal": "12:00",
+   "arrLocal": "16:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "Y",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": null,
+   "delayCode": "66",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "ASL",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-ASL-NE-23",
+  "amount": 0,
+  "currency": "ILS",
+  "delayBand": null,
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "66",
+  "ttUi": [
+   "Promised Itinerary: AC 084 TLV->YYZ scheduled arrival 16:00 (local YYZ)",
+   "Current Itinerary: AC 084 TLV->YYZ ARRIVED LATE, actual 20:00, +4H 00M",
+   "Origin: TLV (Israel) - \"start in Israel\" check PASSES",
+   "Destination: YYZ (Canada) - not Israel - \"end in Israel\" check FAILS (NE-21 component)",
+   "Arrival Delay Code: 66 (Not Extraordinary Circumstance, controllable)",
+   "Regime: ASL (via origin TLV) + APPR (Canadian destination YYZ)",
+   "ASL Route Check: Start in Israel PASSED | End in Israel FAILED (NE-21 component)",
+   "ASL Travel Completed Threshold: 8 hours; 4h < 8h -> below threshold",
+   "3-hour threshold applies only to No Travel; Travel Completed uses 8 hours",
+   "Flight Compensation (ASL): MS MAYA STEIN | NOT ELIGIBLE | NOT_ISRAEL_DESTINATION + BELOW_8HR_THRESHOLD | ILS 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 12:00 TLV chosen (text gives scheduled arrival 16:00 YYZ, actual 20:00)",
+  "flight date June 7, 2026 in text; flightDaysAgo=10",
+  "APPR is assessed separately and may be eligible (not asserted)"
+ ],
+ "unsupported": []
+}

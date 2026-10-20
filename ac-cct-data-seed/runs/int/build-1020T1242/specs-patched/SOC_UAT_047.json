@@ -1,0 +1,89 @@
+{
+  "id": "SOC_UAT_047",
+  "family": "SOC",
+  "summary": "1 adult, AC 837 FRA-YYZ 10:00 departed 17:00 (7h late), delay code 77 weather; EU SOC eligible regardless of cause",
+  "passengers": [
+    {
+      "firstName": "LEON",
+      "lastName": "FISCHER",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "DE",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "837",
+      "origin": "FRA",
+      "destination": "YYZ",
+      "depLocal": "10:00",
+      "arrLocal": "12:30",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": 420,
+      "delayCode": "77",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "SoC-EU-EL-07",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 420,
+    "control": null,
+    "cause": "77",
+    "ttUi": [
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip FRA->YYZ on AC837 delayed due to weather (uncontrollable - NOT CHECKED under EU)",
+      "Regime: EU (FRA departure)",
+      "PASSENGERS: 1 - SEGMENTS: 1",
+      "Promised: AC 837 FRA->YYZ Sched Dep 22-Jun 10:00",
+      "Current: ARRIVED LATE, Sched Dep 10:00, Actual 17:00, Delay +7H 00M (prerequisite 420 min used, chatbot '8h' ignored)",
+      "Departure Delay Code: 77 (Weather) - NOT CHECKED (EU)",
+      "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 30.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+      "CyberSource: YELLOW - case PARKED in fraud queue (visible to fraud team only); status ELIGIBLE (parked - pending fraud review)",
+      "DDS code SoC-EU-EL-07"
+    ],
+    "soc": {
+      "eligibility": "ELIGIBLE",
+      "entitlements": "Meals 30/pax (EUR), hotel rate of day max 3 nights cap 500 (overnight eligible, delay >360), transport 200, communication 30, parking 50, essentials 30"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Arrival 12:30 local YYZ (not given)",
+    "Cabin W (PY), class O",
+    "Residence DE (departure country Germany)",
+    "Arrival delay assumed equal to 420 min departure delay",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10.",
+    "Chatbot journey screen says 8 hours; prerequisites (420) used per TT note"
+  ],
+  "unsupported": [
+    "CyberSource YELLOW fraud result (parked in fraud queue) is produced by the payment/fraud screening step from claimant/payment data, not by booking data; cannot be forced from the booking"
+  ]
+}

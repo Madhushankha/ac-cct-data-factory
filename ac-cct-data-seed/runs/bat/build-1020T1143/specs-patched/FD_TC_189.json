@@ -1,0 +1,82 @@
+{
+ "id": "FD_TC_189",
+ "family": "FD",
+ "summary": "Single pax YUL-YYZ AC 427; promise (14-day mark) arrival 08:00 kept despite OPR INVOL re-route; actual arrival 17:30 (+9h30), code 42",
+ "passengers": [
+  {
+   "firstName": "DOMINIQUE",
+   "lastName": "HEBERT",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "427",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "05:45",
+   "arrLocal": "08:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 570,
+   "depDelayMin": 570,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "APPR_GTE_9_HOURS",
+  "amount": 1000,
+  "currency": "CAD",
+  "delayBand": "DELAY_GTE_9_HOURS",
+  "delayMin": 570,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 427 YUL→YYZ Scheduled Arrival 08:00 (14-day mark, NOT updated by OPR)",
+   "Current: AC 427 YUL→YYZ ARRIVED LATE, Actual 17:30, Delay +9H 30M",
+   "Change History: Change 1: OPR (YTOAC00PR) at D-0 INVOL arrival 08:00→17:30",
+   "Promise = 08:00; Delay from promise = 9.5 hours",
+   "Regime: APPR",
+   "APPR: Delay >=9h, Controllable -> ELIGIBLE",
+   "MSL FLIGHT: AC 427 YUL→YYZ 42",
+   "CONTROLLABLE (Code 42)",
+   "Flight Compensation: MS DOMINIQUE HEBERT | ELIGIBLE | APPR_GTE_9_HOURS | CAD $1,000"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "PNR name accents dropped (GDS ASCII)",
+  "dep time 05:45 (text gives only arrival)",
+  "arrival modelled as the 08:00 promise; actual 17:30 = +570 min delay",
+  "dayOffset 0"
+ ],
+ "unsupported": [
+  "PNR change-history identifiers/classification (VOL/INVOL tool markers, D-n change timing) cannot be expressed in booking data; segment is modelled at the final promise time and delay measured from it; OPR YTOAC00PR identifier and INVOL classification"
+ ]
+}

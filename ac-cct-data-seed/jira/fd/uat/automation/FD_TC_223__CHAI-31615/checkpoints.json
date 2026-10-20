@@ -1,0 +1,378 @@
+{
+  "key": "CHAI-31615",
+  "test_id": "FD_TC_223",
+  "title": "3rd Party � Family/Friend � OTP Failed � Upload POA � Manual Handoff",
+  "goal": "Validates that when a family member or friend cannot pass OTP authentication, the system requires them to upload proof of authority (POA/authorization document) and routes the case for manual handling.",
+  "summary": {
+    "seed": 2,
+    "chat": 17,
+    "api": 0,
+    "email": 0,
+    "dashboard": 9,
+    "implied": 9,
+    "manual": 2,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Validates that when a family member or friend cannot pass OTP authentication, the system requires them to upload proof of authority (POA/authorization document) and routes the case for manual handling.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Third-party caller type: Parent/Guardian/Family/Friend",
+      "expected": "Third-party caller type: Parent/Guardian/Family/Friend",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "OTP authentication fails (wrong code or passenger unreachable)",
+      "expected": "OTP authentication fails (wrong code or passenger unreachable)",
+      "id": "CP003"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP004"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01)",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"I'm filing a flight disruption claim for my elderly mother who can't use the computer\"",
+      "expected": "I'm filing a flight disruption claim for my elderly mother who can't use the computer",
+      "id": "CP008"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? YES",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot identifies third-party type ? Parent/Guardian/Family/Friend",
+      "expected": "",
+      "id": "CP011"
+    },
+    {
+      "section": "OTP AUTHENTICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot initiates OTP verification",
+      "expected": "",
+      "id": "CP012"
+    },
+    {
+      "section": "OTP AUTHENTICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds: \"She doesn't have access to her phone right now, I can't get the code\"",
+      "expected": "",
+      "id": "CP013"
+    },
+    {
+      "section": "OTP FAILED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system marks OTP ? FAILED / NOT COMPLETED",
+      "expected": "",
+      "id": "CP014"
+    },
+    {
+      "section": "DOCUMENT UPLOAD REQUIRED",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Since we're unable to verify through OTP, you'll need to upload a document proving you have the authority to act on behalf of the passenger (e.g., Power of Attorney, authorization letter).\"",
+      "expected": "Since we're unable to verify through OTP, you'll need to upload a document proving you have the authority to act on behalf of the passenger (e.g., Power of Attorney, authorization letter).",
+      "id": "CP015"
+    },
+    {
+      "section": "DOCUMENT UPLOAD REQUIRED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the chatbot collects: ticket number, booking reference, contact information for the passenger, full passenger names, and requests document upload",
+      "expected": "",
+      "id": "CP016"
+    },
+    {
+      "section": "DOCUMENT UPLOAD REQUIRED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user uploads the authorization document and provides required information",
+      "expected": "",
+      "id": "CP017"
+    },
+    {
+      "section": "CASE SENT FOR MANUAL HANDLING",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system creates a case and routes it for manual handling (intake approval required)",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Is there anything I can help you with?\"",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP019"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP020"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP021"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the system correctly identifies the third-party as \"Parent/Guardian/Family/Friend\"",
+      "expected": "",
+      "id": "CP022"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And OTP authentication has been initiated",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the user cannot provide the correct OTP code as the passenger is unreachable",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the system marks OTP as FAILED or NOT COMPLETED",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the system should fall back to the document upload path",
+      "expected": "",
+      "id": "CP026"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the system should collect ticket number and booking reference and contact information for the passenger and full passenger names and request POA or authorization document upload",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the user uploads the authorization document and provides required information",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And a case should be created and routed for manual handling with intake approval flag",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the Claims Dashboard should show the case with third-party type \"Family/Friend � OTP Failed\" and status \"Manual Review\" and intake approval required",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Given the Family/Friend OTP failed and the case was routed to manual handling with POA upload",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no automated payment flow should be triggered",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence should have been asked during the chatbot flow",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record should have been created automatically",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no batch file should have been dispatched",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no IDV should have been triggered via the automated flow",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no CyberSource fraud screening should have been triggered via the automated flow",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the case should be in manual review status with intake approval required",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And if the agent later approves intake and determines eligible manual compensation should be created and payment dispatched per type with cash to Unifier and e-credit to EIP",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the Claims Dashboard should show case status as \"Manual Review � Intake Approval Required\" with no payout section until manually resolved",
+      "expected": "",
+      "id": "CP040"
+    }
+  ]
+}

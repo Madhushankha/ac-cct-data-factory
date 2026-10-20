@@ -1,0 +1,81 @@
+{
+  "id": "SOC_UAT_056",
+  "family": "SOC",
+  "summary": "1 adult, AC 084 TLV-VDA (Eilat) 8h late on 01-Jan-2021, claimed far outside the 1,460-day ASL limitation; ASL SOC not eligible (limitation expired)",
+  "passengers": [
+    {
+      "firstName": "ELI",
+      "lastName": "AVRAHAM",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "IL",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "084",
+      "origin": "TLV",
+      "destination": "VDA",
+      "depLocal": "21:00",
+      "arrLocal": "21:50",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 2112,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 480,
+      "depDelayMin": 480,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-ASL-NE-08",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 480,
+    "control": null,
+    "cause": "64",
+    "ttUi": [
+      "Claim outside ASL limitation period (> 1,460 days / 4 years)",
+      "Journey AC 084 TLV->VDA delayed (prerequisite: 480 min, 01-Jan-2021 21:00 -> 02-Jan 05:00)",
+      "Flow stops at the claim time limit check before DDS evaluation; NOT_ELIGIBLE, SoC-ASL-NE-08, no receipt upload, no case creation",
+      "Regime: ASL"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none (limitation expired)"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Conflicts: prerequisite routes (YYZ-TLV) and delay (480) and dates (01-Jan-2021) differ from the journey screen (TLV-VDA, 7h, 01-Mar-2022); built TLV-VDA (itinerary line) with prerequisite delay 480 and date 2021-01-01 -> flightDaysAgo=2112 (days before 2026-10-15; > 1460)",
+    "Arrival 21:50 local VDA (50 min flight); arrival delay assumed 480",
+    "Cabin W (PY), class O",
+    "Residence IL"
+  ],
+  "unsupported": [
+    "A 2021 flight date is probably outside the data retention of TripTracer/DDS history, and the limitation gate sits in the chatbot before DDS runs; TT may show nothing or an out-of-window state"
+  ]
+}

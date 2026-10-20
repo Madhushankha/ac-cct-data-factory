@@ -1,0 +1,130 @@
+{
+  "id": "SOC_UAT_042",
+  "family": "SOC",
+  "summary": "4 passengers (2 adults, 2 children, one family), AC 850 CDG-YUL 09:00-13:00 cancelled after diversion back to origin, rebooked ~18h later; EU SOC eligible",
+  "passengers": [
+    {
+      "firstName": "PIERRE",
+      "lastName": "LEFEBVRE",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "DE",
+      "employee": false
+    },
+    {
+      "firstName": "MARIE",
+      "lastName": "LEFEBVRE",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "DE",
+      "employee": false
+    },
+    {
+      "firstName": "LEA",
+      "lastName": "LEFEBVRE",
+      "type": "CHD",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "DE",
+      "employee": false
+    },
+    {
+      "firstName": "HUGO",
+      "lastName": "LEFEBVRE",
+      "type": "CHD",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "DE",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "850",
+      "origin": "CDG",
+      "destination": "YUL",
+      "depLocal": "09:00",
+      "arrLocal": "13:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": 1080,
+      "depDelayMin": 1080,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": 0,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [
+    {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "850",
+      "origin": "CDG",
+      "destination": "YUL",
+      "depLocal": "03:00",
+      "arrLocal": "07:00",
+      "dayOffset": 1,
+      "accepted": true
+    }
+  ],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "SoC-EU-EL-02",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 1080,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Trip Not Completed, Disruption Detected",
+      "Single-segment trip cancelled - passenger stayed at origin (CDG) for 18 hours",
+      "Regime: EU (CDG departure)",
+      "Promised: CDG->(YUL) Sched Dep 09:00 on 19-Jun",
+      "Current: Status: CANCELLED",
+      "SOC section present; Cancellation: YES | SOC Segment Delay to rebooking: 1080 min (18h) >= 2h",
+      "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 60.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+      "CyberSource: GREEN",
+      "DDS code SoC-EU-EL-02 (case record later says EL-03)"
+    ],
+    "soc": {
+      "eligibility": "ELIGIBLE",
+      "entitlements": "Per-pax meals EUR 60 (x4), hotel rate of day 2 rooms (per adult) max 3 nights EUR 500 cap, transport EUR 200 (1-5 pax), communication/essentials EUR 30 per pax, parking EUR 50"
+    }
+  },
+  "assumed": [
+    "Passenger names chosen; family of 2 adults + 2 children from prerequisite (TT block says PASSENGERS: 1 and 1-adult entitlements - conflicting)",
+    "Conflict: prerequisite says diverted back and rebooked 8h later (480 min); TT validation says cancelled with 1080 min (18h) to rebooking. Used TT (1080); rebooking flight set to 03:00 next day to produce 18h",
+    "Gherkin flight AC 871 CDG-YYZ 11-Jun differs from prerequisite AC 850 CDG-YUL; prerequisite used",
+    "cancelCode left null (cause irrelevant under EU SOC)",
+    "No notice before departure (noticeHours 0)",
+    "Cabin W (PY), class O",
+    "Residence DE (payout Germany)",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+    "Case section says DDS code EL-03 while TT says EL-02; expected code EL-02 (matches expected-results line)"
+  ],
+  "unsupported": [
+    "Diversion back to origin followed by cancellation is expressed only as a cancel + rebooking",
+    "Hotel 'two rooms' is an entitlement computation, not booking data"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+ "id": "FD_TC_119",
+ "family": "FD",
+ "summary": "Adult, AC1802 PTP-YUL sched arr 18:00, arrived 21:30 (+210 min); arrival code MISSING, departure code 42 fallback: EU261 Guadeloupe flat EUR 400",
+ "passengers": [
+  {
+   "firstName": "ALAIN",
+   "lastName": "BEAUCHAMP",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "FR",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "1802",
+   "origin": "PTP",
+   "destination": "YUL",
+   "depLocal": "13:00",
+   "arrLocal": "18:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 210,
+   "depDelayMin": 210,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "arrDelayCode": null,
+   "depDelayCode": "42",
+   "fallback": true
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-EU-EL-11",
+  "amount": 400,
+  "currency": "EUR",
+  "delayBand": "EU261_GUADELOUPE_DELAY_GTE_3_HOURS",
+  "delayMin": 210,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 1802, Route: PTP → YUL, Scheduled Arrival: 18:00",
+   "Current Itinerary - Flight: AC 1802, Route: PTP → YUL, Status: ARRIVED LATE, Scheduled Arrival: 18:00 → Actual: 21:30, Delay: +3H 30M",
+   "Regime: EU 261 (Guadeloupe / DOM-TOM)",
+   "Compensation Rule: Flat €400",
+   "MSL FLIGHT: AC 1802 - PTP → YUL - ARRIVAL CODE: NULL (MISSING)",
+   "FALLBACK TRIGGERED: Arrival code NULL → using departure code",
+   "Departure Code: 42 (Scheduled Maintenance)",
+   "Fallback Flag: TRUE",
+   "CONTROLLABLE (Code 42 via fallback departure code)",
+   "Delay: +3H 30M - CONTROLLABLE",
+   "Sister City: FALSE",
+   "Flight Compensation: MR ALAIN BEAUCHAMP | ELIGIBLE | EU261_GUADELOUPE_DELAY_GTE_3_HOURS (FALLBACK) | EUR 400.00 | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 13:00 PTP local (text gives only arrival 18:00 YUL)",
+  "residence FR (Guadeloupe, EUR) per text",
+  "Guadeloupe (PTP) is an EU outermost region: regime stands for EU 261 Guadeloupe flat EUR 400; APPR EL-xx $400 CAD also assessed and EU selected as most generous",
+  "flight number conflict: prerequisites/Expected Results say AC 1840, Trip Tracer/chatbot say AC 1802; AC 1802 used",
+  "delayCode null (arrival code missing); departure code 42 in non-schema extras on the outcome",
+  "Aeroplan not linked"
+ ],
+ "unsupported": []
+}

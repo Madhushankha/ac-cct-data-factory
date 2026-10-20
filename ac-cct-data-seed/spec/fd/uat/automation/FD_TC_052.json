@@ -1,0 +1,76 @@
+{
+ "id": "FD_TC_052",
+ "family": "FD",
+ "summary": "Single pax Luc Bergeron (Basic Aeroplan 9876543210); AC 331 YUL-YYZ sched arr 14:00 arrived 21:00 (+7h), code 64 crew shortage, controllable, but travel was 420 days before the claim (>366 days, time-barred) -> NOT ELIGIBLE CAD 0",
+ "passengers": [
+  {
+   "firstName": "LUC",
+   "lastName": "BERGERON",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "331",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:40",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 420,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 420,
+   "depDelayMin": 420,
+   "delayCode": "64",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-07",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "CONTROLLABLE",
+  "cause": "64",
+  "ttUi": [
+   "Travel date = May 1, 2025; Filing date = June 15, 2026; Days elapsed = 420; APPR limitation = 366 days; LIMITATION EXCEEDED by 54 days",
+   "Arrival delay code = 64 (Flight Crew Shortage - Controllable); Delay = 7h (6 to <9h band); Scheduled arrival = 14:00; Actual arrival = 21:00",
+   "Time Limit Check: 420 days > 366 days -> OUTSIDE LIMITATION -> NOT ELIGIBLE",
+   "MSL FLIGHT: AC 331 YUL->YYZ code 64",
+   "Aeroplan: Basic Member (9876543210) recognized - AC Wallet NOT offered"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flightDaysAgo 420 because the scenario is a timing test: travel 420 days before filing (filing assumed on the run date)",
+  "dep 12:40; depDelayMin 420",
+  "flight AC 331 from prerequisites (chatbot journey shows AC 459)",
+  "Aeroplan Basic active, good standing"
+ ],
+ "unsupported": []
+}

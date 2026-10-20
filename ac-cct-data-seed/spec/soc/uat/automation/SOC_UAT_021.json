@@ -1,0 +1,105 @@
+{
+  "id": "SOC_UAT_021",
+  "family": "SOC",
+  "summary": "APPR SOC: 2 regular adults on AC 301 YYZ-YVR Jun 15 dep 08:00 actual 15:00 (+420), code 06 airport/ground handling controllable; booker Basic Aeroplan + 1 non-member -> ELIGIBLE (SoC-APPR-EL-08); submitted CAD 980 > CAD 800 cap -> Pending Agent Review",
+  "passengers": [
+    {
+      "firstName": "RICHARD",
+      "lastName": "LEGER",
+      "type": "ADT",
+      "aeroplanNumber": "9876543210",
+      "aeroplanTier": "Basic",
+      "residence": "CA",
+      "employee": false
+    },
+    {
+      "firstName": "MARIE",
+      "lastName": "LEGER",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "301",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "08:00",
+      "arrLocal": "09:40",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": 420,
+      "delayCode": "06",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    },
+    {
+      "seg": 1,
+      "pax": 2,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "SoC-APPR-EL-08",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 420,
+    "control": "CONTROLLABLE",
+    "cause": "06",
+    "ttUi": [
+      "Single-segment domestic trip YYZ→YVR on AC301 delayed +7H 00M (Airport Operations / Ramp Ground Handling, controllable)",
+      "Promised Itinerary: AC 301 YYZ→YVR Scheduled Dep 15-Jun 08:00",
+      "Current Itinerary: AC 301 YYZ→YVR ARRIVED LATE, Scheduled Dep 08:00 → Actual 15:00, +7H 00M",
+      "Departure Delay Code: 06 (Airport Operations / Ramp Ground Handling), Controllable",
+      "PASSENGER(S) | ELIGIBLE | DELAY_6_HOURS_OR_MORE (overnight eligible)",
+      "CyberSource: GREEN"
+    ],
+    "soc": {
+      "eligibility": "ELIGIBLE",
+      "entitlements": "hotel rate of day max 3 nights $500 cap per room, meals $60, transport $200, communication $60, parking $50, essentials $60; submitted hotel 550 + meals 130 + transport 220 + essentials 80 = CAD 980 exceeds CAD 800 total case threshold -> Manual Handling Queue (Pending Agent Review)"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "arrival 09:40",
+    "Aeroplan numbers invented where members are stated",
+    "residence CA assumed (Interac payout for Canada)",
+    "TT UI lines reconstructed from the DDS evaluation block (text has no explicit Trip Tracer UI validation list for this case)"
+  ],
+  "unsupported": [
+    "Receipt, threshold and payout routing are Claims Dashboard behaviour"
+  ]
+}

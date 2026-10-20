@@ -1,0 +1,89 @@
+{
+  "id": "FD_TC_180",
+  "family": "FD",
+  "summary": "Two-passenger YUL-YYZ AC422 arrived 4h late; Catherine Bouchard was already compensated on an earlier claim (filed by herself), Marc Bouchard files for both -> Marc eligible CAD 400, Catherine duplicate",
+  "passengers": [
+    {
+      "firstName": "MARC",
+      "lastName": "BOUCHARD",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    },
+    {
+      "firstName": "CATHERINE",
+      "lastName": "BOUCHARD",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "422",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "09:00",
+      "arrLocal": "10:20",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": null,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "FD-APPR-EL-01",
+    "amount": 400,
+    "currency": "CAD",
+    "delayBand": "DELAY_3_TO_LT_6_HOURS",
+    "delayMin": 240,
+    "control": "CONTROLLABLE",
+    "cause": "42",
+    "ttUi": [
+      "Passenger 1: Marc Bouchard - NEW CLAIM - ELIGIBLE CAD 400",
+      "Passenger 2: Catherine Bouchard - DUPLICATE (already compensated on an earlier case)",
+      "Duplicate detection: PASSENGER-BASED (not claimant-based)",
+      "Claimant on original case: Catherine Bouchard (herself); claimant on new case: Marc Bouchard",
+      "Flight Compensation: MR MARC BOUCHARD | ELIGIBLE | APPR_3_TO_6_HOURS | CAD 400",
+      "Flight Compensation: MS CATHERINE BOUCHARD | DUPLICATE | ALREADY_COMPENSATED | CAD 0",
+      "DDS: FD-DUP-NE-02 for Catherine, FD-APPR-EL-01 for Marc"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "No delay code in the text; chose 42 (controllable) so that APPR 3 to <6h applies and CAD 400 results",
+    "times chosen: AC 422 YUL 09:00 -> YYZ 10:20 (actual 14:20); date May 1, 2026 in text; flightDaysAgo=10",
+    "delayBand name DELAY_3_TO_LT_6_HOURS inferred from the schema example pattern; text says APPR 3 to <6h",
+    "Both passengers Adult; Marc is the claimant of the second claim, no Aeroplan"
+  ],
+  "unsupported": [
+    "Catherine already having a paid earlier claim (CASE-FD-20260501-002, CAD 400 paid) is case-side state, not booking data - a first claim by Catherine must be filed and paid before the second claim is attempted"
+  ]
+}

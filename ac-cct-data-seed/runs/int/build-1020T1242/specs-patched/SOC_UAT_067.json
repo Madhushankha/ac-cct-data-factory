@@ -1,0 +1,108 @@
+{
+ "id": "SOC_UAT_067",
+ "family": "SOC",
+ "summary": "1 adult, TLV-HFA on AC 090 on time then HFA-VDA on LY 301 (other airline) whose operating data is unavailable even after the 14-day re-trigger; ASL no determination",
+ "passengers": [
+  {
+   "firstName": "LIOR",
+   "lastName": "MALKA",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "IL",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "090",
+   "origin": "TLV",
+   "destination": "HFA",
+   "depLocal": "08:00",
+   "arrLocal": "08:35",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "LY",
+   "number": "301",
+   "origin": "HFA",
+   "destination": "VDA",
+   "depLocal": "11:00",
+   "arrLocal": "12:15",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 24,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "nodata"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "ASL",
+  "eligibility": "NO_DETERMINATION",
+  "systemCode": "SoC-ASL-ND-05",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": null,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Disruption Suspected - OAL operating data unavailable",
+   "Multi-segment trip TLV->HFA->VDA - Segment 1 AC090 on time, Segment 2 LY301 (OAL) - flight data unavailable after 14-day retrigger",
+   "Regime: ASL (TLV->HFA->VDA = all Israel)",
+   "PASSENGERS: 1 - SEGMENTS: 2",
+   "Promised: Seg 1 AC 090 TLV->HFA | Seg 2 LY 301 HFA->VDA",
+   "Current: Seg 1 ON TIME | Seg 2 DATA UNAVAILABLE - OAL operating data not populated",
+   "SOC section present - SOC Segment: LY 301 HFA->VDA (OAL); Operating Carrier LY (El Al - OAL)",
+   "OAL Operating Data: UNAVAILABLE after 14-day RE retrigger; Delay Calculation: IMPOSSIBLE",
+   "Geographic Check: all Israel PASSED",
+   "PASSENGER STATUS: NO_DETERMINATION | BAND: blank (cannot calculate)",
+   "Passenger Claims: NO DETERMINATION - case created for manual review (agent coordinates with OAL); DDS code SoC-ASL-ND-05"
+  ],
+  "soc": {
+   "eligibility": null,
+   "entitlements": "none - no determination (OAL data unavailable), manual review"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "flightDaysAgo=24 (scenario: disruption May 16, filing Jun 9 = 24 days; test depends on the 14-day re-trigger having elapsed)",
+  "Times chosen: AC090 08:00-08:35, LY301 11:00-12:15; no outcome record for seg 2",
+  "Cabin W (PY), class O",
+  "Residence IL"
+ ],
+ "unsupported": [
+  "Absence of any LY 301 operating data is a feed condition, not booking data; the 14-day RE re-trigger is a system behaviour"
+ ],
+ "pinDaysAgo": true
+}

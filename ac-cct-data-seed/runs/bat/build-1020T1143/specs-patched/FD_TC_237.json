@@ -1,0 +1,121 @@
+{
+ "id": "FD_TC_237",
+ "family": "FD",
+ "summary": "2 pax (Marie-Eve claimant Basic Aeroplan, Luc) on AC 305 YUL-YVR Aug 5 08:00-10:30 cancelled on the day (cancel code WXX weather) with open coding review (00/IU Under Investigation); both rebooked on AC 311 YUL-YVR arriving 17:30 (+7h); DDS NO DETERMINATION CAD 0",
+ "passengers": [
+  {
+   "firstName": "MARIE-\u00c8VE",
+   "lastName": "TREMBLAY",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  },
+  {
+   "firstName": "LUC",
+   "lastName": "TREMBLAY",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "305",
+   "origin": "YUL",
+   "destination": "YVR",
+   "depLocal": "08:00",
+   "arrLocal": "10:30",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HX"
+  }
+ ],
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": 420,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "WXX",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "311",
+   "origin": "YUL",
+   "destination": "YVR",
+   "depLocal": "15:00",
+   "arrLocal": "17:30",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded"
+  }
+ ],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 1,
+   "pax": 2,
+   "event": "boarded"
+  }
+ ],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NO_DETERMINATION",
+  "systemCode": null,
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": 420,
+  "control": null,
+  "cause": "WXX",
+  "ttUi": [
+   "Promised Itinerary: AC 305 YUL\u2192YVR 08:00\u219210:30",
+   "Current Itinerary: AC 305 CANCELLED (INVOL); AC 311 YUL\u2192YVR arrived 17:30",
+   "Delay: +7H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL Flight: AC 305 YUL\u2192YVR, Cancellation code WXX \"Cancelled due to weather\"",
+   "Coding flag: 00 / IU \"Under Investigation\" (controllability under review)",
+   "Controllability: UNDER DETERMINATION (not Uncontrollable, not Controllable)",
+   "Aeroplan: 9876543210 (Basic Member, linked, claimant)",
+   "MS MARIE-\u00c8VE TREMBLAY | NO DETERMINATION | Controllability under determination | CAD 0.00",
+   "MR LUC TREMBLAY | NO DETERMINATION | Controllability under determination | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "cabin Y, booking class T (not stated)",
+  "AC 311 departs 15:00 (text gives only arrival 17:30)",
+  "cancelled flight status HX",
+  "noticeHours null (text: customers told on the day of travel, hours not stated)",
+  "cancelCode kept as 'WXX' exactly as in the text (NetLine WEAT equivalent)",
+  "paxEvents 'boarded' refers to the rebooked AC 311 coupon (both boarded)",
+  "residence CA from prerequisites",
+  "systemCode only given as FD-APPR-ND-xx -> null; must NOT be FD-APPR-NE-28",
+  "flightDaysAgo 10 default (flight Aug 5, claim Aug 14 = 9 days after)"
+ ],
+ "unsupported": [
+  "Open coding review flag 00 / IU 'Under Investigation' on the cancelled flight (schema only has one cancelCode); must be loaded as a second coding record on AC 305 so controllability is 'under determination'"
+ ],
+ "scheduleChanges": [],
+ "vouchers": [],
+ "bags": [],
+ "flightDaysAgo": 10
+}

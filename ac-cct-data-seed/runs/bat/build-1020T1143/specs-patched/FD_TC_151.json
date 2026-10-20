@@ -1,0 +1,82 @@
+{
+  "id": "FD_TC_151",
+  "family": "FD",
+  "summary": "ASL YYZ-TLV AC082 arrived 9h late, crew scheduling code 42 (controllable) -> Eligible ILS 3,670",
+  "passengers": [
+    {
+      "firstName": "DAVID",
+      "lastName": "COHEN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "IL",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "82",
+      "origin": "YYZ",
+      "destination": "TLV",
+      "depLocal": "13:00",
+      "arrLocal": "06:00",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 540,
+      "depDelayMin": null,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "FD-ASL-EL-01",
+    "amount": 3670,
+    "currency": "ILS",
+    "delayBand": null,
+    "delayMin": 540,
+    "control": "CONTROLLABLE",
+    "cause": "42",
+    "ttUi": [
+      "Promised Itinerary: AC 082 YYZ->TLV scheduled arrival 06:00 (local TLV)",
+      "Current Itinerary: AC 082 YYZ->TLV ARRIVED LATE, actual 15:00, +9H 00M",
+      "Regime: ASL (Israel destination TLV) + APPR (Canadian origin YYZ)",
+      "MSL FLIGHT: AC 082 YYZ->TLV",
+      "Arrival Delay Code: 42",
+      "Delayed due to crew scheduling",
+      "NOT EXTRAORDINARY CIRCUMSTANCE (code 42 controllable under ASL terminology)",
+      "Delay +9H 00M >= 8 hours: MEETS ASL THRESHOLD (Gate 8)",
+      "ASL: Not Extraordinary + >=8hrs -> ELIGIBLE ILS 3,670",
+      "Fallback: FALSE",
+      "Flight Compensation: MR DAVID COHEN | ELIGIBLE | ASL_TRAVEL_COMPLETED_NON_EXTRAORDINARY | ILS 3,670.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "dep 13:00 YYZ, arrival 06:00 local TLV next day (dayOffset 1) chosen consistent with ~10h flight",
+    "depDelayMin not stated -> null",
+    "Aeroplan not linked (given); residence Israel (given)",
+    "APPR also applies (assessed separately)"
+  ],
+  "unsupported": []
+}

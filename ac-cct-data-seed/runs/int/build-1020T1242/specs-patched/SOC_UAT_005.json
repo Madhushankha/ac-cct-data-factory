@@ -1,0 +1,93 @@
+{
+ "id": "SOC_UAT_005",
+ "family": "SOC",
+ "summary": "APPR SOC: 1 revenue pax on UA 456 ORD-LAX (OAL only, no AC segment) Jun 2, dep 10:00 actual 15:00 (+300 min); OAL-only -> NOT ELIGIBLE, redirect to United (SoC-APPR-NE-05)",
+ "passengers": [
+  {
+   "firstName": "DAVID",
+   "lastName": "MILLER",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "UA",
+   "number": "456",
+   "origin": "ORD",
+   "destination": "LAX",
+   "depLocal": "10:00",
+   "arrLocal": "12:15",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "PY",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "SoC-APPR-NE-05",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_2_TO_6_HOURS",
+  "delayMin": 300,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Trip Completed, Disruption Detected",
+   "Single-segment trip ORD\u2192LAX on UA456 delayed +5H 00M, OAL operated",
+   "PASSENGERS: 1 SEGMENTS: 1",
+   "Promised Itinerary: UA 456 ORD\u2192LAX Scheduled Dep 02-Jun 10:00",
+   "Current Itinerary: UA 456 ORD\u2192LAX ARRIVED LATE, Scheduled Dep 10:00 \u2192 Actual 15:00, +5H 00M",
+   "SOC section present",
+   "PASSENGER | NOT_ELIGIBLE | DELAY_2_TO_6_HOURS",
+   "NOT_ELIGIBLE reason: OAL-operated segment, redirect to United Airlines"
+  ],
+  "soc": {
+   "eligibility": "NOT_ELIGIBLE",
+   "entitlements": "none; OAL-only itinerary, redirect to United Airlines"
+  }
+ },
+ "assumed": [
+  "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+  "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+  "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+  "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+  "arrival 12:15 local LAX (4h15 block, tz -2h)",
+  "no delay code (OAL only; AC has no departure delay code data)"
+ ],
+ "unsupported": [
+  "Itinerary with no AC segment (UA-only PNR with no AC delay data) must exist in Trip Tracer"
+ ]
+}

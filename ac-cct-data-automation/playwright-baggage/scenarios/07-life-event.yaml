@@ -1,0 +1,13 @@
+id: life-event
+title: Life event mentioned (funeral) -> BAG-08.S3 detection
+booking: { pool: any, pick: next-unused, need: [lost], avoid: [partner, waiting, two-bags, two-journeys, cap-spent, duplicate, closed] }
+first_message: "My bag never arrived and it had my suit for my father's funeral tomorrow. I need to claim for it."
+steps:
+  - notice: "yes"
+  - identify: true
+  - verify: true
+  - journey: one
+  - delivery: "no"
+  - expect: { step: BAG-08.S3, board: '[check: "Is there a key word on life event detected?"] -> empathy', any_of: ["sorry for your loss", "condolences", "difficult time", "sorry to hear"] }
+  - stop: end
+known: [I-12]

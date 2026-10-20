@@ -1,0 +1,999 @@
+{
+  "key": "CHAI-31620",
+  "test_id": "FD_TC_234",
+  "title": "FD Eligible | SINGLE pax | Agent override to Not Eligible | APPR | Controllable (Code 96 � Operations Control) | Delay 6 to under 9 hrs (7h) | Travelled (arrived late) | 1 Leg | Domestic (CA) | Basic Aeroplan",
+  "goal": "Checks the Decision Assist override from Eligible to Not Eligible for a single passenger. Flight AC 412 YUL ? YYZ arrived 7 hours late (Code 96, Controllable). DDS returns FD-APPR-EL-02, CAD 700. The customer leaves the chat before payment, so the case goes to agent Sarah Martin. She finds a record showing that CAD 700 APPR compensation was already paid for AC 412 on Jul 22 through an airport/legacy channel. This record isn't linked in the Claims Dashboard, so the automatic duplicate check didn't catch it. Sarah overrides the decision to Not Eligible and enters a reason of 50 to 500 characters. The original Eligible recommendation stays visible as read-only, and the override is audited with before/after values. She sends \"Decision Rendered � Not Eligible\" and the case closes as Closed � Not Eligible. No compensation record is created and nothing is paid. Also checks that the reason length is enforced and that only permitted users can override.",
+  "summary": {
+    "seed": 13,
+    "chat": 10,
+    "api": 13,
+    "email": 1,
+    "dashboard": 0,
+    "implied": 71,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Checks the Decision Assist override from Eligible to Not Eligible for a single passenger. Flight AC 412 YUL ? YYZ arrived 7 hours late (Code 96, Controllable). DDS returns FD-APPR-EL-02, CAD 700. The customer leaves the chat before payment, so the case goes to agent Sarah Martin. She finds a record showing that CAD 700 APPR compensation was already paid for AC 412 on Jul 22 through an airport/legacy channel. This record isn't linked in the Claims Dashboard, so the automatic duplicate check didn't catch it. Sarah overrides the decision to Not Eligible and enters a reason of 50 to 500 characters. The original Eligible recommendation stays visible as read-only, and the override is audited with before/after values. She sends \"Decision Rendered � Not Eligible\" and the case closes as Closed � Not Eligible. No compensation record is created and nothing is paid. Also checks that the reason length is enforced and that only permitted users can override.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: OV001 � single passenger Antoine Leblanc (Adult, Basic Aeroplan 9876543210, good standing)",
+      "expected": "PNR: OV001 � single passenger Antoine Leblanc (Adult, Basic Aeroplan 9876543210, good standing)",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "AC 412 YUL ? YYZ, July 20, 2026",
+      "expected": "AC 412 YUL ? YYZ, July 20, 2026",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Scheduled arrival 12:00, actual 19:00 (7h delay)",
+      "expected": "Scheduled arrival 12:00, actual 19:00 (7h delay)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Code 96 (Operations Control � Controllable)",
+      "expected": "Code 96 (Operations Control � Controllable)",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Travelled, arrived late",
+      "expected": "Travelled, arrived late",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No VOL/INVOL changes",
+      "expected": "No VOL/INVOL changes",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "AC only",
+      "expected": "AC only",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Claim filed Jul 28, 2026 (within 366 days)",
+      "expected": "Claim filed Jul 28, 2026 (within 366 days)",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Case reference: CASE-FD-20260728-101",
+      "expected": "Case reference: CASE-FD-20260728-101",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Claims Dashboard duplicate check: no duplicate (the prior payment is outside CD)",
+      "expected": "Claims Dashboard duplicate check: no duplicate (the prior payment is outside CD)",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Prior payment evidence: legacy / airport record of CAD 700 APPR paid Jul 22, 2026 (reference LEG-APPR-55821)",
+      "expected": "Prior payment evidence: legacy / airport record of CAD 700 APPR paid Jul 22, 2026 (reference LEG-APPR-55821)",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "implied",
+      "step": "CyberSource GREEN",
+      "expected": "CyberSource GREEN",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Country of residence: Canada",
+      "expected": "Country of residence: Canada",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Users: Sarah Martin (Agent with case.render_decision), Paul Girard (read-only user without case.render_decision)",
+      "expected": "Users: Sarah Martin (Agent with case.render_decision), Paul Girard (read-only user without case.render_decision)",
+      "id": "CP015"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP016"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01) and the user selects \"English\"",
+      "expected": "English",
+      "id": "CP017"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then the privacy alert is displayed",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Montreal to Toronto was delayed about 7 hours, I'd like to check if I'm eligible for compensation\"",
+      "expected": "My flight from Montreal to Toronto was delayed about 7 hours, I'd like to check if I'm eligible for compensation",
+      "id": "CP019"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then third-party check ? NO, and the legal disclaimer is shown and accepted",
+      "expected": "IDENTIFICATION (GenUC-01): \"Antoine Leblanc\" + PNR \"OV001\" ? Trip Tracer PNR FOUND (Auth Flow 1) AUTHENTICATION (GenUC-05): Email a***@gmail.com ? OTP \"581204\" ? CORRECT (attempt 1 of 5) GROUP BOOKING / PASSENGER SELECTION (GenUC-06): group identifier NOT PRESENT; 1 passenger ? \"Yes\" JOURNEY SELECTION (GenUC-08): AC 412, YUL ? YYZ, July 20, 2026, Arrival Delay 7 hours ? \"Yes\" CHECKS: single leg; duplicate check ? no existing case in CD; more than 72 hours; within 366 days ? PROCEED DDS: APPR; Code 96 Controllable; 420 min; ELIGIBLE; FD-APPR-EL-02; CAD 700",
+      "id": "CP021"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "OV001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current: ARRIVED LATE, 12:00 ? 19:00, +7H 00M",
+      "expected": "Current: ARRIVED LATE, 12:00 ? 19:00, +7H 00M",
+      "id": "CP022"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "OV001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: APPR (1 regime)",
+      "expected": "Regime: APPR (1 regime)",
+      "id": "CP023"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "OV001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL: AC 412 � YUL ? YYZ � 96 \"Delayed due to operations control\" � CONTROLLABLE",
+      "expected": "MSL: AC 412 � YUL ? YYZ � 96 \"Delayed due to operations control\" � CONTROLLABLE",
+      "id": "CP024"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "OV001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "MR ANTOINE LEBLANC | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet",
+      "expected": "MR ANTOINE LEBLANC | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet",
+      "id": "CP025"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "OV001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "CYBERSOURCE (GLOB-05): GREEN",
+      "expected": "CYBERSOURCE (GLOB-05): GREEN",
+      "id": "CP026"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "OV001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "ELIGIBLE RESULT (FD-05a): APPR eligible message for AC 412",
+      "expected": "ELIGIBLE RESULT (FD-05a): APPR eligible message for AC 412",
+      "id": "CP027"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "OV001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "CUSTOMER DROPS OFF: closes the chat at \"In which country will your reimbursement be deposited?\"",
+      "expected": "CUSTOMER DROPS OFF: closes the chat at \"In which country will your reimbursement be deposited?\"",
+      "id": "CP028"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "OV001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the case is created as ELIGIBLE, CAD 700, with no payment instruction, and is routed to the agent queue",
+      "expected": "",
+      "id": "CP029"
+    },
+    {
+      "section": "PART B � AGENT REVIEWS THE CASE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given Sarah Martin clicks \"Get Next Case\" ? Assigned ? opens it within 10 minutes ? In Progress",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "PART B � AGENT REVIEWS THE CASE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then Decision Assist shows the FD badge, \"Recommended: Eligible\" (green), the reasoning list, \"Last run: [timestamp]\" and \"CAD $700.00\" with the payout method badge",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "PART B � AGENT REVIEWS THE CASE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah checks the Compensation history, ops notes and legacy payment lookup",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "PART B � AGENT REVIEWS THE CASE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then she finds LEG-APPR-55821: CAD 700 APPR compensation paid to Antoine Leblanc for AC 412, Jul 20, 2026, issued Jul 22, 2026",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "PART B � AGENT REVIEWS THE CASE",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And she confirms that Trip Tracer coding (Code 96, 7h) is correct and doesn't need changing",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "PART B � AGENT REVIEWS THE CASE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And she does NOT edit the flight code",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "PART C � PERMISSION CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given Paul Girard (no case.render_decision permission) opens the same case",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "PART C � PERMISSION CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the \"Override\" button is NOT displayed",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "PART C � PERMISSION CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Paul cannot change eligibility, amount or payout method",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "PART D � OVERRIDE FORM VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given Sarah clicks \"Override\" next to the recommendation",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "PART D � OVERRIDE FORM VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then an inline form opens with: new eligibility (Eligible / Not Eligible / Partial), new amount, new payout method, override reason (required)",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "PART D � OVERRIDE FORM VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When she selects \"Not Eligible\" and leaves the reason empty",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "PART D � OVERRIDE FORM VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then she cannot confirm and a required-field message is shown",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "PART D � OVERRIDE FORM VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When she enters a 30-character reason (\"Already paid at airport, close\")",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "PART D � OVERRIDE FORM VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then she cannot confirm (below the 50-character minimum)",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "PART D � OVERRIDE FORM VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When she pastes a 520-character reason",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "PART D � OVERRIDE FORM VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then she cannot confirm (above the 500-character maximum)",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "PART E � OVERRIDE TO NOT ELIGIBLE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah selects new eligibility \"Not Eligible\"",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "PART E � OVERRIDE TO NOT ELIGIBLE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the new amount is 0 / \"�\" and no payout method is selected",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "PART E � OVERRIDE TO NOT ELIGIBLE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And she enters the reason: \"Passenger already received CAD 700 APPR compensation for AC 412 YUL-YYZ Jul 20 2026 via airport/legacy payment LEG-APPR-55821 issued Jul 22 2026. Paying again would duplicate compensation for the same disruption.\"",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "PART E � OVERRIDE TO NOT ELIGIBLE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And she clicks Confirm",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "PART E � OVERRIDE TO NOT ELIGIBLE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the override is saved to the case",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "PART E � OVERRIDE TO NOT ELIGIBLE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Decision Assist shows the agent decision \"Not Eligible\"",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "PART E � OVERRIDE TO NOT ELIGIBLE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the original recommendation \"Recommended: Eligible � CAD 700 � FD-APPR-EL-02\" stays visible as read-only context",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "PART E � OVERRIDE TO NOT ELIGIBLE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the stored values show suggested = Eligible / CAD 700, approved = Not Eligible / CAD 0, difference = ?CAD 700",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "PART E � OVERRIDE TO NOT ELIGIBLE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Audit Log records: Override, agent ID (Sarah Martin), timestamp, before (Eligible, CAD 700, Cash/AC Wallet) and after (Not Eligible, 0, none), reason text",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "PART E � OVERRIDE TO NOT ELIGIBLE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Sarah adds an internal note referencing LEG-APPR-55821",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "PART F � ADVANCE CASE AND NOTIFY THE CUSTOMER",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah clicks \"Advance Case\"",
+      "expected": "",
+      "id": "CP057"
+    },
+    {
+      "section": "PART F � ADVANCE CASE AND NOTIFY THE CUSTOMER",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then Step 1 shows the decision Not Eligible (overridden) with the reason summary",
+      "expected": "",
+      "id": "CP058"
+    },
+    {
+      "section": "PART F � ADVANCE CASE AND NOTIFY THE CUSTOMER",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When she selects the template \"Decision Rendered � Not Eligible\" (English)",
+      "expected": "",
+      "id": "CP059"
+    },
+    {
+      "section": "PART F � ADVANCE CASE AND NOTIFY THE CUSTOMER",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And enters customer text saying compensation for this disruption has already been issued, without internal references or payment details",
+      "expected": "",
+      "id": "CP060"
+    },
+    {
+      "section": "PART F � ADVANCE CASE AND NOTIFY THE CUSTOMER",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And sends it",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "PART F � ADVANCE CASE AND NOTIFY THE CUSTOMER",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the notification is sent via Adobe to a***@gmail.com",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "PART F � ADVANCE CASE AND NOTIFY THE CUSTOMER",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no secure payment / Welcome Back link is included",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "PART F � ADVANCE CASE AND NOTIFY THE CUSTOMER",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case status becomes \"Closed � Not Eligible\"",
+      "expected": "",
+      "id": "CP064"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given the case is Closed � Not Eligible",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then Decision Assist is read-only and the Override button can't be used",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no compensation record exists",
+      "expected": "Claims Dashboard Gherkin:",
+      "id": "CP067"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Given case \"CASE-FD-20260728-101\" for claimant \"Antoine Leblanc\" (PNR \"OV001\") has a DDS recommendation of \"Eligible\", \"FD-APPR-EL-02\", \"CAD 700\"",
+      "expected": "CASE-FD-20260728-101 Antoine Leblanc OV001 Eligible FD-APPR-EL-02 CAD 700",
+      "id": "CP068"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And agent \"Sarah Martin\" has the \"case.render_decision\" permission",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When a user without \"case.render_decision\" opens the case",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the \"Override\" button should not be displayed",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah clicks \"Override\" and selects \"Not Eligible\"",
+      "expected": "",
+      "id": "CP072"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the override reason is empty, under 50 characters or over 500 characters",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the override should not be saved",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah enters a valid reason of 50 to 500 characters and confirms",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the agent decision should be \"Not Eligible\" with amount 0 and no payout method",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the original \"Recommended: Eligible � CAD 700\" should remain visible as read-only",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the suggested value, approved value and difference should be stored",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Audit Log should record agent ID, timestamp, before/after values and reason",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the flight code should still be 96 (not edited)",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Topic/Sub-topic should be \"Travel Disruptions � Delay\"",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Claimant should be \"Antoine Leblanc\", Adult, Authentication \"Pass\"",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the PNR should be \"OV001\" with Creation Date, Journey ID, Booking Source and Office ID populated",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And the Regime should be \"APPR\"",
+      "expected": "APPR",
+      "id": "CP084"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Aeroplan should be \"9876543210\", Tier \"Basic / Member\"",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Journey should show \"Bound 1: YUL ? YYZ\" (AC 412, +7H 00M, Code 96)",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Eligibility and Compensation section should show \"Not Eligible (Agent Override)\"",
+      "expected": "",
+      "id": "CP087"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And CyberSource should be \"GREEN\"",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah sends \"Decision Rendered � Not Eligible\"",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then Customer Communications should show the Not Eligible notification with template ID, version, language, timestamp and delivery status",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no payment link should be sent",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the status should be \"Closed � Not Eligible\"",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case should be read-only after closure",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the agent should not be able to access Case Search as it is for leads and management only",
+      "expected": "Payment Validation Gherkin:",
+      "id": "CP094"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Given the DDS recommendation was \"Eligible, CAD 700\" and the agent overrode it to \"Not Eligible\"",
+      "expected": "Eligible, CAD 700 Not Eligible",
+      "id": "CP095"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then no Cash or AC Wallet option should be offered to the customer",
+      "expected": "",
+      "id": "CP096"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no country of residence, Interac email, bank or card details should be collected",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Persona IDV for payout should not be triggered",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no compensation record should be created",
+      "expected": "",
+      "id": "CP099"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And nothing should be picked up by the evening batch file",
+      "expected": "",
+      "id": "CP100"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And nothing should be sent to Unifier or EIP",
+      "expected": "",
+      "id": "CP101"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Compensation tab should show no payout for this case",
+      "expected": "",
+      "id": "CP102"
+    },
+    {
+      "section": "PART G � AFTER CLOSURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the prior payment LEG-APPR-55821 should not be duplicated",
+      "expected": "",
+      "id": "CP103"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS FD-APPR-EL-02, Eligible, CAD 700.",
+      "expected": "DDS FD-APPR-EL-02, Eligible, CAD 700.",
+      "id": "CP104"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "An authorized agent overrides it to Not Eligible with a required 50 to 500-character reason.",
+      "expected": "An authorized agent overrides it to Not Eligible with a required 50 to 500-character reason.",
+      "id": "CP105"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The original recommendation is kept as read-only, and suggested vs approved values and the difference are stored.",
+      "expected": "The original recommendation is kept as read-only, and suggested vs approved values and the difference are stored.",
+      "id": "CP106"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The override is audited with before/after values.",
+      "expected": "The override is audited with before/after values.",
+      "id": "CP107"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Users without permission can't override, and invalid reasons are blocked.",
+      "expected": "Users without permission can't override, and invalid reasons are blocked.",
+      "id": "CP108"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The \"Decision Rendered � Not Eligible\" notice is sent with no payment link, and the case closes as Closed � Not Eligible with no payout.",
+      "expected": "The \"Decision Rendered � Not Eligible\" notice is sent with no payment link, and the case closes as Closed � Not Eligible with no payout.",
+      "id": "CP109"
+    }
+  ]
+}

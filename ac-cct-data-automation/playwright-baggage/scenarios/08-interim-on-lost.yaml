@@ -1,0 +1,13 @@
+id: interim-on-lost
+title: Interim expenses on a lost bag (receipts only)
+booking: { pool: any, pick: next-unused, need: [lost], avoid: [partner, waiting, two-bags, two-journeys, cap-spent, duplicate, closed] }
+first_message: "My bag is still missing. I only want to claim the toiletries I had to buy while waiting."
+steps:
+  - notice: "yes"
+  - identify: true
+  - verify: true
+  - journey: one
+  - delivery: "no"
+  - expect: { step: BAG-03e.S3, board: "interim-only branch: receipts for expenses, no contents list", any_of: ["receipt", "expenses"], absent: ["list the items in your bag"] }
+  - stop: end
+known: [interim-only]

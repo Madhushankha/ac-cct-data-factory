@@ -1,0 +1,198 @@
+{
+  "key": "CHAI-31817",
+  "test_id": "FD_ED_TC_06",
+  "title": "Authentication | OTP Service Down | System Unavailable | No Case Created",
+  "goal": "OTP service is completely unavailable (system outage). Per call transcript, if major services like OTP are down, the chat will be disabled and users receive a \"system unavailable\" message. No shell case created.",
+  "summary": {
+    "seed": 1,
+    "chat": 4,
+    "api": 0,
+    "email": 0,
+    "dashboard": 2,
+    "implied": 12,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "OTP service is completely unavailable (system outage). Per call transcript, if major services like OTP are down, the chat will be disabled and users receive a \"system unavailable\" message. No shell case created.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "OTP service: OFFLINE/DOWN (system outage); All other services operational; Customer attempts to file FD claim",
+      "expected": "OTP service: OFFLINE/DOWN (system outage); All other services operational; Customer attempts to file FD claim",
+      "id": "CP002"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given the OTP service is OFFLINE/DOWN (system outage detected)",
+      "expected": "",
+      "id": "CP003"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system health check identifies: OTP service = UNAVAILABLE",
+      "expected": "",
+      "id": "CP004"
+    },
+    {
+      "section": "SYSTEM AVAILABILITY CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system performs pre-chat health check",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "SYSTEM AVAILABILITY CHECK",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the system checks critical services:",
+      "expected": "? Trip Tracer: ONLINE ? ? Case Services: ONLINE ? ? DDS: ONLINE ? ? CyberSource: ONLINE ? ? OTP Service: OFFLINE ? ? Persona IDV: ONLINE ? ? Adobe Notifications: ONLINE ?",
+      "id": "CP006"
+    },
+    {
+      "section": "SYSTEM AVAILABILITY CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system determines: CRITICAL SERVICE DOWN (OTP) ? CHATBOT DISABLED",
+      "expected": "NOTE: Per call transcript � if major services like OTP are down, the chat will be disabled entirely. No partial functionality. No fallback.",
+      "id": "CP007"
+    },
+    {
+      "section": "CHATBOT DISABLED � SYSTEM UNAVAILABLE MESSAGE",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP008"
+    },
+    {
+      "section": "CHATBOT DISABLED � SYSTEM UNAVAILABLE MESSAGE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot does NOT display the standard greeting",
+      "expected": "Instead, the chatbot displays a system unavailable message: \"We're sorry, but our claims service is temporarily unavailable due to system maintenance. Please try again later. We apologize for the inconvenience.\"",
+      "id": "CP009"
+    },
+    {
+      "section": "CHATBOT DISABLED � SYSTEM UNAVAILABLE MESSAGE",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "And an alert information is displayed: \"System temporarily unavailable\"",
+      "expected": "System temporarily unavailable",
+      "id": "CP010"
+    },
+    {
+      "section": "CHATBOT DISABLED � SYSTEM UNAVAILABLE MESSAGE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the chatbot provides:",
+      "expected": "� Estimated restoration time (if available) � Alternative contact: \"If you need immediate assistance, please contact our Customer Relations team at [phone number] or [email].\" � Link to Air Canada website for manual claim submission NO IDENTIFICATION (chatbot disabled) NO AUTHENTICATION (chatbot disabled) NO JOURNEY SELECTION (chatbot disabled) NO DDS EVALUATION (chatbot disabled) NO CASE CREATION (no case created � chatbot disabled) NO SHELL CASE (per call transcript � no shell case when system is down) NO NOTIFICATION (no case to notify about)",
+      "id": "CP011"
+    },
+    {
+      "section": "SYSTEM MONITORING",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system monitoring team is alerted:",
+      "expected": "? Alert: OTP Service DOWN ? Impact: Chatbot DISABLED for all users ? Priority: CRITICAL ? Estimated users affected: All FD claim users during outage window",
+      "id": "CP012"
+    },
+    {
+      "section": "POST-OUTAGE RECOVERY",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the OTP service is restored",
+      "expected": "",
+      "id": "CP013"
+    },
+    {
+      "section": "POST-OUTAGE RECOVERY",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system health check re-validates all critical services",
+      "expected": "",
+      "id": "CP014"
+    },
+    {
+      "section": "POST-OUTAGE RECOVERY",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system determines: All critical services ONLINE",
+      "expected": "",
+      "id": "CP015"
+    },
+    {
+      "section": "POST-OUTAGE RECOVERY",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the chatbot is automatically re-enabled",
+      "expected": "",
+      "id": "CP016"
+    },
+    {
+      "section": "POST-OUTAGE RECOVERY",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And users can access the chatbot normally",
+      "expected": "",
+      "id": "CP017"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "When the agent navigates to Claims Dashboard",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the dashboard shows:",
+      "expected": "� No new cases created during outage window � System outage logged in system health history � Outage duration recorded",
+      "id": "CP019"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Chat flow stops at authentication requirement; \"System unavailable\" message displayed with phone number; Customer directed to phone support; No shell case created; No identification completed; Error logged in monitoring; Operations team alerted",
+      "expected": "Chat flow stops at authentication requirement; \"System unavailable\" message displayed with phone number; Customer directed to phone support; No shell case created; No identification completed; Error logged in monitoring; Operations team alerted",
+      "id": "CP020"
+    }
+  ]
+}

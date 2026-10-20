@@ -1,0 +1,16 @@
+id: eur
+title: Contents valued in euros
+booking: { pool: any, pick: next-unused, need: [lost], avoid: [partner, waiting, two-bags, two-journeys, cap-spent, duplicate, closed] }
+first_message: "My suitcase is lost. I'd like to claim for what was in it; I paid in euros."
+steps:
+  - notice: "yes"
+  - identify: true
+  - verify: true
+  - journey: one
+  - delivery: "no"
+  - readiness: "yes"
+  - contents: { category: Clothing, cad: false, currency: Euro, item: Shirt, qty: 2, amount: 60 }
+  - expect: { step: BAG-06.S18, any_of: ["items and values"], all_of: ["EUR|euro|€"], buttons: ["I confirm"] }
+  - confirm: true
+  - expect: { step: BAG-06.S20, layout: success, text: "submission was successful" }
+  - stop: payout-country

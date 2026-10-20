@@ -1,0 +1,94 @@
+{
+ "id": "FD_TC_011",
+ "family": "FD",
+ "summary": "Single pax Olivier Menard on AC 420 YUL-YYZ originally arr 10:00; two INVOL changes (arr 13:00 then 15:00), actual 15:00 (+5h), code 32, APPR Tier 1 $400",
+ "passengers": [
+  {
+   "firstName": "OLIVIER",
+   "lastName": "MENARD",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "420",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 120,
+   "delayCode": "32"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [
+  {
+   "seg": 1,
+   "depDeltaMin": 120,
+   "arrDeltaMin": 120,
+   "noticeHours": 72,
+   "changeType": "INVOL",
+   "changeSeq": 1
+  },
+  {
+   "seg": 1,
+   "depDeltaMin": 60,
+   "arrDeltaMin": 60,
+   "noticeHours": 48,
+   "changeType": "INVOL",
+   "changeSeq": 2
+  }
+ ],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 300,
+  "control": "CONTROLLABLE",
+  "cause": "32",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 420, Route: YUL-YYZ, Scheduled Arrival: 10:00 (14-day mark, INVOL NEVER updates regardless of count)",
+   "Current Itinerary - Flight: AC 420, Route: YUL-YYZ, Status: ARRIVED LATE, Scheduled Arrival: 10:00 - Actual: 15:00, Delay: +5H 00M",
+   "History - Change 1: INVOL - arr 13:00 | Change 2: INVOL - arr 15:00",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 420 - YUL-YYZ - 32",
+   "\"Delayed due to loading/unloading\"",
+   "Delay: +5H 00M - CONTROLLABLE",
+   "MR OLIVIER MENARD | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00 | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "name accent dropped",
+  "two airline schedule changes of the same flight: +180 then +120 min (cumulative arr 13:00 then 15:00), notice 72 h and 48 h assumed",
+  "INVOL/VOL history is modelled with optional extra keys (voluntary, changeDaysBeforeDeparture, changeType) not in the base schema"
+ ],
+ "unsupported": [
+  "details of the rebooked flights are not given in the text",
+  "flight date: run uses flightDaysAgo=10 (text: filed D+13)"
+ ]
+}

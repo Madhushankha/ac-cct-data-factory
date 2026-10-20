@@ -1,0 +1,102 @@
+{
+ "id": "FD_TC_047",
+ "family": "FD",
+ "summary": "Single pax Richard Clarke (Aeroplan Elite 35K 9876543210, AC-issued 014 ticket) on an all-OAL itinerary UA 4521 (AC codeshare AC 4521) ORD-DEN, operated by United; cancelled D-1 code TECH (DMT upline safety), INVOL rebooked UA 4525 arriving 21:00 vs 14:00 promise (+7h); zero AC-operated legs -> NOT ELIGIBLE for AC payout, redirect to United",
+ "passengers": [
+  {
+   "firstName": "RICHARD",
+   "lastName": "CLARKE",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "35K",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "UA",
+   "number": "4521",
+   "origin": "ORD",
+   "destination": "DEN",
+   "depLocal": "12:30",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": 420,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "TECH",
+   "noticeHours": 24,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "UA",
+   "number": "4525",
+   "origin": "ORD",
+   "destination": "DEN",
+   "depLocal": "19:30",
+   "arrLocal": "21:00",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-05",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": null,
+  "cause": "TECH",
+  "ttUi": [
+   "MSL = Leg 1; Operating carrier = United Airlines (UA, Star Alliance)",
+   "Cancellation Code = TECH (Aircraft Technical Issue) [DMT (Upline Safety)]",
+   "All legs scanned -> ZERO AC-operated segments on entire itinerary",
+   "Scheduled Arrival = 14:00; Actual Arrival on UA 4525 = 21:00; Delay = 7hrs (6 to <9h band)",
+   "Ticket stock = 014- (AC issued); Aeroplan Status = Elite 35K",
+   "Operating Carrier Check: AC operated legs = 0 -> AC has no compensation liability -> NOT ELIGIBLE for AC payout",
+   "Compensation: $0 (from AC); customer redirected to United Airlines / manual handoff"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "UA 4521 times: dep 12:30 CT, arr 14:00 MT (promise 14:00 from the text); rebooking UA 4525 dep 19:30 CT arr 21:00 MT",
+  "cancelled at D-1 -> noticeHours 24",
+  "cancelCode TECH (DMT sub-reason not representable); delayCode null",
+  "control left null (text says TECH/DMT upline safety, no controllability stated)",
+  "delayMin 420 = 21:00 minus 14:00 promise on the rebooked flight",
+  "residence CA (customer answered Canada)",
+  "amount 0: NOT ELIGIBLE for AC payout (APPR operating-carrier rule)"
+ ],
+ "unsupported": [
+  "Codeshare marketing flight AC 4521 on UA 4521 and the operating carrier distinction (UA operates, AC marketing/ticketing) - only carrier UA is modelled",
+  "AC ticket stock 014- (ticketing carrier) has no field",
+  "Full-OAL itinerary hand-off to a manual agent / United redirect is chatbot/workflow behaviour"
+ ],
+ "loyalty": {
+  "tier": "E35K",
+  "why": "jira prerequisites name Elite 35K"
+ }
+}

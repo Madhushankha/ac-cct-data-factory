@@ -1,0 +1,111 @@
+{
+ "id": "FD_TC_207",
+ "family": "FD",
+ "summary": "AC-sold itinerary: ground bus YOW-YUL 08:00-10:00 delayed 3h (actual arr 13:00), customer misses AC 870 YUL-CDG 13:00 (arr 02:00+1) which departs on time; only the bus segment is disrupted",
+ "passengers": [
+  {
+   "firstName": "MARC-ANDRE",
+   "lastName": "PELLETIER",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "ZZ",
+   "number": "1",
+   "origin": "YOW",
+   "destination": "YUL",
+   "depLocal": "08:00",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "870",
+   "origin": "YUL",
+   "destination": "CDG",
+   "depLocal": "13:00",
+   "arrLocal": "02:00",
+   "dayOffset": 1,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 180,
+   "depDelayMin": 180,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "no_show"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "NON_FLIGHT_SEGMENT_DISRUPTION",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": null,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Promised: Segment 1 Bus YOW\u2192YUL Dep 08:00 Arr 10:00; Segment 2 Flight AC 870 YUL\u2192CDG Dep 13:00 Arr 02:00+1",
+   "Current: Segment 1 Bus YOW\u2192YUL ARRIVED LATE, Actual Arr 13:00, Delay +3H 00M; Segment 2 Flight AC 870 YUL\u2192CDG DEPARTED ON TIME - CUSTOMER NO-SHOW (missed connection)",
+   "Disrupted Segment: Segment 1 (Bus) - NOT a flight segment",
+   "Flight Segment (AC 870): operated on time - no flight disruption occurred",
+   "Rule: Train and Bus - no entitlement to compensation (all regimes) as only flight segments matter",
+   "APPR = NOT ELIGIBLE; EU 261 = NOT ELIGIBLE; ASL = NOT ELIGIBLE (disruption on non-flight segment)",
+   "GW Flag: available at business discretion, not automatic",
+   "Flight Compensation: MR MARC-ANDRE PELLETIER | NOT ELIGIBLE | NON_FLIGHT_SEGMENT_DISRUPTION | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "PNR name accents dropped (GDS ASCII)",
+  "bus modelled as carrier ZZ (placeholder, ground partner) with number 1; AC 870 cabin Y class T",
+  "bus delayed arrival 13:00 (+180 min); AC 870 departed on time, customer no_show"
+ ],
+ "unsupported": [
+  "Bus (ground) segment mode cannot be expressed in the flight booking data (modelled as a ZZ placeholder carrier segment); goodwill (GW) discretion not modelled"
+ ],
+ "pinDaysAgo": true
+}

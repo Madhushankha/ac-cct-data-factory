@@ -1,0 +1,94 @@
+{
+ "id": "SOC_UAT_008",
+ "family": "SOC",
+ "summary": "APPR SOC: 1 revenue pax on AC 111 YYZ-YUL Jun 7 09:00 cancelled (code 42 scheduled maintenance), rebooked with SOC-segment departure delay 90 min; passenger stayed at origin -> NOT ELIGIBLE, delay below 2 h (SoC-APPR-NE-14)",
+ "passengers": [
+  {
+   "firstName": "ETIENNE",
+   "lastName": "PAQUETTE",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "111",
+   "origin": "YYZ",
+   "destination": "YUL",
+   "depLocal": "09:00",
+   "arrLocal": "10:20",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "PY",
+   "status": "HX"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 90,
+   "depDelayMin": 90,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "SoC-APPR-NE-14",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_LESS_THAN_2_HOURS",
+  "delayMin": 90,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Trip Not Completed, Disruption Detected",
+   "Single-segment domestic trip YYZ\u2192YUL on AC111 cancelled, rebooked with SOC segment departure delay +1H 30M; passenger stayed at origin (YYZ)",
+   "PASSENGERS: 1 SEGMENTS: 1",
+   "Promised Itinerary: AC 111 YYZ\u2192YUL Scheduled Dep 07-Jun 09:00",
+   "Current Itinerary: AC 111 YYZ\u2192YUL CANCELLED, rebooked, SOC Segment Departure Delay +1H 30M",
+   "SOC Segment Departure Delay: 90 min, below 2h threshold",
+   "Departure Delay Code: 42 (Scheduled Maintenance), Controllable (irrelevant, threshold not met)",
+   "PASSENGER | NOT_ELIGIBLE | DELAY_LESS_THAN_2_HOURS"
+  ],
+  "soc": {
+   "eligibility": "NOT_ELIGIBLE",
+   "entitlements": "none; no travel, delay below 2 h"
+  }
+ },
+ "assumed": [
+  "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+  "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+  "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+  "delay 90 min per prerequisites and TT lines (the Expected Results line says 150 min: text inconsistency)",
+  "rebooked flight AC 113 YYZ-YUL dep 10:30 arr 11:50 invented (number not stated); accepted=false because passenger stayed at origin",
+  "cancel code TECH chosen as NetLine equivalent of delay code 42 (scheduled maintenance)",
+  "residence CA assumed"
+ ],
+ "unsupported": [
+  "Text states two different delays (90 min vs 150 min in Expected Results); spec uses 90"
+ ]
+}

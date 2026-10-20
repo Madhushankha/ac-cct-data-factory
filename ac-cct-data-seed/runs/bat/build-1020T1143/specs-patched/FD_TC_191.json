@@ -1,0 +1,81 @@
+{
+ "id": "FD_TC_191",
+ "family": "FD",
+ "summary": "Single pax YUL-YYZ AC 421; VOL pre-move updated promise to 13:00, later REACC (INVOL) does not; actual arrival 17:00 (+4h from promise), code 42",
+ "passengers": [
+  {
+   "firstName": "ANDRE",
+   "lastName": "PELLETIER",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "421",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "11:00",
+   "arrLocal": "13:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "APPR_3_TO_6_HOURS",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 421 YUL→YYZ Scheduled Arrival 13:00 (updated by Pre-Move VOL, NOT further updated by REACC)",
+   "Current: AC 421 YUL→YYZ ARRIVED LATE, Actual 17:00, Delay +4H 00M",
+   "Change 1: Pre-Move (RF-PMV / YMQAC0848) at D-8 VOL arrival 10:00→13:00 PROMISE UPDATED",
+   "Change 2: REACC (MUC1A06AC) at D-2 INVOL arrival 13:00→17:00 PROMISE NOT UPDATED",
+   "Promise = 13:00 (last VOL before first INVOL); Delay from promise = 4 hours",
+   "Regime: APPR",
+   "APPR: Delay 3-<6h, Controllable -> ELIGIBLE",
+   "MSL FLIGHT: AC 421 YUL→YYZ 42",
+   "CONTROLLABLE (Code 42)",
+   "Flight Compensation: MR ANDRE PELLETIER | ELIGIBLE | APPR_3_TO_6_HOURS | CAD $400"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "PNR name accents dropped (GDS ASCII)",
+  "dep time 11:00 (text gives only arrival); original 14-day arrival 10:00 not modelled, segment is at the VOL-updated 13:00 promise"
+ ],
+ "unsupported": [
+  "PNR change-history identifiers/classification (VOL/INVOL tool markers, D-n change timing) cannot be expressed in booking data; segment is modelled at the final promise time and delay measured from it; Pre-Move VOL (RF-PMV/YMQAC0848) then REACC INVOL (MUC1A06AC) sequence, original 10:00 schedule"
+ ]
+}

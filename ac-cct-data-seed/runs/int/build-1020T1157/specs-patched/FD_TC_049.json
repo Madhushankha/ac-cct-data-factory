@@ -1,0 +1,94 @@
+{
+ "id": "FD_TC_049",
+ "family": "FD",
+ "summary": "Single pax Dominique Arsenault (Basic Aeroplan 9876543210); AC 435 YUL-YYZ dep 08:00 arr 10:00 cancelled SKD (schedule/commercial, controllable); reprotected on renumbered AC 445 same 08:00 departure, arrives 12:30 (+2h30 < 3h threshold) -> NOT ELIGIBLE CAD 0",
+ "passengers": [
+  {
+   "firstName": "DOMINIQUE",
+   "lastName": "ARSENAULT",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "435",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": 150,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "OPER",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "445",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "12:30",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-27",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": "BELOW_THRESHOLD_POST_REPROTECTION",
+  "delayMin": 150,
+  "control": "CONTROLLABLE",
+  "cause": "OPER",
+  "ttUi": [
+   "Promised: AC 435 YUL->YYZ Scheduled Departure 08:00, Scheduled Arrival 10:00 (CANCELLED - SKD)",
+   "History: Change 1 INVOL - AC 435 CANCELLED (SKD Schedule/Commercial Cancellation - Controllable); reprotected onto renumbered flight AC 445 YUL->YYZ",
+   "Current: AC 445 (Renumbered) YUL->YYZ, ARRIVED, Scheduled Departure 08:00 (SAME), Actual Arrival 12:30",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 435 YUL->YYZ SKD (Schedule/Commercial Cancellation - Controllable)",
+   "Reprotected Flight: AC 445 Departed 08:00 (SAME) Arrived 12:30",
+   "Delay Calculation: original promise 10:00; reprotected actual 12:30; Delay +2H 30M (150 min)",
+   "APPR Gate 8: delay 2h 30m < 3h -> FAILS threshold -> NOT ELIGIBLE",
+   "Fallback: FALSE",
+   "Sister City: FALSE",
+   "Flight Compensation: MS DOMINIQUE ARSENAULT | NOT ELIGIBLE | BELOW_THRESHOLD_POST_REPROTECTION | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "noticeHours null (not stated)",
+  "delayBand carries the TT compensation label (no delay band applies)",
+  "Aeroplan Basic 9876543210 active, good standing"
+ ],
+ "unsupported": []
+}

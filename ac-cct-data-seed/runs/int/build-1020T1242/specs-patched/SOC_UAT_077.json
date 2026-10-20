@@ -1,0 +1,91 @@
+{
+  "id": "SOC_UAT_077",
+  "family": "SOC",
+  "summary": "1 adult, AC 201 YYZ-YYC 27-Jun 07:00 departed 15:00 (8h late), coded 77 weather (so DDS says NOT ELIGIBLE NE-07); an agent override later corrects it to crew shortage 64 and pays",
+  "passengers": [
+    {
+      "firstName": "ETHAN",
+      "lastName": "WALKER",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "201",
+      "origin": "YYZ",
+      "destination": "YYC",
+      "depLocal": "07:00",
+      "arrLocal": "08:45",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 480,
+      "depDelayMin": 480,
+      "delayCode": "77",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-APPR-NE-07",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 480,
+    "control": "UNCONTROLLABLE",
+    "cause": "77",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected - DISPUTED / OVERRIDE APPROVED (PAY)",
+      "Single-segment domestic trip YYZ->YYC on AC201 delayed +8H 00M",
+      "Regime: APPR; PASSENGERS: 1 - SEGMENTS: 1",
+      "Promised: AC 201 YYZ->YYC Sched Dep 27-Jun 07:00",
+      "Current: ARRIVED LATE, Sched Dep 07:00, Actual 15:00, Delay +8H 00M",
+      "Original Departure Delay Code: 77 (Weather) - Uncontrollable; Original DDS: SoC-APPR-NE-07 (NOT ELIGIBLE - weather, regular pax)",
+      "Override Section: Dispute Flag YES; Override Status APPROVED; Decision PAY; Corrected Departure Delay Code 64 (Flight Crew Shortage, controllable); Overridden DDS Code SoC-APPR-EL-08",
+      "PASSENGER STATUS: ELIGIBLE (overridden) | BAND: DELAY_6_HOURS_OR_MORE | MEAL CAD 30.00 | ACCOMMODATION: Rate of day (max CAD 500) | GENERAL EXPENSES: Transport 200 + Comm 30 + Parking 50 + Essentials 30",
+      "CyberSource: GREEN (post-override)",
+      "Final expected state: SoC-Override-Pay (ELIGIBLE)"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "DDS raw: none (NE-07 weather). After override PAY: meals 30, hotel rate of day cap 500, transport 200, communication 30, parking 50, essentials 30 (CAD)"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Booking carries the ORIGINAL delay code 77 so DDS first returns NE-07; the corrected code 64 / EL-08 / Override-Pay result only appears after the agent override",
+    "expect.systemCode is the raw DDS code (NE-07); final state after override is ELIGIBLE (SoC-APPR-EL-08 / SoC-Override-Pay)",
+    "Arrival 08:45 local YYC; arrival delay assumed 480",
+    "Chatbot journey screen says 6h delay; prerequisites (480) used for Trip Tracer",
+    "Cabin W (PY), class O",
+    "Residence CA",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "unsupported": [
+    "The dispute, investigation, corrected delay code 64 and the override decision (Pay) are Case Services/Claims Dashboard actions, not booking data; the booking can only reproduce the pre-override weather state"
+  ]
+}

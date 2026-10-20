@@ -1,0 +1,92 @@
+{
+ "id": "FD_TC_036",
+ "family": "FD",
+ "summary": "Single pax Luc Bergeron; AC 437 YUL-YYZ (sched arr 08:00) cancelled, code 18 baggage processing; accepted rebooking to AC 438 YUL-YHM (sister city) arriving 18:00 (+10h vs promise); APPR Tier 3",
+ "passengers": [
+  {
+   "firstName": "LUC",
+   "lastName": "BERGERON",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "437",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "06:40",
+   "arrLocal": "08:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": 600,
+   "depDelayMin": null,
+   "delayCode": "18",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "438",
+   "origin": "YUL",
+   "destination": "YHM",
+   "depLocal": "16:30",
+   "arrLocal": "18:00",
+   "dayOffset": 0,
+   "accepted": true
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-06",
+  "amount": 1000,
+  "currency": "CAD",
+  "delayBand": "DELAY_GTE_9_HOURS",
+  "delayMin": 600,
+  "control": "CONTROLLABLE",
+  "cause": "18",
+  "ttUi": [
+   "Promised: AC 437 YUL->YYZ Scheduled Arrival 08:00 at YYZ (original flight CANCELLED)",
+   "Current: AC 438 YUL->YHM (rebooked to sister city), ARRIVED, Actual Arrival 18:00 at YHM",
+   "History: Change 1 INVOL - AC 437 YUL->YYZ cancelled (arrival delay code 18 Baggage Processing); customer accepted rebooking to AC 438 YUL->YHM",
+   "Delay Calculation: promise 08:00 at YYZ (AC 437); actual 18:00 at YHM (AC 438); Delay = 10hrs",
+   "Sister City Check: YHM<->YYZ VALID PAIR; accepted as equivalent destination",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 437 YUL->YYZ Arrival delay code 18 \"Cancelled due to baggage processing\"",
+   "Rebooked Flight: AC 438 YUL->YHM (sister city of YYZ)",
+   "Delay: +10H 00M CONTROLLABLE",
+   "Flight Compensation: MR LUC BERGERON | ELIGIBLE | DELAY_GTE_9_HOURS | CAD 1000.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "orig dep 06:40; rebooked dep 16:30 (only arrivals given)",
+  "delayCode 18 as cause; cancelCode null; noticeHours null",
+  "arrDelayMin 600 = actual at YHM minus original promise at YYZ"
+ ],
+ "unsupported": []
+}

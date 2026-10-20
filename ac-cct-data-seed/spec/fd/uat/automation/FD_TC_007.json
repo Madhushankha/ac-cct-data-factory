@@ -1,0 +1,143 @@
+{
+ "id": "FD_TC_007",
+ "family": "FD",
+ "summary": "Single pax Camille Brosseau (Basic Aeroplan): original 2 legs AC 8102 YUL-YOW + AC 8202 YOW-YYZ arr 10:00; INVOL (D-3) to direct AC 425 arr 17:00; VOL (D-1) to later direct AC 427 arr 19:00; gross delay 9h, VOL deduction 2h, net 7h, code 32, APPR Tier 2",
+ "passengers": [
+  {
+   "firstName": "CAMILLE",
+   "lastName": "BROSSEAU",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "8102",
+   "origin": "YUL",
+   "destination": "YOW",
+   "depLocal": "08:00",
+   "arrLocal": "09:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "8202",
+   "origin": "YOW",
+   "destination": "YYZ",
+   "depLocal": "09:30",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": 72,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "cancel",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": 72,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "425",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "15:40",
+   "arrLocal": "17:00",
+   "dayOffset": 0,
+   "accepted": true,
+   "voluntary": false,
+   "changeDaysBeforeDeparture": 3,
+   "replacesAlsoSeg": 2
+  },
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "427",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "17:40",
+   "arrLocal": "19:00",
+   "dayOffset": 0,
+   "accepted": true,
+   "voluntary": true,
+   "changeDaysBeforeDeparture": 1,
+   "replacesAlsoSeg": 2,
+   "actualArrLocal": "19:00",
+   "delayCode": "32"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 700,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "CONTROLLABLE",
+  "cause": "32",
+  "ttUi": [
+   "Rebooking Pattern: MANY_TO_ONE (2-1 leg) - Original 2-leg connecting YUL-YOW-YYZ consolidated into direct YUL-YYZ",
+   "Promised Itinerary - 2-leg connecting: Leg 1 AC 8102 YUL-YOW arr 09:00; Leg 2 AC 8202 YOW-YYZ arr 10:00 (14-day mark final arrival, no VOL before INVOL)",
+   "Current Itinerary: Flight AC 427, Route: YUL-YYZ, Status: ARRIVED LATE, Actual Arrival: 19:00",
+   "Total Gross Delay: +9H 00M (19:00 - 10:00 promise)",
+   "Post-INVOL VOL Deduction: +2H 00M (17:00-19:00, POSITIVE, DEDUCTED)",
+   "Net Delay: +7H 00M (9hrs - 2hrs deduction)",
+   "History: Original (14-day): 2-leg connecting arr 10:00; Change 1 (Day -3): INVOL to direct arr 17:00 (MANY_TO_ONE); Change 2 (Day -1): VOL to later direct arr 19:00 (+2hrs POSITIVE, DEDUCTED)",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 427 - YUL-YYZ - 32",
+   "\"Delayed due to ramp loading operations\"",
+   "Total Delay: +9H 00M - Post-INVOL VOL Deduction: +2H 00M - Net Delay: +7H 00M - CONTROLLABLE",
+   "Fallback: FALSE - Sister City: FALSE",
+   "MS CAMILLE BROSSEAU | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 840.00 (Wallet) / CAD 700.00 (Cash) | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "AC 425 dep 15:40 arr 17:00 and AC 427 dep 17:40 arr 19:00 (dep times assumed)",
+  "amount 700 is the cash value; wallet 840",
+  "delayMin 420 is the NET delay after the 2h VOL deduction (gross 540)",
+  "chain modelled as rebooking entries: INVOL AC 425 (D-3) replacing both original legs, then VOL AC 427 (D-1); extra optional keys voluntary and changeDaysBeforeDeparture; outcome of both original legs is \"cancel\" with 72 h notice"
+ ],
+ "unsupported": [
+  "VOL (customer-initiated) versus INVOL change type is not a field of the schema (added as the optional key \"voluntary\")",
+  "the VOL-deduction rule (deduct positive customer-chosen later time) is DDS logic, not stored data",
+  "flight date: run uses flightDaysAgo=10"
+ ]
+}

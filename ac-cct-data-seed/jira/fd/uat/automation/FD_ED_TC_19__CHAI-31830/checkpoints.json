@@ -1,0 +1,459 @@
+{
+  "key": "CHAI-31830",
+  "test_id": "FD_ED_TC_19",
+  "title": "Claims Dashboard | Banking Error | Payment Failed | Customer Returns | Re-Processing | Code 64 Crew Shortage | Delay 6�9h (7h) | APPR | Basic Aeroplan",
+  "goal": "Eligible claim was submitted and payment initiated for a 7-hour delay (6�<9h band, APPR Tier 2: $700 CAD) caused by Code 64 (Flight Crew Shortage � Controllable) on a domestic flight. Passenger holds a Basic Aeroplan profile (9876543210). Payment processor attempts $700 CAD Interac e-Transfer, but the bank rejects the payment (account closed). Customer receives notification and returns to chatbot to update banking details. Identity is re-verified via OTP (IDV already passed on original submission). Payment is re-processed to the new email address. Validates: (1) Payment failure handling and status updates for a Tier 2 APPR claim, (2) Re-authentication on customer return, (3) IDV bypass when already completed, (4) Successful re-processing of $700 CAD payout, (5) Dashboard payment audit history tracking.",
+  "summary": {
+    "seed": 0,
+    "chat": 28,
+    "api": 0,
+    "email": 6,
+    "dashboard": 3,
+    "implied": 11,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Eligible claim was submitted and payment initiated for a 7-hour delay (6�<9h band, APPR Tier 2: $700 CAD) caused by Code 64 (Flight Crew Shortage � Controllable) on a domestic flight. Passenger holds a Basic Aeroplan profile (9876543210). Payment processor attempts $700 CAD Interac e-Transfer, but the bank rejects the payment (account closed). Customer receives notification and returns to chatbot to update banking details. Identity is re-verified via OTP (IDV already passed on original submission). Payment is re-processed to the new email address. Validates: (1) Payment failure handling and status updates for a Tier 2 APPR claim, (2) Re-authentication on customer return, (3) IDV bypass when already completed, (4) Successful re-processing of $700 CAD payout, (5) Dashboard payment audit history tracking.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "BACKGROUND � ORIGINAL CASE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given a case was previously created: CASE-FD-20260520-060",
+      "expected": "",
+      "id": "CP002"
+    },
+    {
+      "section": "BACKGROUND � ORIGINAL CASE",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the case details are:",
+      "expected": "? Passenger: Claire Dubois (Basic Aeroplan Member #: 9876543210) ? PNR: TC239 ? Journey: YUL ? YYZ (AC 301), May 20, 2026, delayed 7h (6�<9h band) ? Scheduled Arrival: 14:00 ? Actual Arrival: 21:00 ? Disruption Code: 64 (Flight Crew Shortage � Controllable) ? Regime: APPR (domestic) ? Decision: ELIGIBLE ($700 CAD Cash Tier 2 / $840 CAD AC Wallet offered; customer selected Cash) ? Payment Method: Interac e-Transfer ($700 CAD) ? Payment Email: claire.dubois@gmail.com ? IDV: PASS ? CyberSource: GREEN ? Case Status: Eligible � Payment Initiated",
+      "id": "CP003"
+    },
+    {
+      "section": "PAYMENT FAILURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the system initiates Interac e-Transfer of $700 CAD to claire.dubois@gmail.com",
+      "expected": "",
+      "id": "CP004"
+    },
+    {
+      "section": "PAYMENT FAILURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the payment processor attempts the transfer",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "PAYMENT FAILURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the bank returns: PAYMENT REJECTED",
+      "expected": "? Rejection Reason: ACCOUNT CLOSED (the email is no longer linked to an active Interac account) ? Error Code: BANK_REJECT_ACCOUNT_CLOSED ? Payment Status: FAILED ? Retry Attempted: YES (automatic retry after 24 hours) ? Retry Result: FAILED AGAIN (same rejection)",
+      "id": "CP006"
+    },
+    {
+      "section": "PAYMENT FAILURE NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP007"
+    },
+    {
+      "section": "PAYMENT FAILURE NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a Payment Failed notification email is sent to claire.dubois@gmail.com",
+      "expected": "",
+      "id": "CP008"
+    },
+    {
+      "section": "PAYMENT FAILURE NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains:",
+      "expected": "Action Required: Payment for your Air Canada claim � CASE-FD-20260520-060 We were unable to complete the payment to the email address provided. This may be due to an issue with your Interac e-Transfer registration. Please return to our chatbot to update your payment details so we can re-process your compensation.",
+      "id": "CP009"
+    },
+    {
+      "section": "CASE STATUS UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system updates the case status:",
+      "expected": "? Previous Status: Eligible � Payment Initiated ? New Status: Eligible � Payment Failed (Awaiting Updated Banking Details) ? Payment Failure Reason: Bank rejection � account closed ? Payment Retry Count: 2 (initial + 1 retry, both failed)",
+      "id": "CP010"
+    },
+    {
+      "section": "CUSTOMER RETURNS TO CHATBOT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP011"
+    },
+    {
+      "section": "CUSTOMER RETURNS TO CHATBOT",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP012"
+    },
+    {
+      "section": "CUSTOMER RETURNS TO CHATBOT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP013"
+    },
+    {
+      "section": "CUSTOMER RETURNS TO CHATBOT",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP014"
+    },
+    {
+      "section": "CUSTOMER RETURNS TO CHATBOT",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP015"
+    },
+    {
+      "section": "CUSTOMER RETURNS TO CHATBOT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"I received an email saying my payment failed for my compensation claim. I need to update my banking details.\"",
+      "expected": "I received an email saying my payment failed for my compensation claim. I need to update my banking details.",
+      "id": "CP016"
+    },
+    {
+      "section": "INTENT DETECTION � PAYMENT UPDATE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies payment update intent",
+      "expected": "",
+      "id": "CP017"
+    },
+    {
+      "section": "INTENT DETECTION � PAYMENT UPDATE",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can help you update your payment details. Let me look up your case first.",
+      "id": "CP018"
+    },
+    {
+      "section": "CASE LOOKUP",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Could you please provide your case reference number or booking reference (PNR)?",
+      "id": "CP019"
+    },
+    {
+      "section": "CASE LOOKUP",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"CASE-FD-20260520-060\"",
+      "expected": "CASE-FD-20260520-060",
+      "id": "CP020"
+    },
+    {
+      "section": "CASE RETRIEVAL",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system searches Case Services for: CASE-FD-20260520-060",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "CASE RETRIEVAL",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Case Services returns: CASE FOUND",
+      "expected": "? Case Reference: CASE-FD-20260520-060 ? Passenger: Claire Dubois (Aeroplan Basic Member #: 9876543210) ? Journey: YUL ? YYZ, 7h delay (Code 64 Crew Shortage) ? Status: Eligible � Payment Failed ? Compensation: $700 CAD ? Payment Failure Reason: Bank rejection � account closed",
+      "id": "CP022"
+    },
+    {
+      "section": "IDENTITY RE-VERIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I found your case. Before we update your payment details, I need to verify your identity.",
+      "id": "CP023"
+    },
+    {
+      "section": "IDENTITY RE-VERIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: c***@gmail.com � Phone: +1***567",
+      "id": "CP024"
+    },
+    {
+      "section": "IDENTITY RE-VERIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: c***@gmail.com\"",
+      "expected": "Email: c***@gmail.com",
+      "id": "CP025"
+    },
+    {
+      "section": "IDENTITY RE-VERIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP026"
+    },
+    {
+      "section": "IDENTITY RE-VERIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"518293\"",
+      "expected": "518293",
+      "id": "CP027"
+    },
+    {
+      "section": "IDENTITY RE-VERIFICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "IDENTITY RE-VERIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful.",
+      "id": "CP029"
+    },
+    {
+      "section": "PAYMENT FAILURE EXPLANATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can see that the payment of $700 CAD for your claim could not be processed. The Interac e-Transfer to your previous email address was unsuccessful. Let's update your payment details so we can re-process the payment. Would you like to: � Update your Interac e-Transfer email � provide a different email address � Switch to a different payment method � if you'd prefer another option Which would you prefer?",
+      "id": "CP030"
+    },
+    {
+      "section": "PAYMENT FAILURE EXPLANATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Update my Interac e-Transfer email\"",
+      "expected": "Update my Interac e-Transfer email",
+      "id": "CP031"
+    },
+    {
+      "section": "UPDATED PAYMENT DETAILS",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Please provide the new email address where you'd like to receive the Interac e-Transfer.",
+      "id": "CP032"
+    },
+    {
+      "section": "UPDATED PAYMENT DETAILS",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"claire.dubois.new@gmail.com\"",
+      "expected": "claire.dubois.new@gmail.com",
+      "id": "CP033"
+    },
+    {
+      "section": "UPDATED PAYMENT DETAILS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot confirms:",
+      "expected": "\"Thank you. I'll update your payment details to: � Payment Method: Interac e-Transfer � New Email: claire.dubois.new@gmail.com � Amount: $700 CAD Would you like me to re-process the payment?\"",
+      "id": "CP034"
+    },
+    {
+      "section": "UPDATED PAYMENT DETAILS",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP035"
+    },
+    {
+      "section": "IDV CHECK � ALREADY COMPLETED",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "Then the system checks: Has IDV been completed for this case? ? YES (completed during original submission)",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "IDV CHECK � ALREADY COMPLETED",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "Then the system determines: IDV ALREADY PASSED � NO NEED TO REPEAT",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "PAYMENT RE-PROCESSING",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system updates the case:",
+      "expected": "? Payment Email: claire.dubois@gmail.com ? claire.dubois.new@gmail.com ? Payment Status: Failed ? Re-Processing ? Re-Processing Initiated: June 15, 2026",
+      "id": "CP038"
+    },
+    {
+      "section": "PAYMENT RE-PROCESSING",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your payment details have been updated and the payment is being re-processed. You should receive the $700 CAD via Interac e-Transfer at claire.dubois.new@gmail.com within 5 to 10 business days.",
+      "id": "CP039"
+    },
+    {
+      "section": "PAYMENT RE-PROCESSING",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "And an alert information is displayed: \"Payment re-processing initiated!\"",
+      "expected": "Payment re-processing initiated!",
+      "id": "CP040"
+    },
+    {
+      "section": "NOTIFICATION � PAYMENT RE-PROCESSING",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "NOTIFICATION � PAYMENT RE-PROCESSING",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a Payment Re-Processing notification email is sent to claire.dubois.new@gmail.com",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "NOTIFICATION � PAYMENT RE-PROCESSING",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains:",
+      "expected": "Payment re-processing for your Air Canada claim � CASE-FD-20260520-060 Your payment is being re-processed. Please allow 5 to 10 business days.",
+      "id": "CP043"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers:",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP044"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP045"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP046"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "When the agent navigates to Claims Dashboard",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the agent searches for the case",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the dashboard displays:",
+      "expected": "� Case Reference: CASE-FD-20260520-060 � Claimant Name: Claire Dubois � Aeroplan: 9876543210 (linked, Basic Member in good standing) � Status: Eligible � Payment Re-Processing � Disruption Code: Code 64 (Flight Crew Shortage � Controllable) � Arrival Delay: 7 hours (6�<9h band, APPR Tier 2) � Compensation: $700 CAD � Payment History: Attempt 1: Interac $700 CAD to claire.dubois@gmail.com ? FAILED (account closed) Retry 1: Interac $700 CAD to claire.dubois@gmail.com ? FAILED (account closed) Attempt 3: Interac $700 CAD to claire.dubois.new@gmail.com ? RE-PROCESSING � Payment Email Updated: June 15, 2026 � IDV: PASS (original � not repeated) � CyberSource: GREEN (original)",
+      "id": "CP049"
+    }
+  ]
+}

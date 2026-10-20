@@ -1,0 +1,93 @@
+{
+ "id": "FD_TC_126",
+ "family": "FD",
+ "summary": "Adult, AC870 CDG-YYZ dep 10:00 sched arr 13:00, arrived 17:35 (+275 min), no arrival code, departure code 11 fallback: EU261 Rest of Europe EUR 600",
+ "passengers": [
+  {
+   "firstName": "ETIENNE",
+   "lastName": "BEAUMONT",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "FR",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "870",
+   "origin": "CDG",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "13:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 275,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "arrDelayCode": null,
+   "depDelayCode": "11",
+   "fallback": true
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-EU-EL-18",
+  "amount": 600,
+  "currency": "EUR",
+  "delayBand": "EU261_TRAVEL_COMPLETED_REST_OF_EUROPE_GTE_4HR_FALLBACK_CODE",
+  "delayMin": 275,
+  "control": "CONTROLLABLE",
+  "cause": "11",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 870, Route: CDG → YYZ, Scheduled Departure: 10:00, Scheduled Arrival: 13:00 (local YYZ)",
+   "Current Itinerary - Flight: AC 870, Route: CDG → YYZ, Actual Arrival: 17:35 (local YYZ), Status: ARRIVED (DELAYED)",
+   "Delay at Arrival: 4 hours 35 minutes (275 minutes)",
+   "Delay Band: ≥240 min → 4+ hours (DELAY_GTE_4_HOURS)",
+   "Customer Status: TRAVEL COMPLETED",
+   "Regime: EU 261 (Rest of Europe - CDG origin) + APPR (Canada arrival)",
+   "Origin Region: CDG = Rest of Europe",
+   "MSL FLIGHT: AC 870 - CDG → YYZ",
+   "Arrival Delay Code: UNAVAILABLE (no arrival code assigned)",
+   "Departure Delay Code: 11 - CONTROLLABLE",
+   "Fallback: TRUE - arrival delay code unavailable → Rules Engine used first departure delay code (11) (priority: cancellation code → first arrival delay code → first departure delay code)",
+   "CONTROLLABLE (Departure code 11)",
+   "Disruption Type: DELAY",
+   "EU 261: Travel Completed, Rest of Europe, 4+ hr delay, Controllable (fallback departure code) = €600",
+   "APPR: Travel Completed, Controllable, 3-<6 hr delay = $400 CAD",
+   "Most Generous: EU 261 Rest of Europe selected",
+   "Flight Compensation: MR ETIENNE BEAUMONT | ELIGIBLE | EU261_TRAVEL_COMPLETED_REST_OF_EUROPE_GTE_4HR_FALLBACK_CODE | EUR 600.00 | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "residence FR (text: France, EUR)",
+  "Aeroplan not linked (cash only)",
+  "Dual regime: APPR $400 CAD (3-<6h) also assessed; EU 261 Rest of Europe selected as most generous",
+  "depDelayMin 0 (text gives only arrival delay)",
+  "delayCode null (arrival code unavailable); departure code in non-schema extras (arrDelayCode/depDelayCode/fallback) on the outcome",
+  "regime 'EU' = EU 261 Rest of Europe"
+ ],
+ "unsupported": []
+}

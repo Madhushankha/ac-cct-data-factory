@@ -1,0 +1,657 @@
+{
+  "key": "CHAI-31837",
+  "test_id": "FD_ED_TC_26",
+  "title": "Empathy | Angry Customer | Persistent Negativity | Sentiment Monitoring | Handoff Threshold",
+  "goal": "Customer is persistently angry throughout the flow (not threatening, but consistently negative). System monitors sentiment across multiple messages and offers live agent handoff when negativity threshold is reached. Tests continuous sentiment monitoring vs. single-message detection.",
+  "summary": {
+    "seed": 1,
+    "chat": 44,
+    "api": 3,
+    "email": 2,
+    "dashboard": 1,
+    "implied": 19,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Customer is persistently angry throughout the flow (not threatening, but consistently negative). System monitors sentiment across multiple messages and offers live agent handoff when negativity threshold is reached. Tests continuous sentiment monitoring vs. single-message detection.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Sentiment analysis with multi-message tracking; Negativity threshold configured (e.g., 3+ consecutive negative messages)",
+      "expected": "Sentiment analysis with multi-message tracking; Negativity threshold configured (e.g., 3+ consecutive negative messages)",
+      "id": "CP002"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP003"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP004"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP007"
+    },
+    {
+      "section": "NEGATIVE MESSAGE 1",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"Your airline ruined my vacation. My flight was delayed and nobody cared. I want compensation.\"",
+      "expected": "Your airline ruined my vacation. My flight was delayed and nobody cared. I want compensation.",
+      "id": "CP008"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 1",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? Sentiment: NEGATIVE (angry, accusatory)",
+      "expected": "? Threat Level: NONE ? Consecutive Negative Count: 1 of 3 threshold ? Action: CONTINUE FLOW with empathy",
+      "id": "CP009"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 1",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I'm really sorry to hear about your experience. I understand how disappointing that must have been. Let me help you check your eligibility for compensation.",
+      "id": "CP010"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 1",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP011"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process...\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process...",
+      "id": "CP012"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP013"
+    },
+    {
+      "section": "NEGATIVE MESSAGE 2",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds \"Why do I have to give you all this information? This is ridiculous. Your airline caused the problem and now I have to jump through hoops. My name is Karen Mitchell.\"",
+      "expected": "",
+      "id": "CP014"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 2",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? Sentiment: NEGATIVE (frustrated, accusatory)",
+      "expected": "? Threat Level: NONE ? Consecutive Negative Count: 2 of 3 threshold ? Action: CONTINUE FLOW with empathy acknowledgment",
+      "id": "CP015"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 2",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I understand this process can feel frustrating, Karen, and I apologize for the inconvenience. We need this information to verify your identity and process your claim securely. I'll make this as quick as possible.",
+      "id": "CP016"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 2",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "What is your booking reference number?",
+      "id": "CP017"
+    },
+    {
+      "section": "NEGATIVE MESSAGE 3",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds \"TC246. This better work. I've been trying to get help for weeks and nobody at Air Canada gives a damn. Worst airline ever.\"",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 3",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? Sentiment: NEGATIVE (angry, disparaging)",
+      "expected": "? Threat Level: NONE ? Consecutive Negative Count: 3 of 3 threshold � THRESHOLD REACHED ? Action: OFFER LIVE AGENT HANDOFF (persistent negativity threshold met)",
+      "id": "CP019"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 3",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC246",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 3",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "PERSISTENT NEGATIVITY � HANDOFF OFFERED",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I found your booking, Karen. I can see your frustration, and I want to make sure you have the best experience possible. I have two options for you: � Continue with me � I'll keep processing your claim and get you to a result as quickly as possible. We're almost there. � Speak with a live agent � If you'd prefer a personal touch, I can connect you with a customer service representative who can help. What would you prefer?",
+      "id": "CP022"
+    },
+    {
+      "section": "CUSTOMER CHOOSES TO CONTINUE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds \"Just keep going. I don't want to wait on hold for an agent.\"",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 4",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? Sentiment: NEGATIVE (still frustrated but willing to continue)",
+      "expected": "? Threat Level: NONE ? Action: CONTINUE FLOW � customer declined handoff ? Consecutive Negative Count: RESET (handoff was offered, customer chose to continue) ? Next threshold: 3 more consecutive negative messages before re-offering",
+      "id": "CP024"
+    },
+    {
+      "section": "FLOW CONTINUES � AUTHENTICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Absolutely, let's keep moving. To verify your identity, I'll send a one-time verification code to your email or phone on file. Where would you like to receive it?",
+      "id": "CP025"
+    },
+    {
+      "section": "FLOW CONTINUES � AUTHENTICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: k***@gmail.com � Phone: +1567",
+      "id": "CP026"
+    },
+    {
+      "section": "FLOW CONTINUES � AUTHENTICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: k@gmail.com\"",
+      "expected": "Email: k@gmail.com",
+      "id": "CP027"
+    },
+    {
+      "section": "FLOW CONTINUES � AUTHENTICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP028"
+    },
+    {
+      "section": "FLOW CONTINUES � AUTHENTICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"482917\"",
+      "expected": "482917",
+      "id": "CP029"
+    },
+    {
+      "section": "FLOW CONTINUES � AUTHENTICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "FLOW CONTINUES � AUTHENTICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your verification was successful. Let's proceed.",
+      "id": "CP031"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the system checks Trip Tracer for group booking identifier",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "GROUP BOOKING CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And group booking identifier = NOT PRESENT",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays passengers from PNR:",
+      "expected": "I found 1 passenger on this booking: � Karen Mitchell (Adult) Is this correct?",
+      "id": "CP034"
+    },
+    {
+      "section": "PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP035"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot retrieves booking details and displays:",
+      "expected": "I found the following journey: � Flight: AC 103 � Route: Toronto (YYZ) ? Vancouver (YVR) � Date: May 25, 2026 � Arrival Delay: 5 hours Is this the journey you'd like to check?",
+      "id": "CP036"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP037"
+    },
+    {
+      "section": "SEGMENT CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: More than 1 segment? ? NO ? skip GenUC-18",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "DUPLICATE CLAIM CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Case Services returns: NO existing case found",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "72-HOUR CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Hours since arrival ? >72 hours ? PROCEED",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "REGIME DETERMINATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Origin = YYZ (Canada) ? APPR",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "DDS EVALUATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "APPR: Delay 3�6h, Controllable ? ELIGIBLE, $400 CAD",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "FRAUD SCREENING",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "CyberSource: GREEN",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "ELIGIBLE RESULT",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays:",
+      "expected": "Great news, Karen! I've checked your flight details, and it looks like flight AC 103 from Toronto (YYZ) to Vancouver (YVR) was delayed by about 5 hours. Based on the Canadian Air Passenger Protection Regulations (APPR), you are eligible for compensation of $400 CAD for this delay. I'll guide you through the next steps. Great news",
+      "id": "CP044"
+    },
+    {
+      "section": "NEGATIVE MESSAGE 5",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user responds \"Finally! About time. Let's just get this done.\"",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "SENTIMENT ANALYSIS � MESSAGE 5",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? Sentiment: SLIGHTLY NEGATIVE (impatient but accepting)",
+      "expected": "? Trend: IMPROVING (from highly negative to slightly negative) ? Consecutive Negative Count: 1 (reset after handoff offer) ? Action: CONTINUE FLOW",
+      "id": "CP046"
+    },
+    {
+      "section": "CLAIM PAYMENT: COUNTRY OF RESIDENCE FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks:",
+      "expected": "In which country will your reimbursement be deposited?",
+      "id": "CP047"
+    },
+    {
+      "section": "CLAIM PAYMENT: COUNTRY OF RESIDENCE FLOW",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Canada\"",
+      "expected": "Canada",
+      "id": "CP048"
+    },
+    {
+      "section": "CASH vs AC WALLET CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "No Aeroplan ? cash only",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "CASH vs AC WALLET CHECK",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"You are entitled to receive a $400 CAD compensation. Would you like to proceed?\"",
+      "expected": "You are entitled to receive a $400 CAD compensation. Would you like to proceed?",
+      "id": "CP050"
+    },
+    {
+      "section": "CASH vs AC WALLET CHECK",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And user provides \"Yes\"",
+      "expected": "Yes",
+      "id": "CP051"
+    },
+    {
+      "section": "PAYMENT METHOD � INTERAC E-TRANSFER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your payment will be made through Interac e-Transfer. Please provide the email address where you'd like to receive the transfer.",
+      "id": "CP052"
+    },
+    {
+      "section": "PAYMENT METHOD � INTERAC E-TRANSFER",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"karen.mitchell@gmail.com\"",
+      "expected": "karen.mitchell@gmail.com",
+      "id": "CP053"
+    },
+    {
+      "section": "PAYMENT METHOD � INTERAC E-TRANSFER",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot confirms: \"Thank you. Your details have been recorded.\"",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I must verify your identity for payment security. Please click here to get started",
+      "id": "CP055"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And chatbot displays a button \"Get verified\"",
+      "expected": "Get verified",
+      "id": "CP056"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "When user clicks on the button",
+      "expected": "",
+      "id": "CP057"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the customer completes identity verification via Persona",
+      "expected": "",
+      "id": "CP058"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Persona returns: IDV PASS",
+      "expected": "",
+      "id": "CP059"
+    },
+    {
+      "section": "IDENTITY VERIFICATION � PERSONA",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your identity has been verified successfully.",
+      "id": "CP060"
+    },
+    {
+      "section": "CLAIM AMOUNT CONFIRMATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please review your compensation details:",
+      "expected": "Deposit Amount: $400 CAD Payment Method: Interac e-Transfer Would you like me to submit your claim?\"",
+      "id": "CP061"
+    },
+    {
+      "section": "CLAIM AMOUNT CONFIRMATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "When the user provides: \"Yes\"",
+      "expected": "Yes",
+      "id": "CP062"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Thank you, Karen. Your claim has been submitted and will now be processed within the next 15 days. Please check your email for a confirmation.\"",
+      "expected": "Thank you, Karen. Your claim has been submitted and will now be processed within the next 15 days. Please check your email for a confirmation.",
+      "id": "CP063"
+    },
+    {
+      "section": "CASE CREATION",
+      "requirement": "GLOB-09",
+      "kind": "alert",
+      "method": "chat",
+      "step": "And an alert information is displayed: \"Claim submission successful!\"",
+      "expected": "Claim submission successful!",
+      "id": "CP064"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And an eligible notification email is sent to k***@gmail.com",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers:",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP067"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP068"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada. I hope your next trip goes smoothly, Karen!\"",
+      "expected": "Thank you for choosing Air Canada. I hope your next trip goes smoothly, Karen!",
+      "id": "CP069"
+    },
+    {
+      "section": "SENTIMENT MONITORING VALIDATION",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "? Message 1: NEGATIVE (angry) � empathy provided, flow continued ?",
+      "expected": "Great news",
+      "id": "CP070"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "dashboard",
+      "step": "Multi-message sentiment tracking works; Threshold reached after 3 consecutive negative messages; Empathy responses increase in warmth as negativity persists; Live agent handoff offered at threshold; Customer choice respected; Sentiment log shows progression; Dashboard flags persistent negativity for agent/manager awareness",
+      "expected": "Multi-message sentiment tracking works; Threshold reached after 3 consecutive negative messages; Empathy responses increase in warmth as negativity persists; Live agent handoff offered at threshold; Customer choice respected; Sentiment log shows progression; Dashboard flags persistent negativity for agent/manager awareness",
+      "id": "CP071"
+    }
+  ]
+}

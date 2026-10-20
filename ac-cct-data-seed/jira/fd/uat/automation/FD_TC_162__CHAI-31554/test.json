@@ -1,0 +1,28 @@
+{
+  "key": "CHAI-31554",
+  "issue_id": "7380402",
+  "test_id": "FD_TC_162",
+  "summary": "FD_TC_162_Not Eligible | ASL | Itinerary Did Not End in Israel | Travel Completed | Delay | Single Pax | 1 Leg",
+  "title": "Not Eligible | ASL | Itinerary Did Not End in Israel | Travel Completed | Delay | Single Pax | 1 Leg",
+  "status": "New",
+  "priority": "Low",
+  "labels": [],
+  "scenario_type": "scenario",
+  "execution": "CHAI-31809",
+  "synced_at": "2026-10-13T07:02:34Z",
+  "description": "Flight TLV?YYZ (Tel Aviv to Toronto) � delayed 4 hours, controllable (arrival delay code 66). This TC validates the ASL \"end in Israel\" component check � which FAILS because destination is YYZ (Canada), not Israel. IMPORTANT NOTE: ASL applies to flights to AND from Israel. Since this itinerary STARTS in Israel (TLV), ASL still applies via the \"start in Israel\" path. NE-21 fires specifically for the \"end in Israel\" check failure as a component code. Additionally, even if ASL applies via the origin path, the 4hr delay is below the 8-hour ASL Travel Completed threshold (Gate 8), so the result would still be NE under ASL.\n\nPrerequisites:\nPNR: single passenger Maya Stein (Adult). Journey: 1 leg AC operated, Flight AC 084, TLV?YYZ. Flight status: ARRIVED LATE. Arrival delay code: 66 (Not Extraordinary Circumstance � controllable). Delay: 4 hours. Origin: TLV (Tel Aviv, Israel) ? \"start in Israel\" check PASSES ? ASL applies via origin. Destination: YYZ (Toronto, Canada) ? NOT Israel destination ? \"end in Israel\" check FAILS. ASL Travel Completed threshold: 8 hours ? 4hrs < 8hrs ? below threshold. Regime: ASL (via origin) + APPR (Canadian destination). Result: NOT ELIGIBLE under ASL \"end in Israel\" check (NE-21 component); also NE under ASL overall (4hrs < 8hr Travel Completed threshold).",
+  "goal": "Flight TLV?YYZ (Tel Aviv to Toronto) � delayed 4 hours, controllable (arrival delay code 66). This TC validates the ASL \"end in Israel\" component check � which FAILS because destination is YYZ (Canada), not Israel. IMPORTANT NOTE: ASL applies to flights to AND from Israel. Since this itinerary STARTS in Israel (TLV), ASL still applies via the \"start in Israel\" path. NE-21 fires specifically for the \"end in Israel\" check failure as a component code. Additionally, even if ASL applies via the origin path, the 4hr delay is below the 8-hour ASL Travel Completed threshold (Gate 8), so the result would still be NE under ASL.",
+  "prerequisites": "PNR: single passenger Maya Stein (Adult). Journey: 1 leg AC operated, Flight AC 084, TLV?YYZ. Flight status: ARRIVED LATE. Arrival delay code: 66 (Not Extraordinary Circumstance � controllable). Delay: 4 hours. Origin: TLV (Tel Aviv, Israel) ? \"start in Israel\" check PASSES ? ASL applies via origin. Destination: YYZ (Toronto, Canada) ? NOT Israel destination ? \"end in Israel\" check FAILS. ASL Travel Completed threshold: 8 hours ? 4hrs < 8hrs ? below threshold. Regime: ASL (via origin) + APPR (Canadian destination). Result: NOT ELIGIBLE under ASL \"end in Israel\" check (NE-21 component); also NE under ASL overall (4hrs < 8hr Travel Completed threshold).",
+  "prerequisite_items": [
+    "PNR: single passenger Maya Stein (Adult)",
+    "Journey: 1 leg AC operated, Flight AC 084, TLV?YYZ",
+    "Flight status: ARRIVED LATE",
+    "Arrival delay code: 66 (Not Extraordinary Circumstance � controllable)",
+    "Delay: 4 hours",
+    "Origin: TLV (Tel Aviv, Israel) ? \"start in Israel\" check PASSES ? ASL applies via origin",
+    "Destination: YYZ (Toronto, Canada) ? NOT Israel destination ? \"end in Israel\" check FAILS",
+    "ASL Travel Completed threshold: 8 hours ? 4hrs < 8hrs ? below threshold",
+    "Regime: ASL (via origin) + APPR (Canadian destination)",
+    "Result: NOT ELIGIBLE under ASL \"end in Israel\" check (NE-21 component); also NE under ASL overall (4hrs < 8hr Travel Completed threshold)"
+  ]
+}

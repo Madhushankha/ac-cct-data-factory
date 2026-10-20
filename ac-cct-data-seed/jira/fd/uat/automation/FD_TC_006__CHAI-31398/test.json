@@ -1,0 +1,33 @@
+{
+  "key": "CHAI-31398",
+  "issue_id": "7380246",
+  "test_id": "FD_TC_006",
+  "summary": "FD_TC_006_Travel Completed | APPR | VOL?INVOL | Promise = Last VOL | Delay 9h+ (9h 30m) | ONE_TO_MANY Rebooking (1?2 legs) | Aeroplan 75K",
+  "title": "Travel Completed | APPR | VOL?INVOL | Promise = Last VOL | Delay 9h+ (9h 30m) | ONE_TO_MANY Rebooking (1?2 legs) | Aeroplan 75K",
+  "status": "New",
+  "priority": "Low",
+  "labels": [],
+  "scenario_type": "scenario",
+  "execution": "CHAI-31809",
+  "synced_at": "2026-10-13T07:02:34Z",
+  "description": "Customer made a voluntary change (VOL) to a later flight BEFORE the airline made an involuntary change (INVOL). The INVOL rebook splits the original single direct flight into a 2-leg connecting itinerary (ONE_TO_MANY: YUL?YYZ direct ? YUL?YOW?YYZ connecting). Customer has an active Aeroplan 75K status linked to booking. Arrival at destination YYZ is delayed by 9h 30m (9h+ tier). Validates: (1) DDS sets promise to last VOL arrival time (13:00) before first INVOL � NOT the 14-day mark (10:00), (2) ONE_TO_MANY rebooking pattern correctly handled � delay measured at final destination YYZ, (3) MSL determined across the 2-leg rebooked itinerary, (4) Segment check (GenUC-18) triggers for multi-leg journey, (5) APPR Tier 3 compensation ($1,000 CAD base / $1,200 CAD AC Wallet with 20% top-up) correctly evaluated for 9h+ delay, (6) Aeroplan 75K tier status recognized in profile.\n\nPrerequisites:\nPNR: TC003 � Hugo Villeneuve (Adult). Original (14-day): 1 leg direct AC 423 YUL?YYZ, arrival 10:00. Change 1 (D-10): VOL � customer changed to later direct flight AC 425 YUL?YYZ, new arrival 13:00. Change 2 (D-3): INVOL � AC cancelled direct flight and rebooked onto connecting itinerary (ONE_TO_MANY: 1?2 legs): Leg 1 AC 8101 YUL?YOW dep 14:00 arr 15:00; Leg 2 AC 8201 YOW?YYZ dep 21:00 arr 22:30. Actual arrival at YYZ: 22:30. Promise = 13:00 (last VOL before first INVOL). Delay = 22:30 - 13:00 = 9 hours 30 minutes (9h+ delay band). Arrival delay code on MSL (Leg 2): 96 (Ops Control � Controllable). Carrier: AC only (both legs). Aeroplan: Linked (9876543210), Tier Status = 75K, in good standing. 72hrs: Elapsed (filed D+13). Time limit: Within 366 days. No duplicate case. CyberSource: GREEN. RDS: No flags.",
+  "goal": "Customer made a voluntary change (VOL) to a later flight BEFORE the airline made an involuntary change (INVOL). The INVOL rebook splits the original single direct flight into a 2-leg connecting itinerary (ONE_TO_MANY: YUL?YYZ direct ? YUL?YOW?YYZ connecting). Customer has an active Aeroplan 75K status linked to booking. Arrival at destination YYZ is delayed by 9h 30m (9h+ tier). Validates: (1) DDS sets promise to last VOL arrival time (13:00) before first INVOL � NOT the 14-day mark (10:00), (2) ONE_TO_MANY rebooking pattern correctly handled � delay measured at final destination YYZ, (3) MSL determined across the 2-leg rebooked itinerary, (4) Segment check (GenUC-18) triggers for multi-leg journey, (5) APPR Tier 3 compensation ($1,000 CAD base / $1,200 CAD AC Wallet with 20% top-up) correctly evaluated for 9h+ delay, (6) Aeroplan 75K tier status recognized in profile.",
+  "prerequisites": "PNR: TC003 � Hugo Villeneuve (Adult). Original (14-day): 1 leg direct AC 423 YUL?YYZ, arrival 10:00. Change 1 (D-10): VOL � customer changed to later direct flight AC 425 YUL?YYZ, new arrival 13:00. Change 2 (D-3): INVOL � AC cancelled direct flight and rebooked onto connecting itinerary (ONE_TO_MANY: 1?2 legs): Leg 1 AC 8101 YUL?YOW dep 14:00 arr 15:00; Leg 2 AC 8201 YOW?YYZ dep 21:00 arr 22:30. Actual arrival at YYZ: 22:30. Promise = 13:00 (last VOL before first INVOL). Delay = 22:30 - 13:00 = 9 hours 30 minutes (9h+ delay band). Arrival delay code on MSL (Leg 2): 96 (Ops Control � Controllable). Carrier: AC only (both legs). Aeroplan: Linked (9876543210), Tier Status = 75K, in good standing. 72hrs: Elapsed (filed D+13). Time limit: Within 366 days. No duplicate case. CyberSource: GREEN. RDS: No flags.",
+  "prerequisite_items": [
+    "PNR: TC003 � Hugo Villeneuve (Adult)",
+    "Original (14-day): 1 leg direct AC 423 YUL?YYZ, arrival 10:00",
+    "Change 1 (D-10): VOL � customer changed to later direct flight AC 425 YUL?YYZ, new arrival 13:00",
+    "Change 2 (D-3): INVOL � AC cancelled direct flight and rebooked onto connecting itinerary (ONE_TO_MANY: 1?2 legs): Leg 1 AC 8101 YUL?YOW dep 14:00 arr 15:00; Leg 2 AC 8201 YOW?YYZ dep 21:00 arr 22:30",
+    "Actual arrival at YYZ: 22:30",
+    "Promise = 13:00 (last VOL before first INVOL)",
+    "Delay = 22:30 - 13:00 = 9 hours 30 minutes (9h+ delay band)",
+    "Arrival delay code on MSL (Leg 2): 96 (Ops Control � Controllable)",
+    "Carrier: AC only (both legs)",
+    "Aeroplan: Linked (9876543210), Tier Status = 75K, in good standing",
+    "72hrs: Elapsed (filed D+13)",
+    "Time limit: Within 366 days",
+    "No duplicate case",
+    "CyberSource: GREEN",
+    "RDS: No flags"
+  ]
+}

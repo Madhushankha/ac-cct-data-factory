@@ -1,0 +1,139 @@
+{
+  "id": "FD_TC_088",
+  "family": "FD",
+  "summary": "Single adult LUC BERGERON, AC 484 YUL-YYZ flown on time; AC 485 YYZ-YVR cancelled with code TECH (technical, controllable); alternate AC 486 YYZ-YVR offered arriving 1.5 h after the original arrival (below 3h) and DECLINED; customer stranded at YYZ (No Travel Incomplete)",
+  "passengers": [
+    {
+      "firstName": "LUC",
+      "lastName": "BERGERON",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "484",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "12:30",
+      "arrLocal": "13:55",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "485",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "16:55",
+      "arrLocal": "19:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "TECH",
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [
+    {
+      "replacesSeg": 2,
+      "carrier": "AC",
+      "number": "486",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "18:25",
+      "arrLocal": "20:30",
+      "dayOffset": 0,
+      "accepted": false
+    }
+  ],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    },
+    {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "FD-APPR-NE-22",
+    "amount": 0,
+    "currency": "CAD",
+    "delayBand": null,
+    "delayMin": 90,
+    "control": "CONTROLLABLE",
+    "cause": "TECH",
+    "noTravel": "INCOMPLETE",
+    "strandedAt": "YYZ",
+    "fallback": false,
+    "reason": "DELAY_BELOW_THRESHOLD",
+    "ttUi": [
+      "Segment 1: Flight: AC 484, Route: YUL->YYZ, Status: COMPLETED",
+      "Segment 2: Flight: AC 485, Route: YYZ->YVR, Status: CANCELLED (claim filed)",
+      "Alternate Offered: Flight AC 486, YYZ->YVR, Departure: 16:00, Arrival: 19:00 (2h after original arrival of 17:00)",
+      "Customer Status: NO TRAVEL - INCOMPLETE (customer declined alternate, stranded at YYZ)",
+      "History - Alternate offered and DECLINED by customer",
+      "Regime: APPR (1 regime)",
+      "MSL FLIGHT: AC 485 - YYZ->YVR - TECH",
+      "\"Cancellation - Technical Fault\"",
+      "CONTROLLABLE (Code 42)",
+      "Disruption Type: CANCELLATION (mid-journey)",
+      "Effective Delay: Alternate arrival (19:00) - Original arrival (17:00) = 2h 00m",
+      "APPR Gate 8: Effective delay 2h 00m < 3 hrs - BELOW THRESHOLD - NOT ELIGIBLE",
+      "Gate 9 (controllability) NOT REACHED - short-circuited at Gate 8",
+      "Fallback: FALSE (cancellation code available)",
+      "Flight Compensation: MR LUC BERGERON | NOT ELIGIBLE | DELAY_BELOW_THRESHOLD | CAD 0.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "cabin Y and booking class T on every segment (text gives none)",
+    "source conflict on the alternate: prerequisites and expected results say original arrival 19:00, alternate arrival 20:30 (1.5 h); TT UI lines say original 17:00, AC 486 dep 16:00 arr 19:00 (2 h). Used the prerequisites (1.5 h); ttUi lines are kept verbatim from the text and so show the 2 h variant. Both are below 3 h so the outcome is the same",
+    "leg 1 times and leg 2 departure times assumed (12:30-13:55; 16:55 for AC 485, 18:25 for AC 486)",
+    "noticeHours not stated, left null",
+    "Aeroplan not linked",
+    "alternate offered and declined: rebooking accepted=false"
+  ],
+  "unsupported": []
+}

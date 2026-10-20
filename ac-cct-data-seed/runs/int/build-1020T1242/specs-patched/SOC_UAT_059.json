@@ -1,0 +1,128 @@
+{
+ "id": "SOC_UAT_059",
+ "family": "SOC",
+ "summary": "1 adult, TLV-HFA-VDA on AC 090 + AC 091; AC 091 cancelled and rebooked 170 min later; stranded at HFA; ASL no-travel delay judged below threshold, not eligible",
+ "passengers": [
+  {
+   "firstName": "GAL",
+   "lastName": "SEGAL",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "IL",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "090",
+   "origin": "TLV",
+   "destination": "HFA",
+   "depLocal": "08:00",
+   "arrLocal": "08:35",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "091",
+   "origin": "HFA",
+   "destination": "VDA",
+   "depLocal": "11:00",
+   "arrLocal": "12:15",
+   "dayOffset": 0,
+   "cabin": "W",
+   "bookingClass": "O",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "delay",
+   "arrDelayMin": 90,
+   "depDelayMin": 90,
+   "delayCode": "64",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "ASL",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "SoC-ASL-NE-11",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_LESS_THAN_2_HOURS",
+  "delayMin": 170,
+  "control": null,
+  "cause": "64",
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Regime: ASL (TLV/Israel domestic - Israel to Israel)",
+   "SOC section present",
+   "Geographic Check: Israel -> Israel PASSED",
+   "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE",
+   "Trip Not Completed, Disruption Detected",
+   "Multi-segment trip TLV->HFA->VDA - Segment 2 AC091 HFA->VDA cancelled, rebooked with SOC segment departure delay +2H 50M (170 min). Passenger stranded at HFA.",
+   "PASSENGERS: 1 - SEGMENTS: 2",
+   "Promised: Seg 1 AC 090 TLV->HFA | Seg 2 AC 091 HFA->VDA",
+   "Current: Seg 1 ON TIME | Seg 2 CANCELLED - Rebooked, SOC Segment Departure Delay +2H 50M",
+   "SOC Segment: AC 091 HFA->VDA; SOC Segment Departure Delay 170 min (source says below 2h threshold despite 170 > 120 - validate against actual system behaviour)",
+   "Departure Delay Code 64 - NOT CHECKED",
+   "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_LESS_THAN_2_HOURS",
+   "DDS code SoC-ASL-NE-11"
+  ],
+  "soc": {
+   "eligibility": "NOT_ELIGIBLE",
+   "entitlements": "none (no-travel delay stated as below threshold)"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "Times chosen: AC090 08:00-08:35, AC091 11:00-12:15; rebooked AC 091 13:50-15:05 (170 min later)",
+  "cancelCode CREW inferred from delay code 64",
+  "Cabin W (PY), class O",
+  "Residence IL",
+  "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10.",
+  "Source is internally inconsistent: 170 min (>2h) yet stated 'below 2h threshold' and band DELAY_LESS_THAN_2_HOURS; modelled with 170 min as written"
+ ],
+ "unsupported": [
+  "Expected NOT_ELIGIBLE with 170 min delay contradicts a 2-hour threshold; real DDS may return ELIGIBLE (booking is built as written)"
+ ]
+}

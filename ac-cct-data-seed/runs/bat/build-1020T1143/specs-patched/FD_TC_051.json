@@ -1,0 +1,88 @@
+{
+ "id": "FD_TC_051",
+ "family": "FD",
+ "summary": "Single pax Stephane Boucher; AC 330 YUL-YYZ dep 10:00 arr 12:00 operated normally (dep 10:05, arr 12:02) but passenger DENIED BOARDING (involuntary, oversales) at the gate, not rebooked, did not travel; outside the FD flow -> NOT ELIGIBLE (FD channel) CAD 0",
+ "passengers": [
+  {
+   "firstName": "STEPHANE",
+   "lastName": "BOUCHER",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "330",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "12:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 2,
+   "depDelayMin": 5,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "denied_boarding"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-06",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": null,
+  "control": null,
+  "cause": null,
+  "ttUi": [
+   "Promised: AC 330 YUL->YYZ Scheduled Departure 10:00, Scheduled Arrival 12:00",
+   "Current: AC 330 YUL->YYZ DEPARTED / ARRIVED (flight operated normally), Actual Departure 10:05, Actual Arrival 12:02, Passenger Status: NOT BOARDED - DENIED BOARDING",
+   "Denied Boarding Event: changeIdentifier DENIED_BOARDING; change_type INVOLUNTARY; Denial Reason DENIED_BOARDING_OVERSALES (Overbooking); impacted_passenger_id Stephane Boucher; impacted_segment_id AC 330 YUL->YYZ",
+   "Regime: APPR (1 regime)",
+   "DDS Gate 6: Denied Boarding = TRUE -> NOT ELIGIBLE for Flight Disruption compensation",
+   "Separate APPR DB compensation may apply via Customer Relations",
+   "Flight Compensation: MR STEPHANE BOUCHER | NOT ELIGIBLE | DENIED_BOARDING | CAD 0.00 (FD channel)"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "name STEPHANE BOUCHER from TT/impacted_passenger_id (chatbot lines say Dominique Arsenault)",
+  "flight AC 330 from prerequisites/TT (chatbot journey says AC 458)",
+  "arrDelayMin 2 / depDelayMin 5 from actual 12:02 / 10:05",
+  "passenger checked in on time with HK status and valid ticket (per prerequisites); no check-in event added beyond denied_boarding",
+  "delayBand/control null: denial reason carried in cause"
+ ],
+ "unsupported": [
+  "Denial type (involuntary), reason DENIED_BOARDING_OVERSALES, changeIdentifier DENIED_BOARDING only partly expressible: paxEvents.denied_boarding has no INVOL/reason field",
+  "Post-denial 'not rebooked / did not travel' only implied (no rebooking entry)"
+ ]
+}

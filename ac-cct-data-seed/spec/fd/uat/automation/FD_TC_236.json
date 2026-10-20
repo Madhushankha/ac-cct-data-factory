@@ -1,0 +1,122 @@
+{
+  "id": "FD_TC_236",
+  "family": "FD",
+  "summary": "1 pax Gabriel Morin, 2-leg domestic: AC 412 YUL-YYZ on time, then AC 7650 YYZ-YQB (sold by AC, codeshare) arrives 7h late; operating carrier of leg 2 missing (null) in Trip Tracer; delay code logged but not linkable to a carrier -> DDS NO DETERMINATION, CAD 0",
+  "passengers": [
+    {
+      "firstName": "GABRIEL",
+      "lastName": "MORIN",
+      "type": "ADT",
+      "aeroplanNumber": "9876543210",
+      "aeroplanTier": "Basic",
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "412",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "08:45",
+      "arrLocal": "10:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "7650",
+      "origin": "YYZ",
+      "destination": "YQB",
+      "depLocal": "12:40",
+      "arrLocal": "14:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK",
+      "operatingCarrier": null
+    }
+  ],
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": null,
+      "delayCode": "96",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    },
+    {
+      "seg": 2,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": null,
+    "amount": 0,
+    "currency": "CAD",
+    "delayBand": null,
+    "delayMin": 420,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Promised Itinerary: AC 412 YUL→YYZ (10:00) + AC 7650 YYZ→YQB (14:00)",
+      "Current Itinerary: Leg 1 on time; Leg 2 ARRIVED LATE 14:00→21:00 +7H 00M",
+      "Regime: APPR (1 regime)",
+      "MSL Flight: AC 7650 YYZ→YQB",
+      "MSL operating carrier: blank / \"Unknown\"; isStarSegment = false; isOalSegment = false",
+      "Delay: +7H 00M, controllability not decided",
+      "Aeroplan: 9876543210 (Basic Member, linked)",
+      "MR GABRIEL MORIN | NO DETERMINATION | Carrier unknown | CAD 0.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "cabin Y, booking class T (not stated)",
+    "leg 1 AC 412 departs 08:45 (text only gives arrival 10:00)",
+    "leg 2 AC 7650 departs 12:40 (text only gives scheduled arrival 14:00)",
+    "leg 2 delay code set to 96 only so a code is 'logged' (text says a code is logged but cannot be linked to a carrier; value not stated)",
+    "leg 2 depDelayMin not stated -> null",
+    "systemCode only given as FD-APPR-ND-xx (suffix unspecified) -> null",
+    "residence CA from prerequisites",
+    "flightDaysAgo 10 default (flight Jul 20, claim Jul 28)"
+  ],
+  "unsupported": [
+    "Leg 2 operating carrier must be missing/null in Trip Tracer (schema has no operating-carrier field; extra key operatingCarrier:null added on seg 2 with carrier AC as marketing carrier)",
+    "Delay code present on leg 2 but not linkable to a known carrier"
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "vouchers": [],
+  "bags": [],
+  "flightDaysAgo": 10
+}

@@ -1,0 +1,118 @@
+{
+ "id": "FD_TC_044",
+ "family": "FD",
+ "summary": "Single pax Emile Gagnon; two legs in one bound AC 450 YUL-YYZ (operated, on time) and AC 451 YYZ-YVR cancelled, code EQUI (equipment issue, controllable); passenger stranded at YYZ, no rebooking -> No Travel Incomplete; APPR flat 400",
+ "passengers": [
+  {
+   "firstName": "EMILE",
+   "lastName": "GAGNON",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "450",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "09:20",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "451",
+   "origin": "YYZ",
+   "destination": "YVR",
+   "depLocal": "11:00",
+   "arrLocal": "13:30",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "cancel",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "EQUI",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-17",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": null,
+  "control": "CONTROLLABLE",
+  "cause": "EQUI",
+  "ttUi": [
+   "Segment 1: AC 450 YUL->YYZ Status: COMPLETED",
+   "Segment 2: AC 451 YYZ->YVR Status: CANCELLED (claim filed)",
+   "Customer Status: NO TRAVEL - INCOMPLETE (started journey, stranded at connection YYZ)",
+   "History: No rebooking accepted for connecting segment",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 451 YYZ->YVR EQUI \"Cancellation - Equipment issue\"",
+   "CONTROLLABLE (EQUI)",
+   "Disruption Type: CANCELLATION (mid-journey)",
+   "APPR No Travel Incomplete: controllable cancellation = flat $400",
+   "Fallback: FALSE (cancellation code available)",
+   "Flight Compensation: MR EMILE GAGNON | ELIGIBLE | NO_TRAVEL_INCOMPLETE | CAD 400.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "segment times 08:00-09:20 and 11:00-13:30 (YVR local) assumed; text gives none",
+  "segment 1 boarded event assumed from 'Operated, on time'/customer 'started journey'",
+  "amount 400 from TT line ('flat $400'); Expected Results only says 'per APPR No Travel Incomplete rules'",
+  "noticeHours null",
+  "delayBand null (label NO_TRAVEL_INCOMPLETE)"
+ ],
+ "unsupported": []
+}

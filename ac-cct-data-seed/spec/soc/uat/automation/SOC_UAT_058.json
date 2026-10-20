@@ -1,0 +1,112 @@
+{
+  "id": "SOC_UAT_058",
+  "family": "SOC",
+  "summary": "1 adult, AC 084 TLV-VDA 08-Jun 16:00 diverted back to TLV, rebooked 90 min later; passenger returned to origin; ASL no-travel delay under 2h, not eligible",
+  "passengers": [
+    {
+      "firstName": "AVI",
+      "lastName": "NAHUM",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "IL",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "084",
+      "origin": "TLV",
+      "destination": "VDA",
+      "depLocal": "16:00",
+      "arrLocal": "16:50",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "divert",
+      "arrDelayMin": 90,
+      "depDelayMin": 90,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": 0,
+      "divertTo": "TLV"
+    }
+  ],
+  "rebooking": [
+    {
+      "replacesSeg": 1,
+      "carrier": "AC",
+      "number": "084",
+      "origin": "TLV",
+      "destination": "VDA",
+      "depLocal": "17:30",
+      "arrLocal": "18:20",
+      "dayOffset": 0,
+      "accepted": true
+    }
+  ],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-ASL-NE-10",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_LESS_THAN_2_HOURS",
+    "delayMin": 90,
+    "control": null,
+    "cause": "64",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Regime: ASL (TLV/Israel domestic - Israel to Israel)",
+      "SOC section present",
+      "Geographic Check: Israel -> Israel PASSED",
+      "Passenger Claims: TRAVEL DISRUPTIONS / EXPENSES - NOT ELIGIBLE",
+      "Trip Not Completed, Disruption Detected",
+      "Single-segment trip TLV->VDA on AC084 diverted - returned to origin - rebooked with SOC segment departure delay +1H 30M. Passenger returned to TLV.",
+      "PASSENGERS: 1 - SEGMENTS: 1",
+      "Promised: AC 084 TLV->VDA Sched Dep 08-Jun 16:00",
+      "Current: Status DIVERTED - Returned to origin (TLV), rebooked, SOC Segment Departure Delay +1H 30M",
+      "SOC Segment Departure Delay 90 min - below 2h threshold",
+      "Departure Delay Code 64 (Flight Crew Shortage) - NOT CHECKED",
+      "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_LESS_THAN_2_HOURS",
+      "DDS code SoC-ASL-NE-10"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none (no-travel delay below 2h)"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Conflicts: promised itinerary text says AC 084 TLV-YYZ, itinerary/TT say TLV-VDA: TLV-VDA used; expected-results line says 160 min but prerequisite/TT/journey say 90: 90 used",
+    "Rebooked AC 084 17:30-18:20 same day",
+    "Arrival 16:50 local VDA (50 min); cancelCode none (diversion)",
+    "Passenger returned to origin: paxEvent not_travelled",
+    "Cabin W (PY), class O",
+    "Residence IL",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "unsupported": [
+    "Diversion back to origin followed by a rebooking is expressed as a divert outcome (divertTo TLV) plus a rebooking"
+  ]
+}

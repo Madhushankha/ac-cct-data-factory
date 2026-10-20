@@ -1,0 +1,216 @@
+Given the user opens the agentic chatbot
+Then the chatbot displays greeting (GLOB-01):
+""Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?""
+Then user selects English
+Then an alert information is displayed ""Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.""
+Then chatbot asks ""How can I help you today?""
+And the user says ""My flight from Montreal to Toronto was cancelled due to weather and I was moved to a renumbered flight. It departed and arrived at the same time as my original scheduled flight. I'd like to check if I'm eligible for any compensation.""
+When the chatbot identifies flight disruption intent
+Then the chatbot checks: Is this a third-party submission? ? NO
+Then the chatbot responds: ""No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.""
+
+LEGAL DISCLAIMER:
+Then the chatbot responds: ""Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?""
+
+IDENTIFICATION (GenUC-01):
+Then the chatbot responds:
+""I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.""
+And the chatbot responds:
+""Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.""
+And the user provides ""Dominique Arsenault""
+Then the chatbot responds:
+""Thanks, Dominique! And, what is your booking reference number?""
+And the user provides ""PNR: TC024""
+Then the chatbot searches Trip Tracer for PNR: TC024
+And Trip Tracer returns: PNR FOUND (Auth Flow 1)
+And Trip Tracer data (passenger info, journey details) is revealed to the customer
+
+AUTHENTICATION (GenUC-05):
+Then the chatbot responds:
+""To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?""
+And the chatbot displays options:
+� Email: d***@gmail.com
+� Phone: +1***890
+And the user selects ""Email: d***@gmail.com""
+Then the chatbot responds:
+""I've sent a verification code to your email, please enter it within 15 minutes of receiving it.""
+And the user provides the OTP code ""629184""
+Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)
+Then the chatbot responds:
+""Your verification was successful. Let's proceed to the next step.""
+
+GROUP BOOKING CHECK:
+Then the system checks Trip Tracer for group booking identifier
+And group booking identifier = NOT PRESENT
+And system proceeds to passenger selection
+
+PASSENGER SELECTION (GenUC-06):
+Then the chatbot asks:
+""How many people are on your claim?""
+And the chatbot displays passengers from PNR:
+""I found 1 passenger on this booking:
+� Dominique Arsenault (Adult - Aeroplan Member)
+Is this who you'd like to include?""
+And the user confirms ""Yes""
+Then the chatbot checks: PAX count on PNR = 1 ? ?9 ? NOT a group booking ? PROCEED
+
+JOURNEY SELECTION (GenUC-08):
+Then the chatbot retrieves booking details and displays:
+""I found the following journey:
+� Original Flight: AC 435 � CANCELLED (WXX � Weather / Uncontrollable)
+� Reprotected Flight: AC 445 (Renumbered)
+� Route: Montreal (YUL) ? Toronto (YYZ)
+� Date: May 10, 2026
+� Scheduled Departure: 08:00 (Same as original scheduled departure)
+� Original Promised Arrival: 10:00
+� Actual Arrival: 10:00 (On time � same as original promise)
+Is this the journey you'd like to check?""
+And the user confirms ""Yes""
+
+SEGMENT CHECK:
+Then the chatbot checks: More than 1 segment on selected journey? ? NO (single leg) ? skip GenUC-18
+
+DUPLICATE CLAIM CHECK (GenUC-10):
+Then the chatbot sends request to Case Services for duplicate check
+And Case Services returns: NO existing case found for this passenger + journey combination
+
+72-HOUR CHECK:
+Then the chatbot checks: Hours since last leg arrival
+And the system calculates: Arrival was May 10, 2026; current date is June 15, 2026 ? >72 hours ? PROCEED
+
+CLAIM TIME LIMIT CHECK:
+Then the chatbot checks: Filing deadline for APPR = 366 days from disruption
+And the system calculates: Disruption May 10, 2026; filing June 15, 2026 ? 36 days ? within 366 days ? PROCEED
+
+TRIAGE & DDS EVALUATION:
+Then the DDS evaluation is done in backend
+And DDS checks: Was the flight cancelled? ? YES (AC 435 � WXX Weather)
+And DDS checks: Change history = INVOL � AC 435 cancelled (WXX) ? customer reprotected onto renumbered flight AC 445
+And DDS checks: Was the customer reprotected on renumbered flight? ? YES (AC 445 YUL?YYZ, same departure 08:00)
+And DDS applies: APPR Gate 3 � Controllability check:
+  Cancellation Code = WXX (Weather) ? UNCONTROLLABLE
+  Gate 3 FAILS ? Cancellation Entitlement = NOT triggered
+And DDS checks: Actual arrival on renumbered flight at final destination = 10:00
+And DDS checks: Original promised arrival = 10:00
+And DDS calculates: Delay = 10:00 ? 10:00 = 0h (0 min)
+And DDS checks: Was the reprotected arrival delayed ? 3 hours vs original promise? ? NO (0h = 0 min < 180 min threshold)
+And DDS applies: APPR Gate 8 � Delay threshold check: 0h < 3h ? FAILS THRESHOLD (moot � Gate 3 already failed)
+And DDS determines: WXX UNCONTROLLABLE CANCELLATION + 0H ARRIVAL DELAY ? DUAL NOT ELIGIBLE GATES FAILED ? NOT ELIGIBLE
+And DDS sends to Trip Tracer UI:
+
+TRIP TRACER UI VALIDATION
+Then the tester opens Trip Tracer UI for PNR: TC024
+? Promised Itinerary - Flight: AC 435, Route: YUL ? YYZ, Scheduled Departure: 08:00, Scheduled Arrival: 10:00 (CANCELLED � WXX Weather)
+? History - Change 1: INVOL � AC 435 CANCELLED (WXX � Weather � Uncontrollable). Customer reprotected onto renumbered flight AC 445 YUL?YYZ.
+? Current Itinerary - Flight: AC 445 (Renumbered), Route: YUL ? YYZ, Status: ARRIVED ON TIME, Scheduled Departure: 08:00 (SAME as original), Actual Arrival: 10:00 (SAME as original promise)
+? Regime: APPR (1 regime)
+? MSL FLIGHT: AC 435 � YUL ? YYZ � WXX (Weather � Uncontrollable)
+? Reprotected Flight: AC 445 � YUL ? YYZ � Departed 08:00 (SAME) � Arrived 10:00 (SAME as original promise)
+? Delay Calculation: Original promise = 10:00; Reprotected actual = 10:00; Delay = 0H 00M
+? DDS Gate 3: WXX = Uncontrollable ? Cancellation Entitlement NOT triggered ? FAILS
+? DDS Gate 8: 0h < 3h ? Delay Entitlement NOT triggered ? FAILS (moot)
+? Fallback: FALSE
+? Sister City: FALSE
+Flight Compensation:
+? MS DOMINIQUE ARSENAULT | NOT ELIGIBLE | UNCONTROLLABLE_CANCELLATION_NO_DELAY | CAD 0.00
+
+FRAUD SCREENING � NOT TRIGGERED:
+Then the chatbot notes: CyberSource is ONLY called for ELIGIBLE cases
+And this case is NOT ELIGIBLE ? CyberSource NOT invoked
+
+AC WALLET CHECK � NOT TRIGGERED:
+Then the chatbot notes: AC Wallet offer is ONLY triggered for ELIGIBLE cases
+And this case is NOT ELIGIBLE ? AC Wallet NOT offered despite Basic Aeroplan linkage (9876543210)
+
+NOT ELIGIBLE RESULT (FD-05b):
+Then the chatbot displays:
+""I've reviewed the details of your flight. I can see that your original flight AC 435 from Montreal to Toronto was cancelled due to weather conditions, and you were reprotected on renumbered flight AC 445, which departed and arrived at the same scheduled times as your original flight. Under the Air Passenger Protection Regulations (APPR), compensation for cancellations is only applicable when the cancellation is within the airline's control. Since your flight was cancelled due to weather � which is outside of Air Canada's control � no cancellation compensation is applicable. Additionally, as your reprotected flight arrived on time, there is no qualifying arrival delay. We understand this may be disappointing and we appreciate your patience during the weather disruption.""
+
+NO PAYMENT FLOW (skipped entirely � not eligible)
+NO IDV (not required � not eligible)
+
+CASE CREATION (GLOB-09):
+Then the chatbot responds: ""Thank you. Your claim has been submitted and will now be processed within the next 15 days. Please check your email for: A confirmation email summarizing your claim details.""
+And an alert information is displayed: ""Claim submission successful!""
+And the system appends the booking record to the case automatically
+
+NOTIFICATION (Adobe):
+Then the system triggers notification via Adobe:
+And a Not Eligible notification email is sent to d***@gmail.com
+And the email contains: Case Reference, flight details (AC 435 cancelled WXX Weather ? reprotected renumbered AC 445 YUL?YYZ, same departure 08:00, same arrival 10:00), not eligible reason (WXX Uncontrollable cancellation � no cancellation entitlement; 0h arrival delay � no delay entitlement), regulation reference (APPR), contact information
+
+END FLOW (GLOB-11):
+Then the chatbot offers:
+""Is there anything I can help you with?""
+� I would like you to � new flow
+� No
+And the user selects ""No""
+Then the chatbot responds ""Thank you for choosing Air Canada.""
+
+CLAIMS DASHBOARD VALIDATION
+    Given the case has been created for claimant ""Dominique Arsenault"" with PNR ""TC024""
+    Then the Case Header Topic/Sub-topic should be ""Travel Disruptions � Delay""
+    And the agent should be able to edit Topic/Sub-topic but cannot switch automated to non-automated
+    And the Case Status should be ""Closed � Not Eligible""
+    And the Created date should be populated
+    And the Last Updated date should be populated
+    And the SLA countdown should be tracking correctly
+    And the Team assignment should be correct
+    And no banners should be displayed for identified and authenticated Auth Flow 1 user
+    And the Decision Assist panel should NOT be greyed out
+    And the Claimant Name should be ""Dominique Arsenault""
+    And the Claimant Type should be ""Adult""
+    And the Authentication should be ""Pass""
+    And the PNR should be ""TC024""
+    And the PNR Creation Date should be populated
+    And the Journey ID should be populated
+    And the Booking Source should be populated
+    And the Booking Office ID should be populated
+    And the Regime should be ""APPR""
+    And the Full Name should be ""Dominique Arsenault""
+    And the Tags should include ""Claimant"" and ""Adult""
+    And the Email should be ""d***@gmail.com""
+    And the Phone should be ""+1***890""
+    And the Address should be populated
+    And the Aeroplan should be ""9876543210"" linked and in good standing (Basic Member)
+    And the Tier Status should be ""Basic / Member""
+    And the Journey should show ""Bound 1: YUL ? YYZ"" (original AC 435 cancelled WXX; reprotected renumbered AC 445 same departure 08:00, same arrival 10:00)
+    And the Change History should show ""INVOL � AC 435 cancelled (WXX � Weather � Uncontrollable) ? reprotected on renumbered AC 445 YUL?YYZ, same departure 08:00, same arrival 10:00""
+    And the Ancillary Fee section should be present
+    And the expected ancillary fees should be none
+    And the Eligibility and Compensation section should be present and show ""NOT ELIGIBLE"" with reason ""WXX (Weather � Uncontrollable) � Cancellation Entitlement NOT triggered (uncontrollable); Arrival Delay = 0h � Delay Entitlement NOT triggered (moot)""
+    And the Decision Assist Panel should auto-appear for FD topic
+    And DDS should have run automatically
+    And the eligibility decision should be pre-populated as ""NOT ELIGIBLE"" � WXX Uncontrollable (Gate 3 fails) + 0h arrival delay (Gate 8 fails � moot)
+    And the Duplicate Check should have run automatically using baseline data ""Dominique Arsenault + TC024 + YUL?YYZ + FD""
+    And the result should be ""No duplicate found""
+    And no Duplicate Warning Banner should be displayed
+    And the Related Cases tab should show no related cases
+    And CyberSource should NOT have been triggered as it only runs for eligible cases
+    And AC Wallet should NOT have been offered despite Basic Aeroplan linkage as it only applies to eligible cases
+    And the system should have appended the booking record automatically for identified and authenticated user
+    And Trip Tracer poll should NOT be required
+    And the agent should have used pull case from My Activities
+    And the case status should have transitioned from ""Assigned"" to ""In Progress""
+    And a case acknowledgement notification should have been sent
+    And a not eligible notification email should have been sent via Adobe
+    And the Agent Notes section should be accessible
+    And the Audit Log should record all actions with timestamps and before/after values
+    And Customer Communications should show the not eligible notification email chronologically
+    And the chatbot transcript should be accessible and linked to the case
+    And the Attachments tab should be empty
+    And the Final Status should be ""Closed � Not Eligible""
+    And the case should be in read-only mode with no editable Decision Assist fields
+    And the agent should not be able to access Case Search as it is for leads and management only
+
+PAYMENT VALIDATION
+    Given the eligibility result is ""NOT ELIGIBLE"" due to WXX Uncontrollable cancellation + 0h arrival delay post-reprotection
+    Then no payment flow should be triggered
+    And no country of residence should have been asked
+    And no compensation record should have been created
+    And no batch file should have been dispatched
+    And AC Wallet should NOT have been offered despite Basic Aeroplan linkage (9876543210) � AC Wallet only applies to eligible cases
+    And the Claims Dashboard should show eligibility as ""NOT ELIGIBLE"" with no compensation record and no payout section
+
+Expected Results:
+DDS returns FD-APPR-NE-UC-01. Trip Tracer: Original promise = 10:00 (AC 435 CANCELLED � WXX Weather � Uncontrollable); Departure 08:00 (SAME as original scheduled departure); INVOL reprotection ? renumbered AC 445 YUL?YYZ; Same departure 08:00; Reprotected actual arrival = 10:00 (SAME as original promise); Delay = 0h. DUAL NOT ELIGIBLE GATES: (1) DDS Gate 3 � WXX = Uncontrollable ? Cancellation Entitlement NOT triggered ? FAILS; (2) DDS Gate 8 � 0h < 3h ? Delay Entitlement NOT triggered ? FAILS (moot). CRITICAL: WXX is Uncontrollable � neither the cancellation entitlement track ($400 cancellation floor) nor the delay entitlement track (3h threshold) is triggered. Aeroplan Basic (9876543210) recognized but AC Wallet NOT offered (NE case). Compensation: $0. Fraud Screening: NOT INVOKED. Payment: N/A. DDS = FD-APPR-NE-UC-01.

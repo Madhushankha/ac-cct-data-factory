@@ -1,0 +1,28 @@
+version: "3.8"
+
+# Local / simple deployment of the CCT report viewer.
+#   1. cp .env.example .env   and fill it in
+#   2. docker-compose up -d   ->  http://localhost:8090
+# Reports are read from S3 (S3_BUCKET). Auth uses DEV_AUTH locally, or OIDC (AWS SSO) if set.
+
+services:
+  viewer:
+    build:
+      context: ..                 # project root (so the Dockerfile can COPY app.py/static)
+      dockerfile: deploy/Dockerfile
+    container_name: cct-report-viewer
+    ports:
+      - "8090:8080"
+    env_file:
+      - ../.env
+    volumes:
+      # Local AWS credentials for boto3 to read S3 (read-only). On ECS the task role provides
+      # creds instead — remove this mount there. Set AWS_PROFILE in .env to pick a profile.
+      - "${HOME}/.aws:/root/.aws:ro"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request;urllib.request.urlopen('http://localhost:8080/healthz')\" || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

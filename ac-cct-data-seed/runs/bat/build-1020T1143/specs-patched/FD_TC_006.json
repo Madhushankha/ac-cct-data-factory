@@ -1,0 +1,116 @@
+{
+ "id": "FD_TC_006",
+ "family": "FD",
+ "summary": "Single pax Hugo Villeneuve (Aeroplan 75K): original AC 423 YUL-YYZ arr 10:00, VOL to AC 425 arr 13:00 (D-10), then INVOL to 2 legs AC 8101 YUL-YOW + AC 8201 YOW-YYZ arriving 22:30 (D-3); delay 9h30 vs 13:00 promise, code 96, APPR Tier 3",
+ "passengers": [
+  {
+   "firstName": "HUGO",
+   "lastName": "VILLENEUVE",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "75K",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "423",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "cancelCode": "OPER",
+   "noticeHours": 72
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "425",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "11:40",
+   "arrLocal": "13:00",
+   "dayOffset": 0,
+   "voluntary": true,
+   "changeDaysBeforeDeparture": 10
+  },
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "8201",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "21:00",
+   "arrLocal": "22:30",
+   "dayOffset": 0,
+   "accepted": true,
+   "voluntary": false,
+   "changeDaysBeforeDeparture": 3,
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-03",
+  "amount": 1000,
+  "currency": "CAD",
+  "delayBand": "DELAY_GTE_9_HOURS",
+  "delayMin": 570,
+  "control": "CONTROLLABLE",
+  "cause": "OPER",
+  "ttUi": [
+   "Rebooking Pattern: ONE_TO_MANY (1-2 legs) - Original direct YUL-YYZ split into connecting YUL-YOW-YYZ",
+   "Promised Itinerary - Direct Flight: AC 425, Route: YUL-YYZ, Scheduled Arrival: 13:00 (Last VOL before first INVOL, NOT 14-day mark of 10:00)",
+   "Segment 1: Flight AC 8101, Route: YUL-YOW, Status: COMPLETED, Dep: 14:00, Arr: 15:00",
+   "Segment 2: Flight AC 8201, Route: YOW-YYZ, Status: ARRIVED LATE, Dep: 21:00, Actual Arr: 22:30",
+   "Final Destination Arrival: YYZ at 22:30 - Delay: +9H 30M (22:30 - 13:00 promise)",
+   "History: Original (14-day): Direct AC 423 YUL-YYZ arr 10:00; Change 1 (Day -10): VOL to direct AC 425 arr 13:00; Change 2 (Day -3): INVOL to connecting YUL-YOW-YYZ (ONE_TO_MANY) arr 22:30",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 8201 - YOW-YYZ - 96",
+   "\"Delayed due to Ops Control\"",
+   "Delay: +9H 30M - CONTROLLABLE",
+   "CRITICAL: Promise = 13:00 (last VOL), NOT 10:00 (14-day mark)",
+   "CRITICAL: ONE_TO_MANY rebooking - delay measured at final destination YYZ, not at intermediate YOW",
+   "MR HUGO VILLENEUVE | ELIGIBLE | DELAY_GE_9_HOURS | CAD 1,200.00 (Wallet) / CAD 1,000.00 (Cash) | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "original segment AC 423 dep 08:40 arr 10:00 (dep assumed)",
+  "AC 425 dep 11:40 arr 13:00 (dep assumed)",
+  "amount 1000 is the cash value; wallet 1200",
+  "chain modelled as rebooking entries in order: VOL AC 425 (D-10), then INVOL AC 8101 + AC 8201 (D-3); extra optional keys voluntary and changeDaysBeforeDeparture added on rebooking entries",
+  "outcome seg1 is \"cancel\" meaning the airline cancelled the direct flight D-3 (72 h notice); arrDelayMin 570 is the delay at YYZ versus the last-VOL promise and delayCode 96 belongs to the final leg AC 8201"
+ ],
+ "unsupported": [
+  "VOL (customer-initiated) versus INVOL change type is not a field of the schema (added as the optional key \"voluntary\")",
+  "promise = last VOL arrival (13:00) rather than the 14-day mark is derived by DDS, not stored",
+  "flight date: run uses flightDaysAgo=10"
+ ],
+ "loyalty": {
+  "tier": "E75K",
+  "why": "jira prerequisites name 75K"
+ }
+}

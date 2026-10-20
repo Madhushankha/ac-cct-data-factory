@@ -1,0 +1,110 @@
+{
+  "id": "FD_TC_170",
+  "family": "FD",
+  "summary": "ASL YYZ-FRA-TLV: AC873 on time, MSL LH 694 FRA-TLV (Lufthansa) disrupted but OAL data never received through OAG within 14 days -> No Determination",
+  "passengers": [
+    {
+      "firstName": "SHIRA",
+      "lastName": "ABRAMOV",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "IL",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "873",
+      "origin": "YYZ",
+      "destination": "FRA",
+      "depLocal": "18:00",
+      "arrLocal": "08:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "LH",
+      "number": "694",
+      "origin": "FRA",
+      "destination": "TLV",
+      "depLocal": "12:40",
+      "arrLocal": "18:00",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 20,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "FD-ASL-ND-06",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": null,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Segment 1: AC 873 YYZ->FRA COMPLETED (on time), AC operated",
+      "Segment 2: LH 694 FRA->TLV ARRIVED LATE +4H 00M, Lufthansa operated (OAL)",
+      "MSL = Segment 2 (LH 694, Lufthansa, OAL)",
+      "Regime: ASL (Israel destination TLV)",
+      "MSL Operating Carrier: Lufthansa (Star Alliance partner) but data unavailable for this specific flight",
+      "OAL Data: NOT AVAILABLE (Lufthansa did not share disruption data for LH 694)",
+      "Arrival Code (LH 694): NULL",
+      "Departure Code (LH 694): NULL",
+      "14-Day Retry Window: EXHAUSTED",
+      "Case Status: System Processing Queue -> 14 days exhausted -> ESCALATED TO AGENT",
+      "This is a data-sharing issue, not a carrier classification issue",
+      "Flight Compensation: [PASSENGER] | NO DETERMINATION | OAL_DATA_NOT_AVAILABLE_14_DAYS | PENDING AGENT REVIEW"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "times chosen: AC873 18:00 YYZ -> 08:00+1 FRA; LH694 12:40 FRA -> 18:00 TLV (scheduled)",
+    "Text conflict: TT UI says LH 694 ARRIVED LATE +4H 00M, Expected Results say final arrival at TLV UNKNOWN / delay cannot be calculated. Modelled the flight as +240 min (flight status known) with the OAL feed data absent; builder may drop the delay if actuals must be missing",
+    "residence Israel (given)",
+    "flightDaysAgo=20 so the 14-day window is exhausted (filing date May 28 in sibling scenarios)",
+    "APPR also ND; EU assessed separately"
+  ],
+  "unsupported": [
+    "Lufthansa (OAL) arrival/departure codes and actuals must be NOT received from the OAG/partner feed for this specific flight - feed gap not expressible as booking data; 14-day polling and manual-handling case state are case-side"
+  ]
+}

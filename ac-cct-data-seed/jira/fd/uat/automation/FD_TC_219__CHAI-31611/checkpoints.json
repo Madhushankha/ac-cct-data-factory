@@ -1,0 +1,522 @@
+{
+  "key": "CHAI-31611",
+  "test_id": "FD_TC_219",
+  "title": "3rd Party | Travel Agency | Hard Rejection | Code 67 Crew Transport | Delay 6�9h (7h) | APPR | Basic Aeroplan",
+  "goal": "Validates that when a Travel Agency attempts to submit a flight disruption claim on behalf of a passenger, the system immediately rejects the submission and advises the customer must file the claim themselves. The underlying flight involves a 7-hour arrival delay (6�<9h band) caused by Code 67 (Crew Transport / Hotel / Logistics Delay � Controllable) on a domestic APPR-applicable route, and the passenger holds a Basic Aeroplan profile (9876543210). Despite the disruption being a valid APPR controllable claim that would normally yield $700 CAD (Tier 2) / $840 CAD AC Wallet for a linked Basic Aeroplan member, the Travel Agency submission is a hard rejection per policy. Validates that: (1) System correctly identifies third-party type as Travel Agency, (2) System immediately rejects without proceeding to case number, country, Aeroplan, or info collection steps, (3) No case is created regardless of how valid or eligible the underlying flight disruption is, (4) No country-based, Aeroplan-based, or dispute override path exists for Travel Agencies, (5) Flow ends cleanly with rejection message.",
+  "summary": {
+    "seed": 7,
+    "chat": 24,
+    "api": 2,
+    "email": 0,
+    "dashboard": 12,
+    "implied": 8,
+    "manual": 2,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Validates that when a Travel Agency attempts to submit a flight disruption claim on behalf of a passenger, the system immediately rejects the submission and advises the customer must file the claim themselves. The underlying flight involves a 7-hour arrival delay (6�<9h band) caused by Code 67 (Crew Transport / Hotel / Logistics Delay � Controllable) on a domestic APPR-applicable route, and the passenger holds a Basic Aeroplan profile (9876543210). Despite the disruption being a valid APPR controllable claim that would normally yield $700 CAD (Tier 2) / $840 CAD AC Wallet for a linked Basic Aeroplan member, the Travel Agency submission is a hard rejection per policy. Validates that: (1) System correctly identifies third-party type as Travel Agency, (2) System immediately rejects without proceeding to case number, country, Aeroplan, or info collection steps, (3) No case is created regardless of how valid or eligible the underlying flight disruption is, (4) No country-based, Aeroplan-based, or dispute override path exists for Travel Agencies, (5) Flow ends cleanly with rejection message.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Third-party caller type: Travel Agency",
+      "expected": "Third-party caller type: Travel Agency",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Underlying flight: 1 leg AC domestic YUL?YYZ",
+      "expected": "Underlying flight: 1 leg AC domestic YUL?YYZ",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Arrival delay code: 67 (Crew Transport / Hotel / Logistics Delay � Controllable)",
+      "expected": "Arrival delay code: 67 (Crew Transport / Hotel / Logistics Delay � Controllable)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Delay: 7 hours (6�<9h band, APPR Tier 2 � would yield $700 CAD Cash / $840 CAD AC Wallet if filed by passenger directly)",
+      "expected": "Delay: 7 hours (6�<9h band, APPR Tier 2 � would yield $700 CAD Cash / $840 CAD AC Wallet if filed by passenger directly)",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Regime: APPR (domestic)",
+      "expected": "Regime: APPR (domestic)",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Passenger Aeroplan: Basic Member (9876543210)",
+      "expected": "Passenger Aeroplan: Basic Member (9876543210)",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "CRITICAL: Despite a valid controllable APPR claim, Travel Agency submission is a hard rejection with no override path",
+      "expected": "CRITICAL: Despite a valid controllable APPR claim, Travel Agency submission is a hard rejection with no override path",
+      "id": "CP008"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP010"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP011"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP012"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP013"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"I'm a travel agent and I need to file a flight disruption claim on behalf of my client. Their flight from Montreal to Toronto was delayed 7 hours due to crew transport delays and they have an Aeroplan membership.\"",
+      "expected": "I'm a travel agent and I need to file a flight disruption claim on behalf of my client. Their flight from Montreal to Toronto was delayed 7 hours due to crew transport delays and they have an Aeroplan membership.",
+      "id": "CP014"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP015"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? YES",
+      "expected": "",
+      "id": "CP016"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot identifies third-party type ? TRAVEL AGENCY",
+      "expected": "",
+      "id": "CP017"
+    },
+    {
+      "section": "THIRD-PARTY TYPE CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system evaluates: Caller type = Travel Agency",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "THIRD-PARTY TYPE CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system checks: Is Travel Agency an accepted third-party submission type? ? NO (hard rejection per policy)",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "THIRD-PARTY TYPE CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system determines: NO override path exists for Travel Agencies",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "THIRD-PARTY TYPE CHECK",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system determines: Flight details (Code 67, 7h delay, APPR, Basic Aeroplan) are irrelevant to the rejection � policy is absolute",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "REJECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thank you for contacting Air Canada. We appreciate you reaching out on behalf of your client. However, under Air Canada's passenger compensation policy, flight disruption claims under the Air Passenger Protection Regulations (APPR) must be submitted directly by the affected passenger. Travel agencies and other third-party representatives are not permitted to file these claims on a passenger's behalf. Please advise your client to contact us directly through our website or by calling our Customer Relations team to submit their claim. We apologize for any inconvenience.",
+      "id": "CP022"
+    },
+    {
+      "section": "NOTE � CRITICAL VALIDATION POINT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? Underlying flight = Code 67 (Crew Transport � Controllable), 7h delay (6�<9h band)",
+      "expected": "? APPR Tier 2 baseline = $700 CAD Cash / $840 CAD AC Wallet (Basic Aeroplan linked) ? Under normal passenger submission, this would be a fully ELIGIBLE, auto-approved case ? HOWEVER: Travel Agency submission type = hard rejection, no exceptions, no override ? The validity and eligibility of the underlying claim does NOT affect the rejection outcome",
+      "id": "CP023"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers:",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP024"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP025"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP026"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Given the system correctly identifies the third-party type as \"Travel Agency\"",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the system should immediately reject the submission at the third-party check gate",
+      "expected": "",
+      "id": "CP028"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the rejection should occur BEFORE any of the following steps:",
+      "expected": "? Identification / name collection ? PNR lookup ? OTP / authentication ? Passenger selection ? Journey selection (Code 67 / 7h delay / APPR details not evaluated by DDS) ? Aeroplan validation (Basic Member 9876543210 not checked) ? Duplicate check ? DDS evaluation",
+      "id": "CP029"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the rejection message should clearly state the customer must submit the claim themselves",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no case should be created in Claims Dashboard",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And when searching Claims Dashboard no entry should exist for this Travel Agency submission",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no manual handoff should occur",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the flow should end after the rejection message",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no country of residence should have been collected",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no Aeroplan or profile lookup should have been performed",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And no compensation record should exist",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And Travel Agencies are always denied per policy with no country-based, Aeroplan-based, or dispute override path",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "Given the Travel Agency submission was hard rejected per policy",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "Then no payment flow should be triggered",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no case should exist in Claims Dashboard",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no compensation record should have been created",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "manual",
+      "step": "And no batch file should have been dispatched",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no country of residence should have been asked",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no Aeroplan or AC Wallet evaluation should have been triggered (Basic Aeroplan 9876543210 not reached)",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no IDV should have been triggered",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And no CyberSource fraud screening should have been triggered",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "PAYMENT VALIDATION",
+      "requirement": null,
+      "kind": "payment",
+      "method": "chat",
+      "step": "And the underlying APPR claim data (Code 67, 7h delay, Tier 2, $700 CAD / $840 AC Wallet) is irrelevant to the outcome � Travel Agency = hard rejection, no exceptions",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "System correctly identifies third-party type as Travel Agency.",
+      "expected": "System correctly identifies third-party type as Travel Agency.",
+      "id": "CP049"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "System immediately rejects at third-party gate BEFORE identification, PNR lookup, authentication, journey selection, or DDS evaluation.",
+      "expected": "System immediately rejects at third-party gate BEFORE identification, PNR lookup, authentication, journey selection, or DDS evaluation.",
+      "id": "CP050"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Rejection message clearly states the customer must submit the claim themselves.",
+      "expected": "Rejection message clearly states the customer must submit the claim themselves.",
+      "id": "CP051"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "CRITICAL: Even though the underlying flight involves a valid controllable APPR claim (Code 67 Crew Transport, 7h delay, 6�<9h band, $700 CAD Tier 2 / $840 CAD AC Wallet for Basic Aeroplan member 9876543210), the Travel Agency submission is a hard rejection � no override path, no country-based exception, no Aeroplan-based exception.",
+      "expected": "CRITICAL: Even though the underlying flight involves a valid controllable APPR claim (Code 67 Crew Transport, 7h delay, 6�<9h band, $700 CAD Tier 2 / $840 CAD AC Wallet for Basic Aeroplan member 9876543210), the Travel Agency submission is a hard rejection � no override path, no country-based exception, no Aeroplan-based exception.",
+      "id": "CP052"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "No case created.",
+      "expected": "No case created.",
+      "id": "CP053"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "No manual handoff.",
+      "expected": "No manual handoff.",
+      "id": "CP054"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "No compensation record.",
+      "expected": "No compensation record.",
+      "id": "CP055"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Flow ends cleanly after rejection.",
+      "expected": "Flow ends cleanly after rejection.",
+      "id": "CP056"
+    }
+  ]
+}

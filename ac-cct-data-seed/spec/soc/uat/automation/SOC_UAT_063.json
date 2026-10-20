@@ -1,0 +1,115 @@
+{
+  "id": "SOC_UAT_063",
+  "family": "SOC",
+  "summary": "1 adult, TLV-HFA on AC 090 on time then HFA-VDA on LY 301 (other airline) delayed 5h; SOC segment is the OAL segment; ASL no determination",
+  "passengers": [
+    {
+      "firstName": "ORI",
+      "lastName": "DAHAN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "IL",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "090",
+      "origin": "TLV",
+      "destination": "HFA",
+      "depLocal": "08:00",
+      "arrLocal": "08:35",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "LY",
+      "number": "301",
+      "origin": "HFA",
+      "destination": "VDA",
+      "depLocal": "11:00",
+      "arrLocal": "12:15",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 300,
+      "depDelayMin": 300,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "SoC-ASL-ND-01",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_2_TO_6_HOURS",
+    "delayMin": 300,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Multi-segment trip TLV->HFA->VDA - Segment 1 AC090 on time, Segment 2 LY301 (OAL) delayed +5H 00M",
+      "Regime: ASL (TLV->HFA->VDA = all Israel)",
+      "PASSENGERS: 1 - SEGMENTS: 2",
+      "Promised: Seg 1 AC 090 TLV->HFA | Seg 2 LY 301 HFA->VDA",
+      "Current: Seg 1 ON TIME | Seg 2 ARRIVED LATE, Delay +5H 00M",
+      "SOC section present - SOC Segment: LY 301 HFA->VDA (OAL); Operating Carrier LY (El Al - OAL)",
+      "Departure Delay Code: Unknown (OAL - AC has no data)",
+      "Geographic Check: all Israel PASSED",
+      "PASSENGER STATUS: NO_DETERMINATION | BAND: DELAY_2_TO_6_HOURS",
+      "Passenger Claims: NO DETERMINATION - case created for manual review (or redirected to OAL); DDS code SoC-ASL-ND-01"
+    ],
+    "soc": {
+      "eligibility": null,
+      "entitlements": "none - no determination (OAL operated), manual review / redirect to OAL"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Times chosen: AC090 08:00-08:35, LY301 11:00-12:15 scheduled",
+    "Arrival delay assumed equal to the stated 300 min departure delay",
+    "Delay code unknown -> null",
+    "Cabin W (PY), class O",
+    "Residence IL",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "unsupported": [
+    "LY 301 actuals/delay come from OAL data AC does not hold; must be injected as flight data for TT to show +5H 00M. Delay code intentionally unknown."
+  ]
+}

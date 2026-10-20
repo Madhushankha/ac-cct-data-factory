@@ -1,0 +1,95 @@
+{
+  "id": "SOC_UAT_001",
+  "family": "SOC",
+  "summary": "APPR SOC: 1 AC employee (non-revenue) pax on AC 101 YYZ-YUL Jun 1, dep 08:00 actual 14:00 (+360 min), dep delay code 64 controllable; employee check first -> NOT ELIGIBLE (SoC-APPR-NE-01)",
+  "passengers": [
+    {
+      "firstName": "PIERRE",
+      "lastName": "LAVOIE",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": true
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "101",
+      "origin": "YYZ",
+      "destination": "YUL",
+      "depLocal": "08:00",
+      "arrLocal": "09:20",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 360,
+      "depDelayMin": 360,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-APPR-NE-01",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 360,
+    "control": "CONTROLLABLE",
+    "cause": "64",
+    "ttUi": [
+      "TYPE: EMPLOYEE (non-revenue)",
+      "Trip Completed, Disruption Detected",
+      "Single-segment domestic trip YYZ→YUL on AC101 delayed +6H 00M due to crew / FDP exceedance (controllable)",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Promised Itinerary: AC 101 YYZ→YUL Scheduled Dep 01-Jun 08:00",
+      "Current Itinerary: AC 101 YYZ→YUL ARRIVED LATE, Scheduled Dep 08:00 → Actual 14:00, +6H 00M",
+      "SOC section present",
+      "PASSENGER | NOT_ELIGIBLE | DELAY_6_HOURS_OR_MORE | MEAL — | ACCOMMODATION — | GENERAL EXPENSES — | EXPIRES —",
+      "NOT_ELIGIBLE reason: Employee booking",
+      "Passenger Claims: Intent TRAVEL DISRUPTIONS, Sub-Intent EXPENSES, Status NOT ELIGIBLE"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none; AC employee booking (non-revenue); eligible for baggage claims only"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "employee office suffix (ES/OT/EP/EE/EC) not chosen; employee=true only",
+    "residence CA assumed (domestic Canadian flight; not stated)",
+    "arrival 09:20 (1h20 block)"
+  ],
+  "unsupported": [
+    "Non-revenue / standby ticket type and booking-office suffix (ES/OT/EP/EE/EC) are not expressible beyond employee=true"
+  ]
+}

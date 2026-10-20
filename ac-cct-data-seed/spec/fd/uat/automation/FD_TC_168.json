@@ -1,0 +1,83 @@
+{
+  "id": "FD_TC_168",
+  "family": "FD",
+  "summary": "ASL TLV-YYZ AC084 arrived 4h late but NO disruption code (arrival/departure/cancellation all NULL) after 14-day polling -> No Determination",
+  "passengers": [
+    {
+      "firstName": "LIOR",
+      "lastName": "DAYAN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "84",
+      "origin": "TLV",
+      "destination": "YYZ",
+      "depLocal": "12:00",
+      "arrLocal": "16:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 20,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "FD-ASL-ND-04",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": 240,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Promised Itinerary: AC 084 TLV->YYZ scheduled arrival 16:00",
+      "Current Itinerary: AC 084 TLV->YYZ ARRIVED LATE, actual 20:00, +4H 00M",
+      "Regime: ASL (Israel origin TLV)",
+      "MSL FLIGHT: AC 084 TLV->YYZ - NO CODE",
+      "Arrival Code: NULL (after 14 days)",
+      "Departure Code: NULL (after 14 days)",
+      "Cancellation Code: NULL (after 14 days)",
+      "Fallback: ATTEMPTED - ALL CODES NULL - NO FALLBACK AVAILABLE",
+      "14-Day Retry Window: EXHAUSTED",
+      "Case Status: System Processing Queue -> 14 days exhausted -> ESCALATED TO CR AGENT",
+      "Flight Compensation: MR/MS [PASSENGER] | NO DETERMINATION | NO_CODE_14_DAYS | PENDING CR AGENT"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "passenger name not given; chose Lior Dayan",
+    "route/times from TT UI: AC 084 TLV->YYZ sched arrival 16:00, actual 20:00; dep 12:00 chosen",
+    "flightDaysAgo=20 so the 14-day polling window can be exhausted"
+  ],
+  "unsupported": [
+    "All three disruption codes (arrival, departure, cancellation) must be NULL/absent in the feed for 14 days - absence of data is not expressible as an outcome; 14-day polling history / System Processing Queue state is case-side"
+  ]
+}

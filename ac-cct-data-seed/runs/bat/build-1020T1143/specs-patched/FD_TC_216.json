@@ -1,0 +1,81 @@
+{
+ "id": "FD_TC_216",
+ "family": "FD",
+ "summary": "US-origin booking for the dispute path: adult DANIEL HARRIS on AC 727 EWR-YYZ arriving 4h late, code 42 controllable, APPR CAD 400 (claims company, no claim opened, user disputes rejection)",
+ "passengers": [
+  {
+   "firstName": "DANIEL",
+   "lastName": "HARRIS",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "US",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "727",
+   "origin": "EWR",
+   "destination": "YYZ",
+   "depLocal": "13:40",
+   "arrLocal": "15:15",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 17,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 727 EWR->YYZ Scheduled Arrival 15:15",
+   "Current: AC 727 EWR->YYZ ARRIVED LATE, 15:15 -> 19:15, Delay +4H 00M",
+   "Regime: APPR (1 regime; US origin to Canada)",
+   "MSL FLIGHT: AC 727 EWR->YYZ 42 Delayed due to scheduled maintenance - CONTROLLABLE",
+   "Cancellation code: NONE; Fallback: FALSE",
+   "Delay: +4H 00M - CONTROLLABLE",
+   "Flight Compensation: MR DANIEL HARRIS | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flight AC 727 EWR-YYZ dep 13:40 arr 15:15 assumed (text gives only 'United States' as country of origin); a US-origin flight to Canada chosen",
+  "240-min arrival delay, code 42 (CONTROLLABLE), cabin Y class T assumed",
+  "expectation assumes APPR applies to an AC flight arriving in Canada from the US (EL-01 CAD 400); if DDS treats EWR origin differently, the gate should report the DDS result instead",
+  "PNR names/ids in the text are labels, not real locators",
+  "text gives only country of origin United States (no passenger name); passenger name DANIEL HARRIS assumed; residence US assumed"
+ ],
+ "unsupported": [
+  "claim-side behaviour (chatbot, third-party classification, manual handoff, case creation) is Claims Dashboard / chatbot behaviour, not booking data; initial rejection and dispute override are not booking data"
+ ]
+}

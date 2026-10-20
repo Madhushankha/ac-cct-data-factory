@@ -1,0 +1,76 @@
+{
+  "id": "FD_TC_171",
+  "family": "FD",
+  "summary": "ASL TLV-YYZ AC084 disrupted (4h late), claim filed within 72 hours of arrival -> Pending (DDS not run yet)",
+  "passengers": [
+    {
+      "firstName": "NAOMI",
+      "lastName": "BARUCH",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "84",
+      "origin": "TLV",
+      "destination": "YYZ",
+      "depLocal": "12:00",
+      "arrLocal": "16:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 1,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "PENDING",
+    "systemCode": "FD-ASL-PE-01",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": 240,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Status: Pending - Awaiting 72-Hour Window",
+      "DDS = Queued (not yet run); auto-trigger configured",
+      "Flight has occurred but fewer than 72h have elapsed since arrival"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "route/flight from chatbot journey: AC 084 TLV->YYZ, arrival delay 4 hours (June 15, 2026); times 12:00 / 16:00 chosen, delay 240",
+    "flightDaysAgo=1 so the claim is inside the 72-hour window",
+    "eligibility \"PENDING\" is outside the schema enum (ELIGIBLE|NOT_ELIGIBLE|NO_DETERMINATION); DDS code FD-ASL-PE-01 is the real expectation",
+    "no delay code given (not yet processed) -> null"
+  ],
+  "unsupported": [
+    "The 72-hour finalization window is a timing condition (driven by flightDaysAgo=1), not booking data; DDS queued/auto-trigger state is case-side"
+  ]
+}

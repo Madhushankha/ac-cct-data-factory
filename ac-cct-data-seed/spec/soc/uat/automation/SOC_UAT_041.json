@@ -1,0 +1,92 @@
+{
+  "id": "SOC_UAT_041",
+  "family": "SOC",
+  "summary": "1 adult, AC 848 LHR-YYZ 11:00-15:00 delayed 7h (departed 18:00), delay code 77 weather, passenger stayed at origin; EU SOC eligible regardless of cause",
+  "passengers": [
+    {
+      "firstName": "HANNAH",
+      "lastName": "MUELLER",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "DE",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "848",
+      "origin": "LHR",
+      "destination": "YYZ",
+      "depLocal": "11:00",
+      "arrLocal": "15:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": 420,
+      "delayCode": "77",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "SoC-EU-EL-01",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 420,
+    "control": null,
+    "cause": "77",
+    "ttUi": [
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip LHR->YYZ on AC848 delayed +7H 00M due to weather (uncontrollable - NOT CHECKED under EU)",
+      "Regime: EU (LHR departure)",
+      "PASSENGERS: 1 - SEGMENTS: 1",
+      "Promised: AC 848 LHR->YYZ Sched Dep 11:00",
+      "Current: AC 848 LHR->YYZ ARRIVED LATE, Sched Dep 11:00, Actual 18:00, Delay +7H 00M",
+      "Departure Delay Code: 77 (Weather) - NOT CHECKED (EU does not evaluate controllability)",
+      "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 30.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+      "CyberSource: GREEN",
+      "Weather = NOT ELIGIBLE under APPR (NE-07) but ELIGIBLE under EU (EL-01)",
+      "DDS code SoC-EU-EL-01"
+    ],
+    "soc": {
+      "eligibility": "ELIGIBLE",
+      "entitlements": "Meals EUR 30/pax, Hotel rate of day max 3 nights EUR 500 cap, Transport EUR 200, Communication EUR 30, Parking EUR 50 (1 day), Essentials EUR 30; no ACR issued"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Prerequisite says 'Flight cancelled. Rebooked next day' but also delay 420 min and TT shows ARRIVED LATE +7H (actual dep 18:00); modelled as 7h delay, not cancellation",
+    "Arrival delay assumed equal to 420 min departure delay",
+    "Cabin W (PY), class O",
+    "Residence DE (payout country Germany)",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period).",
+    "Gherkin date June 10 vs 18-Jun; ignored",
+    "Departure country UK"
+  ],
+  "unsupported": [
+    "Booking cannot express that the passenger 'stayed at origin' beyond the delay itself",
+    "Receipt/OCR amounts and payout are chatbot/Case Services behaviour, not booking data"
+  ]
+}

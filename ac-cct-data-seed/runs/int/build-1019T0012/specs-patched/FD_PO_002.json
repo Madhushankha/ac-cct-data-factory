@@ -1,0 +1,75 @@
+{
+ "id": "FD_PO_002",
+ "family": "FD",
+ "summary": "FD_UAT_066: Travel Completed | EU 261 (UK) | Controllable | Delay 3–<4 h",
+ "passengers": [
+  {
+   "type": "ADT",
+   "firstName": "BENJAMIN",
+   "lastName": "PATTERSON",
+   "dob": "1976-05-29"
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": null,
+   "carrier": "AC",
+   "number": "8178",
+   "origin": "LHR",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": null,
+   "status": "HK",
+   "depDate": "2026-06-19",
+   "operatingCarrier": "AC"
+  }
+ ],
+ "flightDaysAgo": null,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 210,
+   "delayCode": "64"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "eligibility": "ELIGIBLE",
+  "regime": "EU",
+  "systemCode": "FD-EU-EL-01",
+  "amount": 260.0,
+  "currency": "GBP",
+  "delayMin": 210,
+  "control": "CONTROLLABLE",
+  "delayBand": null,
+  "cause": "64"
+ },
+ "assumed": [
+  "expectation taken from fd-uat-int-v134 (gap-doc card)",
+  "delay set to 210 min: the card says 'Delay 3-<4 hrs' and FD-EU-EL-01 is defined as 3 to less than 4 hours; 240 min is exactly 4 h and lands in EL-02 (GBP 520)",
+  "flight AC8178: AC178 on this day already holds a 240-minute leg from earlier runs, and the engine folds the existing leg rather than our 210"
+ ],
+ "unsupported": [
+  "the card's delayBand DELAY_3_TO_LT_6_HOURS is APPR vocabulary on an EU case, so no band is claimed here"
+ ],
+ "source": {
+  "repo": "agentic-qa",
+  "suite": "fd-uat",
+  "fixture": "FD_UAT_066.json",
+  "case_id": "FD_UAT_066",
+  "source_case_id": "FD_TC_066"
+ },
+ "pointOfSale": {
+  "officeId": "LHRAC08AA",
+  "from": "fixture FD_UAT_066.point_of_sale"
+ }
+}

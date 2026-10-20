@@ -1,0 +1,95 @@
+{
+  "id": "SOC_UAT_023",
+  "family": "SOC",
+  "summary": "APPR SOC: 1 business-class (J) exception pax (accessibility SSR) on AC 401 YYZ-YHZ Jun 16 dep 09:00 actual 13:00 (+240), code 41 safety; exception skips controllability -> ELIGIBLE with limited 2-6 h entitlements (SoC-APPR-EL-09)",
+  "passengers": [
+    {
+      "firstName": "ANNE",
+      "lastName": "LANDRY",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "401",
+      "origin": "YYZ",
+      "destination": "YHZ",
+      "depLocal": "09:00",
+      "arrLocal": "12:00",
+      "dayOffset": 0,
+      "cabin": "J",
+      "bookingClass": "J",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": "41",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "SoC-APPR-EL-09",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_2_TO_6_HOURS",
+    "delayMin": 240,
+    "control": "SAFETY",
+    "cause": "41",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment domestic trip YYZ→YHZ on AC401 delayed +4H 00M due to aircraft defect (safety)",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Class of Booking: J (Business)",
+      "Passenger Type: Exception (Accessibility SSR)",
+      "Promised Itinerary: AC 401 YYZ→YHZ Scheduled Dep 16-Jun 09:00",
+      "Current Itinerary: AC 401 YYZ→YHZ ARRIVED LATE, Scheduled Dep 09:00 → Actual 13:00, +4H 00M",
+      "Departure Delay Code: 41 (Aircraft Defects / Maintenance Finding), Safety",
+      "PASSENGER | ELIGIBLE | DELAY_2_TO_6_HOURS | MEAL $15.00 (LIMITED short delay tier) | ACCOMMODATION — (NOT ENTITLED, delay <6h) | GENERAL EXPENSES Comm $30 only | EXPIRES [date]",
+      "CyberSource: GREEN",
+      "LIMITED entitlements: Meals $15 + Comm $30 only; no hotel/transport/parking/essentials"
+    ],
+    "soc": {
+      "eligibility": "ELIGIBLE",
+      "entitlements": "limited: meals $15 + communication $30 only; not entitled to hotel, transport, parking, essentials (delay < 6 h)"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "cabin J / booking class J (Business)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "arrival 12:00 ADT (2h block, tz +1h)",
+    "residence CA assumed"
+  ],
+  "unsupported": [
+    "Accessibility SSR (exception passenger) cannot be expressed in the passenger schema"
+  ]
+}

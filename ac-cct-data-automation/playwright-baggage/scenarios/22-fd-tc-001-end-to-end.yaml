@@ -1,0 +1,92 @@
+# FD_TC_001 all the way to a submitted case, then validated outside the chat.
+#
+# Written from a real transcript (BAT ZZOTRY, 19 Oct 16:38-16:41), not from the gap doc, so the
+# order below is the order the bot actually asks in. Two things surprised the earlier draft:
+#   * the payout COUNTRY is asked BEFORE the amount is quoted, not after;
+#   * there is a trip-type question ("My own trip" / "Someone else's") and a separate consent
+#     question before identification.
+#
+# This scenario deliberately goes PAST the stops the baggage roads refuse. `allow` is the schema's
+# own escape hatch for that, and it is listed explicitly so the guard still refuses anything not
+# named here: payout country and the payment offer are allowed, bank details are NOT.
+#
+# What happens after the chat is not in this file. `stop: end` leaves the case submitted, and
+# tools/validate_case.py takes over: it reads the confirmation email from the Mailinator inbox and
+# then calls the Claims Dashboard verification API for the case number, so the money, the wallet
+# offer and the claimant are checked in the system of record rather than in chat prose.
+id: fd-tc-001-end-to-end
+title: FD_TC_001 - APPR 4h delay to a submitted claim, 400 CAD Interac
+tags: [fd, pinned, payment]
+booking: { pnr: ZZ5R8J }          # INT, from fd-266-int-1019c; BAT equivalent is ZZOTRY
+# the only stop kinds the guard knows; naming them is what lets this road pass them, and
+# anything NOT named here is still refused (bank details, manual review, third-party answers)
+allow: [payout-country, payment-proceed]
+first_message: "my flight got disrupted and i want the compensation"
+steps:
+  # ---- intent -------------------------------------------------------------
+  - expect:
+      step: FD-01.whose-trip
+      board: whose trip the claim is for
+      any_of: ["your own trip", "on behalf of someone"]
+      buttons: ["My own trip", "Someone else's"]
+  - tap: "My own trip"
+  # ---- the automated-decision notice, then consent ------------------------
+  - expect:
+      step: FD-02.notice
+      board: the automated-decision privacy notice
+      any_of: ["fully automated system", "Privacy Notice"]
+  - expect:
+      step: FD-03.start
+      board: the invitation to start
+      any_of: ["Would you like to get started"]
+      buttons: ["Yes", "No"]
+  - tap: "Yes"
+  # ---- identify + verify --------------------------------------------------
+  - identify: true                 # first name, last name and PNR from the pinned booking
+  - verify: true                   # a real code, read from the seeded Mailinator inbox
+  - expect:
+      step: FD-04.verified
+      board: the verification result
+      any_of: ["You're \\*\\*verified\\*\\*", "verified"]
+  # ---- the journey card ---------------------------------------------------
+  - expect:
+      step: FD-05.journey
+      board: the flight card for this booking
+      any_of: ["found one journey", "Is this the journey"]
+      buttons: ["Yes, that one", "No, a different one"]
+  - tap: "Yes, that one"
+  - expect:
+      step: FD-06.appr
+      board: the APPR eligibility statement
+      any_of: ["APPR", "may be eligible"]
+  # ---- payment: country first, then the amount ----------------------------
+  - expect:
+      step: FD-07.country
+      board: the deposit country form
+      any_of: ["in which country will it be deposited"]
+      form: ["Country"]
+  # the country field is a typeahead: `choose` picks the option and submits the form
+  - choose: ["Canada"]
+  - expect:
+      step: FD-08.amount
+      board: the award this case expects
+      any_of: ["400.00 CAD", "entitled to \\*\\*400"]
+  - tap: "Yes, proceed"
+  - expect:
+      step: FD-09.interac
+      board: the Interac e-transfer email confirmation
+      any_of: ["Interac e-transfer", "confirm the email address"]
+      buttons: ["Yes, confirm this email", "Use a different email"]
+  # the address offered must be the seeded inbox, not a per-member variant
+  - expect:
+      step: FD-10.payment-email
+      board: the payment email offered
+      any_of: ["lahiru@ae-qa1-aircanada.mailinator.com"]
+  - tap: "Yes, confirm this email"
+  # ---- the case should now be submitted -----------------------------------
+  - expect:
+      step: FD-11.submitted
+      board: the submission confirmation carrying the case number
+      any_of: ["submitted", "case (number|reference)", "CCD-"]
+  - stop: end
+known: []

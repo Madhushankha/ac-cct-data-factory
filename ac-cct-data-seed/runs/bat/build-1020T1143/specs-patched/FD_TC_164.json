@@ -1,0 +1,85 @@
+{
+  "id": "FD_TC_164",
+  "family": "FD",
+  "summary": "ASL YYZ-TLV AC085 arrived 4h late, severe weather code 72 (extraordinary) -> Not Eligible ILS 0",
+  "passengers": [
+    {
+      "firstName": "ADI",
+      "lastName": "CARMEL",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "85",
+      "origin": "YYZ",
+      "destination": "TLV",
+      "depLocal": "23:00",
+      "arrLocal": "16:00",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": null,
+      "delayCode": "72",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "FD-ASL-NE-24",
+    "amount": 0,
+    "currency": "ILS",
+    "delayBand": null,
+    "delayMin": 240,
+    "control": "UNCONTROLLABLE",
+    "cause": "72",
+    "ttUi": [
+      "Promised Itinerary: AC 085 YYZ->TLV scheduled arrival 16:00 (local TLV)",
+      "Current Itinerary: AC 085 YYZ->TLV ARRIVED LATE, actual 20:00, +4H 00M",
+      "Regime: ASL (Israel destination TLV) + APPR (Canadian origin YYZ)",
+      "Destination: TLV (Israel)",
+      "MSL FLIGHT: AC 085 YYZ->TLV",
+      "Arrival Delay Code: 72 (numeric delay code, not a cancellation code)",
+      "Delayed due to severe weather (thunderstorm)",
+      "EXTRAORDINARY CIRCUMSTANCE (delay code 72 in list 71, 72, 73, 75, 76, 77)",
+      "Delay: +4H 00M",
+      "ASL: Extraordinary Circumstance -> NOT ELIGIBLE (airline exempt)",
+      "ASL Travel Completed Threshold: 8 hours; 4h < 8h -> also below threshold (double NE reason)",
+      "Fallback: FALSE (arrival delay code 72 available)",
+      "Sister City: FALSE",
+      "Flight Compensation: MR ADI CARMEL | NOT ELIGIBLE | EXTRAORDINARY_CIRCUMSTANCE | ILS 0.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "Text inconsistent on flight number: Prerequisites/Expected say AC 084 YYZ-TLV; TT UI + chatbot say AC 085 YYZ-TLV. Used AC 085.",
+    "scheduled arrival 16:00 local TLV (given); dep 23:00 YYZ chosen (arrival next day)",
+    "flight date June 10, 2026; flightDaysAgo=10",
+    "APPR = NE (Uncontrollable); EU = N/A"
+  ],
+  "unsupported": []
+}

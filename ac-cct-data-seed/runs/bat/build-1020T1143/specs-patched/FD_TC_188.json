@@ -1,0 +1,85 @@
+{
+  "id": "FD_TC_188",
+  "family": "FD",
+  "summary": "APPR YUL-YYZ AC425 involuntary change via DT/COP (YTOAC0652 + I/S indicator): promise stays at 10:00, arrives 420 min late (code 42, controllable) -> Eligible CAD 700",
+  "passengers": [
+    {
+      "firstName": "ETIENNE",
+      "lastName": "LAPOINTE",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "425",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "08:40",
+      "arrLocal": "10:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": null,
+      "delayCode": "42",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "ELIGIBLE",
+    "systemCode": null,
+    "amount": 700,
+    "currency": "CAD",
+    "delayBand": "DELAY_6_TO_LT_9_HOURS",
+    "delayMin": 420,
+    "control": "CONTROLLABLE",
+    "cause": "42",
+    "ttUi": [
+      "Promised Itinerary: AC 425 YUL->YYZ scheduled arrival 10:00 (14-day mark, NOT updated by DT)",
+      "Current Itinerary: AC 425 YUL->YYZ ARRIVED LATE, actual 17:00, +7H 00M",
+      "Change 1: DT/COP (YTOAC0652 + I/S indicator) at D-0 - INVOL - arrival 10:00 -> 17:00",
+      "Promise = 10:00 (DT did NOT update it)",
+      "Delay from promise = 7 hours",
+      "Regime: APPR",
+      "APPR: Delay 6-<9h, Controllable -> ELIGIBLE",
+      "MSL FLIGHT: AC 425 YUL->YYZ - 42",
+      "CONTROLLABLE (Code 42)",
+      "Flight Compensation: MR ETIENNE LAPOINTE | ELIGIBLE | APPR_6_TO_9_HOURS | CAD 700"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "segments hold the ORIGINAL 14-day schedule (promise stays at the 14-day mark); the INVOL change is NOT modelled as a scheduleChange (that would update the promise) - the resulting lateness is the outcome delay measured against the original promise",
+    "dep time = original arrival minus 1h20 (YUL-YYZ ~1h20 block)",
+    "flight date June 10, 2026 in text; flightDaysAgo=10 (72 hrs elapsed)",
+    "DDS code not stated in text (APPR EL-01 is the CAD 400 tier code in sibling scenarios) -> systemCode null",
+    "delayBand name inferred from the schema example pattern",
+    "name \"Etienne\" written without accent"
+  ],
+  "unsupported": [
+    "PNR change-history marker DT/COP (YTOAC0652 + I/S indicator) at D-0 classifying the AC day-of-travel schedule change as INVOL - no initiator/tool field in the schema; D-0 change itself not modelled"
+  ]
+}

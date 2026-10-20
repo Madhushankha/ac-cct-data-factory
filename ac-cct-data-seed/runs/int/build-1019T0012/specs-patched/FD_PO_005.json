@@ -1,0 +1,95 @@
+{
+ "id": "FD_PO_005",
+ "family": "FD",
+ "summary": "FD_UAT_126: Not Eligible | ASL | No Travel Return | Extraordinary Circumstance | C",
+ "passengers": [
+  {
+   "type": "ADT",
+   "firstName": "ELI",
+   "lastName": "NAVON",
+   "dob": "1985-03-15"
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "100",
+   "origin": "TLV",
+   "destination": "FRA",
+   "depLocal": "10:00",
+   "arrLocal": "14:30",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": null,
+   "status": "HK",
+   "depDate": "2026-06-19",
+   "operatingCarrier": "AC"
+  },
+  {
+   "seg": 2,
+   "bound": 2,
+   "carrier": "AC",
+   "number": "101",
+   "origin": "FRA",
+   "destination": "TLV",
+   "depLocal": "18:00",
+   "arrLocal": "22:40",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": null,
+   "status": "HK",
+   "depDate": "2026-06-19",
+   "operatingCarrier": "AC"
+  }
+ ],
+ "flightDaysAgo": null,
+ "outcomes": [
+  {
+   "seg": 2,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "delayCode": "71"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "eligibility": "NOT_ELIGIBLE",
+  "regime": "ASL",
+  "systemCode": "FD-ASL-NE-10",
+  "currency": "CAD",
+  "delayMin": 240,
+  "control": "UNCONTROLLABLE",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "cause": "71"
+ },
+ "assumed": [
+  "expectation taken from fd-uat-int-v134 (gap-doc card)",
+  "the delay is placed on segment 2 of 2: the fixture states it once for the booking",
+  "paxEvent not_travelled on the return: FD-ASL-NE-10 is 'Extraordinary - No travel Return', and a return that arrives means the passenger travelled it",
+  "bounds 1 and 2: NE-10 is \"No travel Return\" while NE-12 is \"No travel Incomplete\"; without bounds the round trip reads as one journey"
+ ],
+ "unsupported": [],
+ "source": {
+  "repo": "agentic-qa",
+  "suite": "fd-uat",
+  "fixture": "FD_UAT_126.json",
+  "case_id": "FD_UAT_126",
+  "source_case_id": "FD_TC_126"
+ },
+ "pointOfSale": {
+  "officeId": "YYZAC08AA",
+  "from": "fixture FD_UAT_126.point_of_sale"
+ }
+}

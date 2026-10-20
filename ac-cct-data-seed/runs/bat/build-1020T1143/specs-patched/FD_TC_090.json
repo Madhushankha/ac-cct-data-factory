@@ -1,0 +1,107 @@
+{
+ "id": "FD_TC_090",
+ "family": "FD",
+ "summary": "Single adult VERONIQUE GAGNON (linked Aeroplan Basic), AC 364 YUL-YYZ (arr 14:00) cancelled with code SKD (schedule/commercial, controllable); customer accepted involuntary rebooking on AC 412 YUL-YYZ arriving 16:30 (150 min after original promise, below 3h)",
+ "passengers": [
+  {
+   "firstName": "VERONIQUE",
+   "lastName": "GAGNON",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "364",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:35",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "OPER",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "412",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "15:05",
+   "arrLocal": "16:30",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-27",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": 150,
+  "control": "CONTROLLABLE",
+  "cause": "OPER",
+  "fallback": false,
+  "reason": "BELOW_THRESHOLD_POST_REBOOKING",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 364, Route: YUL->YYZ, Scheduled Arrival: 14:00 (CANCELLED - SKD)",
+   "Change History - INVOL: AC 364 CANCELLED (SKD - Schedule / Commercial Cancellation - Controllable). Customer accepted rebooking to AC 412 YUL->YYZ.",
+   "Current Itinerary - Flight: AC 412, Route: YUL->YYZ, Status: ARRIVED, Actual Arrival: 16:30 at YYZ",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 364 - YUL->YYZ - SKD (Schedule / Commercial Cancellation - Controllable)",
+   "Rebooked Flight: AC 412 - YUL->YYZ - Arrived 16:30",
+   "Delay Calculation: Original promise = 14:00; Rebooked actual = 16:30; Delay = +2H 30M",
+   "APPR Gate 8: Delay 2h 30m < 3h - FAILS threshold - NOT ELIGIBLE",
+   "Fallback: FALSE",
+   "Sister City: FALSE",
+   "Flight Compensation: MS VERONIQUE GAGNON | NOT ELIGIBLE | BELOW_THRESHOLD_POST_REBOOKING | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "cabin Y and booking class T on every segment (text gives none)",
+  "YUL-YYZ departure assumed 12:35 so that arrival is 14:00",
+  "AC 412 departure assumed 15:05; assumed operated on time (arrives 16:30)",
+  "noticeHours not stated, left null",
+  "change history is INVOL (airline-initiated) per text; rebooking.accepted=true",
+  "paxEvents boarded refers to the rebooked flight"
+ ],
+ "unsupported": [
+  "paxEvents are per original seg; the pax boarding the rebooked AC 412 is not separately expressible"
+ ]
+}

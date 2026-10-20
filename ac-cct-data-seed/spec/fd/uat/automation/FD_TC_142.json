@@ -1,0 +1,104 @@
+{
+ "id": "FD_TC_142",
+ "family": "FD",
+ "summary": "Adult, AC871 CDG-YYZ sched arr 13:00 CANCELLED (CREW, controllable); next available flight arrives 15:00 (2h later) and customer declined it and stayed at CDG: delay below the 3h EU261 threshold, Not Eligible",
+ "passengers": [
+  {
+   "firstName": "ARNAUD",
+   "lastName": "PICARD",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "FR",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "871",
+   "origin": "CDG",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "13:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": 120,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": "CREW",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "873",
+   "origin": "CDG",
+   "destination": "YYZ",
+   "depLocal": "12:00",
+   "arrLocal": "15:00",
+   "dayOffset": 0,
+   "accepted": false
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-EU-NE-13",
+  "amount": 0,
+  "currency": "EUR",
+  "delayBand": "DELAY_BELOW_3_HOURS",
+  "delayMin": 120,
+  "control": "CONTROLLABLE",
+  "cause": "CREW",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 871, Route: CDG → YYZ, Scheduled Arrival: 13:00",
+   "Current Itinerary - Flight: AC 871, Route: CDG → YYZ, Status: CANCELLED",
+   "Cancellation Code: CREW - 4-character Netline code",
+   "\"Cancellation - crew unavailability\"",
+   "CONTROLLABLE (CREW is in the Controllable cancellation code list)",
+   "MSL Delay (re-routing): 2H 00M → BELOW 3-HOUR EU 261 THRESHOLD (Gate 8)",
+   "Customer Status: NO TRAVEL - ORIGIN (customer remained at CDG, declined rebooking)",
+   "History - No rebooking accepted",
+   "Regime: EU 261 (EU Mainland - CDG origin)",
+   "EU 261 Threshold: Arrival delay must be ≥ 3 hours → 2h < 3h → NOT ELIGIBLE",
+   "Fallback: FALSE (cancellation code CREW available)",
+   "CRITICAL: Despite controllable cancellation code CREW, delay is below 3hr threshold → NOT ELIGIBLE. Threshold overrides controllability.",
+   "Flight Compensation: MR ARNAUD PICARD | NOT ELIGIBLE | DELAY_BELOW_3_HOURS | EUR 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 10:00 CDG (as sibling AC871 scenarios)",
+  "the offered next flight (arrival 15:00) is a declined rebooking: assumed AC 873 CDG-YYZ dep 12:00 arr 15:00; rebooking.accepted=false",
+  "delayMin 120 = re-routing delay (next available arrival 15:00 minus promised 13:00)",
+  "residence FR (EUR)",
+  "noticeHours not stated (null)",
+  "customer marked not_travelled"
+ ],
+ "unsupported": []
+}

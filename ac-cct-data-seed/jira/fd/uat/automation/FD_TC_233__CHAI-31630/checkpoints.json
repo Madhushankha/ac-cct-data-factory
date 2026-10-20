@@ -1,0 +1,1260 @@
+{
+  "key": "CHAI-31630",
+  "test_id": "FD_TC_233",
+  "title": "AC internal resourcing ? Park ? lead replies ? case back in the same agent's Assigned Cases | APPR | Controllable (Code 96 � Operations Control) | Delay 6 to under 9 hrs| 1 Pax | 1 Leg | Basic Aeroplan",
+  "goal": "Checks the park cycle for internal resourcing. Flight AC 412 YUL ? YYZ arrived 7 hours late. Trip Tracer shows Code 96 (Controllable), and DDS returns FD-APPR-EL-02, CAD 700. In the chat, the customer said the gate agent blamed the weather. The customer leaves the chat before payment. Agent Sarah Martin doesn't want to pay out while the coding is in doubt, and she can't change the code herself. She chooses New Resourcing and asks the lead pool to confirm the code. A lead task is created, the case parks and the \"Case Escalated\" alert is shown. Lead Nadia Bouchard checks and confirms Code 96, then submits her resourcing notes. The case changes to \"Update Pending Action\" and appears in Sarah's Assigned Cases list with \"?? UPDATE RECEIVED\". It does not go to To Be Assigned and no other agent can take it. Sarah opens it (In Progress), keeps the decision and sends \"Decision Rendered � Action Required\" with the deep link. The customer lives in Canada and picks Cash, so payment goes by Interac and only the email is collected. The customer isn't contacted while the case is parked.",
+  "summary": {
+    "seed": 16,
+    "chat": 16,
+    "api": 12,
+    "email": 4,
+    "dashboard": 0,
+    "implied": 89,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Checks the park cycle for internal resourcing. Flight AC 412 YUL ? YYZ arrived 7 hours late. Trip Tracer shows Code 96 (Controllable), and DDS returns FD-APPR-EL-02, CAD 700. In the chat, the customer said the gate agent blamed the weather. The customer leaves the chat before payment. Agent Sarah Martin doesn't want to pay out while the coding is in doubt, and she can't change the code herself. She chooses New Resourcing and asks the lead pool to confirm the code. A lead task is created, the case parks and the \"Case Escalated\" alert is shown. Lead Nadia Bouchard checks and confirms Code 96, then submits her resourcing notes. The case changes to \"Update Pending Action\" and appears in Sarah's Assigned Cases list with \"?? UPDATE RECEIVED\". It does not go to To Be Assigned and no other agent can take it. Sarah opens it (In Progress), keeps the decision and sends \"Decision Rendered � Action Required\" with the deep link. The customer lives in Canada and picks Cash, so payment goes by Interac and only the email is collected. The customer isn't contacted while the case is parked.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: PK001 � single passenger Nicolas Fortier (Adult, Basic Aeroplan 9876543210, good standing)",
+      "expected": "PNR: PK001 � single passenger Nicolas Fortier (Adult, Basic Aeroplan 9876543210, good standing)",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "AC 412 YUL ? YYZ, July 20, 2026",
+      "expected": "AC 412 YUL ? YYZ, July 20, 2026",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Scheduled arrival 12:00, actual 19:00 (7h delay)",
+      "expected": "Scheduled arrival 12:00, actual 19:00 (7h delay)",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Code 96 (Operations Control � Controllable)",
+      "expected": "Code 96 (Operations Control � Controllable)",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Travelled, arrived late",
+      "expected": "Travelled, arrived late",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No VOL/INVOL changes",
+      "expected": "No VOL/INVOL changes",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "AC only",
+      "expected": "AC only",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Claim filed Jul 28, 2026",
+      "expected": "Claim filed Jul 28, 2026",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Case reference: CASE-FD-20260728-001",
+      "expected": "Case reference: CASE-FD-20260728-001",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No duplicate",
+      "expected": "No duplicate",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "implied",
+      "step": "CyberSource GREEN",
+      "expected": "CyberSource GREEN",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Country of residence: Canada",
+      "expected": "Country of residence: Canada",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Owner agent: Sarah Martin (Agent role, Available)",
+      "expected": "Owner agent: Sarah Martin (Agent role, Available)",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Lead: Nadia Bouchard (Lead role, in the lead pool)",
+      "expected": "Lead: Nadia Bouchard (Lead role, in the lead pool)",
+      "id": "CP015"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Second agent: Marc Dubois (Available)",
+      "expected": "Second agent: Marc Dubois (Available)",
+      "id": "CP016"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Resourcing sent: Aug 1, 10:00",
+      "expected": "Resourcing sent: Aug 1, 10:00",
+      "id": "CP017"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Lead replies: Aug 3, 14:00",
+      "expected": "Lead replies: Aug 3, 14:00",
+      "id": "CP018"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01) and the user selects \"English\"",
+      "expected": "English",
+      "id": "CP020"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then the privacy alert is displayed",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Montreal to Toronto was delayed about 7 hours, the gate agent said it was the weather. I'd like to check if I'm eligible for compensation\"",
+      "expected": "My flight from Montreal to Toronto was delayed about 7 hours, the gate agent said it was the weather. I'd like to check if I'm eligible for compensation",
+      "id": "CP022"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP023"
+    },
+    {
+      "section": "PART A � INITIAL CLAIM",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then third-party check ? NO, and the legal disclaimer is shown and accepted",
+      "expected": "IDENTIFICATION (GenUC-01): \"Nicolas Fortier\" + PNR \"PK001\" ? Trip Tracer PNR FOUND (Auth Flow 1) AUTHENTICATION (GenUC-05): Email n***@gmail.com ? OTP \"164930\" ? CORRECT (attempt 1 of 5) GROUP BOOKING / PASSENGER SELECTION (GenUC-06): group identifier NOT PRESENT; 1 passenger confirmed JOURNEY SELECTION (GenUC-08): AC 412, YUL ? YYZ, July 20, 2026, Arrival Delay 7 hours ? \"Yes\" CHECKS: single leg; no duplicate; more than 72 hours; within 366 days ? PROCEED DDS: APPR; Code 96 Controllable; 420 min; ELIGIBLE; FD-APPR-EL-02; CAD 700",
+      "id": "CP024"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Current: ARRIVED LATE, 12:00 ? 19:00, +7H 00M",
+      "expected": "Current: ARRIVED LATE, 12:00 ? 19:00, +7H 00M",
+      "id": "CP025"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Regime: APPR (1 regime)",
+      "expected": "Regime: APPR (1 regime)",
+      "id": "CP026"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "MSL: AC 412 � YUL ? YYZ � 96 \"Delayed due to operations control\" � CONTROLLABLE",
+      "expected": "MSL: AC 412 � YUL ? YYZ � 96 \"Delayed due to operations control\" � CONTROLLABLE",
+      "id": "CP027"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "MR NICOLAS FORTIER | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet",
+      "expected": "MR NICOLAS FORTIER | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet",
+      "id": "CP028"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "CYBERSOURCE (GLOB-05): GREEN",
+      "expected": "CYBERSOURCE (GLOB-05): GREEN",
+      "id": "CP029"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "CUSTOMER DROPS OFF: closes the chat at \"In which country will your reimbursement be deposited?\"",
+      "expected": "CUSTOMER DROPS OFF: closes the chat at \"In which country will your reimbursement be deposited?\"",
+      "id": "CP030"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": "PK001",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the case is created as ELIGIBLE, CAD 700, with no payment instruction, and the transcript is linked",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "PART B � AGENT PICKS UP AND FINDS THE CODING QUESTION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given Sarah Martin is Available and clicks \"Get Next Case\" ? Assigned",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "PART B � AGENT PICKS UP AND FINDS THE CODING QUESTION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And she opens it within 10 minutes ? In Progress",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "PART B � AGENT PICKS UP AND FINDS THE CODING QUESTION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When she reads the transcript (\"the gate agent said it was the weather\")",
+      "expected": "",
+      "id": "CP034"
+    },
+    {
+      "section": "PART B � AGENT PICKS UP AND FINDS THE CODING QUESTION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And sees that Trip Tracer shows Code 96 Controllable",
+      "expected": "",
+      "id": "CP035"
+    },
+    {
+      "section": "PART B � AGENT PICKS UP AND FINDS THE CODING QUESTION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then she does NOT change the flight code or override Decision Assist",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "PART C � AGENT SENDS NEW RESOURCING AND THE CASE PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah selects \"New Resourcing\" in the Case Actions panel (kebab menu)",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "PART C � AGENT SENDS NEW RESOURCING AND THE CASE PARKS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And sends it to the lead pool with the note: \"Customer states weather; Trip Tracer shows Code 96 Operations Control on AC 412 YUL-YYZ Jul 20. Please confirm coding before payout.\"",
+      "expected": "Customer states weather; Trip Tracer shows Code 96 Operations Control on AC 412 YUL-YYZ Jul 20. Please confirm coding before payout.",
+      "id": "CP038"
+    },
+    {
+      "section": "PART C � AGENT SENDS NEW RESOURCING AND THE CASE PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then a resourcing task is created in the lead / manager pool, linked to the case",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "PART C � AGENT SENDS NEW RESOURCING AND THE CASE PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case status changes to \"Parked\"",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "PART C � AGENT SENDS NEW RESOURCING AND THE CASE PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the blue \"Case Escalated\" alert is shown with context and timestamp",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "PART C � AGENT SENDS NEW RESOURCING AND THE CASE PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case appears in Sarah's Incomplete / Parked Cases widget",
+      "expected": "",
+      "id": "CP042"
+    },
+    {
+      "section": "PART C � AGENT SENDS NEW RESOURCING AND THE CASE PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Sarah's active slot is freed and she can pull a new case",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "PART C � AGENT SENDS NEW RESOURCING AND THE CASE PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the assigned agent stays Sarah Martin",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "PART C � AGENT SENDS NEW RESOURCING AND THE CASE PARKS",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And no customer notification is sent",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "PART C � AGENT SENDS NEW RESOURCING AND THE CASE PARKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Audit Log records: New Resourcing, target (lead pool), note, In Progress ? Parked, actor and timestamp",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "PART D � CASE STAYS SAFE WHILE PARKED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given the case is Parked for resourcing",
+      "expected": "",
+      "id": "CP047"
+    },
+    {
+      "section": "PART D � CASE STAYS SAFE WHILE PARKED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the 10-minute Assigned timeout and the 24-hour In Progress release do NOT apply",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "PART D � CASE STAYS SAFE WHILE PARKED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case does NOT appear in To Be Assigned",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "PART D � CASE STAYS SAFE WHILE PARKED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Marc Dubois clicks \"Get Next Case\"",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "PART D � CASE STAYS SAFE WHILE PARKED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then PK001 is NOT given to him",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "PART D � CASE STAYS SAFE WHILE PARKED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah switches to \"Break / Lunch\" and back to Available",
+      "expected": "",
+      "id": "CP052"
+    },
+    {
+      "section": "PART D � CASE STAYS SAFE WHILE PARKED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the case stays Parked with her",
+      "expected": "",
+      "id": "CP053"
+    },
+    {
+      "section": "PART E � LEAD REVIEWS AND REPLIES",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given Nadia Bouchard opens the resourcing task from the lead pool",
+      "expected": "",
+      "id": "CP054"
+    },
+    {
+      "section": "PART E � LEAD REVIEWS AND REPLIES",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then she can see the case context, Sarah's note, the transcript and Trip Tracer",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "PART E � LEAD REVIEWS AND REPLIES",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When she confirms that Code 96 (Operations Control) is correct and there was no weather code on AC 412",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "PART E � LEAD REVIEWS AND REPLIES",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And she enters the resourcing notes: \"Coding confirmed Code 96 Operations Control, controllable. Proceed with APPR payout.\"",
+      "expected": "",
+      "id": "CP057"
+    },
+    {
+      "section": "PART E � LEAD REVIEWS AND REPLIES",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And she clicks Submit (return to agent with guidance)",
+      "expected": "",
+      "id": "CP058"
+    },
+    {
+      "section": "PART E � LEAD REVIEWS AND REPLIES",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the resourcing task is marked complete",
+      "expected": "",
+      "id": "CP059"
+    },
+    {
+      "section": "PART E � LEAD REVIEWS AND REPLIES",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case ownership stays with Sarah (Nadia does not take ownership)",
+      "expected": "",
+      "id": "CP060"
+    },
+    {
+      "section": "PART F � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the case status changes Parked ? \"Update Pending Action\" straight away",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "PART F � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case leaves Sarah's Parked widget and appears in her Assigned Cases list",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "PART F � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case shows \"?? UPDATE RECEIVED\"",
+      "expected": "",
+      "id": "CP063"
+    },
+    {
+      "section": "PART F � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And it does not count against her one-new-case limit",
+      "expected": "",
+      "id": "CP064"
+    },
+    {
+      "section": "PART F � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the assigned agent is still Sarah Martin",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "PART F � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case does NOT go to To Be Assigned and Marc still can't pull it",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "PART F � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the \"Case Escalated\" alert is cleared or shows as resolved",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "PART F � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Case ID does not change",
+      "expected": "",
+      "id": "CP068"
+    },
+    {
+      "section": "PART F � CASE RETURNS TO THE SAME AGENT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Audit Log records: resourcing completed (by Nadia), notes, Parked ? Update Pending Action",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "PART G � AGENT CONTINUES AND SENDS THE ELIGIBLE NOTICE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah clicks the case row",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "PART G � AGENT CONTINUES AND SENDS THE ELIGIBLE NOTICE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the status changes to \"In Progress\"",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "PART G � AGENT CONTINUES AND SENDS THE ELIGIBLE NOTICE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the lead's notes are clearly shown on the case",
+      "expected": "",
+      "id": "CP072"
+    },
+    {
+      "section": "PART G � AGENT CONTINUES AND SENDS THE ELIGIBLE NOTICE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And she keeps the decision ELIGIBLE, FD-APPR-EL-02, CAD 700 (no override)",
+      "expected": "",
+      "id": "CP073"
+    },
+    {
+      "section": "PART G � AGENT CONTINUES AND SENDS THE ELIGIBLE NOTICE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And she adds an internal note: coding confirmed by lead, proceeding to payout",
+      "expected": "",
+      "id": "CP074"
+    },
+    {
+      "section": "PART G � AGENT CONTINUES AND SENDS THE ELIGIBLE NOTICE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When she completes the Advance Case wizard: Step 1 confirm Eligible / CAD 700; Step 2 \"Decision Rendered � Action Required to Accept Compensation\" (English) with the deep link; Step 3 Advance Case (under threshold, no approval needed)",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "PART G � AGENT CONTINUES AND SENDS THE ELIGIBLE NOTICE",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the notification is sent to n***@gmail.com",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "PART G � AGENT CONTINUES AND SENDS THE ELIGIBLE NOTICE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case status becomes \"Awaiting Customer Info (Compensation)\"",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the customer opens the deep link",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then they land straight on the payment step",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And country = Canada ? CAD",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Basic Aeroplan is found ? both options offered: Cash CAD 700 (Interac, 5 to 10 business days) or AC Wallet CAD 840 (20% bonus)",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the customer selects \"Cash\"",
+      "expected": "Cash",
+      "id": "CP082"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And only the Interac email n***@gmail.com is confirmed",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Persona IDV ? PASS",
+      "expected": "",
+      "id": "CP084"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the customer submits ? one CAD 700 compensation record is created",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the eligible notification email is sent via Adobe",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case auto-closes when payout completes",
+      "expected": "Claims Dashboard Gherkin:",
+      "id": "CP087"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given case \"CASE-FD-20260728-001\" for claimant \"Nicolas Fortier\" is \"In Progress\" with agent \"Sarah Martin\"",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah selects \"New Resourcing\" to the lead pool with a coding question",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then a resourcing task should be created in the lead pool and linked to the case",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case status should be \"Parked\"",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "And the \"Case Escalated\" alert should be displayed with context and timestamp",
+      "expected": "Case Escalated",
+      "id": "CP092"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case should be in Sarah's \"Incomplete / Parked Cases\" widget",
+      "expected": "",
+      "id": "CP093"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Sarah should be able to pull a new case",
+      "expected": "",
+      "id": "CP094"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case should NOT be in \"To Be Assigned\"",
+      "expected": "",
+      "id": "CP095"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And another Available agent should NOT be able to pull the case",
+      "expected": "",
+      "id": "CP096"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And no customer notification should be sent",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When lead \"Nadia Bouchard\" completes the resourcing notes and submits",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the case status should change to \"Update Pending Action\"",
+      "expected": "",
+      "id": "CP099"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case should appear in Sarah's \"Assigned Cases\" list with \"?? UPDATE RECEIVED\"",
+      "expected": "",
+      "id": "CP100"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the assigned agent should remain \"Sarah Martin\"",
+      "expected": "",
+      "id": "CP101"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the lead's notes should be visible on the case",
+      "expected": "",
+      "id": "CP102"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Case ID should not change",
+      "expected": "",
+      "id": "CP103"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When Sarah clicks the case",
+      "expected": "",
+      "id": "CP104"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the status should change to \"In Progress\"",
+      "expected": "",
+      "id": "CP105"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Topic/Sub-topic should be \"Travel Disruptions � Delay\"",
+      "expected": "",
+      "id": "CP106"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Claimant should be \"Nicolas Fortier\", Adult, Authentication \"Pass\"",
+      "expected": "",
+      "id": "CP107"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the PNR should be \"PK001\" with Creation Date, Journey ID, Booking Source and Office ID populated",
+      "expected": "",
+      "id": "CP108"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And the Regime should be \"APPR\"",
+      "expected": "APPR",
+      "id": "CP109"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Aeroplan should be \"9876543210\", Tier \"Basic / Member\"",
+      "expected": "",
+      "id": "CP110"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Journey should show \"Bound 1: YUL ? YYZ\" (AC 412, +7H 00M, Code 96)",
+      "expected": "",
+      "id": "CP111"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the flight code should still be 96 and not edited by the agent",
+      "expected": "",
+      "id": "CP112"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Decision Assist should show ELIGIBLE, FD-APPR-EL-02, CAD 700 and not be greyed out",
+      "expected": "",
+      "id": "CP113"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Duplicate Check should show \"No duplicate found\"",
+      "expected": "",
+      "id": "CP114"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And CyberSource should be \"GREEN\"",
+      "expected": "",
+      "id": "CP115"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the Audit Log should record in order: created, Assigned, In Progress, New Resourcing (with note), Parked, lead task opened, resourcing completed, Update Pending Action, In Progress, Action Required sent, Awaiting Customer Info (Compensation), IDV PASS, payout, Closed, with actor, timestamp and before/after values",
+      "expected": "",
+      "id": "CP116"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Customer Communications should show only the Action Required email and the eligible notification (no customer message during resourcing)",
+      "expected": "",
+      "id": "CP117"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Final Status should be \"Closed\" and read-only",
+      "expected": "Payment Validation Gherkin:",
+      "id": "CP118"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Given the case was parked for internal resourcing",
+      "expected": "",
+      "id": "CP119"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then no compensation record should exist while the case is Parked",
+      "expected": "",
+      "id": "CP120"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the lead confirms the coding and Sarah sends the Action Required notice",
+      "expected": "",
+      "id": "CP121"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the customer completes the deep link",
+      "expected": "",
+      "id": "CP122"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then country should be \"Canada\" and currency \"CAD\"",
+      "expected": "",
+      "id": "CP123"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And both Cash (CAD 700) and AC Wallet (CAD 840) should be offered",
+      "expected": "",
+      "id": "CP124"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the customer selects \"Cash\" ? Interac e-Transfer",
+      "expected": "Cash",
+      "id": "CP125"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And only the email \"n***@gmail.com\" should be collected",
+      "expected": "",
+      "id": "CP126"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Persona IDV should PASS",
+      "expected": "",
+      "id": "CP127"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And exactly one CAD 700 compensation record should be created",
+      "expected": "",
+      "id": "CP128"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And it should be picked up by the evening batch and sent to Unifier (manual trigger in UAT)",
+      "expected": "",
+      "id": "CP129"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Unifier should acknowledge",
+      "expected": "",
+      "id": "CP130"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And Interac status should move Pending ? Cached / Rejected / Expired, with Expired after 35 days unclaimed",
+      "expected": "",
+      "id": "CP131"
+    },
+    {
+      "section": "PART H � CUSTOMER COMPLETES PAYOUT",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Compensation tab should show CAD 700, Cash � Interac, status via talkback",
+      "expected": "",
+      "id": "CP132"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS FD-APPR-EL-02, CAD 700.",
+      "expected": "DDS FD-APPR-EL-02, CAD 700.",
+      "id": "CP133"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The agent sends New Resourcing: a lead task is created, the case parks and \"Case Escalated\" is shown.",
+      "expected": "The agent sends New Resourcing: a lead task is created, the case parks and \"Case Escalated\" is shown.",
+      "id": "CP134"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The agent's slot is freed, the case stays hers and no one else can pull it.",
+      "expected": "The agent's slot is freed, the case stays hers and no one else can pull it.",
+      "id": "CP135"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "When the lead submits resourcing notes, the case moves straight to Update Pending Action with \"?? UPDATE RECEIVED\" in the same agent's Assigned Cases list.",
+      "expected": "When the lead submits resourcing notes, the case moves straight to Update Pending Action with \"?? UPDATE RECEIVED\" in the same agent's Assigned Cases list.",
+      "id": "CP136"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The agent opens it (In Progress), keeps the decision and sends Action Required.",
+      "expected": "The agent opens it (In Progress), keeps the decision and sends Action Required.",
+      "id": "CP137"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The customer is paid CAD 700 Cash via Interac (email only), with one compensation record.",
+      "expected": "The customer is paid CAD 700 Cash via Interac (email only), with one compensation record.",
+      "id": "CP138"
+    }
+  ]
+}

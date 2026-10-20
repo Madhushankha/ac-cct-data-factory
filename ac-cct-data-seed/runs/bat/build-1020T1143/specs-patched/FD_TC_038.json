@@ -1,0 +1,83 @@
+{
+ "id": "FD_TC_038",
+ "family": "FD",
+ "summary": "Single pax Thierry Rousseau, AC 439 YUL-YYZ sched arr 10:00 arrived 17:00 (+7h), arrival delay code MISSING, departure delay code 42 (scheduled maintenance, controllable) -> Fallback=TRUE; APPR Tier 2",
+ "passengers": [
+  {
+   "firstName": "THIERRY",
+   "lastName": "ROUSSEAU",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "439",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 420,
+   "depDelayMin": 420,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "depDelayCode": "42"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-08",
+  "amount": 700,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 439 YUL->YYZ Scheduled Arrival 10:00",
+   "Current: ARRIVED LATE 10:00 -> Actual 17:00, Delay +7H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 439 YUL->YYZ ARRIVAL CODE: NULL (MISSING)",
+   "FALLBACK TRIGGERED: arrival code NULL -> using departure code",
+   "Departure Code: 42 (Scheduled Maintenance)",
+   "Fallback Flag: TRUE",
+   "CONTROLLABLE (Code 42 via fallback departure code)",
+   "Delay: +7H 00M CONTROLLABLE",
+   "Flight Compensation: MR THIERRY ROUSSEAU | ELIGIBLE | DELAY_6_TO_LT_9_HOURS (FALLBACK) | CAD 700.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 08:40; depDelayMin 420",
+  "Text conflict: expected-result sentence says 'Departure Code = 43' but all other lines say 42 - 42 used",
+  "no Aeroplan"
+ ],
+ "unsupported": [
+  "Departure delay code is distinct from the arrival delay code (arrival code NULL -> fallback to first departure delay code, Fallback=TRUE); the schema has no field for it, so it is given as extra key outcomes[].depDelayCode and delayCode is null"
+ ]
+}

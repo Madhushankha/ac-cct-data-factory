@@ -1,0 +1,25 @@
+{
+  "key": "CHAI-31498",
+  "issue_id": "7380346",
+  "test_id": "FD_TC_106",
+  "summary": "FD_TC_106_Pre-Travel | Customer Before Flight Date | Rejected",
+  "title": "Pre-Travel | Customer Before Flight Date | Rejected",
+  "status": "New",
+  "priority": "Low",
+  "labels": [],
+  "scenario_type": "scenario",
+  "execution": "CHAI-31809",
+  "synced_at": "2026-10-13T07:02:34Z",
+  "description": "Customer attempts to file a compensation claim BEFORE their flight has occurred. The flight date is in the future � the flight has not departed, not arrived, and no disruption has actually happened yet. System must reject the claim at the FLIGHT DATE CHECK stage, before DDS is ever invoked. Per business rules, DDS can only run 72 hours POST-ARRIVAL to allow flight data finalization. Validates: (1) System checks flight date against current date, (2) Future flights are rejected with a clear explanation, (3) NO case is created (not even a shell case � there's nothing to track for a flight that hasn't happened), (4) DDS is NOT invoked at all, (5) Customer is told to return 72hrs after arrival. This is the earliest possible rejection point in the entire flow.\n\nPrerequisites:\nPNR: TC058 � single passenger (Adult). Journey: 1 leg AC operated, Flight AC 427, YUL?YYZ. Flight date: May 22, 2026 (FUTURE � flight has not occurred). Current date: May 20, 2026 (2 days before flight). Flight status: NOT DEPARTED � future flight. 72-hour rule: Cannot process until 72hrs post-arrival of final leg. No disruption has occurred (flight is in the future).",
+  "goal": "Customer attempts to file a compensation claim BEFORE their flight has occurred. The flight date is in the future � the flight has not departed, not arrived, and no disruption has actually happened yet. System must reject the claim at the FLIGHT DATE CHECK stage, before DDS is ever invoked. Per business rules, DDS can only run 72 hours POST-ARRIVAL to allow flight data finalization. Validates: (1) System checks flight date against current date, (2) Future flights are rejected with a clear explanation, (3) NO case is created (not even a shell case � there's nothing to track for a flight that hasn't happened), (4) DDS is NOT invoked at all, (5) Customer is told to return 72hrs after arrival. This is the earliest possible rejection point in the entire flow.",
+  "prerequisites": "PNR: TC058 � single passenger (Adult). Journey: 1 leg AC operated, Flight AC 427, YUL?YYZ. Flight date: May 22, 2026 (FUTURE � flight has not occurred). Current date: May 20, 2026 (2 days before flight). Flight status: NOT DEPARTED � future flight. 72-hour rule: Cannot process until 72hrs post-arrival of final leg. No disruption has occurred (flight is in the future).",
+  "prerequisite_items": [
+    "PNR: TC058 � single passenger (Adult)",
+    "Journey: 1 leg AC operated, Flight AC 427, YUL?YYZ",
+    "Flight date: May 22, 2026 (FUTURE � flight has not occurred)",
+    "Current date: May 20, 2026 (2 days before flight)",
+    "Flight status: NOT DEPARTED � future flight",
+    "72-hour rule: Cannot process until 72hrs post-arrival of final leg",
+    "No disruption has occurred (flight is in the future)"
+  ]
+}

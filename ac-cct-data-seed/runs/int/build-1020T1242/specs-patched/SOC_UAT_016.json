@@ -1,0 +1,90 @@
+{
+  "id": "SOC_UAT_016",
+  "family": "SOC",
+  "summary": "APPR SOC: 1 regular revenue pax on AC 301 YYZ-YVR Jun 15 dep 08:00 actual 15:00 (+420), code 64 crew controllable -> ELIGIBLE (SoC-APPR-EL-08)",
+  "passengers": [
+    {
+      "firstName": "FRANCOIS",
+      "lastName": "BEAUDOIN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "301",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "08:00",
+      "arrLocal": "09:40",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 420,
+      "depDelayMin": 420,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "SoC-APPR-EL-08",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 420,
+    "control": "CONTROLLABLE",
+    "cause": "64",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment domestic trip YYZ→YVR on AC301 delayed +7H 00M due to crew shortage (controllable)",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Promised Itinerary: AC 301 YYZ→YVR Scheduled Dep 15-Jun 08:00",
+      "Current Itinerary: AC 301 YYZ→YVR ARRIVED LATE, Scheduled Dep 08:00 → Actual 15:00, +7H 00M",
+      "Departure Delay Code: 64 (Flight Crew Shortage), Controllable",
+      "PASSENGER | ELIGIBLE | DELAY_6_HOURS_OR_MORE | MEAL $30.00 | ACCOMMODATION Rate of day (max $500) | GENERAL EXPENSES Transport $200 + Comm $30 + Parking $50 + Essentials $30",
+      "CyberSource: GREEN"
+    ],
+    "soc": {
+      "eligibility": "ELIGIBLE",
+      "entitlements": "meals $30, hotel rate of day max 3 nights $500 cap, transport $200, communication $30, parking $50, essentials $30"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "arrival 09:40",
+    "residence CA assumed"
+  ],
+  "unsupported": []
+}

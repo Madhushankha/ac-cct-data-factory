@@ -1,0 +1,71 @@
+{
+ "id": "FD_TC_138",
+ "family": "FD",
+ "summary": "Adult on an Air Canada flight YYZ-LHR (Canada to UK, AC is a non-EU carrier) sched arr 08:00 LHR, arrived 12:00 (+4h), code 42 controllable: EU 261 arrival rule does not apply to a non-EU carrier, Not Eligible",
+ "passengers": [
+  {
+   "firstName": "ISABELLE",
+   "lastName": "ROUX",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "BA",
+   "number": "857",
+   "origin": "LHR",
+   "destination": "YYZ"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-EU-NE-04",
+  "amount": 0,
+  "currency": "EUR",
+  "delayBand": null,
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "No Trip Tracer UI validation block in the text; Expected Results: Promise = 08:00 LHR; Actual = 12:00; Delay = 4hrs; MSL = Leg 1; Code 42; Controllable",
+   "Regime check: Origin YYZ (Canada) - NOT EU origin \u2192 EU 261 departure rule does NOT apply",
+   "Destination LHR (UK) - EU arrival, BUT carrier AC is NOT EU-based \u2192 EU 261 arrival rule does NOT apply",
+   "EU 261 = Not Applicable (non-EU carrier arriving in EU); APPR assessed separately (Canada departure); DDS = FD-EU-NE-04"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "conflict inside the text: prerequisites/Expected Results describe a single AC leg YYZ-LHR, while the chatbot dialogue shows AF 1234 CDG-LHR operated by Air France (all-OAL, no case) - the AC YYZ-LHR booking of the prerequisites/DDS result is used",
+  "flight number AC 849 and dep 19:30 YYZ (previous evening, arrival 08:00 LHR next day) are assumed: text gives only arrival 08:00 / actual 12:00 at LHR",
+  "amount 0 EUR (EU 261 not applicable)",
+  "passenger name from the chatbot dialogue (Isabelle Roux)"
+ ],
+ "unsupported": [
+  "Dialogue-level all-OAL routing (Air France AF 1234 CDG-LHR, redirect to the other airline, no case) is not expressible and contradicts the AC booking above; follow the AC YYZ-LHR booking"
+ ]
+}

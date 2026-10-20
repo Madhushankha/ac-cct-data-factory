@@ -1,0 +1,91 @@
+{
+ "id": "FD_TC_124",
+ "family": "FD",
+ "summary": "Adult, AC870 CDG-YYZ dep 10:00 sched arr 13:00, rebooked to sister city YTZ and arrived there 17:50 (+290 min vs YYZ promise), code 42 controllable: EU261 Rest of Europe EUR 600 sister city",
+ "passengers": [
+  {
+   "firstName": "JEAN-LUC",
+   "lastName": "MOREAU",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "FR",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "870",
+   "origin": "CDG",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "13:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "divert",
+   "arrDelayMin": 290,
+   "depDelayMin": 0,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": "YTZ"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-EU-EL-16",
+  "amount": 600,
+  "currency": "EUR",
+  "delayBand": "EU261_TRAVEL_COMPLETED_REST_OF_EUROPE_GTE_4HR_SISTER_CITY",
+  "delayMin": 290,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 870, Route: CDG → YYZ, Scheduled Departure: 10:00, Scheduled Arrival: 13:00 (local YYZ)",
+   "Current Itinerary - Flight: AC 870, Route: CDG → YTZ (sister city of YYZ), Actual Arrival: 17:50 (local YTZ), Status: ARRIVED (DELAYED - REBOOKED TO SISTER CITY)",
+   "Sister City: YTZ = sister city of YYZ (Toronto metropolitan area)",
+   "Delay at Arrival: 4 hours 50 minutes (290 minutes) - measured against original YYZ scheduled arrival 13:00",
+   "Delay Band: ≥240 min → 4+ hours (DELAY_GTE_4_HOURS)",
+   "Customer Status: TRAVEL COMPLETED (customer arrived at sister-city destination YTZ)",
+   "Regime: EU 261 (Rest of Europe - CDG origin) + APPR (Canada arrival - YTZ/YYZ)",
+   "Origin Region: CDG = Rest of Europe",
+   "MSL FLIGHT: AC 870 - CDG → YTZ - 42",
+   "\"Delay - scheduled maintenance\"",
+   "CONTROLLABLE (Delay code 42)",
+   "Disruption Type: DELAY",
+   "Sister City Flag: TRUE",
+   "EU 261: Travel Completed, Rest of Europe, 4+ hr delay, Controllable = €600",
+   "APPR: Travel Completed, Controllable, 3-<6 hr delay = $400 CAD",
+   "Most Generous: EU 261 Rest of Europe selected",
+   "Fallback: FALSE (arrival delay code 42 available)",
+   "Flight Compensation: MR JEAN-LUC MOREAU | ELIGIBLE | EU261_TRAVEL_COMPLETED_REST_OF_EUROPE_GTE_4HR_SISTER_CITY | EUR 600.00 | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "customer rebooked to YTZ modelled as outcome kind 'divert' with divertTo YTZ (schema has no 'rebooked to sister city' kind)",
+  "residence FR (text: France, EUR)",
+  "Aeroplan not linked (cash only)",
+  "Dual regime: APPR $400 CAD (3-<6h band) also assessed; EU 261 selected as most generous",
+  "depDelayMin 0 (text gives only the arrival delay)",
+  "regime 'EU' = EU 261 Rest of Europe (CDG origin)"
+ ],
+ "unsupported": []
+}

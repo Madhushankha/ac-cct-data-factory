@@ -1,0 +1,90 @@
+{
+ "id": "FD_TC_115",
+ "family": "FD",
+ "summary": "Adult, AC849 LHR-YYZ diverted to sister city YTZ, sched arr 16:00, arrived 19:30 at YTZ (+210 min); arrival code MISSING, departure code 42 fallback: EU261 UK Tier 1 sister city + fallback",
+ "passengers": [
+  {
+   "firstName": "OLIVER",
+   "lastName": "BENNETT",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "GB",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "849",
+   "origin": "LHR",
+   "destination": "YYZ",
+   "depLocal": "13:00",
+   "arrLocal": "16:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "divert",
+   "arrDelayMin": 210,
+   "depDelayMin": 210,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": "YTZ",
+   "arrDelayCode": null,
+   "depDelayCode": "42",
+   "fallback": true
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-EU-EL-07",
+  "amount": 260,
+  "currency": "GBP",
+  "delayBand": "EU261_UK_DELAY_3_TO_LT_4_HOURS_LONG_HAUL",
+  "delayMin": 210,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 849, Route: LHR → YYZ, Scheduled Arrival: 16:00 at YYZ",
+   "Current Itinerary - Flight: AC 849, Route: LHR → YTZ (sister city), Status: ARRIVED LATE, Scheduled Arrival: 16:00 → Actual: 19:30 at YTZ, Delay: +3H 30M",
+   "Sister City Check: YTZ ↔ YYZ = VALID PAIR (confirmed in DDS sister city config)",
+   "Sister city accepted as equivalent destination",
+   "Regime: EU 261 (UK)",
+   "Origin Region: LHR = UK",
+   "MSL FLIGHT: AC 849 - LHR → YTZ - ARRIVAL CODE: NULL (MISSING)",
+   "FALLBACK TRIGGERED: Arrival code NULL → using departure code",
+   "Departure Code: 42 (Scheduled Maintenance)",
+   "Fallback Flag: TRUE",
+   "CONTROLLABLE (Code 42 via fallback departure code)",
+   "Delay: +3H 30M - CONTROLLABLE",
+   "EU 261 UK Tier: 3-<4 hrs → UK Tier 1",
+   "Flight Compensation: MR OLIVER BENNETT | ELIGIBLE | EU261_UK_DELAY_3_TO_LT_4_HOURS (SISTER CITY + FALLBACK) | GBP 260.00 | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 13:00 LHR local",
+  "residence GB (text not explicit)",
+  "passenger name from Trip Tracer line (prerequisites only say 'single passenger')",
+  "delayCode null (arrival code missing); departure code 42 in non-schema extras on the outcome",
+  "Dual regime: APPR EL-10 $400 (Sister City + Fallback) also assessed; EU-UK selected",
+  "Prerequisites give no sched/actual times: 16:00 / 19:30 from Trip Tracer lines; flight number AC 849 from Trip Tracer lines"
+ ],
+ "unsupported": []
+}

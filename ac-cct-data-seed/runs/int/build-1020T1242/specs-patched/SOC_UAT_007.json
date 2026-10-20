@@ -1,0 +1,120 @@
+{
+  "id": "SOC_UAT_007",
+  "family": "SOC",
+  "summary": "APPR SOC: 1 revenue pax, 2 segments Jun 6: AC 901 YYZ-YYC operated, AC 902 YYC-YVR 12:00 cancelled (code 77 weather, uncontrollable); stranded at YYC -> NOT ELIGIBLE (SoC-APPR-NE-12)",
+  "passengers": [
+    {
+      "firstName": "CLAUDE",
+      "lastName": "MORIN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "901",
+      "origin": "YYZ",
+      "destination": "YYC",
+      "depLocal": "07:00",
+      "arrLocal": "09:15",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "902",
+      "origin": "YYC",
+      "destination": "YVR",
+      "depLocal": "12:00",
+      "arrLocal": "12:30",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HX"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": "77",
+      "cancelCode": "WEAT",
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    },
+    {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-APPR-NE-12",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": null,
+    "control": "UNCONTROLLABLE",
+    "cause": "77",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Not Completed, Disruption Detected",
+      "Multi-segment domestic trip YYZ→YYC→YVR, Segment 2 AC902 YYC→YVR cancelled due to weather (uncontrollable); passenger stranded at YYC",
+      "PASSENGERS: 1 SEGMENTS: 2",
+      "Promised: Seg 1 AC 901 YYZ→YYC 06-Jun 07:00 | Seg 2 AC 902 YYC→YVR 06-Jun 12:00",
+      "Current: Seg 1 AC 901 ON TIME | Seg 2 AC 902 CANCELLED",
+      "SOC section present, SOC Segment: AC 902 YYC→YVR",
+      "Departure Delay Code: 77 (Weather), Uncontrollable",
+      "PASSENGER | NOT_ELIGIBLE | BAND — "
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none; mid-point stranding, outside carrier control"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "arrivals 09:15 (seg 1) and 12:30 (seg 2) chosen from block times",
+    "cancel code WEAT chosen as NetLine equivalent of delay code 77 (weather)",
+    "residence CA assumed"
+  ],
+  "unsupported": []
+}

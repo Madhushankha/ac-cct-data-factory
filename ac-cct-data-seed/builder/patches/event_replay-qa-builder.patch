@@ -1,0 +1,27 @@
+diff --git a/tools/scripts/lower-env-event-replay/event_replay.py b/tools/scripts/lower-env-event-replay/event_replay.py
+index e8c7579bd..68b3b6ab1 100644
+--- a/tools/scripts/lower-env-event-replay/event_replay.py
++++ b/tools/scripts/lower-env-event-replay/event_replay.py
+@@ -316,7 +316,10 @@ def cmd_check(a):
+     by = {}
+     for m in msgs:
+         by.setdefault(m['booking'], []).append(m)
+-    py_fail = {b: k.validate_booking(b, ms) for b, ms in by.items() if not all(m['feed'] == 'FDM' for m in ms)}
++    # Bookings from the /qa builder (source qa-builder) are not classic rebuilds: the classic shape checks do not apply;
++    # TripTracer's own parsers (tt-replay-check, below) check them like every other message.
++    py_fail = {b: k.validate_booking(b, ms) for b, ms in by.items()
++               if not all(m['feed'] == 'FDM' for m in ms) and not any(m.get('source') == 'qa-builder' for m in ms)}
+     py_fail = {b: p for b, p in py_fail.items() if p}
+     harness = a.harness
+     rust = {'ran': False}
+@@ -476,6 +479,10 @@ def cmd_publish(a):
+     for f in d.glob('published-*.txt'):
+         done |= {l.strip() for l in f.read_text().splitlines() if l.strip()}
+     bookings = [b for b in dict.fromkeys(m['booking'] for m in msgs if m['feed'] != 'FDM') if b not in done]
++    if not any(m['feed'] != 'FDM' for m in msgs):
++        # A flights-only batch (flight status for bookings built elsewhere, e.g. the /qa builder): its riders are the
++        # bookings, so the flights go out with them.
++        bookings = [b for b in dict.fromkeys(r for m in msgs for r in (m.get('riders') or [])) if b not in done]
+     if a.bookings and a.sample == 'diverse':
+         # A trial that touches every kind of message: greedily the booking adding the most feed kinds not yet chosen.
+         kinds = {}

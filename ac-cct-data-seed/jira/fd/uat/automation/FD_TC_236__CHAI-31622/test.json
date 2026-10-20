@@ -1,0 +1,29 @@
+{
+  "key": "CHAI-31622",
+  "issue_id": "7380471",
+  "test_id": "FD_TC_236",
+  "summary": "FD_TC_236_FD | UNKNOWN carrier at fault | Eligibility can't be decided ? MANUAL (No Determination) | APPR | Delay 7h on the MSL | Travelled (arrived late) | 1 Pax | 2 Legs | Domestic (CA) | Basic Aeroplan",
+  "title": "FD | UNKNOWN carrier at fault | Eligibility can't be decided ? MANUAL (No Determination) | APPR | Delay 7h on the MSL | Travelled (arrived late) | 1 Pax | 2 Legs | Domestic (CA) | Basic Aeroplan",
+  "status": "New",
+  "priority": "Low",
+  "labels": [],
+  "scenario_type": "scenario",
+  "execution": "CHAI-31809",
+  "synced_at": "2026-10-13T07:02:34Z",
+  "description": "Checks what DDS does when it can't identify the operating carrier of the leg that caused the delay. Leg 1, AC 412 YUL ? YYZ, is on time. Leg 2, AC 7650 YYZ ? YQB (sold by AC, codeshare), arrives 7 hours late, and DDS picks it as the MSL. Trip Tracer shows no operating carrier code for that leg, so it can't be matched to AC or an AC family carrier, a STAR carrier or OAL. DDS can't apply the carrier rules or decide controllability, so it returns NO DETERMINATION for the passenger with amount 0. It does not return Eligible or Not Eligible. The chatbot shows the standard No Determination message, the case is created automatically and sent to manual review with a 30-day response commitment. No CyberSource check, AC Wallet or Cash offer, IDV or payment takes place, even though Basic Aeroplan is linked.\n\nPrerequisites:\nPNR: UC002 � single passenger Gabriel Morin (Adult, Basic Aeroplan 9876543210, good standing). Leg 1: AC 412 YUL ? YYZ, Jul 20, 2026, operated by AC, on time (arrives 10:00). Leg 2: AC 7650 YYZ ? YQB, sold by AC, scheduled arrival 14:00, actual 21:00 (7h late). Leg 2 operating carrier code: missing (null) in Trip Tracer. Leg 2 arrival delay code: logged but can't be linked to a known carrier. Booking changes: none. MSL = Leg 2. Claim filed Jul 28, 2026 (more than 72h, within 366 days). No duplicate case. Not employee, not infant. Country of residence: Canada.",
+  "goal": "Checks what DDS does when it can't identify the operating carrier of the leg that caused the delay. Leg 1, AC 412 YUL ? YYZ, is on time. Leg 2, AC 7650 YYZ ? YQB (sold by AC, codeshare), arrives 7 hours late, and DDS picks it as the MSL. Trip Tracer shows no operating carrier code for that leg, so it can't be matched to AC or an AC family carrier, a STAR carrier or OAL. DDS can't apply the carrier rules or decide controllability, so it returns NO DETERMINATION for the passenger with amount 0. It does not return Eligible or Not Eligible. The chatbot shows the standard No Determination message, the case is created automatically and sent to manual review with a 30-day response commitment. No CyberSource check, AC Wallet or Cash offer, IDV or payment takes place, even though Basic Aeroplan is linked.",
+  "prerequisites": "PNR: UC002 � single passenger Gabriel Morin (Adult, Basic Aeroplan 9876543210, good standing). Leg 1: AC 412 YUL ? YYZ, Jul 20, 2026, operated by AC, on time (arrives 10:00). Leg 2: AC 7650 YYZ ? YQB, sold by AC, scheduled arrival 14:00, actual 21:00 (7h late). Leg 2 operating carrier code: missing (null) in Trip Tracer. Leg 2 arrival delay code: logged but can't be linked to a known carrier. Booking changes: none. MSL = Leg 2. Claim filed Jul 28, 2026 (more than 72h, within 366 days). No duplicate case. Not employee, not infant. Country of residence: Canada.",
+  "prerequisite_items": [
+    "PNR: UC002 � single passenger Gabriel Morin (Adult, Basic Aeroplan 9876543210, good standing)",
+    "Leg 1: AC 412 YUL ? YYZ, Jul 20, 2026, operated by AC, on time (arrives 10:00)",
+    "Leg 2: AC 7650 YYZ ? YQB, sold by AC, scheduled arrival 14:00, actual 21:00 (7h late)",
+    "Leg 2 operating carrier code: missing (null) in Trip Tracer",
+    "Leg 2 arrival delay code: logged but can't be linked to a known carrier",
+    "Booking changes: none",
+    "MSL = Leg 2",
+    "Claim filed Jul 28, 2026 (more than 72h, within 366 days)",
+    "No duplicate case",
+    "Not employee, not infant",
+    "Country of residence: Canada"
+  ]
+}

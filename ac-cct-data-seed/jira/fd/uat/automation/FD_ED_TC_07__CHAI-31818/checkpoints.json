@@ -1,0 +1,594 @@
+{
+  "key": "CHAI-31818",
+  "test_id": "FD_ED_TC_07",
+  "title": "Authentication | OTP Fail | IDV Fail at Auth | Manual Handling | Case Created | Code 64 | APPR | Domestic",
+  "goal": "Customer's OTP fails 5 times, IDV is offered, but IDV also fails (document unreadable, face mismatch). Case is created with all flight disruption data (Code 64 Flight Crew Shortage � Controllable, 4h delay, 3�<6h band, APPR domestic YUL?YYZ) and sent for manual eligibility determination. Tests the IDV Link-Non Biometric Flow ? Manual Handling Request Flow from Miro. DDS evaluation deferred until authentication is resolved by manual team.",
+  "summary": {
+    "seed": 2,
+    "chat": 42,
+    "api": 3,
+    "email": 3,
+    "dashboard": 3,
+    "implied": 10,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Customer's OTP fails 5 times, IDV is offered, but IDV also fails (document unreadable, face mismatch). Case is created with all flight disruption data (Code 64 Flight Crew Shortage � Controllable, 4h delay, 3�<6h band, APPR domestic YUL?YYZ) and sent for manual eligibility determination. Tests the IDV Link-Non Biometric Flow ? Manual Handling Request Flow from Miro. DDS evaluation deferred until authentication is resolved by manual team.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: TCED06; Journey: 1 leg AC domestic YUL?YYZ; Scheduled arrival: 14:00; Actual arrival: 18:00 (4hr delay, 3�<6h band); Arrival delay code: 64 (Flight Crew Shortage � Controllable); Regime: APPR (domestic AC operated); OTP: will fail 5x; IDV: will fail (Persona returns FAIL � document quality insufficient + face mismatch)",
+      "expected": "PNR: TCED06; Journey: 1 leg AC domestic YUL?YYZ; Scheduled arrival: 14:00; Actual arrival: 18:00 (4hr delay, 3�<6h band); Arrival delay code: 64 (Flight Crew Shortage � Controllable); Regime: APPR (domestic AC operated); OTP: will fail 5x; IDV: will fail (Persona returns FAIL � document quality insufficient + face mismatch)",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Baseline APPR Tier 1 compensation if eligible: $400 CAD (pending auth resolution)",
+      "expected": "Baseline APPR Tier 1 compensation if eligible: $400 CAD (pending auth resolution)",
+      "id": "CP003"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP004"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP008"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"My flight from Montreal to Toronto was delayed 4 hours due to crew issues. I'd like to file a compensation claim\"",
+      "expected": "My flight from Montreal to Toronto was delayed 4 hours due to crew issues. I'd like to file a compensation claim",
+      "id": "CP009"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP011"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP012"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP013"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you.",
+      "id": "CP014"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot responds:",
+      "expected": "Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP015"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"Laurent Pelletier\"",
+      "expected": "Laurent Pelletier",
+      "id": "CP016"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thanks, Laurent! And, what is your booking reference number?",
+      "id": "CP017"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: TC225\"",
+      "expected": "PNR: TC225",
+      "id": "CP018"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC225",
+      "expected": "",
+      "id": "CP019"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND (Auth Flow 1)",
+      "expected": "",
+      "id": "CP020"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer data (passenger info, journey details) is revealed to the customer",
+      "expected": "",
+      "id": "CP021"
+    },
+    {
+      "section": "AUTHENTICATION � OTP ATTEMPTS",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP022"
+    },
+    {
+      "section": "AUTHENTICATION � OTP ATTEMPTS",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "� Email: l***@gmail.com � Phone: +1***456",
+      "id": "CP023"
+    },
+    {
+      "section": "AUTHENTICATION � OTP ATTEMPTS",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: l***@gmail.com\"",
+      "expected": "Email: l***@gmail.com",
+      "id": "CP024"
+    },
+    {
+      "section": "AUTHENTICATION � OTP ATTEMPTS",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP025"
+    },
+    {
+      "section": "OTP ATTEMPT 1 OF 5",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"111111\"",
+      "expected": "111111",
+      "id": "CP026"
+    },
+    {
+      "section": "OTP ATTEMPT 1 OF 5",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? INCORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP027"
+    },
+    {
+      "section": "OTP ATTEMPT 1 OF 5",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "The code you entered is incorrect. Please try again. You have 4 attempts remaining.",
+      "id": "CP028"
+    },
+    {
+      "section": "OTP ATTEMPT 2 OF 5",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"222222\"",
+      "expected": "222222",
+      "id": "CP029"
+    },
+    {
+      "section": "OTP ATTEMPT 2 OF 5",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? INCORRECT (attempt 2 of 5)",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "OTP ATTEMPT 2 OF 5",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "The code you entered is incorrect. Please try again. You have 3 attempts remaining.",
+      "id": "CP031"
+    },
+    {
+      "section": "OTP ATTEMPT 3 OF 5",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"333333\"",
+      "expected": "333333",
+      "id": "CP032"
+    },
+    {
+      "section": "OTP ATTEMPT 3 OF 5",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? INCORRECT (attempt 3 of 5)",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "OTP ATTEMPT 3 OF 5",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "The code you entered is incorrect. Please try again. You have 2 attempts remaining.",
+      "id": "CP034"
+    },
+    {
+      "section": "OTP ATTEMPT 4 OF 5",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"444444\"",
+      "expected": "444444",
+      "id": "CP035"
+    },
+    {
+      "section": "OTP ATTEMPT 4 OF 5",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? INCORRECT (attempt 4 of 5)",
+      "expected": "",
+      "id": "CP036"
+    },
+    {
+      "section": "OTP ATTEMPT 4 OF 5",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "The code you entered is incorrect. Please try again. You have 1 attempt remaining.",
+      "id": "CP037"
+    },
+    {
+      "section": "OTP ATTEMPT 5 OF 5",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides the OTP code \"555555\"",
+      "expected": "555555",
+      "id": "CP038"
+    },
+    {
+      "section": "OTP ATTEMPT 5 OF 5",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? INCORRECT (attempt 5 of 5)",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "OTP ATTEMPT 5 OF 5",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system determines: OTP MAXIMUM ATTEMPTS REACHED (5/5)",
+      "expected": "",
+      "id": "CP040"
+    },
+    {
+      "section": "OTP FAILURE ? IDV OFFERED IMMEDIATELY",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "You've reached the maximum number of verification attempts. Don't worry � I can verify your identity another way. I'll send you a secure link to verify your identity using a government-issued ID.",
+      "id": "CP041"
+    },
+    {
+      "section": "IDV LINK � NON-BIOMETRIC FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Please click the link below to verify your identity. You'll need a valid government-issued photo ID (passport, driver's license, or national ID card).",
+      "id": "CP042"
+    },
+    {
+      "section": "IDV LINK � NON-BIOMETRIC FLOW",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And chatbot displays a button \"Verify my identity\"",
+      "expected": "Verify my identity",
+      "id": "CP043"
+    },
+    {
+      "section": "IDV LINK � NON-BIOMETRIC FLOW",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "When user clicks on the button",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "IDV LINK � NON-BIOMETRIC FLOW",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "Then the chatbot sends Persona IDV link to the customer",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "IDV LINK � NON-BIOMETRIC FLOW",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the customer opens the Persona link",
+      "expected": "",
+      "id": "CP046"
+    },
+    {
+      "section": "PERSONA IDV PROCESS � FAILURE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the customer attempts all steps:",
+      "expected": "? ID Type: Canadian Driver's License ? Front of ID: Uploaded � BLURRY / UNREADABLE (document quality insufficient) ? Back of ID: Uploaded � PARTIALLY OBSCURED ? Selfie: Captured � FACE MISMATCH (selfie does not match ID photo sufficiently)",
+      "id": "CP047"
+    },
+    {
+      "section": "PERSONA IDV PROCESS � FAILURE",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Persona evaluates:",
+      "expected": "? Document Quality: FAIL (below minimum threshold � text unreadable) ? Face Match: FAIL (confidence score below threshold) ? Overall Result: IDV FAIL",
+      "id": "CP048"
+    },
+    {
+      "section": "PERSONA IDV PROCESS � FAILURE",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Persona returns: IDV FAIL (reason: document quality insufficient + face mismatch)",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "IDV FAILURE � BOTH AUTH METHODS EXHAUSTED",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I'm sorry, but we were unable to verify your identity at this time. The document provided could not be read clearly, and the face verification was unsuccessful. Don't worry � I'll create a case with the information you've provided and forward it to our team for manual review. They will contact you to complete the verification process.",
+      "id": "CP050"
+    },
+    {
+      "section": "CASE CREATION � MANUAL HANDLING",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system creates a case with status: PENDING MANUAL HANDLING (Authentication Failure)",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "CASE CREATION � MANUAL HANDLING",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the case contains:",
+      "expected": "� PNR: TC225 � Passenger: Laurent Pelletier � Journey: YUL ? YYZ (AC domestic), delayed 4h (3�<6h band) � Scheduled Arrival: 14:00 ? Actual Arrival: 18:00 � Arrival Delay Code: 64 (Flight Crew Shortage � Controllable) � Regime: APPR (AC domestic � pending DDS evaluation post-auth) � Baseline APPR Tier 1 compensation if eligible: $400 CAD (subject to DDS evaluation after authentication resolved) � Authentication Status: FAILED (OTP 5x fail + IDV fail) � OTP History: 5/5 INCORRECT � IDV History: FAIL (document quality insufficient + face mismatch) � Persona Failure Reason: Document unreadable, face mismatch � Case Status: Pending Manual Handling � Routing: Customer Relations / Manual Authentication Team",
+      "id": "CP052"
+    },
+    {
+      "section": "CASE CREATION � MANUAL HANDLING",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Your case has been created and forwarded to our Customer Relations team. Your case reference number is [CASE-REF]. A team member will contact you within 15 business days to complete the verification and process your claim. Please keep your government-issued ID available for when they reach out.",
+      "id": "CP053"
+    },
+    {
+      "section": "CASE CREATION � MANUAL HANDLING",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "And an alert information is displayed: \"Case created for manual review.\"",
+      "expected": "Case created for manual review.",
+      "id": "CP054"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP055"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a Manual Handling notification email is sent to l***@gmail.com",
+      "expected": "",
+      "id": "CP056"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains:",
+      "expected": "Your Air Canada claim requires additional verification � [CASE-REF] We were unable to verify your identity automatically. Our Customer Relations team will contact you to complete the verification process.",
+      "id": "CP057"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers:",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP058"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP059"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP060"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "When the agent navigates to Claims Dashboard",
+      "expected": "",
+      "id": "CP061"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the agent searches for the case by PNR",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the dashboard displays:",
+      "expected": "� Case Title: \"Travel Disruptions � Authentication Failure\" � Status: Pending Manual Handling � Created: [date populated] � Last updated at: [date populated] � SLA: tracking correctly (15 business days) � Team: Customer Relations / Manual Authentication",
+      "id": "CP063"
+    },
+    {
+      "section": "CASE OVERVIEW",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "� Claimant Name: Laurent Pelletier",
+      "expected": "� Authentication Status: FAILED � OTP: 5/5 INCORRECT � IDV: FAIL (document quality + face mismatch) � PNR: TC225 � Journey: YUL ? YYZ (AC domestic, DELAYED +4h, 3�<6h band) � Scheduled Arrival: 14:00 ? Actual Arrival: 18:00 � Arrival Delay Code: 64 (Flight Crew Shortage � Controllable) � Regime: APPR (domestic AC operated � confirmed) � Eligibility: PENDING (DDS deferred � authentication must be resolved first) � Baseline APPR Tier 1 estimate: $400 CAD (for agent reference only � subject to full DDS evaluation post-authentication) � Banner: Authentication Failure Warning Banner displayed � Decision Assist Panel: GREYED OUT (locked until authentication resolved by manual team) � DDS: NOT triggered (blocked pending authentication)",
+      "id": "CP064"
+    }
+  ]
+}

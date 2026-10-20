@@ -1,0 +1,81 @@
+{
+ "id": "FD_TC_217",
+ "family": "FD",
+ "summary": "Booking behind an existing Case Services claim (opened 15 days ago, no resolution): adult FRANCOIS BERGERON on AC 460 YUL-YYZ arriving 4h late, code 42 controllable, APPR CAD 400",
+ "passengers": [
+  {
+   "firstName": "FRANCOIS",
+   "lastName": "BERGERON",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "460",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "14:00",
+   "arrLocal": "15:20",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 21,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": 240,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 460 YUL->YYZ Scheduled Arrival 15:20",
+   "Current: AC 460 YUL->YYZ ARRIVED LATE, 15:20 -> 19:20, Delay +4H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 460 YUL->YYZ 42 Delayed due to scheduled maintenance - CONTROLLABLE",
+   "Cancellation code: NONE; Fallback: FALSE",
+   "Delay: +4H 00M - CONTROLLABLE",
+   "Flight Compensation: MR FRANCOIS BERGERON | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "flight number AC 460 YUL-YYZ dep 14:00 arr 15:20 assumed (text gives no flight); realistic domestic APPR flight chosen so the booking has an eligible 240-min controllable delay",
+  "delay code 42 (scheduled maintenance, CONTROLLABLE), 240 min arrival delay, cabin Y class T assumed",
+  "PNR names/ids in the text are labels, not real locators",
+  "text names the passenger (Francois Bergeron, accent dropped) and a pre-existing CS case CLM-77889 opened 15 days ago; no flight given: domestic APPR flight chosen",
+  "flightDaysAgo 21 so the flight pre-dates the 15-day-old claim"
+ ],
+ "unsupported": [
+  "the pre-existing Case Services case CLM-77889 (opened 15 days ago, unresolved) cannot be expressed in booking data and must be created via the claim intake; claim-side behaviour (chatbot, third-party classification, manual handoff, case creation) is Claims Dashboard / chatbot behaviour, not booking data"
+ ]
+}

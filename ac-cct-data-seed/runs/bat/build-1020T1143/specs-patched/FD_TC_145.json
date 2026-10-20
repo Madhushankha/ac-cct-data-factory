@@ -1,0 +1,108 @@
+{
+ "id": "FD_TC_145",
+ "family": "FD",
+ "summary": "Adult, EU mainland origin, two legs: AC871 CDG-YYZ sched arr 13:00 arrived 15:00 (+2h, code 42), AC121 YYZ-YVR sched arr 20:00 arrived 21:30 (+1.5h): both the MSL delay and the final arrival delay are below the 3h EU261 threshold, Not Eligible",
+ "passengers": [
+  {
+   "firstName": "JOSEPHINE",
+   "lastName": "LAMBERT",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "FR",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "871",
+   "origin": "CDG",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "13:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "121",
+   "origin": "YYZ",
+   "destination": "YVR",
+   "depLocal": "18:00",
+   "arrLocal": "20:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 120,
+   "depDelayMin": 120,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "delay",
+   "arrDelayMin": 90,
+   "depDelayMin": 90,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": null,
+  "amount": 0,
+  "currency": "EUR",
+  "delayBand": "ARRIVAL_DELAY_BELOW_3_HOURS",
+  "delayMin": 90,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Segment 1: Flight: AC 871, Route: CDG → YYZ, Scheduled Arrival: 13:00, Actual: 15:00, Delay: +2H 00M (MSL)",
+   "Arrival Delay Code on Leg 1: 42 - numeric delay code (Controllable)",
+   "Segment 2: Flight: AC 121, Route: YYZ → YVR, Scheduled Arrival: 20:00, Actual: 21:30, Delay: +1H 30M",
+   "Final Destination: YVR",
+   "Final Arrival Delay: Promised arrival at YVR = 20:00; Actual arrival at YVR = 21:30 → +1H 30M",
+   "MSL Delay: 2H 00M (Leg 1 - CDG → YYZ) - also below 3h",
+   "BOTH MSL delay (2h) AND arrival delay (1.5h) are below 3-hour threshold",
+   "Regime: EU 261 (EU Mainland - CDG origin)",
+   "EU 261 Threshold: Arrival delay at final destination must be ≥ 3 hours → 1.5h < 3h → NOT ELIGIBLE",
+   "Fallback: FALSE (arrival delay code 42 available)",
+   "No ambiguity - insufficient delay at every measurement point",
+   "Flight Compensation: MS JOSEPHINE LAMBERT | NOT ELIGIBLE | ARRIVAL_DELAY_BELOW_3_HOURS | EUR 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "no DDS system code in the scenario text (no 'DDS returns' / Expected Results line; the tail of the file is unrelated Claims Dashboard text from other scenarios): systemCode left null",
+  "times not in text: leg 1 CDG dep 10:00 arr 13:00 (arr from Trip Tracer lines), leg 2 YYZ dep 18:00 arr 20:00",
+  "prerequisites say leg 2 is 'on time' but Trip Tracer lines say +1H 30M at YVR (21:30): Trip Tracer lines used, depDelayMin 90 assumed for leg 2",
+  "delayMin 90 = final arrival delay at YVR (MSL leg 1 delay is 120)",
+  "residence FR (EUR)"
+ ],
+ "unsupported": []
+}

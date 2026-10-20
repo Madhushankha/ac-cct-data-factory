@@ -1,0 +1,82 @@
+{
+ "id": "FD_TC_107",
+ "family": "FD",
+ "summary": "Single adult, AC508 YUL-YYZ sched arr 12:00, arrived 17:00 (+5h), arrival delay code 71 weather (uncontrollable); filed within 72h, DDS data arrived later: Not Eligible",
+ "passengers": [
+  {
+   "firstName": "CLAUDINE",
+   "lastName": "VEZINA",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "508",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "10:45",
+   "arrLocal": "12:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 300,
+   "depDelayMin": 300,
+   "delayCode": "71",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-28",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": 300,
+  "control": "UNCONTROLLABLE",
+  "cause": "71",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 508, Route: YUL → YYZ, Scheduled Arrival: 12:00",
+   "Current Itinerary - Flight: AC 508, Route: YUL → YYZ, Status: ARRIVED LATE, Scheduled Arrival: 12:00 → Actual: 17:00, Delay: +5H 00M",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 508 - YUL → YYZ - 71",
+   "\"Delayed due to severe weather\"",
+   "Delay: +5H 00M - UNCONTROLLABLE",
+   "Fallback: FALSE",
+   "Case Status: Previously in System Processing Queue → DDS now ran → NOT ELIGIBLE",
+   "Flight Compensation: MR/MS [PASSENGER] | NOT ELIGIBLE | UNCONTROLLABLE | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 10:45 (text gives only arrival 12:00)",
+  "Conflicts inside the text: prerequisites say 4h delay and code 72 (Expected Results also 'Code 72'); Trip Tracer lines say +5H 00M and code 71 - Trip Tracer lines used (5h, code 71, both weather/uncontrollable)",
+  "flightDaysAgo=10 so DDS data is available: the pre-72h filing and D+4 data arrival are not simulated",
+  "Passenger name accents dropped"
+ ],
+ "unsupported": [
+  "Welcome Back timeline: filing at 36 h, daily polling from day 2, data arriving at D+4 (time-dependent; booking data only gives the final state)"
+ ]
+}

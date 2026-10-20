@@ -1,0 +1,29 @@
+{
+  "key": "CHAI-31400",
+  "issue_id": "7380248",
+  "test_id": "FD_TC_008",
+  "summary": "FD_TC_008_Travel Completed | APPR | INVOL then VOL (-ve/earlier) | No Deduction | Full Delay | MANY_TO_MANY Rebooking (2?2 legs, connection change)",
+  "title": "Travel Completed | APPR | INVOL then VOL (-ve/earlier) | No Deduction | Full Delay | MANY_TO_MANY Rebooking (2?2 legs, connection change)",
+  "status": "New",
+  "priority": "Low",
+  "labels": [],
+  "scenario_type": "scenario",
+  "execution": "CHAI-31809",
+  "synced_at": "2026-10-13T07:02:34Z",
+  "description": "After airline made an INVOL change that rerouted a 2-leg connecting itinerary through a different connection point (MANY_TO_MANY: YUL?YOW?YYZ ? YUL?YKF?YYZ), customer voluntarily chose an EARLIER connecting itinerary (negative VOL � trying to arrive sooner). The customer's time is NOT deducted because they were mitigating the delay. Validates: (1) DDS does NOT apply deduction for negative VOL, (2) MANY_TO_MANY rebooking pattern correctly handled � same number of legs but different connection, (3) Delay measured at final destination YYZ, (4) Segment check triggers for multi-leg journey.\n\nPrerequisites:\nPNR: TC005 � Val�rie Dupont (Adult). Original (14-day): 2 legs connecting: Leg 1 AC 8103 YUL?YOW dep 08:00 arr 09:00; Leg 2 AC 8203 YOW?YYZ dep 09:30 arr 10:00. Promise = 10:00 (14-day mark). Change 1 (D-3): INVOL � AC rerouted through different connection (MANY_TO_MANY: 2?2 legs, connection change): Leg 1 AC 8301 YUL?YKF dep 12:00 arr 13:30; Leg 2 AC 8401 YKF?YYZ dep 14:30 arr 17:00. Arrival at YYZ = 17:00. Change 2 (D-1): VOL � customer moves to EARLIER connecting itinerary: Leg 1 AC 8302 YUL?YKF dep 10:00 arr 11:30; Leg 2 AC 8402 YKF?YYZ dep 12:30 arr 15:00 (-2hrs, customer tried to mitigate). Actual arrival at YYZ: 15:00. Total delay = 15:00 - 10:00 = 5hrs. Post-INVOL VOL = -2hrs (NEGATIVE ? NOT DEDUCTED). Net delay = 5hrs (full delay, no deduction). Arrival delay code on MSL (Leg 2): 62 (Operational Requirements � Controllable).",
+  "goal": "After airline made an INVOL change that rerouted a 2-leg connecting itinerary through a different connection point (MANY_TO_MANY: YUL?YOW?YYZ ? YUL?YKF?YYZ), customer voluntarily chose an EARLIER connecting itinerary (negative VOL � trying to arrive sooner). The customer's time is NOT deducted because they were mitigating the delay. Validates: (1) DDS does NOT apply deduction for negative VOL, (2) MANY_TO_MANY rebooking pattern correctly handled � same number of legs but different connection, (3) Delay measured at final destination YYZ, (4) Segment check triggers for multi-leg journey.",
+  "prerequisites": "PNR: TC005 � Val�rie Dupont (Adult). Original (14-day): 2 legs connecting: Leg 1 AC 8103 YUL?YOW dep 08:00 arr 09:00; Leg 2 AC 8203 YOW?YYZ dep 09:30 arr 10:00. Promise = 10:00 (14-day mark). Change 1 (D-3): INVOL � AC rerouted through different connection (MANY_TO_MANY: 2?2 legs, connection change): Leg 1 AC 8301 YUL?YKF dep 12:00 arr 13:30; Leg 2 AC 8401 YKF?YYZ dep 14:30 arr 17:00. Arrival at YYZ = 17:00. Change 2 (D-1): VOL � customer moves to EARLIER connecting itinerary: Leg 1 AC 8302 YUL?YKF dep 10:00 arr 11:30; Leg 2 AC 8402 YKF?YYZ dep 12:30 arr 15:00 (-2hrs, customer tried to mitigate). Actual arrival at YYZ: 15:00. Total delay = 15:00 - 10:00 = 5hrs. Post-INVOL VOL = -2hrs (NEGATIVE ? NOT DEDUCTED). Net delay = 5hrs (full delay, no deduction). Arrival delay code on MSL (Leg 2): 62 (Operational Requirements � Controllable).",
+  "prerequisite_items": [
+    "PNR: TC005 � Val�rie Dupont (Adult)",
+    "Original (14-day): 2 legs connecting: Leg 1 AC 8103 YUL?YOW dep 08:00 arr 09:00; Leg 2 AC 8203 YOW?YYZ dep 09:30 arr 10:00",
+    "Promise = 10:00 (14-day mark)",
+    "Change 1 (D-3): INVOL � AC rerouted through different connection (MANY_TO_MANY: 2?2 legs, connection change): Leg 1 AC 8301 YUL?YKF dep 12:00 arr 13:30; Leg 2 AC 8401 YKF?YYZ dep 14:30 arr 17:00",
+    "Arrival at YYZ = 17:00",
+    "Change 2 (D-1): VOL � customer moves to EARLIER connecting itinerary: Leg 1 AC 8302 YUL?YKF dep 10:00 arr 11:30; Leg 2 AC 8402 YKF?YYZ dep 12:30 arr 15:00 (-2hrs, customer tried to mitigate)",
+    "Actual arrival at YYZ: 15:00",
+    "Total delay = 15:00 - 10:00 = 5hrs",
+    "Post-INVOL VOL = -2hrs (NEGATIVE ? NOT DEDUCTED)",
+    "Net delay = 5hrs (full delay, no deduction)",
+    "Arrival delay code on MSL (Leg 2): 62 (Operational Requirements � Controllable)"
+  ]
+}

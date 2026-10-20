@@ -1,0 +1,85 @@
+{
+ "id": "FD_ED_TC_02",
+ "family": "FD",
+ "summary": "Aeroplan-logged-in single pax Sophie Tremblay on AC 103 YYZ-YVR arriving 4h late, code 42 controllable, APPR 3-6h $400",
+ "passengers": [
+  {
+   "firstName": "SOPHIE",
+   "lastName": "TREMBLAY",
+   "type": "ADT",
+   "aeroplanNumber": "1234567890",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "103",
+   "origin": "YYZ",
+   "destination": "YVR",
+   "depLocal": "11:40",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": null,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "APPR_3_TO_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Identification Method: AEROPLAN LOGIN (Session Active)",
+   "Aeroplan #: 1234567890",
+   "OTP: BYPASSED (Aeroplan login authentication)",
+   "Promised Itinerary - Flight: AC 103, Route: YYZ-YVR, Scheduled Arrival: 14:00",
+   "Current Itinerary - Flight: AC 103, Route: YYZ-YVR, Status: ARRIVED LATE, Actual: 18:00, Delay: +4H 00M",
+   "Regime: APPR (Canadian origin - YYZ)",
+   "MSL FLIGHT: AC 103 - YYZ-YVR - 42",
+   "CONTROLLABLE (Code 42)",
+   "APPR: Delay 3-6h, Controllable - ELIGIBLE",
+   "Compensation: CAD $400",
+   "Aeroplan Account: ACTIVE (not frozen) - AC Wallet eligible",
+   "MS SOPHIE TREMBLAY | ELIGIBLE | APPR_3_TO_6_HOURS | CAD $400"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "Aeroplan tier Basic (text only says account active)",
+  "dep 11:40 ET so that 14:00 PT arrival is realistic",
+  "residence CA"
+ ],
+ "unsupported": [
+  "Aeroplan login session / OTP bypass / account-not-frozen state is Claims Dashboard/auth behaviour, not booking data",
+  "scenario text dates flight June 1 2026; run uses flightDaysAgo=10"
+ ]
+}

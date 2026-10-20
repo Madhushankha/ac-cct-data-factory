@@ -1,0 +1,95 @@
+{
+  "id": "SOC_UAT_013",
+  "family": "SOC",
+  "summary": "APPR SOC: 1 revenue pax on AC 501 YYZ-YVR Jun 10 07:00 cancelled (code 41 aircraft defect = safety); stayed at origin, no rebooking within 24 h (1440 min) -> ELIGIBLE (SoC-APPR-EL-01)",
+  "passengers": [
+    {
+      "firstName": "MATHIEU",
+      "lastName": "ROY",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "501",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "07:00",
+      "arrLocal": "08:40",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HX"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": 1440,
+      "delayCode": "41",
+      "cancelCode": "TECH",
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "not_travelled"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "SoC-APPR-EL-01",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 1440,
+    "control": "SAFETY",
+    "cause": "41",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Not Completed, Disruption Detected",
+      "Single-segment domestic trip YYZ→YVR on AC501 cancelled due to aircraft defect (safety)",
+      "Passenger stayed at origin (YYZ)",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Promised Itinerary: AC 501 YYZ→YVR Scheduled Dep 10-Jun 07:00",
+      "Current Itinerary: AC 501 YYZ→YVR CANCELLED",
+      "Departure Delay Code: 41 (Aircraft Defects / Maintenance Finding), Safety",
+      "PASSENGER | ELIGIBLE | DELAY_6_HOURS_OR_MORE | MEAL $60.00 | ACCOMMODATION Rate of day (max $500) | GENERAL EXPENSES Transport $200 + Comm $30 + Parking $50 + Essentials $30 | EXPIRES [date]",
+      "CyberSource: GREEN"
+    ],
+    "soc": {
+      "eligibility": "ELIGIBLE",
+      "entitlements": "Meals $60/pax (as stated), hotel rate of day max 3 nights $500 cap (overnight, delay >360 min), transport $200 (1-5 pax), communication $30/pax, parking $50 (1 day), essentials $30/pax"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "cancel code TECH = NetLine equivalent of delay code 41",
+    "arrival 08:40 PDT (4h40 block, tz -3h)",
+    "depDelayMin 1440 (no rebooking within 24 h)",
+    "residence CA assumed"
+  ],
+  "unsupported": [
+    "ACR (airline-issued meal/hotel/transport voucher) 'No' for all categories: expressed by an empty vouchers list"
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "id": "FD_TC_184",
+  "family": "FD",
+  "summary": "APPR YUL-YYZ AC407 voluntary change via Airport Agent (airport office ID YULAC0101, no ACNP, no disruption context): promise updates 10:00 -> 15:00, flight on time -> Not Eligible (no delay)",
+  "passengers": [
+    {
+      "firstName": "NATHALIE",
+      "lastName": "COTE",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "407",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "08:40",
+      "arrLocal": "10:00",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [
+    {
+      "seg": 1,
+      "depDeltaMin": 300,
+      "arrDeltaMin": 300,
+      "noticeHours": 0
+    }
+  ],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": null,
+    "amount": 0,
+    "currency": "CAD",
+    "delayBand": null,
+    "delayMin": 0,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Promised Itinerary: AC 407 YUL->YYZ scheduled arrival 15:00 (updated by Airport VOL)",
+      "Current Itinerary: AC 407 YUL->YYZ ON TIME, actual 15:00",
+      "Change 1: Airport Agent (airport office ID YULAC0101, no ACNP, no disruption) at D-0 - VOL - arrival 10:00 -> 15:00",
+      "Promise = 15:00 (updated by VOL)",
+      "Delay from promise = 0 hours",
+      "Regime: APPR",
+      "Result: NOT ELIGIBLE (no delay)",
+      "No MSL (no disruption)",
+      "No disruption code",
+      "CRITICAL: Airport changes are VOL only when NO ACNP and NO active disruption context",
+      "Flight Compensation: MS NATHALIE COTE | NOT ELIGIBLE | NO_DELAY_FROM_PROMISE | $0"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "segments hold the ORIGINAL 14-day schedule; the Pre-Move/VOL change is modelled as a scheduleChange moving the arrival; flight then operates on time against the CHANGED schedule (arrDelayMin 0)",
+    "flight date June 10, 2026 in text; flightDaysAgo=10 (72 hrs elapsed)",
+    "dep time = original arrival minus 1h20 (YUL-YYZ ~1h20 block)",
+    "currency of \"$0\" taken as CAD (APPR)",
+    "change made on the day of travel (D-0): noticeHours set to 0",
+    "name \"Nathalie Cote\" written without accents"
+  ],
+  "unsupported": [
+    "PNR history marker: airport office ID YULAC0101, absence of ACNP and absence of any disruption context (together = VOL) - not expressible in scheduleChanges"
+  ]
+}

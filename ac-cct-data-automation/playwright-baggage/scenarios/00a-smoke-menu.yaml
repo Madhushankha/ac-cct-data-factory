@@ -1,0 +1,21 @@
+# Smoke: open the chat, a vague baggage opening -> the bot steers to the baggage roads.
+# No booking, no identity, no OTP: proves the page, the widget driver, the transcript, the screenshot
+# and the report. The guide's "Choose one option" menu is checked as optional, so its absence shows
+# up in the report's notes without failing the plumbing check.
+id: smoke-menu
+title: Vague opening -> baggage roads offered (no identity)
+tags: [smoke]
+first_message: "I have a question about my baggage."
+steps:
+  - expect:
+      step: BAG-01.opening
+      board: the bot offers the baggage roads (delayed / lost / tracking)
+      any_of: ["Choose one option", "delay", "lost", "trac(e|k)"]
+  - expect:
+      step: BAG-01.menu
+      board: '"Choose one option" menu with the baggage roads'
+      text: "Choose one option"
+      buttons: ["Report a delayed bag"]
+      optional: true
+      timeout: 10
+  - stop: end

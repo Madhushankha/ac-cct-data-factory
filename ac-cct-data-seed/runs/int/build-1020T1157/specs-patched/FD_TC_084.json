@@ -1,0 +1,136 @@
+{
+  "id": "FD_TC_084",
+  "family": "FD",
+  "summary": "Single adult JACQUES FORTIER (linked Aeroplan Basic tier A), AC 476 YUL-YYZ on time then AC 477 YYZ-YVR 12:00-14:05 departing 19:25 arriving 21:30 (445 min late, 7h 25m, 6-9h band); first arrival and departure delay code 47 (TL, lack of planned standby aircraft for technical reasons (same aircraft repaired, no swap)); stranded at YYZ (No Travel Incomplete)",
+  "passengers": [
+    {
+      "firstName": "JACQUES",
+      "lastName": "FORTIER",
+      "type": "ADT",
+      "aeroplanNumber": "9876543210",
+      "aeroplanTier": "Basic",
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "476",
+      "origin": "YUL",
+      "destination": "YYZ",
+      "depLocal": "08:30",
+      "arrLocal": "09:55",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "477",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "12:00",
+      "arrLocal": "14:05",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 445,
+      "depDelayMin": 445,
+      "delayCode": "47",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null,
+      "depDelayCode": "47",
+      "delayCodeAlpha": "TL"
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    },
+    {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "FD-APPR-NE-18",
+    "amount": 0,
+    "currency": "CAD",
+    "delayBand": "DELAY_6_TO_LT_9_HOURS",
+    "delayMin": 445,
+    "control": "SAFETY",
+    "cause": "47",
+    "noTravel": "INCOMPLETE",
+    "strandedAt": "YYZ",
+    "fallback": false,
+    "refundEntitlement": "pro-rated / full refund of unused portion + expenses (none claimed), CAD 0 cash",
+    "expenses": "applicable, none claimed",
+    "ttUi": [
+      "Segment 1: Flight: AC 476, Route: YUL->YYZ, Status: COMPLETED (on time, no delay codes)",
+      "Segment 2: Flight: AC 477, Route: YYZ->YVR, Scheduled: 12:00 - 14:05, Actual: 19:25 - 21:30, Status: DELAYED (operated) (claim filed)",
+      "Segment 2 departure delay = 445 min ; arrival delay = 445 min - band 6-9 hours",
+      "Customer Status: NO TRAVEL - INCOMPLETE (started journey, stranded at connection YYZ, Leg 2 coupon not flown)",
+      "History - No rebooking accepted for connecting segment",
+      "Regime: APPR (1 regime)",
+      "MSL FLIGHT: AC 477 - YYZ->YVR (Leg 2)",
+      "Cancellation code: NONE",
+      "First arrival delay code: 47 (TL) - \"Standby aircraft, lack of planned standby aircraft for technical reasons\"",
+      "First departure delay code: 47 (TL)",
+      "No additional delay codes on MSL",
+      "Controllability source = first arrival delay code (no cancellation code)",
+      "Fallback: FALSE (arrival delay code available)",
+      "APPR causal category: Within carrier control - For Safety - SAFETY",
+      "Disruption Type: DELAY (mid-journey)",
+      "No Travel Branch B (Did not remain at origin - intermediate travel) + MSL delayed 3+ hours - controllability check - Safety",
+      "Aeroplan: LINKED | Tier code A | Aeroplan Basic",
+      "DDS outcome code: FD-APPR-NE-18",
+      "Compensation outcome: NOT ELIGIBLE (no cash compensation, 6-9h tier not applied)",
+      "Ticket refund entitlement: PRO-RATED / FULL refund of unused portion (Branch B - Safety)",
+      "Expenses: APPLICABLE under Branch B - Safety (none claimed in this test)",
+      "Flight Compensation: MR JACQUES FORTIER | NOT ELIGIBLE | SAFETY | CAD 0.00"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "cabin Y and booking class T on every segment (text gives none)",
+    "leg 1 AC 476 times 08:30-09:55 assumed",
+    "Aeroplan number not stated for this scenario: used 9876543210; tier A = Basic",
+    "two-letter alpha delay code given in text is carried in delayCodeAlpha (extra key)",
+    "stranded at connection YYZ: paxEvents boarded on seg 1, not_travelled on seg 2"
+  ],
+  "unsupported": []
+}

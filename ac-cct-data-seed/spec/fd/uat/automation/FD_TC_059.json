@@ -1,0 +1,98 @@
+{
+ "id": "FD_TC_059",
+ "family": "FD",
+ "summary": "Single pax Nathalie Fortin; AC 460 YUL-YYZ sched dep 10:00 arr 12:00 operated late (dep 14:20 +260 min, arr 16:25 +265 min), arrival delay code missing, first departure delay code 72 (WT) used as fallback; passenger not boarded, coupon not flown, stayed at YUL (No Travel Origin) -> NOT ELIGIBLE CAD 0, full refund",
+ "passengers": [
+  {
+   "firstName": "NATHALIE",
+   "lastName": "FORTIN",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "460",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "12:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 265,
+   "depDelayMin": 260,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "depDelayCode": "72"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-APPR-NE-09",
+  "amount": 0,
+  "currency": "CAD",
+  "delayBand": null,
+  "delayMin": 265,
+  "control": "UNCONTROLLABLE",
+  "cause": "72",
+  "ttUi": [
+   "Promised: AC 460 YUL->YYZ Scheduled Departure 10:00, Scheduled Arrival 12:00",
+   "Actual: AC 460 YUL->YYZ Actual Departure 14:20, Actual Arrival 16:25, Status: DELAYED (operated)",
+   "Departure delay = 260 min (>=180); Arrival delay = 265 min (>=180)",
+   "Customer Status: NO TRAVEL - ORIGIN (not boarded, coupon not flown, remained at YUL)",
+   "History: No rebooking accepted",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 460 YUL->YYZ (only segment)",
+   "Cancellation code: NONE",
+   "First arrival delay code: NOT AVAILABLE (null/empty)",
+   "First departure delay code: 72 (WT) \"Weather at destination station\"",
+   "Controllability source = first departure delay code (fallback)",
+   "Fallback: TRUE (arrival delay code not available)",
+   "APPR causal category: Outside carrier control - weather -> UNCONTROLLABLE",
+   "Disruption Type: DELAY",
+   "No Travel Branch A (Remained at Origin) + MSL delayed 3+ hours -> controllability check -> outside carrier's control",
+   "DDS outcome code: FD-APPR-NE-09",
+   "Compensation outcome: NOT ELIGIBLE",
+   "Ticket refund entitlement: FULL refund (Branch A - outside control)",
+   "Expenses: NOT applicable",
+   "Flight Compensation: MS NATHALIE FORTIN | NOT ELIGIBLE | UNCONTROLLABLE | CAD 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "passenger name from TT UI line (chatbot passenger line not shown)",
+  "Fallback=TRUE: delayCode (arrival) is null and the departure code is carried in outcomes[].depDelayCode"
+ ],
+ "unsupported": [
+  "Departure delay code distinct from the arrival delay code has no schema field; given as extra outcome key depDelayCode"
+ ]
+}

@@ -1,0 +1,85 @@
+{
+ "id": "FD_TC_009",
+ "family": "FD",
+ "summary": "Single pax Laurent Gosselin on AC 427 YUL-YYZ originally arriving 14:00, INVOL-only change, actual arrival 18:00 (+4h), code 35 grooming, APPR Tier 1 $400",
+ "passengers": [
+  {
+   "firstName": "LAURENT",
+   "lastName": "GOSSELIN",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "427",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:40",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 120,
+   "delayCode": "35"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [
+  {
+   "seg": 1,
+   "depDeltaMin": 120,
+   "arrDeltaMin": 120,
+   "noticeHours": 72,
+   "changeType": "INVOL"
+  }
+ ],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "35",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 427, Route: YUL-YYZ, Scheduled Arrival: 14:00 (14-day mark, INVOL does NOT update promise)",
+   "Current Itinerary - Flight: AC 427, Route: YUL-YYZ, Status: ARRIVED LATE, Scheduled Arrival: 14:00 - Actual: 18:00, Delay: +4H 00M",
+   "History - INVOL only (no VOL) - promise unchanged at 14-day mark",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 427 - YUL-YYZ - 35",
+   "\"Delayed due to Grooming\"",
+   "Delay: +4H 00M - CONTROLLABLE",
+   "MR LAURENT GOSSELIN | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00 | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 12:40",
+  "the INVOL rebooking is modelled as an airline schedule change of the same flight (+240 min, 72 h notice assumed, changeType INVOL); outcome arrDelayMin 240 is the total delay versus the 14-day promise",
+  "INVOL/VOL history is modelled with optional extra keys (voluntary, changeDaysBeforeDeparture, changeType) not in the base schema"
+ ],
+ "unsupported": [
+  "details of the INVOL rebooking flight are not given in the text",
+  "flight date: run uses flightDaysAgo=10 (text: filed D+13)"
+ ]
+}

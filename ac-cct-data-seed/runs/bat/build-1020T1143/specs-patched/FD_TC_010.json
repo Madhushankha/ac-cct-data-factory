@@ -1,0 +1,103 @@
+{
+ "id": "FD_TC_010",
+ "family": "FD",
+ "summary": "Single pax Simon Lacroix: AC 429 YUL-YYZ originally arr 10:00 cancelled by AC (INVOL), customer self-rebooks (SELFREACC, treated as INVOL) arriving 14:00 (+4h), code 36, APPR Tier 1 $400",
+ "passengers": [
+  {
+   "firstName": "SIMON",
+   "lastName": "LACROIX",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "429",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "cancelCode": "OPER",
+   "noticeHours": 24
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "431",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "10:40",
+   "arrLocal": "12:00",
+   "dayOffset": 0,
+   "accepted": false,
+   "changeDaysBeforeDeparture": 1
+  },
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "433",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "12:40",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "voluntary": true,
+   "changeDaysBeforeDeparture": 0.9,
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "OPER",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 429, Route: YUL-YYZ, Scheduled Arrival: 10:00 (14-day mark, SELFREACC = INVOL, doesn't update)",
+   "Current Itinerary - Flight: AC 429, Route: YUL-YYZ, Status: ARRIVED LATE, Scheduled Arrival: 10:00 - Actual: 14:00, Delay: +4H 00M",
+   "History - Change 1: INVOL (cancellation by AC) | Change 2: SELFREACC (customer self-rebooks via tool) - classified as INVOL",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 429 - YUL-YYZ - 36",
+   "\"Delayed due to fuelling/defuelling\"",
+   "Delay: +4H 00M - CONTROLLABLE",
+   "MR SIMON LACROIX | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00 | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 08:40",
+  "rebooked flight uses the same number AC 429 (the TT shows AC 429 for both promised and current) dep 12:40 arr 14:00; cancellation notice 72 h assumed",
+  "INVOL/VOL history is modelled with optional extra keys (voluntary, changeDaysBeforeDeparture, changeType) not in the base schema"
+ ],
+ "unsupported": [
+  "SELFREACC (self-service reaccommodation) as a rebooking type is not a base-schema field (added as optional changeType)",
+  "flight date: run uses flightDaysAgo=10 (text: filed D+13)"
+ ]
+}

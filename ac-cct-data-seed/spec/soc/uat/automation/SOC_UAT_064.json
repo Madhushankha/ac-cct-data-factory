@@ -1,0 +1,115 @@
+{
+  "id": "SOC_UAT_064",
+  "family": "SOC",
+  "summary": "1 adult, YYZ-TLV on AC 084 on time then TLV-IST on TK 789 (Star Alliance partner) delayed 4h; SOC segment is the STAR segment; ASL no determination",
+  "passengers": [
+    {
+      "firstName": "MICHAEL",
+      "lastName": "COHEN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "084",
+      "origin": "YYZ",
+      "destination": "TLV",
+      "depLocal": "05:30",
+      "arrLocal": "22:30",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "TK",
+      "number": "789",
+      "origin": "TLV",
+      "destination": "IST",
+      "depLocal": "00:45",
+      "arrLocal": "03:15",
+      "dayOffset": 1,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "SoC-ASL-ND-02",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_2_TO_6_HOURS",
+    "delayMin": 240,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Multi-segment trip YYZ->TLV->IST - Segment 1 AC084 on time, Segment 2 TK789 (STAR) delayed +4H 00M",
+      "Regime: ASL (journey involves Israel - TLV transit)",
+      "PASSENGERS: 1 - SEGMENTS: 2",
+      "Promised: Seg 1 AC 084 YYZ->TLV | Seg 2 TK 789 TLV->IST",
+      "Current: Seg 1 ON TIME | Seg 2 ARRIVED LATE, Delay +4H 00M",
+      "SOC section present - SOC Segment: TK 789 TLV->IST (STAR); Operating Carrier TK (Turkish Airlines - Star Alliance)",
+      "Departure Delay Code: Unknown (STAR - AC has limited data)",
+      "ASL dual geographic gate would also fail (origin YYZ, destination IST) but STAR carrier check triggered ND first",
+      "PASSENGER STATUS: NO_DETERMINATION | BAND: DELAY_2_TO_6_HOURS",
+      "Receipt collection: INITIATED",
+      "Passenger Claims: NO DETERMINATION - case created for manual review; DDS code SoC-ASL-ND-02"
+    ],
+    "soc": {
+      "eligibility": null,
+      "entitlements": "none - no determination (STAR partner), manual review, receipt collection initiated"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen; residence CA (journey origin YYZ)",
+    "Times chosen: AC084 05:30 YYZ -> 22:30 TLV (10h); TK789 TLV 00:45 next day (dayOffset 1) -> 03:15 IST, because a 10h flight cannot connect on the same day; TT lists both as 15-Jun",
+    "Arrival delay assumed equal to 240 min departure delay",
+    "Cabin W (PY), class O",
+    "Scenario dates are labels only; flight day set by flightDaysAgo."
+  ],
+  "unsupported": [
+    "TK 789 actuals/delay come from partner data that AC does not hold; must be injected as flight data. Delay code intentionally unknown",
+    "Source says both segments depart on 15-Jun, which the real flight times of a 10h YYZ-TLV flight rule out"
+  ]
+}

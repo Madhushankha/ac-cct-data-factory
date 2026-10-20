@@ -1,0 +1,131 @@
+{
+ "id": "FD_TC_097",
+ "family": "FD",
+ "summary": "Single adult LAURENT MERCIER, 2 legs: AC 499 YUL-YYZ on time, leg 2 YYZ-YVR cancelled (code CREW, controllable); customer rebooked to a completely different destination YYZ-YEG (original destination YVR) - DDS cannot assess: new destination/new contract",
+ "passengers": [
+  {
+   "firstName": "LAURENT",
+   "lastName": "MERCIER",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "499",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:30",
+   "arrLocal": "09:55",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "501",
+   "origin": "YYZ",
+   "destination": "YVR",
+   "depLocal": "11:00",
+   "arrLocal": "13:05",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "cancel",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "CREW",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 2,
+   "carrier": "AC",
+   "number": "500",
+   "origin": "YYZ",
+   "destination": "YEG",
+   "depLocal": "13:30",
+   "arrLocal": "15:10",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "NO_DETERMINATION",
+  "systemCode": "FD-APPR-ND-03",
+  "amount": null,
+  "currency": null,
+  "delayBand": null,
+  "delayMin": null,
+  "control": null,
+  "cause": "CREW",
+  "originalDestination": "YVR",
+  "actualDestination": "YEG",
+  "ttUi": [
+   "Original Itinerary - Flight: AC 499, Route: YUL->YYZ, Status: CANCELLED",
+   "Current Itinerary - Flight: AC 500, Route: YUL->YOW, Status: COMPLETED (new destination)",
+   "Original Destination: YYZ (Toronto)",
+   "Current Destination: YOW (Ottawa) - DIFFERENT CITY",
+   "Sister City Check: YOW->YYZ = NOT A VALID PAIR (Ottawa - Toronto sister city)",
+   "Contract Status: Original contract VOIDED; New contract issued for YUL->YOW",
+   "DDS: CANNOT ASSESS - NEW DESTINATION / NEW CONTRACT",
+   "Regime: APPR (1 regime)",
+   "Determination: NO DETERMINATION - SENT TO AGENT",
+   "Flight Compensation: MR LAURENT MERCIER | NO DETERMINATION | NEW_DESTINATION | PENDING AGENT REVIEW"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "cabin Y and booking class T on every segment (text gives none)",
+  "source conflict: prerequisites/expected results = 2-leg YUL-YYZ-YVR with leg 2 rebooked to YEG; journey selection and TT UI = AC 499 YUL-YYZ cancelled and rebooked AC 500 YUL-YOW (Ottawa). Used the prerequisites (YVR -> YEG); ttUi lines are kept verbatim and show the YOW variant. In both, the new destination is not the original one nor a sister city",
+  "flight number AC 501 for leg 2 and all times assumed (text gives none); rebooked AC 500 YYZ-YEG 13:30-15:10 local",
+  "expected results mention \"Cancellation Code = 42\" but prerequisites say CREW (controllable): used CREW",
+  "noticeHours not stated, left null",
+  "Aeroplan not linked",
+  "rebooked passenger flew the new flight; boarded only recorded for seg 1"
+ ],
+ "unsupported": [
+  "rebooked pax travel on AC 500 to YEG is not a paxEvent; only the rebooking entry expresses it"
+ ]
+}

@@ -1,0 +1,84 @@
+{
+ "id": "FD_PO_007",
+ "family": "FD",
+ "summary": "FD_UAT_113: No Determination | EU 261 | New Destination",
+ "passengers": [
+  {
+   "type": "ADT",
+   "firstName": "ALICE",
+   "lastName": "DUNN",
+   "dob": "1985-07-03"
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": null,
+   "carrier": "AC",
+   "number": "241",
+   "origin": "FRA",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "14:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": null,
+   "status": "HK",
+   "depDate": "2026-06-19",
+   "operatingCarrier": "AC"
+  }
+ ],
+ "flightDaysAgo": null,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "delayCode": "64"
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "243",
+   "origin": "FRA",
+   "destination": "YUL",
+   "depLocal": "13:30",
+   "arrLocal": "18:00",
+   "dayOffset": 0,
+   "accepted": true
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "eligibility": "NO_DETERMINATION",
+  "regime": "EU",
+  "systemCode": "FD-EU-ND-03",
+  "currency": "CAD",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "cause": "64"
+ },
+ "assumed": [
+  "expectation taken from fd-uat-int-v134 (gap-doc card)",
+  "rebooking to a different destination (YYZ -> YUL), accepted: FD-EU-ND-03 is 'New Destination (New contract)', expressed in the corpus (FD_TC_097) as a rebooking whose destination differs",
+  "rebooked arrival 18:00: 240 minutes after the original 14:00, which is the delay the card states"
+ ],
+ "unsupported": [],
+ "source": {
+  "repo": "agentic-qa",
+  "suite": "fd-uat",
+  "fixture": "FD_UAT_113.json",
+  "case_id": "FD_UAT_113",
+  "source_case_id": "FD_TC_113"
+ },
+ "pointOfSale": {
+  "officeId": "FRAAC08AA",
+  "from": "fixture FD_UAT_113.point_of_sale"
+ }
+}

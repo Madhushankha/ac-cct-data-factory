@@ -1,0 +1,90 @@
+{
+  "id": "SOC_UAT_054",
+  "family": "SOC",
+  "summary": "1 adult, AC 080 LHR-TLV 05-Jun 21:00 departed 06-Jun 03:00 (6h late), code 64; origin is the UK so ASL does not apply",
+  "passengers": [
+    {
+      "firstName": "NOAH",
+      "lastName": "GOLDBERG",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "GB",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "080",
+      "origin": "LHR",
+      "destination": "TLV",
+      "depLocal": "21:00",
+      "arrLocal": "04:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 360,
+      "depDelayMin": 360,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-ASL-NE-06",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 360,
+    "control": null,
+    "cause": "64",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip LHR->TLV on AC080 delayed +6H 00M - origin NOT in Israel (LHR = UK)",
+      "Regime: EU (system determines - ASL does not apply, LHR departure -> EU applies)",
+      "PASSENGERS: 1 - SEGMENTS: 1",
+      "Promised: AC 080 LHR->TLV Sched Dep 05-Jun 21:00",
+      "Current: ARRIVED LATE, Sched Dep 21:00, Actual 06-Jun 03:00, Delay +6H 00M",
+      "Geographic Check (ASL): Origin LHR (UK) NOT Israel -> ASL FAIL; destination TLV pass",
+      "Regime applied: EU (UK261)",
+      "PASSENGER STATUS: depends on regime routing (ELIGIBLE under EU / NOT_ELIGIBLE under ASL geographic fail)",
+      "DDS code SoC-ASL-NE-06"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none under ASL (geographic gate); note EU would apply to a UK departure"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Regime: prerequisite and TT say EU applies (LHR departure), yet DDS code and expected result say ASL NOT_ELIGIBLE (NE-06) with a wrong 'originated from YYZ' note: expect.regime set to ASL because the title/code say ASL; the real DDS may return EU eligibility instead",
+    "Arrival 04:00 local TLV next calendar day; arrival delay assumed 360",
+    "Cabin W (PY), class O",
+    "Residence GB",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10.",
+    "Chatbot screen says 8h delay; prerequisite 360 used"
+  ],
+  "unsupported": [
+    "Source is self-contradictory (EU regime, UK origin, 6h delay would be SOC ELIGIBLE under EU yet expected code is SoC-ASL-NE-06); the booking is built as described but the expected ASL NOT_ELIGIBLE outcome may not be reproducible by DDS"
+  ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "FD_TC_041",
+ "family": "FD",
+ "summary": "Single pax Marc-Andre Lavoie; AC 442 YUL-YYZ (sched arr 10:00) delayed, arrival delay code MISSING, departure delay code 42 (scheduled maintenance, controllable) = Fallback; accepted INVOL rebooking to AC 443 YUL-YHM (sister city) arriving 17:00 (+7h vs promise); APPR Tier 2",
+ "passengers": [
+  {
+   "firstName": "MARC-ANDRE",
+   "lastName": "LAVOIE",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "442",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 420,
+   "depDelayMin": 420,
+   "depDelayCode": "42"
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "443",
+   "origin": "YUL",
+   "destination": "YHM",
+   "depLocal": "15:30",
+   "arrLocal": "17:00",
+   "dayOffset": 0,
+   "accepted": true,
+   "paxEvent": "boarded"
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-11",
+  "amount": 700,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised: AC 442 YUL->YYZ Scheduled Arrival 10:00 at YYZ (original flight DELAYED)",
+   "Current: AC 443 YUL->YHM (rebooked to sister city), ARRIVED, Actual Arrival 17:00 at YHM",
+   "History: Change 1 INVOL - AC 442 YUL->YYZ delayed (arrival delay code NULL - MISSING); customer accepted rebooking to AC 443 YUL->YHM",
+   "Sister City Check: YHM<->YYZ VALID PAIR (DDS sister city config)",
+   "Regime: APPR (1 regime)",
+   "Delay Calculation: promise 10:00 at YYZ (AC 442); actual 17:00 at YHM (AC 443); Delay = 7hrs",
+   "MSL FLIGHT: AC 442 YUL->YYZ DELAYED CODE: NULL (MISSING)",
+   "FALLBACK TRIGGERED: arrival delay code NULL -> using departure delay code",
+   "Departure Code: 42 (Scheduled Maintenance)",
+   "Fallback Flag: TRUE",
+   "CONTROLLABLE (Code 42 via fallback departure code)",
+   "Delay: +7H 00M CONTROLLABLE",
+   "Rebooked Flight: AC 443 YUL->YHM (sister city of YYZ)",
+   "Flight Compensation: MR MARC-ANDRE LAVOIE | ELIGIBLE | DELAY_6_TO_LT_9_HOURS (SISTER CITY + FALLBACK) | CAD 700.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "orig dep 08:40; rebooked dep 15:30 (only arrivals given)",
+  "AC 442 modelled as delayed; arrDelayMin 420 = 17:00 at YHM minus 10:00 promise at YYZ; original-flight depDelayMin unknown (null)",
+  "no Aeroplan"
+ ],
+ "unsupported": [
+  "Departure delay code is distinct from the arrival delay code (arrival code NULL -> fallback to first departure delay code, Fallback=TRUE); the schema has no field for it, so it is given as extra key outcomes[].depDelayCode and delayCode is null"
+ ]
+}

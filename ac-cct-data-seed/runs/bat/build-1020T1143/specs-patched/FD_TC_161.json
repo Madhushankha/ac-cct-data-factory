@@ -1,0 +1,131 @@
+{
+ "id": "FD_TC_161",
+ "family": "FD",
+ "summary": "ASL YYZ-FRA-TLV: AC873 on time, AC9042 FRA-TLV cancelled (CREW, controllable) with only 2h re-routing delay, customer stranded at FRA -> Not Eligible ILS 0",
+ "passengers": [
+  {
+   "firstName": "NIRIT",
+   "lastName": "GOLAN",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "873",
+   "origin": "YYZ",
+   "destination": "FRA",
+   "depLocal": "18:30",
+   "arrLocal": "07:50",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "Y",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "9042",
+   "origin": "FRA",
+   "destination": "TLV",
+   "depLocal": "12:30",
+   "arrLocal": "17:00",
+   "dayOffset": 1,
+   "cabin": "Y",
+   "bookingClass": "Y",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "cancel",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "CREW",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 2,
+   "carrier": "AC",
+   "number": "9044",
+   "origin": "FRA",
+   "destination": "TLV",
+   "depLocal": "14:30",
+   "arrLocal": "19:00",
+   "dayOffset": 1,
+   "accepted": false
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "ASL",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-ASL-NE-16",
+  "amount": 0,
+  "currency": "ILS",
+  "delayBand": null,
+  "delayMin": 120,
+  "control": "CONTROLLABLE",
+  "cause": "CREW",
+  "ttUi": [
+   "Segment 1: AC 873 YYZ->FRA COMPLETED (on time)",
+   "Segment 2: AC 9042 FRA->TLV CANCELLED (claim filed)",
+   "Cancellation Code on Leg 2: CREW (4-character NetLine code)",
+   "Cancellation - crew unavailability",
+   "NOT EXTRAORDINARY CIRCUMSTANCE (CREW in controllable list)",
+   "MSL Delay on Leg 2 (re-routing): 2H 00M - BELOW 3-HOUR ASL NO TRAVEL THRESHOLD (Gate 8)",
+   "Customer Status: NO TRAVEL - INCOMPLETE (stranded at FRA, did not return to YYZ, did not reach TLV)",
+   "History: customer stranded at mid-point FRA; no rebooking accepted; no return to origin",
+   "Regime: ASL (Israel destination TLV) + APPR (Canadian origin YYZ)",
+   "ASL No Travel Threshold: MSL delay must be >= 3 hours; 2h < 3h -> NOT ELIGIBLE",
+   "Fallback: FALSE",
+   "CRITICAL: threshold overrides controllability",
+   "Flight Compensation: MS NIRIT GOLAN | NOT ELIGIBLE | DELAY_BELOW_3_HOURS | ILS 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "times chosen as in FD_TC_159",
+  "re-routing delay 2h modelled as an offered but NOT accepted rebooking on AC 9044 FRA-TLV departing 14:30 arriving 19:00 next day; number/times chosen",
+  "flight date June 2, 2026 in text; flightDaysAgo=10",
+  "noticeHours not stated -> null"
+ ],
+ "unsupported": []
+}

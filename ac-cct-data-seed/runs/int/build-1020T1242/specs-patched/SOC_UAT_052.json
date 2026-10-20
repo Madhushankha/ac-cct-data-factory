@@ -1,0 +1,86 @@
+{
+  "id": "SOC_UAT_052",
+  "family": "SOC",
+  "summary": "1 adult, AC 084 TLV-YYZ 21:00 departed 22:30 (90 min late), code 64; ASL SOC not eligible (delay under 2h)",
+  "passengers": [
+    {
+      "firstName": "OMER",
+      "lastName": "KATZ",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "IL",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "084",
+      "origin": "TLV",
+      "destination": "YYZ",
+      "depLocal": "21:00",
+      "arrLocal": "01:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 90,
+      "depDelayMin": 90,
+      "delayCode": "64",
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-ASL-NE-04",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_LESS_THAN_2_HOURS",
+    "delayMin": 90,
+    "control": null,
+    "cause": "64",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment trip TLV->YYZ on AC084 delayed +1H 30M",
+      "Regime: ASL (TLV departure - Israel)",
+      "PASSENGERS: 1 - SEGMENTS: 1",
+      "Promised: AC 084 TLV->YYZ Sched Dep 03-Jun 21:00",
+      "Current: ARRIVED LATE, Sched Dep 21:00, Actual 22:30, Delay +1H 30M",
+      "PASSENGER STATUS: NOT_ELIGIBLE | BAND: DELAY_LESS_THAN_2_HOURS",
+      "NOT_ELIGIBLE reason: Delay below 2-hour threshold",
+      "DDS code SoC-ASL-NE-04"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none (delay below 2h)"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Arrival 01:00 local YYZ (next calendar day)",
+    "Arrival delay assumed equal to 90 min departure delay",
+    "Cabin W (PY), class O",
+    "Residence IL",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+  ],
+  "unsupported": []
+}

@@ -1,0 +1,83 @@
+{
+ "id": "FD_ED_TC_04",
+ "family": "FD",
+ "summary": "Single pax Isabelle Fournier with Aeroplan 5678901234 on AC 422 YUL-YYZ arriving 4h late, code 42, APPR 3-6h $400; identified by Aeroplan + e-ticket without PNR",
+ "passengers": [
+  {
+   "firstName": "ISABELLE",
+   "lastName": "FOURNIER",
+   "type": "ADT",
+   "aeroplanNumber": "5678901234",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "422",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 240,
+   "depDelayMin": null,
+   "delayCode": "42",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "APPR_3_TO_6_HOURS",
+  "delayMin": 240,
+  "control": "CONTROLLABLE",
+  "cause": "42",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 422, Route: YUL-YYZ, Scheduled Arrival: 10:00",
+   "Current Itinerary - Flight: AC 422, Route: YUL-YYZ, Status: ARRIVED LATE, Actual: 14:00, Delay: +4H 00M",
+   "Regime: APPR (Canadian origin - YUL)",
+   "Distance: ~505 km - Short-haul",
+   "MSL FLIGHT: AC 422 - YUL-YYZ - 42",
+   "CONTROLLABLE (Code 42)",
+   "APPR: Delay 3-6h, Controllable, Short-haul - ELIGIBLE",
+   "Compensation: CAD $400",
+   "MS ISABELLE FOURNIER | ELIGIBLE | APPR_3_TO_6_HOURS | CAD $400"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "route YUL-YYZ per journey selection and Trip Tracer block (prerequisites line says YYZ-YUL; the majority of the text and the TT block say YUL-YYZ)",
+  "dep 08:40",
+  "Aeroplan tier Basic (not stated)",
+  "FD-APPR-EL-01 from the scenario title"
+ ],
+ "unsupported": [
+  "e-ticket 014-5678901234 on the booking (cross-reference identification) and the TT lines about IDV/OTP 5x failure (copy-paste residue) are not booking data",
+  "scenario text dates flight June 1 2026; run uses flightDaysAgo=10"
+ ]
+}

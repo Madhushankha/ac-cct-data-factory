@@ -1,0 +1,1251 @@
+{
+  "key": "CHAI-31396",
+  "test_id": "FD_TC_004",
+  "title": "Travel Completed | UK Regime Applicable (UK Departure) | APPR also applicable | Controllable (Code 68) | Delay under 3 hrs | Not Eligible | 3 Pax | 1 Leg | Basic Aeroplan Linked | No Changes",
+  "goal": "Checks the full flow for a 3-passenger booking on a UK departure where the delay is too short to pay compensation. Flight AC 865 LHR ? YUL arrives 2 hours 30 minutes late for a controllable reason (Code 68 � Flight Crew Shortage / Crew Rest). The trip starts in the UK, so the UK regime (EU 261 UK branch) applies, and APPR also applies because the flight lands in Canada. Neither regime pays for delays under 3 hours, so all 3 passengers are NOT ELIGIBLE and the amount is 0. Confirms that DDS returns an EU not-eligible response and the bot declines the claim in the chat with the reason, without sending it to manual review. It also confirms that no Cash or AC Wallet offer, CyberSource check, Persona IDV, payment email request or compensation record happens, and that the Claims Dashboard shows the Not Eligible outcome for all 3 passengers.",
+  "summary": {
+    "seed": 16,
+    "chat": 31,
+    "api": 18,
+    "email": 5,
+    "dashboard": 0,
+    "implied": 66,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "Checks the full flow for a 3-passenger booking on a UK departure where the delay is too short to pay compensation. Flight AC 865 LHR ? YUL arrives 2 hours 30 minutes late for a controllable reason (Code 68 � Flight Crew Shortage / Crew Rest). The trip starts in the UK, so the UK regime (EU 261 UK branch) applies, and APPR also applies because the flight lands in Canada. Neither regime pays for delays under 3 hours, so all 3 passengers are NOT ELIGIBLE and the amount is 0. Confirms that DDS returns an EU not-eligible response and the bot declines the claim in the chat with the reason, without sending it to manual review. It also confirms that no Cash or AC Wallet offer, CyberSource check, Persona IDV, payment email request or compensation record happens, and that the Claims Dashboard shows the Not Eligible outcome for all 3 passengers.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "PNR: TC003 � 3 passengers: Catherine Bouchard (Adult - Claimant, Basic Aeroplan Member 9876543210), Alexandre Bouchard (Adult), Sophie Bouchard (Child)",
+      "expected": "PNR: TC003 � 3 passengers: Catherine Bouchard (Adult - Claimant, Basic Aeroplan Member 9876543210), Alexandre Bouchard (Adult), Sophie Bouchard (Child)",
+      "id": "CP002"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Journey: 1 leg AC international LHR ? YUL (Flight AC 865)",
+      "expected": "Journey: 1 leg AC international LHR ? YUL (Flight AC 865)",
+      "id": "CP003"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Departure country: United Kingdom",
+      "expected": "Departure country: United Kingdom",
+      "id": "CP004"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Scheduled arrival: 14:00",
+      "expected": "Scheduled arrival: 14:00",
+      "id": "CP005"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Actual arrival: 16:30 (2hr 30min delay)",
+      "expected": "Actual arrival: 16:30 (2hr 30min delay)",
+      "id": "CP006"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Arrival delay code: 68 (Flight Crew Shortage / Crew Rest � Controllable)",
+      "expected": "Arrival delay code: 68 (Flight Crew Shortage / Crew Rest � Controllable)",
+      "id": "CP007"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Flight status: Arrived (operated)",
+      "expected": "Flight status: Arrived (operated)",
+      "id": "CP008"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Disruption notice: less than 14 days before departure",
+      "expected": "Disruption notice: less than 14 days before departure",
+      "id": "CP009"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Booking changes: None � no VOL or INVOL",
+      "expected": "Booking changes: None � no VOL or INVOL",
+      "id": "CP010"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Carrier: AC only",
+      "expected": "Carrier: AC only",
+      "id": "CP011"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "72hrs: Elapsed (filed D+13)",
+      "expected": "72hrs: Elapsed (filed D+13)",
+      "id": "CP012"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Time limit: Within 2190 days (UK 6-year limit)",
+      "expected": "Time limit: Within 2190 days (UK 6-year limit)",
+      "id": "CP013"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "No duplicate case",
+      "expected": "No duplicate case",
+      "id": "CP014"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Not employee",
+      "expected": "Not employee",
+      "id": "CP015"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Aeroplan: Linked (9876543210), Basic Member in good standing",
+      "expected": "Aeroplan: Linked (9876543210), Basic Member in good standing",
+      "id": "CP016"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Country of residence: Canada",
+      "expected": "Country of residence: Canada",
+      "id": "CP017"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP018"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP019"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects \"English\"",
+      "expected": "English",
+      "id": "CP020"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed: \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP021"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks: \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP022"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says: \"Our flight from London to Montreal was delayed about 2 and a half hours, I'd like to check if my family and I are eligible for compensation\"",
+      "expected": "Our flight from London to Montreal was delayed about 2 and a half hours, I'd like to check if my family and I are eligible for compensation",
+      "id": "CP023"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? NO",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "GREETING & INTENT IDENTIFICATION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.\"",
+      "expected": "No problem, I can help you create a claim for your delayed flight and see if you are eligible for compensation.",
+      "id": "CP026"
+    },
+    {
+      "section": "LEGAL DISCLAIMER",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?\"",
+      "expected": "Please note that the assessment and decision regarding your request will be made through an automated decision-making process. To file your claim, you'll need your booking reference, the name associated to the booking and any receipts you'd like to be reimbursed for. If your claim is eligible, you may also need to provide your address, contact information and where you'd like the funds deposited. Would you like to get started?",
+      "id": "CP027"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you. Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.\"",
+      "expected": "I can definitely help you with that. To start I'll just need to know some information to be able to process your request and identify you. Please provide your full name exactly as it appears on your ticket, including any middle names if applicable.",
+      "id": "CP028"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"Catherine Bouchard\"",
+      "expected": "Catherine Bouchard",
+      "id": "CP029"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Thanks, Catherine! And, what is your booking reference number?\"",
+      "expected": "Thanks, Catherine! And, what is your booking reference number?",
+      "id": "CP030"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"TC003\"",
+      "expected": "TC003",
+      "id": "CP031"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC003",
+      "expected": "",
+      "id": "CP032"
+    },
+    {
+      "section": "IDENTIFICATION",
+      "requirement": "GenUC-01",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND (Auth Flow 1)",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?\"",
+      "expected": "To keep your account secure and assist you further, I'll need to verify your identity. I'll do this by sending a one-time verification code to either your email or phone number on file. Where would you like to receive it?",
+      "id": "CP034"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays options:",
+      "expected": "* Email: c***@gmail.com * Phone: +1567",
+      "id": "CP035"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Email: c@gmail.com\"",
+      "expected": "Email: c@gmail.com",
+      "id": "CP036"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"I've sent a verification code to your email, please enter it within 15 minutes of receiving it.\"",
+      "expected": "I've sent a verification code to your email, please enter it within 15 minutes of receiving it.",
+      "id": "CP037"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides OTP code \"591837\"",
+      "expected": "591837",
+      "id": "CP038"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot validates the OTP code ? CORRECT (attempt 1 of 5)",
+      "expected": "",
+      "id": "CP039"
+    },
+    {
+      "section": "AUTHENTICATION",
+      "requirement": "GenUC-05",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds: \"Your verification was successful. Let's proceed to the next step.\"",
+      "expected": "Your verification was successful. Let's proceed to the next step.",
+      "id": "CP040"
+    },
+    {
+      "section": "GROUP BOOKING CHECK & PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the system checks Trip Tracer for group booking identifier ? NOT PRESENT",
+      "expected": "",
+      "id": "CP041"
+    },
+    {
+      "section": "GROUP BOOKING CHECK & PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot asks: \"How many people are on your claim?\"",
+      "expected": "How many people are on your claim?",
+      "id": "CP042"
+    },
+    {
+      "section": "GROUP BOOKING CHECK & PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays passengers from PNR TC003:",
+      "expected": "I found 3 passengers on this booking: 1. Catherine Bouchard (Adult - Aeroplan Member) 2. Alexandre Bouchard (Adult) 3. Sophie Bouchard (Child) Would you like to include all passengers in this claim?",
+      "id": "CP043"
+    },
+    {
+      "section": "GROUP BOOKING CHECK & PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes, include all 3 passengers\"",
+      "expected": "Yes, include all 3 passengers",
+      "id": "CP044"
+    },
+    {
+      "section": "GROUP BOOKING CHECK & PASSENGER SELECTION",
+      "requirement": "GenUC-06",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: PAX count on PNR = 3 ? 9 or fewer ? NOT a group booking ? PROCEED",
+      "expected": "",
+      "id": "CP045"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot retrieves booking details and displays:",
+      "expected": "I found the following journey: * Flight: AC 865 * Route: London Heathrow (LHR) ? Montreal (YUL) * Date: January 15, 2026 * Arrival Delay: 2 hours 30 minutes Is this the journey you'd like to check?",
+      "id": "CP046"
+    },
+    {
+      "section": "JOURNEY SELECTION",
+      "requirement": "GenUC-08",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP047"
+    },
+    {
+      "section": "SEGMENT & ELIGIBILITY CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: More than 1 segment on selected journey? ? NO (single leg) ? skip GenUC-18",
+      "expected": "",
+      "id": "CP048"
+    },
+    {
+      "section": "SEGMENT & ELIGIBILITY CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot sends request to Case Services for duplicate check ? NO existing case found for any of the 3 passengers",
+      "expected": "",
+      "id": "CP049"
+    },
+    {
+      "section": "SEGMENT & ELIGIBILITY CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks 72-hour rule: Arrival Jan 15, 2026; filing Jan 28, 2026 ? 312 hours ? PROCEED",
+      "expected": "",
+      "id": "CP050"
+    },
+    {
+      "section": "SEGMENT & ELIGIBILITY CHECKS",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks filing deadline: UK departure ? 2190 days; 13 days elapsed ? PROCEED",
+      "expected": "",
+      "id": "CP051"
+    },
+    {
+      "section": "TRIAGE & DDS EVALUATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Backend DDS executes evaluation for PNR TC003:",
+      "expected": "� Journey origin: LHR (United Kingdom) ? UK regime applicable � Arrival in Canada ? APPR also applicable � Delay reason: Code 68 (Controllable) � Delay duration: 150 min ? below the 180 min minimum for both UK and APPR � UK entitlement: GBP 0 | APPR entitlement: CAD 0 � Eligibility: NOT ELIGIBLE for all 3 passengers (reason: arrival delay under 3 hours)",
+      "id": "CP052"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[x] Promised Itinerary: Flight AC 865, LHR ? YUL, Scheduled Arrival: 14:00",
+      "expected": "[x] Promised Itinerary: Flight AC 865, LHR ? YUL, Scheduled Arrival: 14:00",
+      "id": "CP053"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[x] Current Itinerary: Flight AC 865, LHR ? YUL, Status: ARRIVED LATE, Scheduled: 14:00 ? Actual: 16:30, Delay: +2H 30M",
+      "expected": "[x] Current Itinerary: Flight AC 865, LHR ? YUL, Status: ARRIVED LATE, Scheduled: 14:00 ? Actual: 16:30, Delay: +2H 30M",
+      "id": "CP054"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[x] Regime: EU (UK) + APPR (2 regimes)",
+      "expected": "[x] Regime: EU (UK) + APPR (2 regimes)",
+      "id": "CP055"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[x] MSL Flight: AC 865 � LHR ? YUL � Code 68 (\"Delayed due to flight crew shortage / crew rest requirement\")",
+      "expected": "[x] MSL Flight: AC 865 � LHR ? YUL � Code 68 (\"Delayed due to flight crew shortage / crew rest requirement\")",
+      "id": "CP056"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[x] Delay Classification: +2H 30M � CONTROLLABLE",
+      "expected": "[x] Delay Classification: +2H 30M � CONTROLLABLE",
+      "id": "CP057"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "[x] Aeroplan: 9876543210 (Basic Member � linked)",
+      "expected": "[x] Aeroplan: 9876543210 (Basic Member � linked)",
+      "id": "CP058"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MS CATHERINE BOUCHARD | NOT ELIGIBLE | Delay under 3 hours | GBP 0.00",
+      "expected": "MS CATHERINE BOUCHARD | NOT ELIGIBLE | Delay under 3 hours | GBP 0.00",
+      "id": "CP059"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MR ALEXANDRE BOUCHARD | NOT ELIGIBLE | Delay under 3 hours | GBP 0.00",
+      "expected": "MR ALEXANDRE BOUCHARD | NOT ELIGIBLE | Delay under 3 hours | GBP 0.00",
+      "id": "CP060"
+    },
+    {
+      "section": "TRIP TRACER UI VALIDATION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "MISS SOPHIE BOUCHARD | NOT ELIGIBLE | Delay under 3 hours | GBP 0.00",
+      "expected": "MISS SOPHIE BOUCHARD | NOT ELIGIBLE | Delay under 3 hours | GBP 0.00",
+      "id": "CP061"
+    },
+    {
+      "section": "NOT ELIGIBLE RESULT � IN-CHAT DECLINE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot does NOT send the claim to manual review",
+      "expected": "",
+      "id": "CP062"
+    },
+    {
+      "section": "NOT ELIGIBLE RESULT � IN-CHAT DECLINE",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot displays: \"I've checked your flight details. Flight AC 865 from London Heathrow (LHR) to Montreal (YUL) arrived about 2 hours and 30 minutes late. Compensation under the UK passenger rights regulations and the Air Passenger Protection Regulations (APPR) applies only when the arrival delay is 3 hours or more, so the passengers on this booking are not eligible for compensation for this delay.\"",
+      "expected": "I've checked your flight details. Flight AC 865 from London Heathrow (LHR) to Montreal (YUL) arrived about 2 hours and 30 minutes late. Compensation under the UK passenger rights regulations and the Air Passenger Protection Regulations (APPR) applies only when the arrival delay is 3 hours or more, so the passengers on this booking are not eligible for compensation for this delay.",
+      "id": "CP063"
+    },
+    {
+      "section": "NOT ELIGIBLE RESULT � IN-CHAT DECLINE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no compensation amount is quoted (amount = 0)",
+      "expected": "",
+      "id": "CP064"
+    },
+    {
+      "section": "NOT ELIGIBLE RESULT � IN-CHAT DECLINE",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no manual-review reference number is given",
+      "expected": "",
+      "id": "CP065"
+    },
+    {
+      "section": "PAYMENT FLOW SKIPPED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then CyberSource fraud screening (GLOB-05) is NOT triggered",
+      "expected": "",
+      "id": "CP066"
+    },
+    {
+      "section": "PAYMENT FLOW SKIPPED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the country of residence question is NOT asked",
+      "expected": "",
+      "id": "CP067"
+    },
+    {
+      "section": "PAYMENT FLOW SKIPPED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no Cash or AC Wallet offer is shown",
+      "expected": "",
+      "id": "CP068"
+    },
+    {
+      "section": "PAYMENT FLOW SKIPPED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And no Interac email is requested",
+      "expected": "",
+      "id": "CP069"
+    },
+    {
+      "section": "PAYMENT FLOW SKIPPED",
+      "requirement": null,
+      "kind": "idv",
+      "method": "chat",
+      "step": "And Persona IDV (FD-07b) is NOT triggered",
+      "expected": "",
+      "id": "CP070"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "email",
+      "method": "email",
+      "step": "Then a not-eligible notification email is sent via Adobe to c***@gmail.com containing: Case Reference, outcome (Not Eligible), reason (arrival delay under 3 hours), regulation (UK / EU 261 and APPR), flight details (AC 865 LHR ? YUL)",
+      "expected": "",
+      "id": "CP071"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers: \"Is there anything I can help you with?\"",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP072"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP073"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP074"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "Given a case has been created for primary claimant \"Catherine Bouchard\" with PNR \"TC003\" covering 3 passengers",
+      "expected": "",
+      "id": "CP075"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the Case Header Topic/Sub-topic should be \"Travel Disruptions � Delay\" mapped from chatbot intent",
+      "expected": "",
+      "id": "CP076"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the agent should be able to edit Topic/Sub-topic but cannot switch automated to non-automated",
+      "expected": "",
+      "id": "CP077"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Case Status should be \"Done\"",
+      "expected": "",
+      "id": "CP078"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Created date should be populated",
+      "expected": "",
+      "id": "CP079"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Last Updated date should be populated",
+      "expected": "",
+      "id": "CP080"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the SLA countdown should be tracking correctly",
+      "expected": "",
+      "id": "CP081"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Team assignment should be correct",
+      "expected": "",
+      "id": "CP082"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And no banners should be displayed for identified and authenticated Auth Flow 1 user",
+      "expected": "",
+      "id": "CP083"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Decision Assist panel should NOT be greyed out",
+      "expected": "",
+      "id": "CP084"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Claimant Name should be \"Catherine Bouchard\"",
+      "expected": "",
+      "id": "CP085"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Claimant Type should be \"Adult\"",
+      "expected": "",
+      "id": "CP086"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Authentication should be \"Pass\"",
+      "expected": "",
+      "id": "CP087"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the PNR should be \"TC003\"",
+      "expected": "",
+      "id": "CP088"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the PNR Creation Date should be populated",
+      "expected": "",
+      "id": "CP089"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Journey ID should be populated",
+      "expected": "",
+      "id": "CP090"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Booking Source should be populated",
+      "expected": "",
+      "id": "CP091"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Booking Office ID should be populated",
+      "expected": "",
+      "id": "CP092"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And the Regime should be \"EU (UK)\" with APPR also listed as applicable",
+      "expected": "EU (UK)",
+      "id": "CP093"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And all 3 passengers should be listed (Catherine Bouchard, Alexandre Bouchard, Sophie Bouchard)",
+      "expected": "",
+      "id": "CP094"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Tags for the claimant should include \"Claimant\" and \"Adult\"",
+      "expected": "",
+      "id": "CP095"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "email",
+      "method": "email",
+      "step": "And the Email should be \"c***@gmail.com\"",
+      "expected": "c***@gmail.com",
+      "id": "CP096"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Phone should be \"+1***567\"",
+      "expected": "",
+      "id": "CP097"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Address should be populated",
+      "expected": "",
+      "id": "CP098"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Aeroplan should be \"9876543210\" linked and in good standing (Basic Member)",
+      "expected": "",
+      "id": "CP099"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Tier Status should be \"Basic / Member\"",
+      "expected": "",
+      "id": "CP100"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Journey should show \"Bound 1: LHR ? YUL\" with claim filed for this flight",
+      "expected": "",
+      "id": "CP101"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Ancillary Fee section should be present and empty",
+      "expected": "",
+      "id": "CP102"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Eligibility and Compensation section should show \"NOT ELIGIBLE � Delay under 3 hours � GBP 0\" for all 3 passengers",
+      "expected": "",
+      "id": "CP103"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And no Cash or AC Wallet offer should be recorded",
+      "expected": "",
+      "id": "CP104"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Decision Assist Panel should auto-appear for FD topic",
+      "expected": "",
+      "id": "CP105"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And DDS should have run automatically with no agent action needed",
+      "expected": "",
+      "id": "CP106"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the eligibility decision should be pre-populated as \"NOT ELIGIBLE\" (EU/UK and APPR, 2h 30m delay)",
+      "expected": "",
+      "id": "CP107"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Duplicate Check should have run automatically using baseline data \"Catherine Bouchard + TC003 + LHR?YUL + FD\"",
+      "expected": "",
+      "id": "CP108"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the result should be \"No duplicate found\"",
+      "expected": "",
+      "id": "CP109"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And no Duplicate Warning Banner should be displayed",
+      "expected": "",
+      "id": "CP110"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Related Cases tab should show no related cases",
+      "expected": "",
+      "id": "CP111"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the CyberSource result should be \"Not triggered\"",
+      "expected": "",
+      "id": "CP112"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "idv",
+      "method": "chat",
+      "step": "And the IDV status should be \"Not triggered\"",
+      "expected": "Not triggered",
+      "id": "CP113"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And no manual-review queue item should exist for this case",
+      "expected": "",
+      "id": "CP114"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system should have appended the booking record automatically",
+      "expected": "",
+      "id": "CP115"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer poll should NOT be required",
+      "expected": "",
+      "id": "CP116"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "email",
+      "method": "email",
+      "step": "And a not-eligible notification email should have been sent via Adobe",
+      "expected": "",
+      "id": "CP117"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Agent Notes section should be accessible",
+      "expected": "",
+      "id": "CP118"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Audit Log should record all actions with timestamps and before/after values",
+      "expected": "",
+      "id": "CP119"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "email",
+      "method": "email",
+      "step": "And Customer Communications should show the notification email chronologically",
+      "expected": "",
+      "id": "CP120"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the chatbot transcript should be accessible and linked",
+      "expected": "",
+      "id": "CP121"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Attachments tab should be empty",
+      "expected": "",
+      "id": "CP122"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Final Status should be \"Resolved\"",
+      "expected": "",
+      "id": "CP123"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case should be in read-only mode with no editable Decision Assist fields",
+      "expected": "",
+      "id": "CP124"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the agent should not be able to access Case Search as it is for leads and management only",
+      "expected": "Payment Validation Gherkin:",
+      "id": "CP125"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "Given the claim outcome is \"NOT ELIGIBLE\" for all 3 passengers",
+      "expected": "",
+      "id": "CP126"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "Then no country of residence should be collected for payment",
+      "expected": "",
+      "id": "CP127"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And no Cash or AC Wallet option should be offered",
+      "expected": "",
+      "id": "CP128"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "email",
+      "method": "email",
+      "step": "And no Interac email, banking or card details should be collected",
+      "expected": "",
+      "id": "CP129"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And no compensation record should be created",
+      "expected": "",
+      "id": "CP130"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And no record should be picked up by the daily evening batch file",
+      "expected": "",
+      "id": "CP131"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And nothing should be dispatched to Unifier or EIP",
+      "expected": "",
+      "id": "CP132"
+    },
+    {
+      "section": "NOTIFICATION & WRAP-UP",
+      "requirement": "GLOB-11",
+      "kind": "system",
+      "method": "implied",
+      "step": "And the Claims Dashboard Compensation tab should show no payout (GBP 0 / no payment instruction)",
+      "expected": "",
+      "id": "CP133"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "DDS returns an EU not-eligible response for all 3 pax.",
+      "expected": "DDS returns an EU not-eligible response for all 3 pax.",
+      "id": "CP134"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Trip Tracer: Promise = 14:00; Actual = 16:30; Delay = 2h 30m; MSL = Leg 1 (AC 865 LHR ? YUL); Code 68 Controllable; Regimes = EU (UK) + APPR.",
+      "expected": "Trip Tracer: Promise = 14:00; Actual = 16:30; Delay = 2h 30m; MSL = Leg 1 (AC 865 LHR ? YUL); Code 68 Controllable; Regimes = EU (UK) + APPR.",
+      "id": "CP135"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "Compensation: GBP 0 (under 3 hours).",
+      "expected": "Compensation: GBP 0 (under 3 hours).",
+      "id": "CP136"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "chat",
+      "step": "The bot declines in the chat with the reason, with no manual review, no payment offer, no CyberSource check and no IDV.",
+      "expected": "The bot declines in the chat with the reason, with no manual review, no payment offer, no CyberSource check and no IDV.",
+      "id": "CP137"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "id": "FD_TC_096",
+  "family": "FD",
+  "summary": "Single adult FRANCINE DUBE, 2 legs: AC 870 YUL-FRA on time (sched arr 07:30, actual 07:25) then Lufthansa LH 471 FRA-MUC (sched arr 11:00, actual 15:00, 240 min late, MSL) - Star Alliance partner leg; DDS does not auto-assess, StarQuest case forwarded to an agent",
+  "passengers": [
+    {
+      "firstName": "FRANCINE",
+      "lastName": "DUBE",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": null,
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "870",
+      "origin": "YUL",
+      "destination": "FRA",
+      "depLocal": "22:00",
+      "arrLocal": "07:30",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "LH",
+      "number": "471",
+      "origin": "FRA",
+      "destination": "MUC",
+      "depLocal": "09:55",
+      "arrLocal": "11:00",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "T",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": -5,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "delay",
+      "arrDelayMin": 240,
+      "depDelayMin": 240,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    },
+    {
+      "seg": 2,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NO_DETERMINATION",
+    "systemCode": "FD-APPR-ND-02",
+    "amount": null,
+    "currency": null,
+    "delayBand": null,
+    "delayMin": 240,
+    "control": null,
+    "cause": null,
+    "outcome": "STARQUEST case forwarded to agent (Forwarded - StarQuest Review)",
+    "ttUi": [
+      "Segment 1 (AC 870): Scheduled arrival 07:30, Actual arrival 07:25 - no delay",
+      "Segment 2 (LH 471): Scheduled arrival 11:00, Actual arrival 15:00 - 4hr delay",
+      "MSL = Segment 2 (LH 471), carrier Lufthansa (LH), Star Alliance partner",
+      "AC does not auto-assess; outcome STARQUEST CASE; DDS code FD-APPR-ND-02"
+    ],
+    "soc": null
+  },
+  "assumed": [
+    "cabin Y and booking class T on every segment (text gives none)",
+    "last name given as \"Dub?\" (character lost in source), taken as DUBE",
+    "this scenario has NO Trip Tracer UI validation block; ttUi built from expected-results MSL lines",
+    "AC 870 dep 22:00 on the day before (arrival 07:30 next morning), LH 471 dep 09:55 (dayOffset 1); transatlantic timing assumed because text gives only arrival times",
+    "AC 870 arrives 5 min early: arrDelayMin -5; LH 471 depDelayMin assumed 240",
+    "Aeroplan not linked",
+    "no delay/cancel codes given"
+  ],
+  "unsupported": [
+    "Star Alliance partner status of LH is carrier reference data, not booking data"
+  ]
+}

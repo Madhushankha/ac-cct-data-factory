@@ -1,0 +1,99 @@
+{
+  "id": "SOC_UAT_003",
+  "family": "SOC",
+  "summary": "APPR SOC: 1 revenue pax on AC 201 YYZ-YVR scheduled Jun 5 14:00, rescheduled to Jun 6 08:00 (+1080 min), code 67 controllable, customer notified 15 h before scheduled departure (>=12h) -> NOT ELIGIBLE (SoC-APPR-NE-03)",
+  "passengers": [
+    {
+      "firstName": "ISABELLE",
+      "lastName": "GAGNON",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "CA",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "201",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "14:00",
+      "arrLocal": "15:40",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "PY",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "delay",
+      "arrDelayMin": 1080,
+      "depDelayMin": 1080,
+      "delayCode": "67",
+      "cancelCode": null,
+      "noticeHours": 15,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [
+    {
+      "seg": 1,
+      "depDeltaMin": 1080,
+      "arrDeltaMin": 1080,
+      "noticeHours": 15
+    }
+  ],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "APPR",
+    "eligibility": "NOT_ELIGIBLE",
+    "systemCode": "SoC-APPR-NE-03",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 1080,
+    "control": "CONTROLLABLE",
+    "cause": "67",
+    "ttUi": [
+      "TYPE: REVENUE",
+      "Trip Completed, Disruption Detected",
+      "Single-segment domestic trip YYZ→YVR on AC201 delayed +18H 00M due to crew (controllable)",
+      "PASSENGERS: 1 SEGMENTS: 1",
+      "Promised Itinerary: AC 201 YYZ→YVR Scheduled Dep 05-Jun 14:00",
+      "Current Itinerary: AC 201 YYZ→YVR ARRIVED LATE, Scheduled Dep 14:00 → Actual Dep 06-Jun 08:00, +18H 00M",
+      "SOC section present",
+      "PASSENGER | NOT_ELIGIBLE | DELAY_6_HOURS_OR_MORE",
+      "NOT_ELIGIBLE reason: Notified >=12 hours before departure"
+    ],
+    "soc": {
+      "eligibility": "NOT_ELIGIBLE",
+      "entitlements": "none; passenger notified >=12h before departure (APPR)"
+    }
+  },
+  "assumed": [
+    "no year given in text (dates like 01-Jun); flightDaysAgo 10 used so the flight is >72h old and <366 days",
+    "arrival times not stated in text; chosen from realistic block time, scheduled arrival delay assumed equal to departure delay (arrDelayMin = depDelayMin)",
+    "passenger name(s) not stated ([First Name] [Last Name] placeholders); invented",
+    "cabin Y with bookingClass 'PY' exactly as the text's Class of Booking (cabin mapping assumed)",
+    "Actual departure Jun 6 08:00 = dayOffset 1 vs the scheduled day (shown as the delay of 1080 min)",
+    "delay notified 15h before scheduled departure -> modelled as scheduleChange with noticeHours 15 (and outcome noticeHours 15)",
+    "residence CA assumed"
+  ],
+  "unsupported": []
+}

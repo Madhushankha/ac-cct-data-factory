@@ -1,0 +1,100 @@
+{
+ "id": "FD_TC_160",
+ "family": "FD",
+ "summary": "ASL YYZ-TLV AC085 cancelled (CREW, controllable) but re-routing delay only 2h (<3h threshold), customer stayed at YYZ and declined rebooking -> Not Eligible ILS 0",
+ "passengers": [
+  {
+   "firstName": "HADAS",
+   "lastName": "MOR",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": null,
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "85",
+   "origin": "YYZ",
+   "destination": "TLV",
+   "depLocal": "23:00",
+   "arrLocal": "16:00",
+   "dayOffset": 1,
+   "cabin": "Y",
+   "bookingClass": "Y",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": null,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "CREW",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "86",
+   "origin": "YYZ",
+   "destination": "TLV",
+   "depLocal": "01:00",
+   "arrLocal": "18:00",
+   "dayOffset": 1,
+   "accepted": false
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "ASL",
+  "eligibility": "NOT_ELIGIBLE",
+  "systemCode": "FD-ASL-NE-14",
+  "amount": 0,
+  "currency": "ILS",
+  "delayBand": null,
+  "delayMin": 120,
+  "control": "CONTROLLABLE",
+  "cause": "CREW",
+  "ttUi": [
+   "Promised Itinerary: AC 085 YYZ->TLV scheduled arrival 16:00 (local TLV)",
+   "Current Itinerary: AC 085 YYZ->TLV Status DISRUPTED",
+   "MSL Delay: 2H 00M - BELOW 3-HOUR ASL THRESHOLD",
+   "Customer Status: NO TRAVEL - ORIGIN (customer remained at YYZ, declined rebooking)",
+   "History: no rebooking accepted",
+   "Regime: ASL (Israel destination TLV)",
+   "Destination: TLV (Israel)",
+   "ASL Threshold: delay must be >= 3 hours; 2h < 3h -> NOT ELIGIBLE",
+   "Fallback: FALSE",
+   "Flight Compensation: MS HADAS MOR | NOT ELIGIBLE | DELAY_BELOW_3_HOURS | 0.00"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "scheduled arrival 16:00 local TLV given; dep 23:00 YYZ chosen (~10h flight, arrival next day)",
+  "re-routing delay 2h modelled as an offered but NOT accepted rebooking on AC 086 departing 01:00 (+2h) arriving 18:00 (+2h) next day; flight number and times chosen",
+  "flight date May 31, 2026 in text; flightDaysAgo=10",
+  "noticeHours not stated -> null",
+  "APPR also NE (below threshold)"
+ ],
+ "unsupported": []
+}

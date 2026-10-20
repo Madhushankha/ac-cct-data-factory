@@ -1,0 +1,441 @@
+{
+  "key": "CHAI-31827",
+  "test_id": "FD_ED_TC_16",
+  "title": "Passenger |Third-Party Submission | Travel Agent | NOA Required | Manual Handling |",
+  "goal": "A travel agent (not the passenger) submits a claim on behalf of their client. System detects third-party submission at the very first check and requires Notice of Authorization (NOA). Tests the Third Party Handoff flow from Miro.",
+  "summary": {
+    "seed": 1,
+    "chat": 27,
+    "api": 4,
+    "email": 3,
+    "dashboard": 3,
+    "implied": 8,
+    "manual": 0,
+    "report": 1
+  },
+  "checkpoints": [
+    {
+      "section": "GOAL",
+      "requirement": null,
+      "kind": "goal",
+      "method": "report",
+      "step": "A travel agent (not the passenger) submits a claim on behalf of their client. System detects third-party submission at the very first check and requires Notice of Authorization (NOA). Tests the Third Party Handoff flow from Miro.",
+      "expected": "",
+      "id": "CP001"
+    },
+    {
+      "section": "PREREQUISITES",
+      "requirement": null,
+      "kind": "prerequisite",
+      "method": "seed",
+      "step": "Claimant is a travel agent (NOT the passenger); Passenger: \"Emma Watson\" on PNR TCED16; Agent: \"Mark Johnson\" from \"TravelCo Agency\"",
+      "expected": "Claimant is a travel agent (NOT the passenger); Passenger: \"Emma Watson\" on PNR TCED16; Agent: \"Mark Johnson\" from \"TravelCo Agency\"",
+      "id": "CP002"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Given the user opens the agentic chatbot",
+      "expected": "",
+      "id": "CP003"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot displays greeting (GLOB-01):",
+      "expected": "Hello! I will be your virtual assistant today. I can assist you in English or French. Which language would you prefer to use today?",
+      "id": "CP004"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "Then user selects English",
+      "expected": "",
+      "id": "CP005"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "Then an alert information is displayed \"Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.\"",
+      "expected": "Please note that by using this service, you will interact with an automated chatbot which uses AI to answer your questions and requests. Your personal information will be used to identify and authenticate you, to answer your request, and for other purposes detailed in the Privacy Notice.",
+      "id": "CP006"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then chatbot asks \"How can I help you today?\"",
+      "expected": "How can I help you today?",
+      "id": "CP007"
+    },
+    {
+      "section": "START",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user says \"I'm a travel agent and I'd like to file a compensation claim on behalf of my client whose flight was delayed\"",
+      "expected": "I'm a travel agent and I'd like to file a compensation claim on behalf of my client whose flight was delayed",
+      "id": "CP008"
+    },
+    {
+      "section": "INTENT DETECTION � THIRD-PARTY SUBMISSION DETECTED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "When the chatbot identifies flight disruption intent",
+      "expected": "",
+      "id": "CP009"
+    },
+    {
+      "section": "INTENT DETECTION � THIRD-PARTY SUBMISSION DETECTED",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the chatbot checks: Is this a third-party submission? ? YES (user identified as travel agent filing on behalf of client)",
+      "expected": "",
+      "id": "CP010"
+    },
+    {
+      "section": "THIRD-PARTY HANDOFF � IMMEDIATE",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I understand you'd like to file a claim on behalf of your client. For third-party submissions, we require a Notice of Authorization (NOA) from the passenger authorizing you to act on their behalf. To proceed, please provide: 1 2 3 Would you like to proceed?",
+      "id": "CP011"
+    },
+    {
+      "section": "THIRD-PARTY HANDOFF � IMMEDIATE",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"Yes\"",
+      "expected": "Yes",
+      "id": "CP012"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Please provide your details as the authorized representative.",
+      "id": "CP013"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot asks: \"What is your full name?\"",
+      "expected": "What is your full name?",
+      "id": "CP014"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"Mark Johnson\"",
+      "expected": "Mark Johnson",
+      "id": "CP015"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot asks: \"What is the name of your travel agency?\"",
+      "expected": "What is the name of your travel agency?",
+      "id": "CP016"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"TravelCo Agency\"",
+      "expected": "TravelCo Agency",
+      "id": "CP017"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot asks: \"What is your contact email address?\"",
+      "expected": "What is your contact email address?",
+      "id": "CP018"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"mark.johnson@travelco.com\"",
+      "expected": "mark.johnson@travelco.com",
+      "id": "CP019"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot asks: \"What is your contact phone number?\"",
+      "expected": "What is your contact phone number?",
+      "id": "CP020"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"+1-426-555-9876\"",
+      "expected": "+1-426-555-9876",
+      "id": "CP021"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "And the chatbot asks: \"What is the passenger's booking reference number (PNR)?\"",
+      "expected": "What is the passenger's booking reference number (PNR)?",
+      "id": "CP022"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user provides \"PNR: TC236\"",
+      "expected": "PNR: TC236",
+      "id": "CP023"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Then the chatbot searches Trip Tracer for PNR: TC236",
+      "expected": "",
+      "id": "CP024"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer returns: PNR FOUND",
+      "expected": "",
+      "id": "CP025"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "And Trip Tracer identifies: Passenger = \"Emma Watson\"",
+      "expected": "Emma Watson",
+      "id": "CP026"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "I found the booking. The passenger on this booking is Emma Watson. Is this the client you're filing on behalf of?",
+      "id": "CP027"
+    },
+    {
+      "section": "THIRD-PARTY INFORMATION COLLECTION",
+      "requirement": null,
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user confirms \"Yes\"",
+      "expected": "Yes",
+      "id": "CP028"
+    },
+    {
+      "section": "NOA UPLOAD",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Please upload the Notice of Authorization (NOA) signed by Emma Watson, authorizing you (Mark Johnson / TravelCo Agency) to file a claim on her behalf. Accepted formats: PDF, JPG, PNG (max 10MB).",
+      "id": "CP029"
+    },
+    {
+      "section": "NOA UPLOAD",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the user uploads: NOA_EmmaWatson_TravelCo.pdf",
+      "expected": "",
+      "id": "CP030"
+    },
+    {
+      "section": "NOA VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system receives the uploaded NOA document",
+      "expected": "",
+      "id": "CP031"
+    },
+    {
+      "section": "NOA VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the system checks:",
+      "expected": "? File format: PDF ? ? File size: 1.8 MB ? (under 10MB limit) ? Document type: NOA (Notice of Authorization) ? ? Content readable: YES ? NOTE: NOA content validation (verifying passenger signature, matching PNR, matching agent details) is done MANUALLY by an agent � the system cannot auto-validate NOA content.",
+      "id": "CP032"
+    },
+    {
+      "section": "CASE CREATION � THIRD-PARTY MANUAL HANDLING",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "Then the system creates a case with status: PENDING MANUAL HANDLING (Third-Party Submission)",
+      "expected": "",
+      "id": "CP033"
+    },
+    {
+      "section": "CASE CREATION � THIRD-PARTY MANUAL HANDLING",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "And the case contains:",
+      "expected": "� PNR: TC236 � Passenger: Emma Watson � Claimant Type: THIRD-PARTY (Travel Agent) � Agent Name: Mark Johnson � Agency: TravelCo Agency � Agent Email: mark.johnson@travelco.com � Agent Phone: +1-426-555-9876 � NOA Document: NOA_EmmaWatson_TravelCo.pdf (attached) � Authentication Status: PENDING (third-party � requires manual NOA verification) � Case Status: Pending Manual Handling � Routing: Customer Relations / Third-Party Verification Team",
+      "id": "CP034"
+    },
+    {
+      "section": "CASE CREATION � THIRD-PARTY MANUAL HANDLING",
+      "requirement": null,
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds:",
+      "expected": "Thank you, Mark. Your claim on behalf of Emma Watson has been received. Our Customer Relations team will review the Notice of Authorization and process the claim. You will receive updates at mark.johnson@travelco.com. Your case reference number is [CASE-REF]. Please allow up to 15 business days for processing.",
+      "id": "CP035"
+    },
+    {
+      "section": "CASE CREATION � THIRD-PARTY MANUAL HANDLING",
+      "requirement": null,
+      "kind": "alert",
+      "method": "chat",
+      "step": "And an alert information is displayed: \"Third-party claim received for manual review.\"",
+      "expected": "Third-party claim received for manual review.",
+      "id": "CP036"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "Then the system triggers notification via Adobe:",
+      "expected": "",
+      "id": "CP037"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And a Third-Party Claim notification email is sent to mark.johnson@travelco.com (agent email)",
+      "expected": "",
+      "id": "CP038"
+    },
+    {
+      "section": "NOTIFICATION",
+      "requirement": null,
+      "kind": "email",
+      "method": "email",
+      "step": "And the email contains:",
+      "expected": "Third-party claim received � [CASE-REF] Your claim is under review. Our team will verify the Notice of Authorization and process the claim. A claim has been filed on your behalf � [CASE-REF] A travel agent has filed a flight disruption claim on your behalf. If you did not authorize this, please contact us immediately.",
+      "id": "CP039"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot offers:",
+      "expected": "Is there anything I can help you with?",
+      "id": "CP040"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "customer",
+      "method": "chat",
+      "step": "And the user selects \"No\"",
+      "expected": "No",
+      "id": "CP041"
+    },
+    {
+      "section": "END FLOW",
+      "requirement": "GLOB-11",
+      "kind": "bot",
+      "method": "chat",
+      "step": "Then the chatbot responds \"Thank you for choosing Air Canada.\"",
+      "expected": "Thank you for choosing Air Canada.",
+      "id": "CP042"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "When the agent navigates to Claims Dashboard",
+      "expected": "",
+      "id": "CP043"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "And the agent searches for the case by PNR",
+      "expected": "",
+      "id": "CP044"
+    },
+    {
+      "section": "CLAIMS DASHBOARD VALIDATION",
+      "requirement": null,
+      "kind": "dashboard",
+      "method": "dashboard",
+      "step": "Then the dashboard displays:",
+      "expected": "� Case Title: \"Travel Disruptions � Third-Party Claim\" � Status: Pending Manual Handling � Created: � Last updated at � SLA � Team: Customer Relations / Third-Party Verification CASE OVERVIEW � Passenger Name: Emma Watson � Claimant Type: THIRD-PARTY (Travel Agent) � Agent Name: Mark Johnson � Agency: TravelCo Agency � Agent Email: mark.johnson@travelco.com � Agent Phone: +1-426-555-9876 � Authentication Status: PENDING (NOA uploaded, awaiting manual verification) � PNR: TC236 ATTACHMENTS � NOA_EmmaWatson_TravelCo.pdf ELIGIBILITY AND COMPENSATION � Status: PENDING (third-party � NOA verification required)",
+      "id": "CP045"
+    },
+    {
+      "section": "THIRD-PARTY VALIDATION",
+      "requirement": null,
+      "kind": "system",
+      "method": "implied",
+      "step": "? Third-party detected at first check: YES ?",
+      "expected": "? Agent details collected: YES ? ? NOA uploaded: YES ? ? Passenger notified of third-party claim: YES ? ? Standard flow bypassed (no OTP, no DDS, no payment): YES ? ? Case routed to manual handling: YES ?",
+      "id": "CP046"
+    },
+    {
+      "section": "EXPECTED RESULTS",
+      "requirement": null,
+      "kind": "verdict",
+      "method": "api",
+      "step": "Third-party submission detected at first check; Agent details collected; NOA uploaded and attached; Case routed to manual third-party verification; Dashboard shows submission type, agent details, and NOA; DDS not triggered until verification complete",
+      "expected": "Third-party submission detected at first check; Agent details collected; NOA uploaded and attached; Case routed to manual third-party verification; Dashboard shows submission type, agent details, and NOA; DDS not triggered until verification complete",
+      "id": "CP047"
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "id": "SOC_UAT_046",
+  "family": "SOC",
+  "summary": "1 adult, LHR-YYZ-YVR on AC 858 + AC 859; AC 859 cancelled, stranded at YYZ 14h, rebooked next day; EU SOC eligible (SOC segment = seg 2)",
+  "passengers": [
+    {
+      "firstName": "ISABELLA",
+      "lastName": "CLARKE",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "GB",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "858",
+      "origin": "LHR",
+      "destination": "YYZ",
+      "depLocal": "10:00",
+      "arrLocal": "13:00",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "859",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "16:00",
+      "arrLocal": "18:20",
+      "dayOffset": 0,
+      "cabin": "W",
+      "bookingClass": "O",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": 0,
+      "depDelayMin": 0,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": 840,
+      "depDelayMin": 840,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": 0,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [
+    {
+      "replacesSeg": 2,
+      "carrier": "AC",
+      "number": "859",
+      "origin": "YYZ",
+      "destination": "YVR",
+      "depLocal": "06:00",
+      "arrLocal": "08:20",
+      "dayOffset": 1,
+      "accepted": true
+    }
+  ],
+  "scheduleChanges": [],
+  "paxEvents": [],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "EU",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "SoC-EU-EL-06",
+    "amount": null,
+    "currency": null,
+    "delayBand": "DELAY_6_HOURS_OR_MORE",
+    "delayMin": 840,
+    "control": null,
+    "cause": null,
+    "ttUi": [
+      "Trip Not Completed, Disruption Detected",
+      "Multi-segment trip LHR->YYZ->YVR - Segment 1 AC858 on time, Segment 2 AC859 YYZ->YVR cancelled. Passenger stranded at YYZ for 14 hours.",
+      "Regime: EU (LHR departure - journey origin)",
+      "PASSENGERS: 1 - SEGMENTS: 2",
+      "Promised: Seg 1 AC 858 LHR->YYZ | Seg 2 AC 859 YYZ->YVR (22-Jun)",
+      "Current: Seg 1 ON TIME | Seg 2 CANCELLED - Rebooked next day",
+      "SOC Segment: AC 859 YYZ->YVR; Cancellation: YES | SOC Segment Delay: 840 min (14h) >= 2h; Controllability NOT CHECKED",
+      "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_6_HOURS_OR_MORE | MEAL EUR 60.00 | ACCOMMODATION: Rate of day (max EUR 500) | GENERAL EXPENSES: Transport EUR 200 + Comm EUR 30 + Parking EUR 50 + Essentials EUR 30",
+      "CyberSource: GREEN",
+      "DDS code SoC-EU-EL-06"
+    ],
+    "soc": {
+      "eligibility": "ELIGIBLE",
+      "entitlements": "Meals 60, hotel rate of day max 3 nights cap 500, transport 200, communication 30, parking 50, essentials 30"
+    }
+  },
+  "assumed": [
+    "Passenger name chosen",
+    "Times chosen: AC858 10:00-13:00, AC859 16:00-18:20; rebooked AC 859 next day 06:00-08:20 (14h after scheduled departure)",
+    "cancelCode null (irrelevant under EU SOC)",
+    "Cabin W (PY), class O",
+    "Residence GB",
+    "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10 (>72h, within every EU limitation period)."
+  ],
+  "unsupported": []
+}

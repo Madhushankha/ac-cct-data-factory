@@ -1,0 +1,123 @@
+{
+  "id": "FD_TC_153",
+  "family": "FD",
+  "summary": "ASL YYZ-YUL-TLV: AC410 on time, AC084 YUL-TLV cancelled (CREW), customer stranded at YUL (no travel incomplete) -> Eligible ILS 3,670 + expenses + refund",
+  "passengers": [
+    {
+      "firstName": "AVI",
+      "lastName": "GOLDSTEIN",
+      "type": "ADT",
+      "aeroplanNumber": null,
+      "aeroplanTier": null,
+      "residence": "IL",
+      "employee": false
+    }
+  ],
+  "segments": [
+    {
+      "seg": 1,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "410",
+      "origin": "YYZ",
+      "destination": "YUL",
+      "depLocal": "08:00",
+      "arrLocal": "09:20",
+      "dayOffset": 0,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    },
+    {
+      "seg": 2,
+      "bound": 1,
+      "carrier": "AC",
+      "number": "84",
+      "origin": "YUL",
+      "destination": "TLV",
+      "depLocal": "18:30",
+      "arrLocal": "11:30",
+      "dayOffset": 1,
+      "cabin": "Y",
+      "bookingClass": "Y",
+      "status": "HK"
+    }
+  ],
+  "flightDaysAgo": 10,
+  "outcomes": [
+    {
+      "seg": 1,
+      "kind": "ontime",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": null,
+      "noticeHours": null,
+      "divertTo": null
+    },
+    {
+      "seg": 2,
+      "kind": "cancel",
+      "arrDelayMin": null,
+      "depDelayMin": null,
+      "delayCode": null,
+      "cancelCode": "CREW",
+      "noticeHours": null,
+      "divertTo": null
+    }
+  ],
+  "rebooking": [],
+  "scheduleChanges": [],
+  "paxEvents": [
+    {
+      "seg": 1,
+      "pax": 1,
+      "event": "boarded"
+    },
+    {
+      "seg": 2,
+      "pax": 1,
+      "event": "not_travelled"
+    }
+  ],
+  "vouchers": [],
+  "bags": [],
+  "expect": {
+    "regime": "ASL",
+    "eligibility": "ELIGIBLE",
+    "systemCode": "FD-ASL-EL-09",
+    "amount": 3670,
+    "currency": "ILS",
+    "delayBand": null,
+    "delayMin": null,
+    "control": "CONTROLLABLE",
+    "cause": "CREW",
+    "ttUi": [
+      "Segment 1: AC 410 YYZ->YUL COMPLETED (on time)",
+      "Segment 2: AC 084 YUL->TLV CANCELLED",
+      "Customer Status: NO TRAVEL - INCOMPLETE (stranded at YUL, did not return to YYZ, did not reach TLV)",
+      "History: customer stranded at mid-point YUL; no rebooking; no return to origin",
+      "Regime: ASL (Israel destination TLV) + APPR (Canadian origin YYZ)",
+      "MSL FLIGHT: AC 084 YUL->TLV",
+      "Cancellation Code: CREW (4-character NetLine code)",
+      "Cancellation - crew unavailability",
+      "NOT EXTRAORDINARY",
+      "Disruption Type: CANCELLATION (Leg 2, mid-journey)",
+      "ASL No Travel: Branch B (did not remain at origin, at midpoint YUL) -> MSL cancelled -> Not Extraordinary -> ELIGIBLE",
+      "Compensation: ILS 3,670 + Expenses + Pro-rated/full ticket refund",
+      "Fallback: FALSE",
+      "Flight Compensation: MR AVI GOLDSTEIN | ELIGIBLE | ASL_NO_TRAVEL_INCOMPLETE_NON_EXTRAORDINARY | ILS 3,670.00"
+    ],
+    "soc": {
+      "eligibility": "ELIGIBLE",
+      "entitlements": "ILS 3,670 + expenses + pro-rated/full ticket refund"
+    }
+  },
+  "assumed": [
+    "times chosen: AC410 08:00-09:20, AC084 YUL 18:30 -> TLV 11:30 next day",
+    "noticeHours not stated -> null",
+    "flight 084 written as number 84",
+    "residence Israel, Aeroplan not linked (given)"
+  ],
+  "unsupported": []
+}

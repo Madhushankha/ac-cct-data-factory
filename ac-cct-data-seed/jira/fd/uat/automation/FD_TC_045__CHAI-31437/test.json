@@ -1,0 +1,30 @@
+{
+  "key": "CHAI-31437",
+  "issue_id": "7380285",
+  "test_id": "FD_TC_045",
+  "summary": "FD_TC_045_Not Eligible | Employee AC | APPR",
+  "title": "Not Eligible | Employee AC | APPR",
+  "status": "New",
+  "priority": "Low",
+  "labels": [],
+  "scenario_type": "scenario",
+  "execution": "CHAI-31809",
+  "synced_at": "2026-10-13T07:02:34Z",
+  "description": "Passenger is an Air Canada employee travelling on a staff/employee booking. Employee bookings are NOT eligible for compensation under ANY regime � APPR, EU 261, or ASL. The employee exclusion is a universal override that applies BEFORE controllability or delay assessment � even though the flight has a 4hr controllable delay (which would normally yield $400), the employee flag terminates eligibility immediately. Validates that: (1) DDS detects the employee booking flag from Trip Tracer, (2) Employee exclusion overrides all other eligible conditions (controllable code, sufficient delay, valid route), (3) No payment flow is triggered (CyberSource NOT invoked, IDV NOT required), (4) All three regimes return Not Eligible simultaneously. This is a PRE-ASSESSMENT exclusion � DDS should check employee status before running the full delay/controllability/tier logic.\n\nPrerequisites:\nPNR: TC022 � single passenger (Adult). Employee Flag: AC EMPLOYEE BOOKING � staff travel flag present in Trip Tracer PNR data. Journey: 1 leg AC operated, Flight AC 326, YUL?YYZ (domestic Canada). Scheduled arrival: 14:00. Actual arrival: 18:00 (4hr delay). Disruption code: 42(Scheduled Maintenance� Controllable). Arrival code: 42(available, no fallback needed). Regime: APPR (domestic Canada). Booking changes: None. Timing: >72hrs elapsed. Filing: Within 1-year limitation. Key distinction: Despite controllable 4hr delay on valid domestic route (normally $400 Tier 1), the employee flag overrides everything.",
+  "goal": "Passenger is an Air Canada employee travelling on a staff/employee booking. Employee bookings are NOT eligible for compensation under ANY regime � APPR, EU 261, or ASL. The employee exclusion is a universal override that applies BEFORE controllability or delay assessment � even though the flight has a 4hr controllable delay (which would normally yield $400), the employee flag terminates eligibility immediately. Validates that: (1) DDS detects the employee booking flag from Trip Tracer, (2) Employee exclusion overrides all other eligible conditions (controllable code, sufficient delay, valid route), (3) No payment flow is triggered (CyberSource NOT invoked, IDV NOT required), (4) All three regimes return Not Eligible simultaneously. This is a PRE-ASSESSMENT exclusion � DDS should check employee status before running the full delay/controllability/tier logic.",
+  "prerequisites": "PNR: TC022 � single passenger (Adult). Employee Flag: AC EMPLOYEE BOOKING � staff travel flag present in Trip Tracer PNR data. Journey: 1 leg AC operated, Flight AC 326, YUL?YYZ (domestic Canada). Scheduled arrival: 14:00. Actual arrival: 18:00 (4hr delay). Disruption code: 42(Scheduled Maintenance� Controllable). Arrival code: 42(available, no fallback needed). Regime: APPR (domestic Canada). Booking changes: None. Timing: >72hrs elapsed. Filing: Within 1-year limitation. Key distinction: Despite controllable 4hr delay on valid domestic route (normally $400 Tier 1), the employee flag overrides everything.",
+  "prerequisite_items": [
+    "PNR: TC022 � single passenger (Adult)",
+    "Employee Flag: AC EMPLOYEE BOOKING � staff travel flag present in Trip Tracer PNR data",
+    "Journey: 1 leg AC operated, Flight AC 326, YUL?YYZ (domestic Canada)",
+    "Scheduled arrival: 14:00",
+    "Actual arrival: 18:00 (4hr delay)",
+    "Disruption code: 42(Scheduled Maintenance� Controllable)",
+    "Arrival code: 42(available, no fallback needed)",
+    "Regime: APPR (domestic Canada)",
+    "Booking changes: None",
+    "Timing: >72hrs elapsed",
+    "Filing: Within 1-year limitation",
+    "Key distinction: Despite controllable 4hr delay on valid domestic route (normally $400 Tier 1), the employee flag overrides everything"
+  ]
+}

@@ -1,0 +1,19 @@
+id: lost-no-expenses
+title: Lost contents, no expenses -> contents -> payment
+booking: { pool: any, pick: next-unused, need: [lost], avoid: [partner, waiting, two-bags, two-journeys, cap-spent, duplicate, closed] }
+first_message: "My bag is lost and I want to claim for what was inside it."
+steps:
+  - notice: "yes"
+  - identify: true
+  - verify: true
+  - journey: one
+  - expect: { step: BAG-03c.S5, board: '"Has your bag been delivered?"', any_of: ["been delivered"], buttons: ["Yes, it was delivered!", "No, I still haven't received it!"] }
+  - delivery: "no"
+  - expect: { step: BAG-03e.S2, any_of: ["list the items"], box: "Before you begin", buttons: ["Yes, let's start", "No, not now"] }
+  - readiness: "yes"
+  - contents: { category: Clothing, cad: true, item: Shirt, qty: 1, amount: 80 }
+  - confirm: true
+  - expect: { step: BAG-06.S20, layout: success, text: "submission was successful" }
+  - expect: { step: GenUC-16a, board: payout country, text: "in which country will it be deposited", form: ["Country*"] }
+  - stop: payout-country
+known: []

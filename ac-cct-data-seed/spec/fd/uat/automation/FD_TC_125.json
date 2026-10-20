@@ -1,0 +1,93 @@
+{
+ "id": "FD_TC_125",
+ "family": "FD",
+ "summary": "Adult, AC870 CDG-YYZ dep 10:00 sched arr 13:00, arrived 16:40 (+220 min), no arrival code, departure code 19 fallback: EU261 Rest of Europe EUR 300",
+ "passengers": [
+  {
+   "firstName": "CAMILLE",
+   "lastName": "LEFEVRE",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "FR",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "870",
+   "origin": "CDG",
+   "destination": "YYZ",
+   "depLocal": "10:00",
+   "arrLocal": "13:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 220,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null,
+   "arrDelayCode": null,
+   "depDelayCode": "19",
+   "fallback": true
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "EU",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-EU-EL-17",
+  "amount": 300,
+  "currency": "EUR",
+  "delayBand": "EU261_TRAVEL_COMPLETED_REST_OF_EUROPE_3_TO_4HR_FALLBACK_CODE",
+  "delayMin": 220,
+  "control": "CONTROLLABLE",
+  "cause": "19",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 870, Route: CDG → YYZ, Scheduled Departure: 10:00, Scheduled Arrival: 13:00 (local YYZ)",
+   "Current Itinerary - Flight: AC 870, Route: CDG → YYZ, Actual Arrival: 16:40 (local YYZ), Status: ARRIVED (DELAYED)",
+   "Delay at Arrival: 3 hours 40 minutes (220 minutes)",
+   "Delay Band: 180-239 min → 3-<4 hours (DELAY_3_TO_LT_4_HOURS)",
+   "Customer Status: TRAVEL COMPLETED",
+   "Regime: EU 261 (Rest of Europe - CDG origin) + APPR (Canada arrival)",
+   "Origin Region: CDG = Rest of Europe",
+   "MSL FLIGHT: AC 870 - CDG → YYZ",
+   "Arrival Delay Code: UNAVAILABLE (no arrival code assigned)",
+   "Departure Delay Code: 19 - CONTROLLABLE",
+   "Fallback: TRUE - arrival delay code unavailable → Rules Engine used first departure delay code (19) (priority: cancellation code → first arrival delay code → first departure delay code)",
+   "CONTROLLABLE (Departure code 19)",
+   "Disruption Type: DELAY",
+   "EU 261: Travel Completed, Rest of Europe, 3-<4 hr delay, Controllable (fallback departure code) = €300",
+   "APPR: Travel Completed, Controllable, 3-<6 hr delay = $400 CAD",
+   "Most Generous: EU 261 Rest of Europe selected",
+   "Flight Compensation: MS CAMILLE LEFEVRE | ELIGIBLE | EU261_TRAVEL_COMPLETED_REST_OF_EUROPE_3_TO_4HR_FALLBACK_CODE | EUR 300.00 | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "residence FR (text: France, EUR)",
+  "Aeroplan not linked (cash only)",
+  "Dual regime: APPR $400 CAD (3-<6h) also assessed; EU 261 Rest of Europe selected as most generous",
+  "depDelayMin 0 (text gives only arrival delay)",
+  "delayCode null (arrival code unavailable); departure code in non-schema extras (arrDelayCode/depDelayCode/fallback) on the outcome",
+  "regime 'EU' = EU 261 Rest of Europe"
+ ],
+ "unsupported": []
+}

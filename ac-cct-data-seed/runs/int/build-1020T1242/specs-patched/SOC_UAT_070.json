@@ -1,0 +1,123 @@
+{
+ "id": "SOC_UAT_070",
+ "family": "SOC",
+ "summary": "1 adult in J: AC 090 TLV-HFA operated, AC 091 HFA-VDA cancelled (aircraft defect, code 05), rebooked 3h later; stranded at HFA; ASL SOC eligible with limited (short-delay) entitlements",
+ "passengers": [
+  {
+   "firstName": "DAN",
+   "lastName": "ELIAV",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "IL",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "090",
+   "origin": "TLV",
+   "destination": "HFA",
+   "depLocal": "08:00",
+   "arrLocal": "08:35",
+   "dayOffset": 0,
+   "cabin": "J",
+   "bookingClass": "J",
+   "status": "HK"
+  },
+  {
+   "seg": 2,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "091",
+   "origin": "HFA",
+   "destination": "VDA",
+   "depLocal": "14:00",
+   "arrLocal": "15:15",
+   "dayOffset": 0,
+   "cabin": "J",
+   "bookingClass": "J",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "ontime",
+   "arrDelayMin": 0,
+   "depDelayMin": 0,
+   "delayCode": null,
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  },
+  {
+   "seg": 2,
+   "kind": "delay",
+   "arrDelayMin": 180,
+   "depDelayMin": 180,
+   "delayCode": "05",
+   "cancelCode": null,
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [],
+ "paxEvents": [
+  {
+   "seg": 1,
+   "pax": 1,
+   "event": "boarded"
+  },
+  {
+   "seg": 2,
+   "pax": 1,
+   "event": "not_travelled"
+  }
+ ],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "ASL",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "SoC-ASL-EL-03",
+  "amount": null,
+  "currency": null,
+  "delayBand": "DELAY_2_TO_6_HOURS",
+  "delayMin": 180,
+  "control": null,
+  "cause": "05",
+  "ttUi": [
+   "TYPE: REVENUE",
+   "Trip Not Completed, Disruption Detected",
+   "Multi-segment trip TLV->HFA->VDA - Segment 2 AC091 HFA->VDA cancelled due to aircraft defect. Passenger stranded at HFA for 3 hours.",
+   "Regime: ASL (TLV->HFA->VDA = all Israel)",
+   "PASSENGERS: 1 - SEGMENTS: 2; Class of Booking: J (Business)",
+   "Promised: Seg 1 AC 090 TLV->HFA | Seg 2 AC 091 HFA->VDA",
+   "Current: Seg 1 ON TIME | Seg 2 CANCELLED",
+   "SOC Segment: AC 091 HFA->VDA; Departure Delay Code 05 (Aircraft Defect) - NOT CHECKED",
+   "Cancellation: YES | SOC Segment Delay: 180 min (3h) >= 2h",
+   "PASSENGER STATUS: ELIGIBLE | BAND: DELAY_2_TO_6_HOURS | MEAL ILS 55.00 (LIMITED short delay tier) | ACCOMMODATION: not entitled (delay <6h) | GENERAL EXPENSES: Comm ILS 110 only (Transport/Parking/Essentials NOT ENTITLED)",
+   "CyberSource: GREEN",
+   "DDS code SoC-ASL-EL-03"
+  ],
+  "soc": {
+   "eligibility": "ELIGIBLE",
+   "entitlements": "LIMITED: Meals ILS 55 + Communication ILS 110 only; no hotel, transport, parking or essentials (delay < 360 min)"
+  }
+ },
+ "assumed": [
+  "Passenger name chosen",
+  "Times chosen: AC090 08:00-08:35; AC091 scheduled 14:00-15:15, rebooked 17:00-18:15 (3h later)",
+  "cancelCode TECH inferred from code 05 (aircraft defect)",
+  "Cabin J, booking class J",
+  "Residence IL",
+  "Scenario dates (June 2026) are labels only; flight day set by flightDaysAgo=10."
+ ],
+ "unsupported": []
+}

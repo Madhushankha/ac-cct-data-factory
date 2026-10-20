@@ -1,0 +1,85 @@
+{
+ "id": "FD_TC_012",
+ "family": "FD",
+ "summary": "Single pax Nadia Fortin on AC 421 YUL-YYZ originally arr 10:00; day-of-travel schedule change by AC to arr 14:30 (+4h30), code 37 catering, APPR Tier 1 $400",
+ "passengers": [
+  {
+   "firstName": "NADIA",
+   "lastName": "FORTIN",
+   "type": "ADT",
+   "aeroplanNumber": null,
+   "aeroplanTier": null,
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "421",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:40",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "delay",
+   "arrDelayMin": 150,
+   "delayCode": "37"
+  }
+ ],
+ "rebooking": [],
+ "scheduleChanges": [
+  {
+   "seg": 1,
+   "depDeltaMin": 120,
+   "arrDeltaMin": 120,
+   "noticeHours": 0,
+   "changeType": "DT"
+  }
+ ],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": "FD-APPR-EL-01",
+  "amount": 400,
+  "currency": "CAD",
+  "delayBand": "DELAY_3_TO_LT_6_HOURS",
+  "delayMin": 270,
+  "control": "CONTROLLABLE",
+  "cause": "37",
+  "ttUi": [
+   "Promised Itinerary - Flight: AC 421, Route: YUL-YYZ, Scheduled Arrival: 10:00 (14-day mark, DT = INVOL, doesn't update)",
+   "Current Itinerary - Flight: AC 421, Route: YUL-YYZ, Status: ARRIVED LATE, Scheduled Arrival: 10:00 - Actual: 14:30, Delay: +4H 30M",
+   "History - Change 1: DT (AC schedule change) - arr 14:30",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 421 - YUL-YYZ - 37",
+   "\"Delayed due to catering\"",
+   "Delay: +4H 30M - CONTROLLABLE",
+   "MS NADIA FORTIN | ELIGIBLE | DELAY_3_TO_LT_6_HOURS | CAD 400.00 | [expiry date]"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "dep 08:40",
+  "day-of-travel schedule change +270 min with noticeHours 0 (changeType DT)",
+  "INVOL/VOL history is modelled with optional extra keys (voluntary, changeDaysBeforeDeparture, changeType) not in the base schema"
+ ],
+ "unsupported": [
+  "\"DT\" (day-of-travel) change type is not a base-schema field (added as optional changeType)",
+  "flight date: run uses flightDaysAgo=10 (text: filed D+13)"
+ ]
+}

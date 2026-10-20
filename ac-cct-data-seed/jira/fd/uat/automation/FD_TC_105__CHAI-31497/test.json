@@ -1,0 +1,25 @@
+{
+  "key": "CHAI-31497",
+  "issue_id": "7380345",
+  "test_id": "FD_TC_105",
+  "summary": "FD_TC_105_Travel Completed | APPR | INVOL Earlier Flight | Actual < Promise | Not Eligible",
+  "title": "Travel Completed | APPR | INVOL Earlier Flight | Actual < Promise | Not Eligible",
+  "status": "New",
+  "priority": "Low",
+  "labels": [],
+  "scenario_type": "scenario",
+  "execution": "CHAI-31809",
+  "synced_at": "2026-10-13T07:02:34Z",
+  "description": "AC involuntarily rebooked customer to an EARLIER flight. Customer arrived at 12:00 � 2 hours BEFORE the original promise of 14:00. Since the customer arrived EARLIER than promised, there is no delay (delay cannot be negative). Validates that: (1) DDS treats negative delay (early arrival) as zero, (2) An INVOL change to an earlier flight does NOT create a compensable event � arriving early is not a disruption, (3) The promise remains the original 14:00 (no VOL before the INVOL), and actual 12:00 is before that promise ? no delay. Edge case where INVOL actually benefits the customer.\n\nPrerequisites:\nPNR: single passenger(Adult). Journey: 1 leg AC operated, Flight AC 424, YUL?YYZ. Promise (14-day): Arrival = 14:00 (no VOL changes before the INVOL). INVOL change: AC rebooked to earlier flight � new arrival 12:00. Actual arrival: 12:00 (on time per INVOL rebooking � 2hrs BEFORE original promise). Delay calculation: 12:00 ? 14:00 = ?2hrs (arrived early) ? net delay = 0. Regime: APPR (domestic).",
+  "goal": "AC involuntarily rebooked customer to an EARLIER flight. Customer arrived at 12:00 � 2 hours BEFORE the original promise of 14:00. Since the customer arrived EARLIER than promised, there is no delay (delay cannot be negative). Validates that: (1) DDS treats negative delay (early arrival) as zero, (2) An INVOL change to an earlier flight does NOT create a compensable event � arriving early is not a disruption, (3) The promise remains the original 14:00 (no VOL before the INVOL), and actual 12:00 is before that promise ? no delay. Edge case where INVOL actually benefits the customer.",
+  "prerequisites": "PNR: single passenger(Adult). Journey: 1 leg AC operated, Flight AC 424, YUL?YYZ. Promise (14-day): Arrival = 14:00 (no VOL changes before the INVOL). INVOL change: AC rebooked to earlier flight � new arrival 12:00. Actual arrival: 12:00 (on time per INVOL rebooking � 2hrs BEFORE original promise). Delay calculation: 12:00 ? 14:00 = ?2hrs (arrived early) ? net delay = 0. Regime: APPR (domestic).",
+  "prerequisite_items": [
+    "PNR: single passenger(Adult)",
+    "Journey: 1 leg AC operated, Flight AC 424, YUL?YYZ",
+    "Promise (14-day): Arrival = 14:00 (no VOL changes before the INVOL)",
+    "INVOL change: AC rebooked to earlier flight � new arrival 12:00",
+    "Actual arrival: 12:00 (on time per INVOL rebooking � 2hrs BEFORE original promise)",
+    "Delay calculation: 12:00 ? 14:00 = ?2hrs (arrived early) ? net delay = 0",
+    "Regime: APPR (domestic)"
+  ]
+}

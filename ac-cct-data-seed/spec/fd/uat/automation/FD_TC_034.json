@@ -1,0 +1,96 @@
+{
+ "id": "FD_TC_034",
+ "family": "FD",
+ "summary": "Single pax Dominique Arsenault (Basic Aeroplan 9876543210); AC 435 YUL-YYZ dep 08:00 arr 10:00 cancelled HDLG (ACS ground-handling security check, controllable); INVOL reprotected on renumbered AC 445 YUL-YYZ, same 08:00 departure, arrival 17:00 (+7h); APPR Tier 2",
+ "passengers": [
+  {
+   "firstName": "DOMINIQUE",
+   "lastName": "ARSENAULT",
+   "type": "ADT",
+   "aeroplanNumber": "9876543210",
+   "aeroplanTier": "Basic",
+   "residence": "CA",
+   "employee": false
+  }
+ ],
+ "segments": [
+  {
+   "seg": 1,
+   "bound": 1,
+   "carrier": "AC",
+   "number": "435",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "10:00",
+   "dayOffset": 0,
+   "cabin": "Y",
+   "bookingClass": "T",
+   "status": "HK"
+  }
+ ],
+ "flightDaysAgo": 10,
+ "outcomes": [
+  {
+   "seg": 1,
+   "kind": "cancel",
+   "arrDelayMin": 420,
+   "depDelayMin": null,
+   "delayCode": null,
+   "cancelCode": "HDLG",
+   "noticeHours": null,
+   "divertTo": null
+  }
+ ],
+ "rebooking": [
+  {
+   "replacesSeg": 1,
+   "carrier": "AC",
+   "number": "445",
+   "origin": "YUL",
+   "destination": "YYZ",
+   "depLocal": "08:00",
+   "arrLocal": "17:00",
+   "dayOffset": 0,
+   "accepted": true
+  }
+ ],
+ "scheduleChanges": [],
+ "paxEvents": [],
+ "vouchers": [],
+ "bags": [],
+ "expect": {
+  "regime": "APPR",
+  "eligibility": "ELIGIBLE",
+  "systemCode": null,
+  "amount": 700,
+  "currency": "CAD",
+  "delayBand": "DELAY_6_TO_LT_9_HOURS",
+  "delayMin": 420,
+  "control": "CONTROLLABLE",
+  "cause": "HDLG",
+  "ttUi": [
+   "Promised: AC 435 YUL->YYZ Scheduled Departure 08:00, Scheduled Arrival 10:00 (CANCELLED)",
+   "Current: AC 445 (Renumbered) YUL->YYZ, ARRIVED, Scheduled Departure 08:00 (SAME), Actual Arrival 17:00",
+   "History: Change 1 INVOL - AC 435 YUL->YYZ cancelled (HDLG - ACS); customer reprotected onto renumbered flight AC 445 YUL->YYZ",
+   "Departure Check: scheduled departure matches original (08:00)",
+   "Delay Calculation: original promised arrival 10:00; actual arrival on AC 445 17:00; Delay = 7 hrs DELAY_6_TO_LT_9_HOURS",
+   "Regime: APPR (1 regime)",
+   "MSL FLIGHT: AC 435 YUL->YYZ Cancellation Code: HDLG (ACS) \"Cancelled due to security check - ACS ground handling\"",
+   "Fallback: FALSE (cancellation code available)",
+   "Rebooked Flight: AC 445 YUL->YYZ (Renumbered)",
+   "APPR causal category: Within carrier control -> CONTROLLABLE",
+   "Delay: +7H 00M CONTROLLABLE (HDLG - ACS)",
+   "Aeroplan: 9876543210 (Basic Member linked)",
+   "Flight Compensation: MS DOMINIQUE ARSENAULT | ELIGIBLE | DELAY_6_TO_LT_9_HOURS | CAD 700.00 Cash / CAD 840.00 AC Wallet (+20%)"
+  ],
+  "soc": null
+ },
+ "assumed": [
+  "noticeHours null (not stated)",
+  "Cancel code written 'HDLG' (text: HDLG (ACS))",
+  "systemCode not stated (null)",
+  "flight times as given in text (an 9h block time on a YUL-YYZ renumbered flight is unrealistic but taken verbatim)"
+ ],
+ "unsupported": []
+}
