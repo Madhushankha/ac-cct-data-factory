@@ -160,6 +160,7 @@ class KitBuilder:
             self._run(["bag_build.py", str(plan_file), str(patched), str(out), env], work, env)
         else:
             self._run(["scenario_build.py", str(plan_file), "-", str(out), env], work, env)
+        self.remember_used(env, out / "manifest.json")
         return self.load(out, patched_dir=patched)
 
     @staticmethod
@@ -215,26 +216,65 @@ class KitBuilder:
             return set()
 
     @staticmethod
-    def keys_used(env: str) -> set[str]:
-        """Every flight key this project has published in an environment."""
+    def _manifest_keys(rows) -> set[str]:
+        """The `carrier#number#day#origin` keys a build manifest's bookings fly on."""
         out: set[str] = set()
+        for r in rows if isinstance(rows, list) else []:
+            if not (isinstance(r, dict) and r.get("pnrId")):
+                continue
+            for f in r.get("flights") or []:
+                carrier, number = f.get("carrier"), f.get("number")
+                day = str(f.get("depUtc") or "")[:10]
+                origin = f.get("origin")
+                if carrier and number and day and origin:
+                    out.add(f"{carrier}#{number}#{day}#{origin}")
+        return out
+
+    @staticmethod
+    def ledger(env: str) -> pathlib.Path:
+        return paths.RUNS / env / "taken-used.json"
+
+    @classmethod
+    def remember_used(cls, env: str, manifest: pathlib.Path) -> None:
+        """Add a build's flight keys to `runs/<env>/taken-used.json` the moment it is built.
+
+        Scanning manifests alone forgot a whole BAT seed once its build folder was gone: 2,552
+        keys dropped out of the avoid list, the next run landed 97 of 99 bookings on flights that
+        already held a booking, and the engine judged them on the older booking's delay.
+        """
+        try:
+            keys = cls._manifest_keys(json.loads(manifest.read_text(encoding="utf-8")))
+        except Exception:                                                   # noqa: BLE001
+            return
+        if not keys:
+            return
+        path = cls.ledger(env)
+        try:
+            known = {str(k) for k in json.loads(path.read_text(encoding="utf-8"))}
+        except Exception:                                                   # noqa: BLE001
+            known = set()
+        if keys <= known:
+            return
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(sorted(known | keys), indent=0), encoding="utf-8")
+
+    @classmethod
+    def keys_used(cls, env: str) -> set[str]:
+        """Every flight key this project has published in an environment: the ledger, plus any
+        manifest still on disk (runs from before the ledger existed)."""
+        out: set[str] = set()
+        try:
+            out |= {str(k) for k in json.loads(cls.ledger(env).read_text(encoding="utf-8"))}
+        except Exception:                                                   # noqa: BLE001
+            pass
         base = paths.RUNS / env
         if not base.is_dir():
             return out
         for manifest in base.rglob("manifest.json"):
             try:
-                rows = json.loads(manifest.read_text(encoding="utf-8"))
+                out |= cls._manifest_keys(json.loads(manifest.read_text(encoding="utf-8")))
             except Exception:                                               # noqa: BLE001
                 continue
-            for r in rows if isinstance(rows, list) else []:
-                if not (isinstance(r, dict) and r.get("pnrId")):
-                    continue
-                for f in r.get("flights") or []:
-                    carrier, number = f.get("carrier"), f.get("number")
-                    day = str(f.get("depUtc") or "")[:10]
-                    origin = f.get("origin")
-                    if carrier and number and day and origin:
-                        out.add(f"{carrier}#{number}#{day}#{origin}")
         return out
 
     @staticmethod

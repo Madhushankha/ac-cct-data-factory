@@ -10,13 +10,22 @@
 // With CDP_URL unset this module is the plain `@playwright/test` export, so the default behaviour
 // (launch our own Chromium) is untouched and no scenario changes meaning.
 import { test as base, expect, chromium, type Browser, type BrowserContext } from '@playwright/test';
+import { cdpEndpoints, endpointOrder } from '../../src/cdp-endpoints';
+import { HTTP_CREDENTIALS } from '../../src/config';
 
-const CDP_URL = process.env.CDP_URL;
+// CDP_URL, CDP_URLS or CDP_PORTS (see src/cdp-endpoints.ts): one Moli per worker when there are several
+const ENDPOINTS = cdpEndpoints();
 
 /** One connection per worker: a CDP endpoint is a running browser, not a process to spawn. */
 const cdpTest = base.extend<{ cdpContext: BrowserContext }, { cdpBrowser: Browser }>({
-  cdpBrowser: [async ({}, use) => {
-    const browser = await chromium.connectOverCDP(CDP_URL!);
+  cdpBrowser: [async ({}, use, workerInfo) => {
+    let browser: Browser | undefined;
+    const tried: string[] = [];
+    for (const url of endpointOrder(ENDPOINTS, workerInfo.parallelIndex)) {
+      try { browser = await chromium.connectOverCDP(url, { timeout: 20_000 }); break; }
+      catch (e: any) { tried.push(`${url}: ${String(e?.message ?? e).split(/\r?\n/)[0].slice(0, 80)}`); }
+    }
+    if (!browser) throw new Error(`no CDP browser answered (start Moli first): ${tried.join('; ')}`);
     await use(browser);
     // close the connection, not the browser: the endpoint outlives the run and may serve others
     await browser.close();
@@ -28,11 +37,12 @@ const cdpTest = base.extend<{ cdpContext: BrowserContext }, { cdpBrowser: Browse
     let context: BrowserContext;
     let own = false;
     try {
-      context = await cdpBrowser.newContext();
+      // the same viewport and site login a launched browser gets (uat2 sits behind Basic auth)
+      context = await cdpBrowser.newContext({ viewport: { width: 1280, height: 1000 }, httpCredentials: HTTP_CREDENTIALS });
       own = true;
     } catch {
       context = cdpBrowser.contexts()[0];
-      if (!context) throw new Error(`${CDP_URL} exposes no browser context`);
+      if (!context) throw new Error('the CDP browser exposes no browser context');
     }
     await use(context);
     if (own) await context.close();
@@ -44,5 +54,5 @@ const cdpTest = base.extend<{ cdpContext: BrowserContext }, { cdpBrowser: Browse
   },
 });
 
-export const test = CDP_URL ? cdpTest : base;
+export const test = ENDPOINTS.length ? cdpTest : base;
 export { expect };

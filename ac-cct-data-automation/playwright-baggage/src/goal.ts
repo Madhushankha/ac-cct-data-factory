@@ -17,13 +17,17 @@ import path from 'node:path';
 import { expect, type Page, type TestInfo } from '@playwright/test';
 import { BedrockRuntimeClient, ConverseCommand, type ContentBlock, type Tool } from '@aws-sdk/client-bedrock-runtime';
 import { fromIni } from '@aws-sdk/credential-providers';
+import { TASK_ROLE } from './envs';
 import { settle, typeInto } from './chat';
-import { ROOT } from './config';
-import { assertAllowed, detect, SafetyStopError, STOPS, type StopKind } from './guards';
+import { ENV, PERSONA_DONE, ROOT, ensureDir } from './config';
+import { assertAllowed, detect, SafetyStopError, STOPS, UPLOAD_BUTTON, type StopKind } from './guards';
+import { codeSince } from './otp';
 import { describe, genericDefects } from './judge';
 import type { Scenario } from './scenario';
 import { EndRun, Run } from './steps';
 import type { Message } from './transcript';
+import { caseMails, caseNumberFrom, checkDashboard, chosenAmount, fetchVerification, readCaseMail,
+         type DashboardCheck, type EmailCheck } from './verify';
 
 /**
  * One goal chat. From a seeded case: `title`, `brief` (the gap-doc description without its "Expected:" part,
@@ -42,6 +46,12 @@ export interface GoalItem {
   /** safety stops this test is meant to pass (FD submits its claim on INT: payout-country, payment-proceed) */
   allow?: StopKind[];
   jiraKey?: string;
+  /** the test's Claims Dashboard rows, mapped to the testing API's item ids; checked after the chat */
+  dashboard?: DashboardCheck[];
+  /** the test's e-mail rows; any present means the case must have mail quoting its case number */
+  emails?: EmailCheck[];
+  /** this case's own receipts (ac-cct-data-seed tools/soc_receipts.py), paths relative to this project */
+  receipts?: { file: string; category?: string; total?: number | string; currency?: string }[];
 }
 
 export interface ScriptStep { type: string; value?: string; line?: number; reason?: string; after_line?: number }
@@ -54,7 +64,28 @@ const DEFAULT_GOAL = 'Play out this test case as the customer until the assistan
 const MODEL = process.env.GOAL_MODEL_ID || 'global.anthropic.claude-sonnet-4-6';
 const REGION = process.env.AGENT_REGION || 'ca-central-1';
 const PROFILE = process.env.BEDROCK_PROFILE || process.env.AWS_PROFILE || 'int-cce';
-const RECEIPTS = ['receipts/clothing-receipt.pdf', 'receipts/toiletries-receipt.pdf'];
+/** Test receipts per flow: baggage claims clothing and toiletries; standards of care a night stranded
+ *  (hotel, meals, taxi, essentials -- SOC_UAT_046's amounts). Written by scripts/make-receipts.js. */
+const RECEIPTS: Record<string, string[]> = {
+  baggage: ['receipts/clothing-receipt.pdf', 'receipts/toiletries-receipt.pdf'],
+  soc: ['receipts/soc/hotel-receipt.pdf', 'receipts/soc/meals-receipt.pdf', 'receipts/soc/taxi-receipt.pdf',
+        'receipts/soc/essentials-receipt.pdf'],
+};
+
+/**
+ * How many of a case's receipts go up, by request ONE for now (RECEIPTS_MAX=all, or a number, for more).
+ * Photos first: the meal or taxi JPG is the kind the reference pack shows the reader accepting most
+ * reliably, ahead of a PDF folio.
+ */
+export function pickReceipts(files: string[], max = process.env.RECEIPTS_MAX ?? '1'): string[] {
+  const ordered = [...files].sort((a, b) => Number(/\.pdf$/i.test(a)) - Number(/\.pdf$/i.test(b)));
+  return max === 'all' ? ordered : ordered.slice(0, Math.max(1, Number(max) || 1));
+}
+
+/** Which receipts a case uploads, from its case id (SOC_UAT_046 -> soc); baggage's are the default. */
+export function receiptsFor(caseId?: string): string[] {
+  return /^soc[_-]/i.test(caseId ?? '') ? RECEIPTS.soc : RECEIPTS.baggage;
+}
 const MAX_ERRORS_IN_A_ROW = 3;
 /** INT can take 2-3 minutes to answer after a submit (e.g. the payout country): wait this long for a reply */
 const REPLY_WAIT_MS = Number(process.env.REPLY_WAIT_MS || 240_000);
@@ -63,7 +94,8 @@ const CHROME = /^(helpful|not helpful|minimize( chat)?|full screen|exit full scr
 
 let client: BedrockRuntimeClient | undefined;
 function bedrock(): BedrockRuntimeClient {
-  client ??= new BedrockRuntimeClient({ region: REGION, credentials: fromIni({ profile: PROFILE }) });
+  // adaptive retry: backs off on Bedrock throttling when many chats run at once
+  client ??= new BedrockRuntimeClient({ region: REGION, credentials: TASK_ROLE ? undefined : fromIni({ profile: PROFILE }), maxAttempts: 8, retryMode: 'adaptive' });
   return client;
 }
 
@@ -77,8 +109,8 @@ const TOOLS: Tool[] = ([
     { id: num('control number of the combobox'), option: str('the option to pick, e.g. Canada') }, ['id', 'option']],
   ['send_message', 'Type a message in the chat box at the bottom and press Send, as the customer.', { text: str('the message') }, ['text']],
   ['get_email_code', 'Choose to receive the one-time code by email, then type it into the code field and submit. Use when the assistant offers where to send a verification code.', {}, []],
-  ['complete_persona', 'Identity verification (Persona), the whole step: clicks "Verify my identity" (or "Get verified"), opens the withpersona.com link the assistant gives, closes it, and types "done" in the chat (the INT skip). Use it once when the assistant asks to verify identity; do not click those buttons yourself.', {}, []],
-  ['upload_files', 'Attach the test receipt files to the open upload pop-up (then wait for them to show, and click its Submit).', {}, []],
+  ['complete_persona', 'Identity verification (Persona), the whole step: clicks "Verify my identity" (or "Get verified"), opens the withpersona.com link the assistant gives, closes it, then clicks the "Done" button in the chat (or types "done" where there is none). Use it once when the assistant asks to verify identity; do not click those buttons yourself.', {}, []],
+  ['upload_files', 'The whole receipt step: opens the "Upload receipts" pop-up if needed, attaches this case\'s receipts, waits for them and clicks the pop-up\'s Submit. Use it once when the assistant asks for receipts; do not click "Upload receipts" yourself.', {}, []],
   ['scroll', 'Scroll the chat.', { direction: { type: 'string', enum: ['up', 'down'] } }, ['direction']],
   ['wait', 'Wait for the assistant (it is still typing or loading).', { seconds: num('2 to 20') }, ['seconds']],
   ['finish', 'End the chat: the goal is reached, or it cannot be reached.',
@@ -90,21 +122,32 @@ const TOOLS: Tool[] = ([
     required: ['why', ...required] } as any } },
 }) as Tool);
 
-function scripted(item: GoalItem, b: { first: string; last: string; pnr: string }): string {
+/**
+ * A Jira test played as a customer would: the assistant leads, the test's customer steps are what the
+ * customer KNOWS and WANTS. The first version told the model to perform the steps "IN ORDER, do not skip",
+ * and on SOC_UAT_046 that made it type the passenger name and the PNR into the chat right after the bot
+ * had answered with general information and "Is there anything else I can help with?" -- answers to
+ * questions nobody asked -- then scroll fourteen times waiting for a form that was never coming.
+ */
+export function scripted(item: GoalItem, b: { first: string; last: string; pnr: string }): string {
   const sample = item.sample || {};
   const steps = (item.script || []).map((st, i) => {
     const v = st.value ?? '';
-    const what = st.type === 'assumed' ? `answer "${v}" (not scripted in the test: ${st.reason || 'the bot asks'})`
-      : st.type === 'otp' ? 'enter the verification code: use get_email_code (the test\'s code is an example)'
-      : st.type === 'say' ? `send_message: "${v}"`
-      : st.type === 'click' && /get verified/i.test(v) ? 'complete_persona'
-      : `${st.type}: "${v}"`;
+    const what = st.type === 'assumed' ? `whatever the assistant offers here (the test only says: ${st.reason || 'the bot asks'})`
+      : st.type === 'otp' ? 'the verification code: use get_email_code when the assistant asks where to send it (the test\'s code is an example)'
+      : st.type === 'say' ? `say (free text, when the assistant is waiting for you to type): "${v}"`
+      : st.type === 'click' && /get verified/i.test(v) ? 'identity verification: complete_persona when the assistant asks for it'
+      : st.type === 'provide' ? `when asked, give: "${v}"`
+      : `when offered, choose: "${v}"`;
     return `${i + 1}. ${what}${i === 0 && /english/i.test(v) ? '  (ALREADY DONE: the chat opens in English)' : ''}`;
   }).join('\n');
   return [
     'You are a QA tester executing a Jira/Xray Cucumber test in the "Ask AC" web chat, operating the browser like a person: you see a screenshot and a numbered list of the controls on the page, and you act with one tool call per turn.',
     item.title ? `Test: ${item.jiraKey ? item.jiraKey + ' ' : ''}${item.title}` : '',
-    'Perform the customer steps below IN ORDER, one per turn, mapping each to what is on screen (a button or option with that label, the message box, or a form field). Do not skip, add or reorder steps. If the assistant asks something the script does not answer, give the plainest answer that keeps the scripted flow going and say so in why.',
+    item.goal ? `What the test is about: ${item.goal}` : '',
+    'THE ASSISTANT LEADS. Each turn, first work out what the assistant is asking for RIGHT NOW (a question, a form, buttons, a pop-up) and answer exactly that, taking the answer from the customer steps below. The steps are the facts this customer knows and the choices they make, listed in the order the test expects; use them when they fit what is being asked, not as text to type in order. Never type a name, booking reference or other detail into the chat unless the assistant has just asked for it in the chat; when it shows a form, fill the form. Only send a scripted message ("say") when the assistant is waiting for free text from you and that message is what this customer would say next. If the assistant asks something the steps do not cover, give the plainest answer that keeps the test\'s flow going, and say so in why.',
+    'If the assistant does not start the claim: when it answers with general information, a link, or "is there anything else I can help with" instead of starting the claim the test is about (no claim notice, no identification form), steer it in plain words, once or twice -- e.g. "I\'d like to file a claim to be reimbursed for my expenses" for meals/hotel/transport (standards of care), "I\'d like to claim compensation for my delayed/cancelled flight" for a disruption, "I\'d like to file a claim for my baggage" for bags -- and say in why that the test\'s own wording did not start the claim.',
+    'Track the steps: by the end, every step should have been used where the assistant asked for it. A step the assistant never asks for is not forced in.',
     `The test's sample data is replaced by the seeded booking: name "${sample.name || ''}" -> "${b.first} ${b.last}" (first name ${b.first}), booking reference "${sample.pnr || ''}" -> "${b.pnr}". A masked email/phone option in the script means: pick the Email option on screen.`,
     'Forms: type each value into its own field (first name, last name, booking reference), then click that form\'s Submit.',
     'This test submits its claim on INT: you DO answer the payout country, choose the payout option and confirm/submit exactly as scripted. Never type bank account, card or IBAN numbers.',
@@ -112,8 +155,10 @@ function scripted(item: GoalItem, b: { first: string; last: string; pnr: string 
     'The assistant can take 2-3 minutes to answer after a submit (for example after the payout country). The harness already waits for its reply after each click or message; if the screen still shows the same question, use wait -- NEVER repeat a click or re-submit an answer that was already given.',
     'Dropdowns and type-ahead fields (role combobox, e.g. Country): use choose_option once, then click the form\'s Submit once.',
     'Identity check: use complete_persona once. If the assistant still says the verification is incomplete after a second complete_persona, stop and call finish with cannot_reach (the result did not reach the chat); never loop on it.',
+    'Options you can see but cannot click: if the screenshot shows answer chips (e.g. "Yes" / "No", "My own trip") that are not in the controls list, do not click the message box or scroll looking for them: type the option text itself with send_message (e.g. "Yes"). Never click or scroll more than twice in a row without the chat changing.',
     'Do not finish while scripted steps remain: after the claim is submitted, wait for the assistant to ask if there is anything else, answer as the script says (usually No) and wait for its closing message.',
-    'Call finish with goal_reached right after the last scripted step is done, or cannot_reach if the assistant goes another way and the next step can no longer be performed.',
+    'Call finish with goal_reached once the claim has gone as far as the steps describe and the assistant has closed, or cannot_reach only after steering has failed and the claim the test is about can no longer be started or continued.',
+    'Scrolling: at most twice in a row. If nothing new appears, act instead (answer, use a control, or steer).',
     '- Before the tool call, write one short sentence saying what you see and which step you are doing.',
   ].filter(Boolean).join('\n');
 }
@@ -142,14 +187,123 @@ function system(item: GoalItem, b: { first: string; last: string; pnr: string; f
   ].filter(Boolean).join('\n');
 }
 
-function transcriptText(messages: Message[], tail = 16): string {
+export function transcriptText(messages: Message[], tail = 16): string {
   return messages.slice(-tail).map(m => {
     const who = m.who === 'you' ? 'CUSTOMER' : m.who === 'bot' ? `ASSISTANT${m.layout !== 'plain' ? ` [${m.layout} box]` : ''}` : 'WIDGET';
-    return `${who}: ${m.text.replace(/\s+/g, ' ').slice(0, 700)}`;
+    // an alert-only message keeps its words in its box: without shown() the customer never saw it either
+    return `${who}: ${shown(m).replace(/\s+/g, ' ').slice(0, 700)}`;
   }).filter(l => !/^WIDGET: $/.test(l)).join('\n');
 }
 
+/** How long the assistant may stay silent while the customer only waits or scrolls, before the run stops. */
+export const SILENCE_LIMIT_MS = Number(process.env.SILENCE_LIMIT_MS || 6 * 60_000);
+
+/**
+ * Milliseconds since the assistant last said anything new, counted only across trailing turns in which
+ * the customer did nothing that asks for an answer (wait/scroll). Zero as soon as the customer acts.
+ */
+export function botSilence(decisions: { action: string; at?: string }[], messages: { who: string }[], now = Date.now()): number {
+  let i = decisions.length - 1;
+  while (i >= 0 && /^(wait|scroll)$/.test(decisions[i].action)) i--;
+  const idle = decisions.slice(i + 1);
+  if (!idle.length || !idle[0].at) return 0;
+  // the transcript has no reliable timestamps, so the span of idle turns is the measure; a new bot message
+  // since the idle span began would have made the model act rather than wait again
+  return messages.length && messages[messages.length - 1].who === 'you' || idle.length >= 2 ? now - Date.parse(idle[0].at) : 0;
+}
+
+/** Two scrolls in a row: the agent is looking for something that is not coming, and must act instead. */
+export function scrollStuck(decisions: { action: string }[]): boolean {
+  const last = decisions.slice(-2);
+  return last.length === 2 && last.every(d => d.action === 'scroll');
+}
+
+/**
+ * Everything a message shows: its text, and its alert boxes. An alert-only message ("Claim submission
+ * successful!", "payment details cannot be changed") has EMPTY text -- the words live in the box -- so a
+ * judge reading `text` alone reported both as never shown when the chat had displayed them.
+ */
+export function shown(m: Pick<Message, 'text' | 'boxes'>): string {
+  const t = (m.text || '').trim();
+  const boxes = (m.boxes || []).map(b => b.text.trim()).filter(b => b && !t.includes(b));
+  return [t, ...boxes].filter(Boolean).join(' ');
+}
+
+export interface CheckpointResult {
+  n: number; requirement: string | null; kind?: string; expected?: string; line?: number;
+  status: 'pass' | 'fail' | 'not_reached' | 'unverified'; message: number | null; quote: string; reason: string;
+}
+
+export function checkpointNote(results: CheckpointResult[]): string {
+  const c = (k: string) => results.filter(x => x.status === k).length;
+  return `checkpoints: ${c('pass')} pass, ${c('fail')} fail, ${c('not_reached')} not reached, ${c('unverified')} unverified (quote not found) of ${results.length}`;
+}
+
+/**
+ * Each expected bot line/alert/option of the Jira test, matched to what the assistant actually showed, in
+ * order, by the model; then every quote it gives is looked up in the transcript, and a pass whose quote is
+ * not there becomes "unverified". Used after a chat, and by scripts/rejudge.ts on a saved transcript.
+ */
+export async function judgeTranscript(cps: Checkpoint[], messages: Message[], consent?: string)
+  : Promise<{ results: CheckpointResult[] } | { error: string }> {
+  const msgs = messages.map((m, i) => ({ i, m })).filter(x => x.m.who !== 'you' && (shown(x.m) || x.m.buttons.length));
+  const transcript = msgs.map(x => {
+    const box = (x.m.boxes || []).map(b => b.kind).find(k => k && k !== 'plain');
+    const layout = x.m.layout !== 'plain' ? x.m.layout : box;
+    return `[${x.i}] ${x.m.who === 'bot' ? 'ASSISTANT' : 'WIDGET'}${layout ? ` (${layout} box)` : ''}: `
+      + `${shown(x.m).replace(/\s+/g, ' ').slice(0, 600)}${x.m.buttons.length ? ` {buttons: ${x.m.buttons.join(' | ')}}` : ''}`
+      + `${x.m.form.length ? ` {form: ${x.m.form.join(', ')}}` : ''}`;
+  }).join('\n');
+  const pre = consent ? `[consent] PRE-CHAT CONSENT SCREEN (shown before the chat opens): ${consent.replace(/\s+/g, ' ').slice(0, 800)}\n` : '';
+  const list = cps.map((c, n) => `${n + 1}. (${c.kind}${c.requirement ? ', ' + c.requirement : ''}) ${String(c.text || '').slice(0, 300)}`).join('\n');
+  let items: { n: number; status: string; message: number | null; quote: string; reason: string }[] = [];
+  try {
+    const res = await bedrock().send(new ConverseCommand({
+      modelId: MODEL,
+      system: [{ text: 'You check a chat transcript against a test\'s expected assistant lines, in order. For each expected item: pass = the assistant (or widget) shows the same meaning/element (wording may differ; the test\'s sample names, booking reference, flight number, dates and masked email/phone may differ because the booking is seeded; amounts, currencies, outcomes and option labels must match; an alert/success/info box counts as shown); fail = the assistant reached that point but said/showed something different (give the difference); not_reached = the chat never got there. quote must be copied exactly from the matched message.' }],
+      messages: [{ role: 'user', content: [{ text: `Expected items:\n${list}\n\nTranscript (numbered messages):\n${pre}${transcript}` }] }],
+      toolConfig: {
+        tools: [{ toolSpec: { name: 'results', description: 'One result per expected item.', inputSchema: { json: { type: 'object', required: ['items'], properties: {
+          items: { type: 'array', items: { type: 'object', required: ['n', 'status', 'reason'], properties: {
+            n: { type: 'number' }, status: { type: 'string', enum: ['pass', 'fail', 'not_reached'] },
+            message: { type: 'number' }, quote: { type: 'string' }, reason: { type: 'string' } } } } } } as any } } } as Tool],
+        toolChoice: { tool: { name: 'results' } },
+      },
+      inferenceConfig: { maxTokens: 6000, temperature: 0 },
+    }));
+    const use = (res.output?.message?.content ?? []).find(b => 'toolUse' in b && b.toolUse) as ContentBlock.ToolUseMember | undefined;
+    items = ((use?.toolUse.input as any)?.items ?? []);
+  } catch (e: any) {
+    return { error: String(e?.message ?? e).slice(0, 160) };
+  }
+  return { results: verifyQuotes(cps, items, messages, consent) };
+}
+
+/** The judge's verdicts, each pass held to a quote that really is in the transcript (text or alert box). */
+export function verifyQuotes(cps: Checkpoint[], items: { n: number; status: string; message: number | null; quote?: string; reason?: string }[],
+                             messages: Message[], consent?: string): CheckpointResult[] {
+  const norm = (t: string) => t.normalize('NFKD').toLowerCase().replace(/[‘’“”'"`]/g, '')
+    .replace(/[^a-z0-9$.%]+/g, ' ').replace(/\s+/g, ' ').trim();
+  const said = (m: Message) => norm([shown(m), ...m.buttons, ...m.form].join(' '));
+  return cps.map((c, n) => {
+    const it = items.find(x => x.n === n + 1) || { status: 'not_reached', message: null, quote: '', reason: 'no result returned' } as any;
+    const q = norm(it.quote || '').slice(0, 120);
+    const msg = it.message != null ? messages[it.message] : undefined;
+    const hit = q ? (msg && said(msg).includes(q) ? msg : messages.find(m => m.who !== 'you' && said(m).includes(q))
+      ?? (consent && norm(consent).includes(q) ? ({} as Message) : undefined)) : undefined;
+    let message = it.message ?? null;
+    if (hit && message == null) message = messages.indexOf(hit as Message);
+    const status = (it.status === 'pass' && !hit ? 'unverified' : it.status) as CheckpointResult['status'];
+    return { n: n + 1, requirement: c.requirement || null, kind: c.kind, expected: c.text, line: c.line, status,
+             message, quote: it.quote || '', reason: it.reason || '' };
+  });
+}
+
 export class GoalRun extends Run {
+  /** worker slots that already waited their stagger (only a worker's first chat waits) */
+  static staggered = new Set<number>();
+  /** this worker's parallel slot, for the staggered start */
+  private slot = 0;
   private item: GoalItem;
   private maxTurns: number;
   private outcome: 'goal_reached' | 'cannot_reach' | 'stopped' | 'budget' | 'errors' | '' = '';
@@ -163,6 +317,7 @@ export class GoalRun extends Run {
       first_message: '', steps: [],
     };
     super(page, s, testInfo);
+    this.slot = testInfo?.parallelIndex ?? 0;
     this.item = item;
     this.goal = [item.title, item.brief, item.goal].filter(Boolean).join(' — ') || DEFAULT_GOAL;
     this.maxTurns = Math.max(3, Math.min(90, item.maxTurns ?? (item.script?.length ? Math.max(40, item.script.length * 4) : 40)));
@@ -172,7 +327,20 @@ export class GoalRun extends Run {
   /** Run.execute calls start() and then walks steps (none here): the whole conversation lives in start(). */
   protected override async start(): Promise<void> {
     this.currentStep = 'open chat';
-    await this.chat.open(this.s.lang ?? 'English', { requireGreeting: false });
+    // stagger the starts: 20 parallel chats opening uat2 in the same second left 13 with no chat at all
+    // (cloud rerun, 2026-10-21). Each worker waits STAGGER_MS x its slot before its first chat.
+    const slot = this.slot;
+    if (!GoalRun.staggered.has(slot)) {
+      GoalRun.staggered.add(slot);
+      const ms = Number(process.env.STAGGER_MS ?? 5000) * slot;
+      if (ms > 0) await this.chat.page.waitForTimeout(Math.min(ms, 180_000));
+    }
+    // and one retry: a chat that does not open the first time usually does the second
+    try { await this.chat.open(this.s.lang ?? 'English', { requireGreeting: false }); }
+    catch (e: any) {
+      this.r.notes.push(`chat did not open on the first try (${String(e?.message ?? e).split('\n')[0].slice(0, 120)}); retrying once`);
+      await this.chat.open(this.s.lang ?? 'English', { requireGreeting: false });
+    }
     // the privacy notice is a screen before the chat on INT: keep its words as evidence for the Jira checkpoints
     if (this.chat.consent) this.r.notes.push(`pre-chat consent screen: ${this.chat.consent.slice(0, 1200)}`);
     this.r.sessionId = await this.chat.sessionId();
@@ -201,8 +369,10 @@ export class GoalRun extends Run {
         const botsBefore = this.messages.filter(m => m.who === 'bot').length;
         d.outcome = (await this.perform(decided.name, decided.input as Record<string, any>)) || 'ok';
         // only an action that sends something gets an answer: opening a field or ticking a box does not
-        const sends = /^(send_message|get_email_code|complete_persona)$/.test(decided.name)
-          || (decided.name === 'click' && /^(button|link)$/.test(this.controls.find(c => c.id === Number((decided.input as any)?.id))?.role ?? ''));
+        const clicked = this.controls.find(c => c.id === Number((decided.input as any)?.id));
+        // a button that only opens a pop-up (Upload receipts) gets no assistant reply: do not wait for one
+        const sends = /^(send_message|get_email_code|complete_persona|upload_files)$/.test(decided.name)
+          || (decided.name === 'click' && /^(button|link)$/.test(clicked?.role ?? '') && !UPLOAD_BUTTON.test(clicked?.label ?? ''));
         if (sends) {
           const replied = await this.waitForReply(botsBefore, REPLY_WAIT_MS);
           if (!replied) d.outcome += ` (no new assistant message after ${Math.round(REPLY_WAIT_MS / 1000)} s)`;
@@ -218,6 +388,16 @@ export class GoalRun extends Run {
       for (const x of genericDefects(fresh)) await this.fail({ step: `turn ${turn}`, expected: 'no raw URLs or error text', got: `${x.what}: ${describe(x.m)}`, kind: x.kind });
       await this.live();
       await this.checkStops(fresh);
+      // the assistant has gone quiet: waiting longer only burns the turn budget (SOC_UAT_046 run 3 waited
+      // 48 turns after "we had a small disruption on our end"). Stop and say so: a bot finding, not a pass.
+      const silentFor = botSilence(this.decisions, this.messages);
+      if (silentFor >= SILENCE_LIMIT_MS) {
+        this.outcome = 'errors';
+        this.r.endedAt_step = 'assistant stopped answering';
+        await this.fail({ step: `turn ${turn}`, expected: 'the assistant answers the customer',
+          got: `no new assistant message for ${Math.round(silentFor / 60_000)} min; last reply: ${describe(this.lastBot())}`, kind: 'flow', severity: 'High' });
+        return;
+      }
       if (errors >= MAX_ERRORS_IN_A_ROW) {
         this.outcome = 'errors';
         await this.fail({ step: `turn ${turn}`, expected: 'the AI customer can operate the chat',
@@ -228,6 +408,30 @@ export class GoalRun extends Run {
     this.outcome = 'budget';
     await this.fail({ step: `after ${this.maxTurns} turns`, expected: this.goal ?? '',
       got: `turn budget used up; last reply: ${describe(this.lastBot())}`, kind: 'flow' });
+  }
+
+  /**
+   * The whole receipt step, as the scripted runs do it: open the "Upload receipts" pop-up when it is not
+   * open yet, attach the files, wait for one "View receipt" per file (a Submit while a file is still
+   * uploading does nothing), Submit, and wait for the pop-up to close. The file input only exists inside
+   * the pop-up: SOC_UAT_046's first stable run attached to nothing and timed out, then clicked the button
+   * and sat four minutes waiting for a reply a pop-up never sends.
+   */
+  private async uploadReceipts(files: string[]): Promise<string> {
+    const dlg = this.chat.dialog();
+    if (!(await dlg.locator('input[type=file]').count().catch(() => 0))) {
+      await this.chat.root().getByRole('button', { name: UPLOAD_BUTTON }).last().click({ timeout: 15_000 });
+      await dlg.waitFor({ state: 'visible', timeout: 60_000 });
+    }
+    await dlg.locator('input[type=file]').first().setInputFiles(files, { timeout: 30_000 });
+    const view = dlg.getByText(/View receipt|Voir le reçu/i);
+    await expect(view).toHaveCount(files.length, { timeout: 120_000 })
+      .catch(() => expect(view.first()).toBeVisible({ timeout: 60_000 }));
+    const submit = dlg.getByRole('button', { name: /^(Submit|Soumettre)$/i }).last();
+    await submit.click({ timeout: 15_000 });
+    await expect(dlg).toBeHidden({ timeout: 30_000 }).catch(() => submit.click().catch(() => {}));
+    this.chat.lastAction = `uploaded ${files.map(f => path.basename(f)).join(', ')}`;
+    return `uploaded and submitted ${files.length} receipt(s): ${files.map(f => path.basename(f)).join(', ')}`;
   }
 
   /** a safety stop is where a goal chat ends, not a failure */
@@ -257,7 +461,11 @@ export class GoalRun extends Run {
       const seen = new Set<Element>();
       const out: any[] = [];
       let n = 0;
-      for (const sc of scopes) for (const el of Array.from(sc.querySelectorAll<HTMLElement>(sel))) {
+      // some widget builds draw quick replies ("Yes" / "No", "Email: …") as plain elements with a click handler
+      // and no button role: count a leaf with a pointer cursor as a button too, or the AI sees them and cannot act
+      const chipLike = (sc: Element) => Array.from(sc.querySelectorAll<HTMLElement>('span,div,li')).filter(e =>
+        getComputedStyle(e).cursor === 'pointer' && !e.closest(sel) && !e.querySelector(sel) && (e.innerText || '').trim().length > 0 && (e.innerText || '').length < 120);
+      for (const sc of scopes) for (const el of [...Array.from(sc.querySelectorAll<HTMLElement>(sel)), ...chipLike(sc)]) {
         if (seen.has(el)) continue;
         seen.add(el);
         const r = el.getBoundingClientRect();
@@ -310,6 +518,10 @@ export class GoalRun extends Run {
     switch (name) {
       case 'click': {
         const { c, el } = this.control(a.id);
+        // "Email" as the place to send the verification code is the code step, which the code tool does
+        // whole (request, read, type, submit); a bare click sends a code nothing then reads
+        // (a button on one page, a radio/option on the new INT page: any control labelled Email counts)
+        if (/^\s*(E-?mail|Courriel)\b/i.test(c.label) && !c.inDialog && !/textbox|combobox/.test(c.role)) return this.emailCode();
         assertAllowed({ tap: c.label }, this.chat.allow);
         await el.scrollIntoViewIfNeeded().catch(() => {});
         const clicked = await el.click({ timeout: 4000 }).then(() => true, () => false)
@@ -358,12 +570,11 @@ export class GoalRun extends Run {
       case 'complete_persona': return this.persona();
       case 'get_email_code': return this.emailCode();
       case 'upload_files': {
-        const files = RECEIPTS.map(f => path.resolve(ROOT, f)).filter(f => fs.existsSync(f));
-        const input = page.locator('[role=dialog] input[type=file], #ac-chat-widget-container input[type=file]').last();
-        await input.setInputFiles(files, { timeout: 10_000 });
-        this.chat.lastAction = `attached ${files.map(f => path.basename(f)).join(', ')}`;
-        await page.waitForTimeout(3000);
-        return `attached ${files.length} file(s); wait for "View receipt" before Submit`;
+        // the case's own receipts when its plan names them; the flow's generic test receipts otherwise
+        const own = (this.item.receipts ?? []).map(r => r.file);
+        const files = (own.length ? own : receiptsFor(this.item.caseId)).map(f => path.resolve(ROOT, f)).filter(f => fs.existsSync(f));
+        if (!files.length) throw new Error(`no test receipts for ${this.item.caseId ?? 'this case'}: run node scripts/make-receipts.js`);
+        return this.uploadReceipts(pickReceipts(files));
       }
       case 'scroll':
         await this.chat.root().evaluate((r, up) => {
@@ -408,13 +619,60 @@ export class GoalRun extends Run {
    */
   private async emailCode(): Promise<string> {
     const root = this.chat.root();
-    const email = root.getByRole('button', { name: /^\s*(E-?mail|Courriel)\b/i }).filter({ visible: true }).last();
-    const ready = await expect(email).toBeEnabled({ timeout: REPLY_WAIT_MS }).then(() => true, () => false);
+    // a button on most builds; a plain "Email: la***@…" chip on others (BAT, 50-chat run 2026-10-21)
+    const email = root.getByRole('button', { name: /^\s*(E-?mail|Courriel)\b/i })
+      .or(root.getByText(/^\s*(E-?mail|Courriel)\s*:\s*\S+@/i)).filter({ visible: true }).last();
+    // already sent ("I've just sent a 6-digit verification code"): read it now, don't wait four minutes for
+    // an Email choice that is no longer the next step (SOC_UAT_046, new INT page, turn 4)
+    const sentAlready = /sent a 6-digit verification code|what'?s the code|code de vérification à 6 chiffres/i.test(this.lastBot()?.text ?? '');
+    // BAT lists the contacts as plain text ("• Email: LA***3@…  Where would you like to receive the code?") with
+    // nothing to press: answer "Email" in the chat, then read the code from the booking's own inbox (FD_TC_002, 2026-10-22)
+    const offeredAsText = !sentAlready
+      && /where would you like to receive the code|où (souhaitez|voulez)-vous recevoir le code/i.test(this.lastBot()?.text ?? '')
+      && !(await root.getByRole('button', { name: /^\s*(E-?mail|Courriel)\b/i }).filter({ visible: true }).count().catch(() => 0));
+    if (offeredAsText) {
+      if (!(this.booking?.otp.provider === 'mailinator' && this.booking.otp.own))
+        throw new Error('the code would go to a shared inbox; this run cannot tell which code is its own');
+      const asked = Date.now();
+      await this.chat.say('Email');
+      const field = root.getByLabel(/Verification code|Code de vérification/i).filter({ visible: true }).last();
+      await expect(field.or(root.getByText(/sent (a|you a) 6-digit|what'?s the code|enter (it|the code)|entrez le code/i))
+        .first()).toBeVisible({ timeout: REPLY_WAIT_MS });
+      const code = await codeSince(this.booking.otp, asked - 5000);
+      this.r.otpCodes++;
+      if (await field.isVisible().catch(() => false)) {
+        await typeInto(field, code);
+        await this.chat.tap(/^(Submit|Soumettre)$/, { settle: false });
+      } else await this.chat.say(code);
+      await expect(root).toContainText(/You're verified|You are verified|verification was successful|successfully verified|vérifié|doesn't match|did not match|ne correspond pas/i, { timeout: 60_000 });
+      return 'answered "Email" in the chat, code read from the booking\'s own inbox and entered';
+    }
+    const ready =!sentAlready && await expect(email).toBeEnabled({ timeout: REPLY_WAIT_MS }).then(() => true, () => false);
     if (!ready) {
       const field = root.getByLabel(/Verification code|Code de vérification/i).filter({ visible: true }).last();
-      throw new Error(await field.isVisible().catch(() => false)
-        ? 'a code was already requested in this chat (the Email choice is used); this run cannot read that code'
-        : 'the assistant has not offered to send a code by email yet: wait for it');
+      // the new INT page has no code field: the assistant says "What's the code?" and takes it as a chat message
+      const asked = /sent a 6-digit verification code|what'?s the code|enter (it|the code)|entrez le code/i.test(this.lastBot()?.text ?? '');
+      const hasField = await field.isVisible().catch(() => false);
+      if (!hasField && !asked) throw new Error('the assistant has not offered to send a code by email yet: wait for it');
+      if (!hasField) {
+        if (!(this.booking?.otp.provider === 'mailinator' && this.booking.otp.own))
+          throw new Error('the code was sent already and goes to a shared inbox; this run cannot tell which code is its own');
+        const code = await codeSince(this.booking.otp, Date.parse(this.r.startedAt));
+        this.r.otpCodes++;
+        await this.chat.say(code);
+        await expect(root).toContainText(/You're verified|You are verified|verification was successful|successfully verified|vérifié|doesn't match|did not match|ne correspond pas/i, { timeout: 60_000 });
+        return 'code read from the booking\'s own inbox and sent in the chat';
+      }
+      // the code was requested already (the customer pressed "Email" itself): with an inbox of its own the
+      // booking's newest code since the chat began is that one (SOC_UAT_046, new URL, turn 7)
+      if (!(this.booking?.otp.provider === 'mailinator' && this.booking.otp.own))
+        throw new Error('a code was already requested in this chat (the Email choice is used); this run cannot read that code');
+      const code = await codeSince(this.booking.otp, Date.parse(this.r.startedAt));
+      this.r.otpCodes++;
+      await typeInto(field, code);
+      await this.chat.tap(/^(Submit|Soumettre)$/, { settle: false });
+      await expect(root).toContainText(/You're verified|You are verified|verification was successful|successfully verified|vérifié|doesn't match|did not match|ne correspond pas/i, { timeout: 60_000 });
+      return 'code (already requested) read from the booking\'s own inbox and entered';
     }
     await settle(root, 2000, 20_000).catch(() => {});
     await this.verify();
@@ -449,6 +707,17 @@ export class GoalRun extends Run {
       if (!href) throw new Error(`no Persona link from the assistant within ${Math.round(REPLY_WAIT_MS / 1000)} s`);
     }
     this.r.notes.push(`Persona link: ${href.replace(/code=[^&\s]+/, 'code=…')}`);
+    if (PERSONA_DONE) {
+      // BAT (uat2), by request 2026-10-21: once the link has come, do not open Persona -- pressing its consent
+      // button starts a real verification that never completes. Close any tab the click opened, then "done".
+      for (const p of page.context().pages()) if (p !== page && /withpersona/i.test(p.url())) await p.close().catch(() => {});
+      await page.bringToFront().catch(() => {});
+      const doneBtn = root.getByRole('button', { name: /^(done|termin[ée])$/i }).filter({ visible: true }).last();
+      if (await doneBtn.waitFor({ state: 'visible', timeout: 15_000 }).then(() => true, () => false)) await doneBtn.click({ timeout: 10_000 });
+      else await this.chat.say('done');
+      this.chat.lastAction = 'clicked Verify, waited for the link, then "done" (Persona not opened)';
+      return this.chat.lastAction;
+    }
     // open the link the way a customer clicks it, look at it, close it
     const tab = page.context().pages().find(p => p !== page && /withpersona/i.test(p.url())) ?? await page.context().newPage();
     let seen = '';
@@ -470,9 +739,15 @@ export class GoalRun extends Run {
       await page.bringToFront().catch(() => {});
     }
     this.r.notes.push(`Persona page said: "${seen}"`);
-    // back in the chat: tell the assistant the check is done
-    await this.chat.say('done');
-    this.chat.lastAction = 'opened the Persona link, closed it and told the assistant "done"';
+    // back in the chat: press its "Done" button where it offers one (BAT, by request 2026-10-21), else type it
+    const done = root.getByRole('button', { name: /^(done|termin[ée])$/i }).filter({ visible: true }).last();
+    if (await done.waitFor({ state: 'visible', timeout: PERSONA_DONE ? 15_000 : 3000 }).then(() => true, () => false)) {
+      await done.click({ timeout: 10_000 });
+      this.chat.lastAction = 'opened the Persona link, closed it and clicked [Done]';
+    } else {
+      await this.chat.say('done');
+      this.chat.lastAction = 'opened the Persona link, closed it and told the assistant "done"';
+    }
     return this.chat.lastAction;
   }
 
@@ -487,49 +762,14 @@ export class GoalRun extends Run {
   private async judgeCheckpoints(): Promise<void> {
     const cps = this.item.checkpoints || [];
     if (!cps.length) return;
-    const msgs = this.messages.map((m, i) => ({ i, m })).filter(x => x.m.who !== 'you' && (x.m.text || x.m.buttons.length));
-    const transcript = msgs.map(x => `[${x.i}] ${x.m.who === 'bot' ? 'ASSISTANT' : 'WIDGET'}${x.m.layout !== 'plain' ? ` (${x.m.layout} box)` : ''}: `
-      + `${x.m.text.replace(/\s+/g, ' ').slice(0, 600)}${x.m.buttons.length ? ` {buttons: ${x.m.buttons.join(' | ')}}` : ''}${x.m.form.length ? ` {form: ${x.m.form.join(', ')}}` : ''}`).join('\n');
-    const consent = this.chat.consent ? `[consent] PRE-CHAT CONSENT SCREEN (shown before the chat opens): ${this.chat.consent.replace(/\s+/g, ' ').slice(0, 800)}\n` : '';
-    const list = cps.map((c, n) => `${n + 1}. (${c.kind}${c.requirement ? ', ' + c.requirement : ''}) ${String(c.text || '').slice(0, 300)}`).join('\n');
+    // nothing to judge: a chat that never opened has no transcript, and judging 30-odd checkpoints against
+    // nothing hung until the 45-minute test limit (13 chats, cloud rerun 2026-10-21)
+    if (!this.messages.length) { this.r.notes.push('checkpoints not judged: the chat has no messages (it did not open)'); return; }
     this.currentStep = 'checking the test\'s bot checkpoints';
     await this.live();
-    let items: { n: number; status: string; message: number | null; quote: string; reason: string }[] = [];
-    try {
-      const res = await bedrock().send(new ConverseCommand({
-        modelId: MODEL,
-        system: [{ text: 'You check a chat transcript against a test\'s expected assistant lines, in order. For each expected item: pass = the assistant (or widget) shows the same meaning/element (wording may differ; the test\'s sample names, booking reference, flight number, dates and masked email/phone may differ because the booking is seeded; amounts, currencies, outcomes and option labels must match); fail = the assistant reached that point but said/showed something different (give the difference); not_reached = the chat never got there. quote must be copied exactly from the matched message.' }],
-        messages: [{ role: 'user', content: [{ text: `Expected items:\n${list}\n\nTranscript (numbered messages):\n${consent}${transcript}` }] }],
-        toolConfig: {
-          tools: [{ toolSpec: { name: 'results', description: 'One result per expected item.', inputSchema: { json: { type: 'object', required: ['items'], properties: {
-            items: { type: 'array', items: { type: 'object', required: ['n', 'status', 'reason'], properties: {
-              n: { type: 'number' }, status: { type: 'string', enum: ['pass', 'fail', 'not_reached'] },
-              message: { type: 'number' }, quote: { type: 'string' }, reason: { type: 'string' } } } } } } as any } } } as Tool],
-          toolChoice: { tool: { name: 'results' } },
-        },
-        inferenceConfig: { maxTokens: 6000, temperature: 0 },
-      }));
-      const use = (res.output?.message?.content ?? []).find(b => 'toolUse' in b && b.toolUse) as ContentBlock.ToolUseMember | undefined;
-      items = ((use?.toolUse.input as any)?.items ?? []);
-    } catch (e: any) {
-      this.r.notes.push(`checkpoint judge unavailable: ${String(e?.message ?? e).slice(0, 160)}`);
-      return;
-    }
-    const norm = (t: string) => t.normalize('NFKD').toLowerCase().replace(/[\u2018\u2019\u201c\u201d'"`]/g, '')
-      .replace(/[^a-z0-9$.%]+/g, ' ').replace(/\s+/g, ' ').trim();
-    const said = (m: Message) => norm([m.text, ...m.buttons, ...m.form].join(' '));
-    const results = cps.map((c, n) => {
-      const it = items.find(x => x.n === n + 1) || { status: 'not_reached', message: null, quote: '', reason: 'no result returned' } as any;
-      const q = norm(it.quote || '').slice(0, 120);
-      const msg = it.message != null ? this.messages[it.message] : undefined;
-      const hit = q ? (msg && said(msg).includes(q) ? msg : this.messages.find(m => m.who !== 'you' && said(m).includes(q))
-        ?? (this.chat.consent && norm(this.chat.consent).includes(q) ? ({} as Message) : undefined)) : undefined;
-      if (hit && it.message == null) it.message = this.messages.indexOf(hit as Message);
-      const quoted = !!hit;
-      const status = it.status === 'pass' && !quoted ? 'unverified' : it.status;
-      return { n: n + 1, requirement: c.requirement || null, kind: c.kind, expected: c.text, line: c.line, status,
-               message: it.message ?? null, quote: it.quote || '', reason: it.reason || '' };
-    });
+    const out = await judgeTranscript(cps, this.messages, this.chat.consent);
+    if ('error' in out) { this.r.notes.push(`checkpoint judge unavailable: ${out.error}`); return; }
+    const results = out.results;
     (this.r as any).checkpoints = results;
     for (const x of results) {
       if (x.status === 'pass' && x.requirement && !this.r.stepsSeen.includes(x.requirement)) this.r.stepsSeen.push(x.requirement);
@@ -540,8 +780,7 @@ export class GoalRun extends Run {
           kind: x.status === 'not_reached' ? 'flow' : 'wording', severity: x.status === 'not_reached' ? 'High' : 'Medium' });
       }
     }
-    const c = (k: string) => results.filter(x => x.status === k).length;
-    this.r.notes.push(`checkpoints: ${c('pass')} pass, ${c('fail')} fail, ${c('not_reached')} not reached, ${c('unverified')} unverified (quote not found) of ${results.length}`);
+    this.r.notes.push(checkpointNote(results));
   }
 
   // ------------------------------------------------------------ deciding
@@ -564,7 +803,10 @@ export class GoalRun extends Run {
       'Chat so far (latest last):', transcriptText(this.messages) || '(empty)',
       `Controls on the page now:\n${list || '(none besides the message box)'}`,
       recent ? `Your previous actions and what happened:\n${recent}` : '',
-      'Look at the screenshot and choose the next single action.',
+      scrollStuck(this.decisions)
+        ? 'You have scrolled twice in a row and nothing new appeared: do NOT scroll again. Answer the assistant\'s last message, use a control from the list, or steer the chat (see "If the assistant does not start the claim").'
+        : '',
+      'Look at the screenshot and choose the next single action: first answer what the assistant is asking NOW.',
     ].filter(Boolean).join('\n\n');
     this.currentStep = `turn ${turn}: looking at the screen`;
     await this.live();
@@ -636,10 +878,64 @@ export class GoalRun extends Run {
 
   private unclear = false;
 
+  /**
+   * The systems behind the chat: the Claims Dashboard's testing API for the case the chat opened, and the
+   * case's mail. Evidence files go to dashboard/ and emails/ in the run folder; a dashboard item the API says
+   * is absent, a mapped item it does not have, or a test that expects mail with none quoting the case, fails.
+   * POST_CHECKS=0 skips all of it.
+   */
+  private async postChecks(): Promise<void> {
+    if (process.env.POST_CHECKS === '0') return;
+    const caseNumber = caseNumberFrom(this.messages);
+    (this.r as any).caseNumber = caseNumber ?? null;
+    if (!caseNumber) {
+      if (this.item.dashboard?.length || this.item.emails?.length)
+        this.r.notes.push('post-chat checks skipped: the chat never quoted a case number (CCD-…)');
+      return;
+    }
+    this.currentStep = `checking case ${caseNumber} on the dashboard and in the mail`;
+    await this.live();
+    const env = process.env.DASHBOARD_ENV || ENV.name;
+    let amount: string | undefined;
+    if (this.item.dashboard?.length) {
+      try {
+        const v = await fetchVerification(caseNumber, env);
+        fs.writeFileSync(path.join(ensureDir(path.join(this.dir, 'dashboard')), `run${this.r.run}.json`), JSON.stringify(v, null, 2));
+        amount = chosenAmount(v);
+        const results = checkDashboard(this.item.dashboard, v);
+        (this.r as any).dashboard = results;
+        for (const x of results.filter(x => x.status === 'fail' || x.status === 'missing'))
+          await this.fail({ step: `dashboard ${x.api} (${x.jiraCheckpoint ?? 'jira'})`, expected: x.expected || x.check,
+            got: x.status === 'missing' ? 'the testing API has no such item' : `absent on the dashboard: ${x.value ?? ''}`, kind: 'data' });
+        const n = (s: string) => results.filter(x => x.status === s).length;
+        this.r.notes.push(`dashboard ${caseNumber}: ${n('pass')} pass, ${n('review')} to review, ${n('fail')} fail, ${n('missing')} missing, `
+          + `${n('ui')} UI-derived, ${n('manual')} manual, ${n('unmapped')} unmapped`);
+      } catch (e: any) {
+        this.r.notes.push(`dashboard check unavailable: ${String(e?.message ?? e).slice(0, 200)}`);
+      }
+    }
+    if (this.booking) {
+      try {
+        const { ownInbox, mails } = await readCaseMail(this.booking.otp, caseNumber, Date.parse(this.r.startedAt));
+        const seen = caseMails(mails, caseNumber, { ownInbox, amount });
+        fs.writeFileSync(path.join(ensureDir(path.join(this.dir, 'emails')), `run${this.r.run}.json`), JSON.stringify(seen, null, 2));
+        (this.r as any).emails = seen;
+        const quoting = seen.filter(m => m.quotesCase);
+        this.r.notes.push(`mail for ${caseNumber}: ${seen.length} message(s), ${quoting.length} quote the case number`
+          + (amount ? `, ${seen.filter(m => m.amountFound).length} carry ${amount}` : ''));
+        if (this.item.emails?.length && !quoting.length)
+          await this.fail({ step: 'case e-mail', expected: `an e-mail quoting ${caseNumber}`, got: `none in ${ownInbox ? 'the booking\'s own' : 'the shared'} inbox`, kind: 'data' });
+      } catch (e: any) {
+        this.r.notes.push(`mail check unavailable: ${String(e?.message ?? e).slice(0, 200)}`);
+      }
+    }
+  }
+
   protected override async finish(): Promise<void> {
     if (!this.r.result.startsWith('blocked')) {
       await this.judgeCheckpoints().catch(e => this.r.notes.push(`checkpoint judge error: ${String(e?.message ?? e).slice(0, 160)}`));
       await this.judgeExpected().catch(() => {});
+      await this.postChecks().catch(e => this.r.notes.push(`post-chat checks error: ${String(e?.message ?? e).slice(0, 160)}`));
     }
     await super.finish();
     if (this.unclear && this.r.result === 'pass') {

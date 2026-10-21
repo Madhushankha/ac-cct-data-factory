@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import datetime as _dt
 import json
+import os as _os
 import pathlib
 import re as _re
 from typing import Sequence
@@ -97,6 +98,116 @@ def cmd_show(args) -> int:
                 print(f"    - {item}")
         if doc.damaged_characters:
             print(f"\n  ({doc.damaged_characters} character(s) arrived damaged from Jira)")
+    return 0
+
+
+def _case_receipts(receipts_dir: pathlib.Path, suite: pathlib.Path, case_id: str) -> list[dict] | None:
+    """`<receipts_dir>/<CASE>/manifest.json` (tools/soc_receipts.py or tools/baggage_receipts.py),
+    each entry's `file` made the path the suite resolves: relative to playwright-baggage when
+    inside it, absolute otherwise."""
+    manifest = receipts_dir / case_id / "manifest.json"
+    if not manifest.exists():
+        return None
+    entries = []
+    for r in json.loads(manifest.read_text(encoding="utf-8")).get("receipts") or []:
+        path = (receipts_dir / case_id / r["file"]).resolve()
+        try:
+            rel = path.relative_to(suite.resolve()).as_posix()
+        except ValueError:
+            rel = path.as_posix()
+        entries.append({**r, "file": rel})
+    return entries
+
+
+#: the suite's receipts folder per flow (the set's first path segment); anything else reads soc's
+RECEIPTS_BY_FLOW = {"soc": "soc", "baggage": "baggage"}
+
+
+def default_receipts_dir(suite: pathlib.Path, set_name: str) -> pathlib.Path:
+    """`receipts/baggage` for a baggage set (tools/baggage_receipts.py), `receipts/soc` otherwise."""
+    flow = set_name.strip("/").split("/")[0].lower()
+    return suite / "receipts" / RECEIPTS_BY_FLOW.get(flow, "soc")
+
+
+def cmd_goal_plan(args) -> int:
+    """A goal-mode plan for the automation: each Jira test of a set, played on its pool booking.
+
+    Joins `jira/<set>/<CASE>__<KEY>/` (checkpoints.json + test.feature) to the seeded pool by case
+    id and writes the JSON the suite's `GOAL_PLAN` reads. Writes nothing else and sends nothing.
+    """
+    import yaml
+    from domain import goal_plan
+
+    pools_dir = paths.AUTOMATION / "playwright-baggage" / "data" / "pools"
+    pool_path = pathlib.Path(args.pool)
+    if not pool_path.exists():
+        pool_path = pools_dir / f"{args.pool}.yaml"
+    if not pool_path.exists():
+        print(f"no pool {args.pool!r} (looked for {pool_path})")
+        return 1
+    pools = (yaml.safe_load(pool_path.read_text(encoding="utf-8")) or {}).get("pools") or {}
+    by_case: dict[str, goal_plan.Booking] = {}
+    for pool_name, pool in pools.items():
+        for row in pool.get("bookings") or []:
+            case = str(row.get("caseId") or "")
+            if case and row.get("pnr"):
+                by_case[case.upper()] = goal_plan.Booking(
+                    pnr=str(row["pnr"]), first=str(row.get("first") or pool.get("first") or ""),
+                    last=str(row.get("last") or pool.get("last") or ""), case_id=case,
+                    pool=pool_name)
+    base = paths.JIRA / args.set.strip("/")
+    if not base.is_dir():
+        print(f"no Jira snapshot for {args.set} ({base})")
+        return 1
+    only = {c.strip().upper() for c in args.only.split(",") if c.strip()}
+    # passengers per case, from the specs: a 1-passenger booking never gets the "how many people" question
+    try:
+        pax = {s.case_id.split("#")[0].upper(): len(s.passengers)
+               for s in FileSpecSource().scenarios(args.set.strip("/"))}
+    except KeyError:
+        pax = {}
+    suite = paths.AUTOMATION / "playwright-baggage"
+    receipts_dir = (pathlib.Path(args.receipts_dir) if args.receipts_dir
+                    else default_receipts_dir(suite, args.set))
+    items, missing, unmapped, notes, with_receipts = [], [], 0, [], 0
+    for folder in sorted(d for d in base.iterdir() if (d / "checkpoints.json").exists()):
+        case_id = folder.name.split("__")[0].upper()
+        if only and case_id not in only and folder.name.upper() not in only:
+            continue
+        booking = by_case.get(folder.name.upper()) or by_case.get(case_id)
+        if booking is None:
+            missing.append(folder.name)
+            continue
+        feature = folder / "test.feature"
+        receipts = _case_receipts(receipts_dir, suite, case_id)
+        plan = goal_plan.build(json.loads((folder / "checkpoints.json").read_text(encoding="utf-8")),
+                               feature.read_text(encoding="utf-8") if feature.exists() else "",
+                               booking, allow_payment=False if args.no_payment else None,
+                               passengers=pax.get(case_id), receipts=receipts)
+        with_receipts += bool(receipts)
+        items.append(plan.item)
+        unmapped += len(plan.unmapped_dashboard)
+        notes += [f"{folder.name}: {n}" for n in plan.notes]
+    if not items:
+        print(f"no test of {args.set} has a booking in {pool_path.name}")
+        return 1
+    out = pathlib.Path(args.out) if args.out else (
+        paths.AUTOMATION / "playwright-baggage" / "data" / "plans"
+        / f"{args.set.replace('/', '-')}--{pool_path.stem}.json")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(items, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    steps = sum(len(i["script"]) for i in items)
+    judged = sum(len(i["checkpoints"]) for i in items)
+    dash = sum(len(i.get("dashboard") or ()) for i in items)
+    print(f"{len(items)} chat(s) -> {out}")
+    print(f"  {steps} customer step(s), {judged} chat checkpoint(s) for the judge, "
+          f"{dash} dashboard check(s) ({unmapped} not yet mapped to an API item)")
+    print(f"  {with_receipts} chat(s) carry their own receipts from {receipts_dir}")
+    if missing:
+        print(f"  {len(missing)} test(s) have no booking in the pool, e.g. {', '.join(missing[:4])}")
+    for n in notes[:10]:
+        print(f"  note: {n}")
+    print(f"  run:  GOAL_PLAN={out} npx playwright test --project=goal")
     return 0
 
 
@@ -307,6 +418,7 @@ def _pack(args):
         policy=registry.for_set(spec_set.name),
         sink=PoolFileSink() if getattr(args, "pool", False) else None,
         loyalty=AccpLoyaltyDirectory(args.env) if getattr(args, "wallet", False) else None,
+        wallet_for_all=bool(getattr(args, "wallet", False)),
         env=args.env)
     pack.read_batch = args.read_batch
     return pack, scenarios, label
@@ -345,7 +457,21 @@ def cmd_plan(args) -> int:
 
 def cmd_seed(args) -> int:
     """Build, publish, settle, read and judge a set."""
+    if args.go or getattr(args, "wallet", False):
+        # an expired int-cce session fails a seed part-way (after minting, before publishing): check
+        # first, and if it has expired open the sign-in and wait for the person to approve it
+        from core import aws_guard
+        if not aws_guard.ensure():
+            return 1
+    if getattr(args, "wallet", False):
+        # ACCP is reached only through int-cce, for every environment (see accp_loyalty.check).
+        # Setting it here, when nothing else has, is what lets wallets be the default; an explicit
+        # value is left alone so a wrong one is still refused below rather than overridden.
+        _os.environ.setdefault("AQA_ACCP_PROFILE", "int-cce")
     pack, scenarios, label = _pack(args)
+    if args.go and args.batch_size:
+        from core import aws_guard
+        pack.before_batch = aws_guard.ensure   # renews the sign-in between batches of a long seed
     if getattr(args, "wallet", False) and pack.loyalty is not None:
         ready, why = pack.loyalty.check()
         if not ready:
@@ -360,7 +486,17 @@ def cmd_seed(args) -> int:
     identity = Identity(email=args.email or None, phone=args.phone or None, dob=dob,
                         first_name=args.first_name or None,
                         last_name=(args.last_name or "").replace(" ", "") or None,
-                        unique_name=args.unique_name)
+                        unique_name=args.unique_name,
+                        inbox_tag=(_dt.datetime.now(_dt.timezone.utc).strftime("%m%dT%H%M")
+                                   if getattr(args, "inbox_per_case", False) else None))
+    if identity.first_name and pack.loyalty is not None and hasattr(pack.loyalty, "first_name"):
+        pack.loyalty.first_name = identity.first_name.title()
+    if identity.inbox_tag and pack.loyalty is not None and hasattr(pack.loyalty, "contact_for"):
+        # the wallet profile carries the booking's own inbox and phone, not the shared default
+        from adapters.kafka_publisher import case_inbox, case_phone
+        tag = identity.inbox_tag
+        pack.loyalty.contact_for = lambda case: (identity.email or case_inbox(case, tag),
+                                                 identity.phone or case_phone(case, tag))
     out = pack.run(scenarios, label=label, run_day=args.run_day or None,
                    dry_run=not args.go, settle_seconds=args.settle, spec_set=args.set,
                    identity=identity, batch_size=args.batch_size)
@@ -477,6 +613,22 @@ def build_parser() -> argparse.ArgumentParser:
                    help="where a test states a wallet state or tier the spec does not express")
     p.set_defaults(fn=cmd_jira)
 
+    p = sub.add_parser("goal-plan",
+                       help="a goal-mode chat plan: each Jira test of a set on its pool booking")
+    p.add_argument("set", help="a set with a Jira snapshot, e.g. soc/uat/automation")
+    p.add_argument("--pool", required=True,
+                   help="a pool name in the suite's data/pools (without .yaml), or a path")
+    p.add_argument("--only", default="", help="comma-separated case ids")
+    p.add_argument("--out", default="", help="where to write the plan; defaults to the suite's "
+                                             "data/plans/<set>--<pool>.json")
+    p.add_argument("--no-payment", action="store_true",
+                   help="never let a chat proceed with payment, even where the test pays out")
+    p.add_argument("--receipts-dir", default="",
+                   help="per-case receipts (tools/soc_receipts.py, tools/baggage_receipts.py): "
+                        "<dir>/<CASE>/manifest.json; defaults to the suite's receipts/baggage for "
+                        "a baggage set and receipts/soc otherwise")
+    p.set_defaults(fn=cmd_goal_plan)
+
     for name, fn, helptext in (("plan", cmd_plan, "patch and date a set, publish nothing"),
                                ("seed", cmd_seed, "build, publish, read and judge a set")):
         p = sub.add_parser(name, help=helptext)
@@ -518,14 +670,23 @@ def build_parser() -> argparse.ArgumentParser:
             # well as ISO because that is how a date gets typed.
             p.add_argument("--dob", default="",
                            help="rewrite every passenger date of birth (YYYY-MM-DD or YYYY/MM/DD)")
-            p.add_argument("--wallet", action="store_true",
-                           help="mint and attach an AC Wallet / Aeroplan member for every case "
-                                "that asks for one. Needs AWS_PROFILE=int-cce and "
-                                "AQA_ACCP_PROFILE=int-cce; without those nothing is attached and "
-                                "the failure is silent, so this refuses up front")
+            # on by default: every dataset is seeded with wallets, so a run that should not have
+            # them says --no-wallet rather than every run having to remember --wallet
+            p.add_argument("--wallet", action=argparse.BooleanOptionalAction, default=True,
+                           help="mint and attach an AC Wallet / Aeroplan member for EVERY case "
+                                "(an open E50K wallet where the spec asks for none). On by "
+                                "default; --no-wallet turns it off. Uses AQA_ACCP_PROFILE=int-cce "
+                                "(set here when unset) and refuses up front if ACCP is unusable. "
+                                "A dry run mints nothing")
             p.add_argument("--pool", action="store_true",
                            help="hand the seeded bookings to the automation half as a pool file, "
                                 "so its scenarios can pick them by state")
+            p.add_argument("--inbox-per-case", action="store_true",
+                           help="give every booking its own Mailinator inbox "
+                                "(lahiru-<case>-<run stamp>@ae-qa1-aircanada.mailinator.com) instead of "
+                                "the shared one, and write it into the pool, so automation reads "
+                                "each booking's OTP and mail without queueing behind other runs. "
+                                "Overrides --email")
             p.add_argument("--unique-name", action="store_true",
                            help="give each case its own surname, derived from the case id, so one "
                                 "shared inbox can tell the scenarios apart")

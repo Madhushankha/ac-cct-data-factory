@@ -8,11 +8,13 @@ pool or report goes to a `_trash/` folder next to it, and can be put back.
 from __future__ import annotations
 
 import datetime as _dt
+import io
 import json
 import os
 import pathlib
 import re
 import shutil
+import zipfile
 from typing import Any
 
 import yaml
@@ -274,7 +276,8 @@ def reports() -> list[dict[str, Any]]:
         env, flow, phase, purpose = v.relative_to(REPORTS).parts[:4]
         files = sorted(f.relative_to(v).as_posix() for f in v.rglob("*") if f.is_file())
         out.append({"path": v.relative_to(REPORTS).as_posix(), "env": env,
-                    "set": f"{flow}/{phase}/{purpose}", "version": int(v.name[1:]),
+                    "set": f"{flow}/{phase}/{purpose}", "flow": flow, "phase": phase,
+                    "purpose": purpose, "version": int(v.name[1:]),
                     "updated": _mtime(v), "files": files[:200], "fileCount": len(files)})
     return sorted(out, key=lambda r: (r["env"], r["set"], -r["version"]))
 
@@ -284,6 +287,19 @@ def report_file(rel: str) -> pathlib.Path:
     if not p.is_file():
         raise RecordError(f"no report file {rel}")
     return p
+
+
+def report_zip(rel: str) -> bytes:
+    """Every file of one report version, zipped, with paths relative to the version folder."""
+    v = _inside(REPORTS, rel)
+    if not v.is_dir() or not re.fullmatch(r"v\d+", v.name):
+        raise RecordError(f"{rel} is not a report version")
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        for f in sorted(v.rglob("*")):
+            if f.is_file():
+                z.write(f, f.relative_to(v).as_posix())
+    return buf.getvalue()
 
 
 def trash_report(rel: str) -> str:

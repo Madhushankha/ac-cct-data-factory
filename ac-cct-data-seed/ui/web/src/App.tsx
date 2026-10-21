@@ -10,11 +10,13 @@ import { PoolsPage, PoolView } from './pages/Pools';
 import { ReportsPage } from './pages/Reports';
 import { JiraPage } from './pages/Jira';
 import { ActivityPage } from './pages/Activity';
+import { LivePage } from './pages/Live';
+import { AwsBanner } from './aws';
 import { useRoute } from './ui';
 
 const NAV: [string, string][] = [
   ['', 'Dashboard'], ['sets', 'Sets & cases'], ['seed', 'Seed'], ['jobs', 'Jobs'], ['runs', 'Runs'],
-  ['pools', 'Pools'], ['reports', 'Reports'], ['jira', 'Jira'], ['activity', 'Activity'],
+  ['pools', 'Pools'], ['live', 'Live automation'], ['reports', 'Reports'], ['jira', 'Jira'], ['activity', 'Activity'],
 ];
 
 export function App() {
@@ -35,6 +37,7 @@ export function App() {
     case 'reports': page = <ReportsPage />; break;
     case 'jira': page = <JiraPage query={query} />; break;
     case 'activity': page = <ActivityPage />; break;
+    case 'live': page = <LivePage run={parts[1]} n={parts[2]} />; break;
     default: page = <div className="page"><h1>Not found</h1></div>;
   }
 
@@ -50,7 +53,7 @@ export function App() {
           <a key={path} href={`#/${path}`} className={section === path ? 'active' : ''}>{label}</a>
         ))}
       </nav>
-      <main>{page}</main>
+      <main><div style={{ padding: '0 24px' }}><AwsBanner /></div>{page}</main>
     </div>
   );
 }

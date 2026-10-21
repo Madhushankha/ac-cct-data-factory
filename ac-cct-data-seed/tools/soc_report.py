@@ -32,6 +32,8 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from tools.report import CSS, FILTER_JS, esc, file_prefix, owner_tag       # noqa: E402
+from domain.testdoc import readable                                          # noqa: E402
+from tools.booking_identity import cell, identities, line, lookup            # noqa: E402
 
 EXTRA_CSS = (".what{font-size:12px;max-width:34em;line-height:1.35}"
              ".tag{display:inline-block;padding:1px 6px;border-radius:9px;font-size:11px;"
@@ -123,8 +125,8 @@ def expectation(spec: dict) -> str:
     return " · ".join(str(b) for b in bits if b)
 
 
-def seeded_page(records, summary, label, env, spec_by_id, doc_by_id) -> str:
-    cols = ["case", "Jira", "what it verifies", "PNR", "pnrId", "flight", "route",
+def seeded_page(records, summary, label, env, spec_by_id, doc_by_id, ids) -> str:
+    cols = ["case", "Jira", "what it verifies", "PNR", "pnrId", "passenger", "flight", "route",
             "card expects", "engine answered", "prereqs"]
     head = "".join(f"<th>{esc(c)}</th>" for c in cols)
     rows, codes = [], collections.Counter()
@@ -144,6 +146,7 @@ def seeded_page(records, summary, label, env, spec_by_id, doc_by_id) -> str:
             f"<td class=what>{esc(getattr(doc, 'title', '') or spec.get('summary') or '')}</td>",
             f"<td class=mono>{esc(r.get('locator'))}</td>",
             f"<td class=mono>{esc(r.get('pnrId'))}</td>",
+            f"<td>{cell(lookup(ids, r))}</td>",
             f"<td class=mono>{esc(r.get('flight'))}</td>",
             f"<td class=mono>{esc(r.get('route'))}</td>",
             f"<td class=mono>{esc(expectation(spec))}</td>",
@@ -167,13 +170,13 @@ def seeded_page(records, summary, label, env, spec_by_id, doc_by_id) -> str:
     return page(f"Seeded {label}", "".join(body))
 
 
-def scenarios_page(records, label, env, spec_by_id, doc_by_id) -> str:
+def scenarios_page(records, label, env, spec_by_id, doc_by_id, ids) -> str:
     by_case = {r["case"]: r for r in records}
     body = [f"<h1>SOC scenarios &mdash; {esc(label)} ({esc(env)})</h1>",
             "<p class=why>One block per case: what Jira says to verify, the prerequisites the "
             "card states, and the cucumber steps to walk &mdash; with the seeded booking beside "
             "them. Open a case to read its script.</p>",
-            "<input id=q type=search placeholder='filter by case, Jira key or title'>"]
+            "<input id=q type=search placeholder='filter by case, Jira key, title, name or ticket'>"]
     for cid in sorted(by_case):
         r, doc = by_case[cid], doc_by_id.get(cid)
         spec = spec_by_id.get(cid, {})
@@ -182,15 +185,20 @@ def scenarios_page(records, label, env, spec_by_id, doc_by_id) -> str:
         steps = esc(getattr(doc, "gherkin", "") or "")
         got = answered(r)
         answer = ", ".join(f"{g['status']} {g['code'] or ''}".strip() for g in got) or "—"
+        # the passenger as published, so the walk can log in and quote the ticket straight away
+        ident = lookup(ids, r)
+        name = " ".join(p for p in (ident.get("first"), ident.get("last")) if p)
+        who = line(ident)
         body.append(
             f"<details><summary class=mono>{esc(cid)} &nbsp; "
             f"{esc(getattr(doc, 'key', ''))} &nbsp; {esc(r.get('locator'))} &nbsp; "
-            f"{esc(r.get('flight'))} {esc(r.get('route'))} &nbsp; "
+            f"{esc(name)} &nbsp; {esc(r.get('flight'))} {esc(r.get('route'))} &nbsp; "
             f"{esc(getattr(doc, 'title', ''))}</summary>"
             f"<div class=what><b>Verify:</b> {esc(getattr(doc, 'goal', '') or '')}</div>"
             f"<div class=why>booking <span class=mono>{esc(r.get('pnrId'))}</span> &mdash; "
             f"card expects <span class=mono>{esc(expectation(spec))}</span> &mdash; "
             f"engine answered <span class=mono>{esc(answer)}</span></div>"
+            + (f"<div class=why>passenger {who}</div>" if who else "")
             + (f"<div class=why><b>Prerequisites</b></div><ul class=pre>{pre}</ul>" if pre else "")
             + (f"<div class=why><b>Cucumber steps</b></div><pre class=steps>{steps}</pre>"
                if steps else "<div class=why>no steps synced</div>")
@@ -333,19 +341,22 @@ def main(argv: list[str] | None = None) -> int:
     label = summary.get("label") or run.name
     env = summary.get("env") or run.parent.name
     spec_by_id, doc_by_id = specs(), jira()
+    ids = identities(records, label=label, env=env, runs_dir=run.parent)
 
     out = pathlib.Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     prefix = file_prefix(out, when=str(summary.get("written_at") or ""),
                          owner=(args.owner or owner_tag(env)))
     pages = {
-        f"{prefix}-seeded.html": seeded_page(records, summary, label, env, spec_by_id, doc_by_id),
-        f"{prefix}-scenarios.html": scenarios_page(records, label, env, spec_by_id, doc_by_id),
+        f"{prefix}-seeded.html": seeded_page(records, summary, label, env, spec_by_id, doc_by_id,
+                                             ids),
+        f"{prefix}-scenarios.html": scenarios_page(records, label, env, spec_by_id, doc_by_id, ids),
         f"{prefix}-disagreements.html": disagreements_page(records, label, env, spec_by_id,
                                                            doc_by_id),
     }
     for name, text in pages.items():
-        (out / name).write_text(text, encoding="utf-8")
+        # Jira's lost bullets, dashes and arrows put back for the reader (domain/testdoc.readable)
+        (out / name).write_text(readable(text), encoding="utf-8")
         print(f"[report] {out / name}")
 
     with_steps = sum(1 for r in records

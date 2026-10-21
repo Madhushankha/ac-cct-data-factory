@@ -28,7 +28,23 @@ from dataclasses import dataclass, field
 from typing import Any
 
 #: the character a lost bullet, arrow or accent arrives as
-REPLACEMENT = "�"
+REPLACEMENT = "\ufffd"
+
+
+def readable(text: str | None) -> str:
+    """Jira's damaged text, repaired for a person to read. Display only: the stored snapshot keeps its
+    damage, and `damaged_characters` still counts it.
+
+    The lost characters can be told apart by where they sit, which is all that survives of them:
+    a line-leading one was a bullet, a spaced one the en dash of a title ("APPR - Not Eligible - ..."),
+    one between airport codes an arrow (YYZ->YYC). A lost accent inside a word cannot be recovered
+    and is left visible rather than guessed.
+    """
+    t = str(text or "")
+    t = re.sub(rf"(?m)^([ \t]*){REPLACEMENT}[ \t]*", "\\1\u2022 ", t)
+    t = re.sub(rf"(?<=[A-Z]{{3}}){REPLACEMENT}(?=[A-Z]{{3}}\b)", "\u2192", t)
+    t = re.sub(rf"(?<=\s){REPLACEMENT}(?=\s)", "\u2013", t)
+    return t
 
 
 @dataclass(frozen=True, slots=True)

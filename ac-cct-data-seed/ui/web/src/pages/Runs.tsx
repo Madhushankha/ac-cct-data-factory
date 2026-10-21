@@ -76,6 +76,7 @@ export function RunView({ env, label }: { env: string; label: string }) {
   const [dialog, setDialog] = useState<'judge' | 'gate' | null>(null);
   const [doc, setDoc] = useState<{ name: string; body: unknown } | null>(null);
   const [filter, setFilter] = useState<'all' | 'agree' | 'disagree' | 'unjudged'>('all');
+  const toast = useToast();
   if (error) return <div className="page"><ErrorBox error={error} /></div>;
   if (!data) return <Loading />;
   const s = data.summary || {};
@@ -87,6 +88,8 @@ export function RunView({ env, label }: { env: string; label: string }) {
       <div className="page-head">
         <h1>{label}</h1>
         <div className="row">
+          {data.cases.length > 0 && <button className="primary" title="Write this run's report pages into the next reports/<env>/<set>/v<n> (a seed writes run records only)"
+            onClick={async () => { try { const j = await api.post<Job>('/api/jobs/report', { env, run: label }); toast(`Started: ${j.title}`); go(`/jobs/${j.id}`); } catch (e: any) { toast(e.message, 'err'); } }}>Make report</button>}
           {data.cases.length > 0 && <button onClick={() => setDialog('judge')}>Re-judge</button>}
           {data.batches.length > 0 && <button onClick={() => setDialog('gate')}>Gate (read and judge)</button>}
         </div>

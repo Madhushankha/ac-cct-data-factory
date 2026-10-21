@@ -149,8 +149,12 @@ export function Badge({ kind, children }: { kind: string; children: ReactNode })
 }
 
 export const STATUS_KIND: Record<string, string> = {
-  runnable: 'ok', blocked: 'warn', empty: 'muted', running: 'info', ok: 'ok', findings: 'warn',
+  runnable: 'ok', 'no-verdict': 'warn', blocked: 'err', empty: 'muted', running: 'info', ok: 'ok', findings: 'warn',
   failed: 'err', cancelled: 'muted',
+};
+/** A set's state as a person reads it. "no-verdict" sets seed; only "blocked" ones cannot. */
+export const SET_STATE_TEXT: Record<string, string> = {
+  runnable: 'runnable', 'no-verdict': 'seeds, no verdict', blocked: 'blocked', empty: 'empty',
 };
 export const STATUS_TEXT: Record<string, string> = {
   running: 'running', ok: 'finished', findings: 'finished, some disagree', failed: 'failed', cancelled: 'stopped',

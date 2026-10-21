@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { api, SetInfo } from '../api';
-import { Badge, Confirm, Empty, ErrorBox, Link, Loading, Modal, STATUS_KIND, useLoad, useToast, go } from '../ui';
+import { Badge, Confirm, Empty, ErrorBox, Link, Loading, Modal, SET_STATE_TEXT, STATUS_KIND, useLoad, useToast, go } from '../ui';
 
 interface SetsResponse { sets: SetInfo[]; archived: { id: string; flow: string; phase: string; folder: string; count: number }[] }
 
@@ -47,7 +47,8 @@ export function SetsPage() {
               <tr key={s.name} className="click" onClick={() => go(`/sets/${s.name}`)}>
                 <td><b>{s.name}</b></td><td>{s.flowLabel}</td><td>{s.phase}</td><td>{s.purpose}</td>
                 <td className="num">{s.count}</td>
-                <td><Badge kind={STATUS_KIND[s.state]}>{s.state}</Badge>{s.state === 'blocked' && <div className="muted small clip" title={s.needs.join('\n')}>{s.needs[0]}</div>}</td>
+                <td><Badge kind={STATUS_KIND[s.state]}>{SET_STATE_TEXT[s.state] || s.state}</Badge>
+                  {(s.state === 'no-verdict' || s.state === 'blocked') && <ul className="muted small">{(s.state === 'blocked' ? s.blocks : s.needs).map(n => <li key={n}>{n}</li>)}</ul>}</td>
                 <td className="num">{s.deleted || ''}</td>
               </tr>
             ))}

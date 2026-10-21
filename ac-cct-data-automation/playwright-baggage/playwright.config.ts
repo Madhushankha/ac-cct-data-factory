@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { defineConfig } from '@playwright/test';
-import { BASE_URL, CHAT_DIR, CHAT_PORT, LOCAL_CHAT } from './src/config';
+import { BASE_URL, CHAT_DIR, CHAT_PORT, HTTP_CREDENTIALS, LOCAL_CHAT } from './src/config';
 
 // A launcher (agentic-qa) that sets RUN_DIR gets the HTML/JSON reports inside that run's folder;
 // a plain `npm test` keeps them in out/html.
@@ -15,6 +15,10 @@ const BROWSER = {
   // no video by default (VIDEO=on records every chat, VIDEO=retain-on-failure only failures; saved as <run>/videos/run<n>.webm)
   video: (process.env.VIDEO || 'off') as 'on' | 'retain-on-failure' | 'off',
   screenshot: 'only-on-failure' as const,
+  // the uat2 (BAT) site's Basic-auth login, from .env; undefined elsewhere
+  httpCredentials: HTTP_CREDENTIALS,
+  // PW_WS_ENDPOINT=ws://127.0.0.1:3000/ drives the memory-capped Chrome in docker/chrome instead of launching one here
+  ...(process.env.PW_WS_ENDPOINT ? { connectOptions: { wsEndpoint: process.env.PW_WS_ENDPOINT } } : {}),
 };
 
 export default defineConfig({

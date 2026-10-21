@@ -10,7 +10,7 @@ guide, it is because the widget or this machine does something else; see "Differ
 
 ## What it drives
 
-- **Chat page.** Default: the hosted INT stable preview (`https://cct-chat-stable.ac-cct-int.cloud.aircanada.com/`).
+- **Chat page.** Default: the main INT page (`https://cct-chat.ac-cct-int.cloud.aircanada.com/`, no password). `CHAT_URL=stable` uses the hosted INT stable preview (`https://cct-chat-stable.ac-cct-int.cloud.aircanada.com/`).
   Its widget calls the same INT gateway (`rg9r0wtonl`) as the agentic-qa seed pipeline. The suite signs in with
   `CHAT_PASSWORD` from `.env`. `CHAT_URL=local` uses the public-qa copy served by `scripts/serve.js`, whose widget
   calls `bcnxq39777`.

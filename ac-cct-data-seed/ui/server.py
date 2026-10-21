@@ -8,18 +8,20 @@ Reading and editing the spec tree happen here, in-process. Anything that talks t
 """
 from __future__ import annotations
 
+import datetime as _dt
 import json
 import pathlib
 import re
 from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from adapters.file_spec_source import FileSpecSource
 from adapters.jira_docs import FileTestDocs
+from domain.testdoc import readable
 from core import paths
 from flows import registry
 from ui import records
@@ -194,6 +196,26 @@ def import_cases(flow: str, phase: str, purpose: str, body: ImportBody) -> dict[
     return out
 
 
+class Identity(BaseModel):
+    email: str = ""
+    phone: str = ""
+    firstName: str = ""
+    lastName: str = ""
+    dob: str = ""
+
+
+@app.get("/api/sets/{flow}/{phase}/{purpose}/identity")
+def get_identity(flow: str, phase: str, purpose: str) -> dict[str, str]:
+    return specs.identity(_set(flow, phase, purpose))
+
+
+@app.put("/api/sets/{flow}/{phase}/{purpose}/identity")
+def save_identity(flow: str, phase: str, purpose: str, body: Identity) -> dict[str, str]:
+    saved = specs.save_identity(_set(flow, phase, purpose), body.model_dump())
+    records.audit("set.identity", set=_set(flow, phase, purpose))
+    return saved
+
+
 @app.get("/api/sets/{flow}/{phase}/{purpose}/export")
 def export_cases(flow: str, phase: str, purpose: str) -> JSONResponse:
     name = _set(flow, phase, purpose)
@@ -269,10 +291,38 @@ def search(q: str) -> list[dict[str, Any]]:
 
 # =========================================================================== jira
 
+def _shown(v: Any) -> Any:
+    """Jira text as a person should read it: the snapshot's lost bullets, dashes and arrows put back."""
+    if isinstance(v, str):
+        return readable(v)
+    if isinstance(v, (list, tuple)):
+        return [_shown(x) for x in v]
+    return v
+
+
 def _doc(d) -> dict[str, Any]:
-    return {k: getattr(d, k, None) for k in (
+    return {k: _shown(getattr(d, k, None)) for k in (
         "case_id", "key", "status", "url", "title", "goal", "description",
         "prerequisite_items", "synced_at", "damaged_characters")}
+
+
+def _jira_url(key: str) -> str:
+    return f"https://aircanada.atlassian.net/browse/{key}" if key else ""
+
+
+@app.get("/api/jira/tests")
+def jira_tests(set: str) -> list[dict[str, Any]]:
+    """Every synced test in a set, in full: the description, the Cucumber steps and both links.
+
+    The reports page shows these beside a set's report, so a reader can check a run against what
+    the test actually says without leaving for Jira.
+    """
+    if ".." in set.split("/"):
+        raise SpecError(f"not a set: {set}")
+    return [{**_doc(d), "summary": readable(d.summary), "priority": d.priority, "labels": list(d.labels),
+             "scenarioType": d.scenario_type, "gherkin": readable(d.gherkin),
+             "execution": d.execution, "executionUrl": _jira_url(d.execution)}
+            for d in FileTestDocs().docs(set)]
 
 
 @app.get("/api/jira/coverage")
@@ -326,9 +376,10 @@ class SeedRequest(Selection):
     firstName: str = ""
     lastName: str = ""
     dob: str = ""
-    wallet: bool = False
+    wallet: bool = True
     pool: bool = False
     uniqueName: bool = False
+    inboxPerCase: bool = False
 
 
 def _selection_args(r: Selection) -> list[str]:
@@ -382,8 +433,10 @@ def job_seed(body: SeedRequest) -> dict[str, Any]:
         if not _DOB.match(body.dob.strip()):
             raise SpecError("date of birth must be YYYY-MM-DD or YYYY/MM/DD")
         a += ["--dob", body.dob.strip()]
-    for flag, on in (("--wallet", body.wallet), ("--pool", body.pool),
-                     ("--unique-name", body.uniqueName)):
+    # the CLI mints wallets by default, so off has to be said
+    a.append("--wallet" if body.wallet else "--no-wallet")
+    for flag, on in (("--pool", body.pool), ("--unique-name", body.uniqueName),
+                     ("--inbox-per-case", body.inboxPerCase)):
         if on:
             a.append(flag)
     title = f"{'seed' if body.go else 'dry-run seed'} {body.set} on {body.env}"
@@ -433,6 +486,49 @@ def job_judge(body: JudgeRequest) -> dict[str, Any]:
         a.append("--write")
     job = jobs.start("judge", f"judge {body.run} on {body.env}", a, params=body.model_dump())
     records.audit("job.judge", job=job.id, run=body.run, env=body.env, write=body.write)
+    return _job(job)
+
+
+class ReportRequest(BaseModel):
+    env: Env = "int"
+    run: str
+    #: the set the run seeded; read off a default label (`<flow>-<phase>-<purpose>-<stamp>`) when left out
+    set: str = ""
+
+
+#: the page generator each flow's run records need: baggage answers per bag and SOC per segment, so
+#: the FD-shaped `tools/report.py` would show them an empty verdict column
+_REPORT_TOOL = {"baggage": "tools/baggage_report.py", "soc": "tools/soc_report.py"}
+
+
+def _set_of_run(label: str) -> str:
+    names = {s["name"] for s in specs.sets()}
+    for name in sorted(names, key=len, reverse=True):
+        if label.startswith(name.replace("/", "-") + "-"):
+            return name
+    raise SpecError(f"cannot tell which set {label} seeded; choose the set")
+
+
+@app.post("/api/jobs/report")
+def job_report(body: ReportRequest) -> dict[str, Any]:
+    """Write the next report version for a run: `reports/<env>/<set>/v<n+1>/`.
+
+    `cli seed` writes run records, not report pages, so a seed alone never shows on the Reports
+    page. This runs the flow's page generator over the run, into the next free version.
+    """
+    run = paths.RUNS / body.env / body.run
+    if not run.is_dir() or not re.fullmatch(r"[A-Za-z0-9_.\-]{1,120}", body.run):
+        raise SpecError(f"no run {body.run} in {body.env}")
+    name = body.set.strip("/") or _set_of_run(body.run)
+    FileSpecSource().set_named(name)                                       # 404 on an unknown set
+    flow = name.split("/")[0]
+    base = records.REPORTS / body.env / name
+    taken = [int(p.name[1:]) for p in base.glob("v*") if p.is_dir() and p.name[1:].isdigit()]
+    out = base / f"v{max(taken, default=0) + 1}"
+    tool = _REPORT_TOOL.get(flow, "tools/report.py")
+    job = jobs.start("report", f"report {body.run} -> {out.relative_to(records.REPORTS).as_posix()}",
+                     [tool, "--run", str(run), "--out", str(out)], module="", params=body.model_dump())
+    records.audit("job.report", job=job.id, run=body.run, env=body.env, out=str(out))
     return _job(job)
 
 
@@ -565,8 +661,19 @@ def list_reports() -> list[dict[str, Any]]:
 
 
 @app.get("/api/reports/file/{rel:path}")
-def report_file(rel: str) -> FileResponse:
-    return FileResponse(records.report_file(rel))
+def report_file(rel: str, download: bool = False) -> FileResponse:
+    path = records.report_file(rel)
+    # filename= makes it an attachment; without it the browser opens the page in place
+    return FileResponse(path, filename=path.name if download else None)
+
+
+@app.get("/api/reports/zip/{rel:path}")
+def report_zip(rel: str) -> Response:
+    """One report version, every file in it, as a zip."""
+    data = records.report_zip(rel)
+    name = rel.strip("/").replace("/", "-") + ".zip"
+    return Response(data, media_type="application/zip",
+                    headers={"Content-Disposition": f'attachment; filename="{name}"'})
 
 
 @app.delete("/api/reports/{rel:path}")
@@ -574,6 +681,122 @@ def trash_report(rel: str) -> dict[str, str]:
     where = records.trash_report(rel)
     records.audit("report.delete", report=rel, kept_as=where)
     return {"keptAs": where}
+
+
+# =========================================================================== AWS sign-in
+
+@app.get("/api/aws")
+def aws_state() -> dict[str, Any]:
+    """Whether the int-cce sign-in works, and whether a job is waiting for one."""
+    from core import aws_guard
+    return {**aws_guard.status(), "signedIn": aws_guard.signed_in(), "profile": aws_guard.PROFILE}
+
+
+@app.post("/api/aws/signin")
+def aws_signin() -> dict[str, Any]:
+    """Start `aws sso login`: the browser opens on this machine and the person approves it there."""
+    from core import aws_guard
+    aws_guard.start_login()
+    records.audit("aws.signin")
+    return {"started": True}
+
+
+# =========================================================================== live automation
+
+#: where the Playwright suite writes each run: out/<date>_<name>_<hhmm>/
+AUTOMATION_OUT = paths.AUTOMATION / "playwright-baggage" / "out"
+_RUN_DIR = re.compile(r"^[A-Za-z0-9_.\-]{1,120}$")
+_CODE = re.compile(r"(?<!\d)\d{6}(?!\d)")
+
+
+def _out_run(run: str) -> pathlib.Path:
+    d = AUTOMATION_OUT / run
+    if not _RUN_DIR.match(run) or not d.is_dir():
+        raise HTTPException(404, f"no automation run {run}")
+    return d
+
+
+def _flow_of(cases: list[str]) -> str:
+    """fd / soc / baggage / anc from the case ids a run holds, for the page's flow filter."""
+    for c in cases:
+        u = c.upper()
+        for prefix, flow in (("FD_", "fd"), ("SOC_", "soc"), ("BAG", "baggage"), ("ANC", "anc")):
+            if u.startswith(prefix):
+                return flow
+    return ""
+
+
+@app.get("/api/live")
+def live_runs() -> list[dict[str, Any]]:
+    """The suite's recent runs, newest first, each with its chats and whether one is still going."""
+    if not AUTOMATION_OUT.is_dir():
+        return []
+    out = []
+    for d in sorted((p for p in AUTOMATION_OUT.iterdir() if p.is_dir() and p.name not in ("html", "adhoc")),
+                    key=lambda p: p.stat().st_mtime, reverse=True)[:20]:
+        chats = []
+        for f in sorted((d / "transcripts").glob("run*.live.json")):
+            try:
+                s = json.loads(f.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
+            n = f.name.split(".")[0][3:]
+            res = d / "results" / f"run{n}.json"
+            final = json.loads(res.read_text(encoding="utf-8")) if res.exists() else {}
+            result = final.get("result")
+            cps = final.get("checkpoints") or []
+            state = s.get("state")
+            # a chat whose process was killed never writes "finished": silence for 5 minutes means stopped
+            if state == "running" and _dt.datetime.now(_dt.timezone.utc).timestamp() - f.stat().st_mtime > 300:
+                state = "stopped"
+            chats.append({"n": n, "title": s.get("title"), "booking": s.get("booking"), "state": state,
+                          "step": s.get("step"), "updatedAt": s.get("updatedAt"), "result": result,
+                          "caseId": final.get("caseId"), "caseNumber": final.get("caseNumber"),
+                          "pass": sum(c.get("status") == "pass" for c in cps),
+                          "fail": sum(c.get("status") in ("fail", "not_reached") for c in cps)})
+        try:
+            header = json.loads((d / "run.json").read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            header = {}
+        ev = d / "evidence"
+        out.append({"run": d.name, "updated": records._mtime(d), "chats": chats,
+                    "evidence": sorted(p.name for p in ev.glob("*") if p.suffix in (".html", ".zip"))
+                    if ev.is_dir() else [],
+                    "running": any(c["state"] == "running" for c in chats),
+                    "planned": header.get("planned"), "cases": header.get("cases") or [],
+                    "flow": _flow_of(header.get("cases") or [c.get("title") or "" for c in chats])})
+    return out
+
+
+@app.get("/api/live/{run}/{n}")
+def live_chat(run: str, n: str) -> dict[str, Any]:
+    """One chat as it stands: the live state, the AI's decisions, and the evidence files kept so far."""
+    d = _out_run(run)
+    if not n.isdigit():
+        raise HTTPException(404)
+    f = d / "transcripts" / f"run{n}.live.json"
+    if not f.exists():
+        raise HTTPException(404, f"no chat {n} in {run}")
+    s = json.loads(f.read_text(encoding="utf-8"))
+    for m in s.get("messages") or []:
+        if m.get("who") == "you":                       # never show a typed one-time code
+            m["text"] = _CODE.sub("•" * 6, m.get("text") or "")
+    res = d / "results" / f"run{n}.json"
+    s["final"] = json.loads(res.read_text(encoding="utf-8")) if res.exists() else None
+    s["files"] = sorted(p.relative_to(d).as_posix() for p in d.rglob(f"*run{n}*")
+                        if p.is_file() and p.suffix in (".png", ".webm", ".html", ".json"))
+    return s
+
+
+@app.get("/api/live/{run}/file/{rel:path}")
+def live_file(run: str, rel: str, download: bool = False) -> FileResponse:
+    d = _out_run(run)
+    p = (d / rel).resolve()
+    if d.resolve() not in p.parents or not p.is_file() or p.suffix not in (".png", ".webm", ".html", ".json", ".zip"):
+        raise HTTPException(404)
+    # the evidence pages and the zip are for keeping: hand them over as downloads
+    name = f"{run}-{p.name}" if p.parent.name == "evidence" and download else None
+    return FileResponse(p, filename=name, headers={"Cache-Control": "no-store"})
 
 
 # =========================================================================== audit

@@ -35,6 +35,9 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from domain.testdoc import readable                                          # noqa: E402
+from tools.booking_identity import cell, identities, lookup                   # noqa: E402
+
 # ---------------------------------------------------------------- reading
 
 #: the checks whose actual value belongs in the summary table, in the order a reader wants them
@@ -522,6 +525,7 @@ details{margin:8px 0;border:1px solid var(--line);border-radius:8px;padding:8px 
 summary{cursor:pointer;font-weight:600}
 .chk{font-size:12px;margin:3px 0} .chk.no{color:var(--fail)} .chk.yes{color:var(--pass)}
 .leg{color:var(--mut);font-size:12px;margin:10px 0 0}
+.idl{font-size:11px;color:var(--mut);white-space:nowrap}
 input[type=search]{width:260px;padding:5px 8px;border:1px solid var(--line);border-radius:6px;
   background:var(--bg);color:var(--fg);margin:8px 0}
 @media(max-width:760px){body{padding:16px}table{font-size:12px}}
@@ -530,7 +534,7 @@ input[type=search]{width:260px;padding:5px 8px;border:1px solid var(--line);bord
 FILTER_JS = """
 const q=document.getElementById('q');
 if(q)q.addEventListener('input',function(){var v=q.value.toLowerCase();
-  document.querySelectorAll('tbody tr').forEach(function(r){
+  document.querySelectorAll('tbody tr, .wrap > details').forEach(function(r){
     r.style.display=r.textContent.toLowerCase().indexOf(v)>=0?'':'none';});});
 """
 
@@ -594,6 +598,10 @@ def seeded_page(runs: list[Run], base: dict) -> str:
         cols.append("kit")
     head = "".join(f"<th>{esc(c)}</th>" for c in cols)
 
+    # who each booking is as published -- name, contact, Aeroplan, ticket -- from the pool file
+    # and the built batch (tools/booking_identity.py), not from the run record
+    ids = identities(list(primary.cases.values()), label=primary.label, env=primary.env,
+                     runs_dir=primary.dir.parent)
     rows: list[str] = []
     buckets: dict[str, int] = {}
     for cid in sorted(primary.cases):
@@ -617,7 +625,7 @@ def seeded_page(runs: list[Run], base: dict) -> str:
                  f"<td>{badge(bucket)}</td>",
                  f"<td class=mono>{esc(rec.get('locator'))}</td>",
                  f"<td class=mono>{esc(rec.get('pnrId'))}</td>",
-                 f"<td>{esc(passenger(rec))}</td>",
+                 f"<td>{cell(lookup(ids, rec), passenger(rec))}</td>",
                  f"<td class=mono>{esc(rec.get('flight'))}</td>",
                  f"<td class=mono>{esc(rec.get('route'))}</td>",
                  f"<td class=mono>{esc(flight_day(rec))}</td>",
@@ -732,7 +740,8 @@ def main(argv: list[str] | None = None) -> int:
     pages = {f"{prefix}-seeded.html": seeded_page(runs, base),
              f"{prefix}-disagreements.html": disagreements_page(runs, base)}
     for name, text in pages.items():
-        (out / name).write_text(text, encoding="utf-8")
+        # Jira's lost bullets, dashes and arrows put back for the reader (domain/testdoc.readable)
+        (out / name).write_text(readable(text), encoding="utf-8")
     for r in runs:
         c = r.counts()
         print(f"[report] {r.env}/{r.label}: {c['cases']} case(s), {c['agree']} agree, "

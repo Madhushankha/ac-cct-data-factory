@@ -1,0 +1,103 @@
+# One Moli browser per parallel chat, each capped so the PC cannot run out of memory, all going out
+# through a local proxy that adds the uat2 (BAT) login for uat2.aircanada.com only.
+#   docker compose --env-file ../../playwright-baggage/.env up -d     start all (reads UAT2_USER/UAT2_PASS)
+#   docker compose down                                              stop all
+# Ports 9222-9246 on 127.0.0.1 only; the suite picks them up with CDP_PORTS=9222-9246.
+x-moli: &moli
+  # built once with: docker build -t cct-qa/moli:1.1.18 .
+  image: cct-qa/moli:1.1.18
+  entrypoint: ["/bin/sh", "/moli-start.sh"]
+  volumes: ["./moli-start.sh:/moli-start.sh:ro", "./certs:/certs:ro"]
+  depends_on: [proxy]
+  restart: on-failure
+  mem_limit: 512m
+  cpus: 0.5
+  shm_size: 256m
+services:
+  proxy:
+    image: mitmproxy/mitmproxy:11.1.3
+    # decrypt uat2 only; every other host is a plain tunnel
+    command: ["mitmdump", "--set", "confdir=/certs", "--allow-hosts", "^uat2[.]aircanada[.]com(:443)?$$", "-s", "/addon/uat2_auth.py", "--listen-port", "8080", "--quiet"]
+    environment:
+      UAT2_USER: ${UAT2_USER:?put UAT2_USER in playwright-baggage/.env}
+      UAT2_PASS: ${UAT2_PASS:?put UAT2_PASS in playwright-baggage/.env}
+    volumes: ["./proxy:/addon:ro", "./certs:/certs"]
+    restart: on-failure
+    mem_limit: 512m
+    cpus: 1.0
+    # no ports: only the Moli containers reach it, on the compose network
+  moli01:
+    <<: *moli
+    ports: ["127.0.0.1:9222:9222"]
+  moli02:
+    <<: *moli
+    ports: ["127.0.0.1:9223:9222"]
+  moli03:
+    <<: *moli
+    ports: ["127.0.0.1:9224:9222"]
+  moli04:
+    <<: *moli
+    ports: ["127.0.0.1:9225:9222"]
+  moli05:
+    <<: *moli
+    ports: ["127.0.0.1:9226:9222"]
+  moli06:
+    <<: *moli
+    ports: ["127.0.0.1:9227:9222"]
+  moli07:
+    <<: *moli
+    ports: ["127.0.0.1:9228:9222"]
+  moli08:
+    <<: *moli
+    ports: ["127.0.0.1:9229:9222"]
+  moli09:
+    <<: *moli
+    ports: ["127.0.0.1:9230:9222"]
+  moli10:
+    <<: *moli
+    ports: ["127.0.0.1:9231:9222"]
+  moli11:
+    <<: *moli
+    ports: ["127.0.0.1:9232:9222"]
+  moli12:
+    <<: *moli
+    ports: ["127.0.0.1:9233:9222"]
+  moli13:
+    <<: *moli
+    ports: ["127.0.0.1:9234:9222"]
+  moli14:
+    <<: *moli
+    ports: ["127.0.0.1:9235:9222"]
+  moli15:
+    <<: *moli
+    ports: ["127.0.0.1:9236:9222"]
+  moli16:
+    <<: *moli
+    ports: ["127.0.0.1:9237:9222"]
+  moli17:
+    <<: *moli
+    ports: ["127.0.0.1:9238:9222"]
+  moli18:
+    <<: *moli
+    ports: ["127.0.0.1:9239:9222"]
+  moli19:
+    <<: *moli
+    ports: ["127.0.0.1:9240:9222"]
+  moli20:
+    <<: *moli
+    ports: ["127.0.0.1:9241:9222"]
+  moli21:
+    <<: *moli
+    ports: ["127.0.0.1:9242:9222"]
+  moli22:
+    <<: *moli
+    ports: ["127.0.0.1:9243:9222"]
+  moli23:
+    <<: *moli
+    ports: ["127.0.0.1:9244:9222"]
+  moli24:
+    <<: *moli
+    ports: ["127.0.0.1:9245:9222"]
+  moli25:
+    <<: *moli
+    ports: ["127.0.0.1:9246:9222"]

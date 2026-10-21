@@ -39,9 +39,11 @@ from domain.models import Booking
 #: the suite's own pool directory, which `src/bookings.ts` merges on every run
 POOL_DIR = paths.AUTOMATION / "playwright-baggage" / "data" / "pools"
 
-#: One inbox takes every scenario's mail, so the surname is what tells a run which scenario a
-#: message belongs to -- see `adapters/kafka_publisher.case_surname`. A pool whose bookings carry
-#: their own `last` needs no pool-level name, which is why `first`/`last` are written per booking.
+#: By default one inbox takes every scenario's mail, and the suite tells mail apart by first name
+#: under a global one-at-a-time queue. A run seeded with `--inbox-per-case` writes each booking's
+#: own `email` and `otp` (with `own: true`), which the suite reads instead of the pool's `otp`.
+#: A pool whose bookings carry their own `last` needs no pool-level name, which is why
+#: `first`/`last` are written per booking.
 MAILINATOR_DOMAIN = "ae-qa1-aircanada.mailinator.com"
 
 
@@ -56,7 +58,9 @@ class PoolFileSink:
                  tags: dict[str, tuple[str, ...]] | None = None,
                  names: dict[str, tuple[str, str]] | None = None,
                  aeroplan: dict[str, str] | None = None,
-                 dataset: str = "", email: str = "") -> str:
+                 dataset: str = "", email: str = "",
+                 emails: dict[str, str] | None = None,
+                 phones: dict[str, str] | None = None) -> str:
         """Write `<name>.yaml`. One file per run, so a run can be handed over or dropped alone.
 
         `names` maps pnrId to the name the booking actually carries, which the publisher resolves:
@@ -73,7 +77,7 @@ class PoolFileSink:
         path = self.directory / f"{_safe(name)}.yaml"
 
         rows = []
-        names, aeroplan = names or {}, aeroplan or {}
+        names, aeroplan, emails = names or {}, aeroplan or {}, emails or {}
         missing_names = []
         for b in bookings:
             first, last = names.get(b.pnr_id) or ("", "")
@@ -100,6 +104,14 @@ class PoolFileSink:
                 row["aeroplan"] = aeroplan[b.case_id]
             if b.route:
                 row["note"] = f"{b.route} | {b.case_id}"
+            # the booking's own inbox: the suite reads this booking's codes and mail from it alone,
+            # so it neither queues behind other runs nor needs the first name to tell mail apart
+            own = emails.get(b.pnr_id)
+            if own:
+                row["email"] = own
+                row["otp"] = {**_otp(own), "own": True}
+            if (phones or {}).get(b.pnr_id):
+                row["phone"] = phones[b.pnr_id]
             rows.append(row)
 
         pool = {

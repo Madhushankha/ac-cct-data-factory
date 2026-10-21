@@ -1,0 +1,47 @@
+{
+  "family": "cct-qa-chat-runner-big",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "cpu": "16384",
+  "memory": "32768",
+  "taskRoleArn": "arn:aws:iam::982081066747:role/cct-qa-task-role",
+  "executionRoleArn": "arn:aws:iam::982081066747:role/cct-qa-exec-role",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "containerDefinitions": [
+    {
+      "name": "runner",
+      "image": "982081066747.dkr.ecr.ca-central-1.amazonaws.com/cct-qa-chat-runner:v6",
+      "essential": true,
+      "environment": [
+        {
+          "name": "TASK_ROLE",
+          "value": "1"
+        },
+        {
+          "name": "AWS_REGION",
+          "value": "ca-central-1"
+        },
+        {
+          "name": "WORKERS",
+          "value": "20"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/cct-qa-chat-runner",
+          "awslogs-region": "ca-central-1",
+          "awslogs-stream-prefix": "runner"
+        }
+      },
+      "linuxParameters": {
+        "initProcessEnabled": true
+      }
+    }
+  ]
+}

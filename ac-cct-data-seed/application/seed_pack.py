@@ -24,11 +24,12 @@ batched as wide as the 8 KiB command override allows.
 """
 from __future__ import annotations
 
+
 import datetime as _dt
 from dataclasses import dataclass, field, replace
-from typing import Iterable, Sequence
+from typing import Callable, Iterable, Sequence
 
-from domain.loyalty import Member
+from domain.loyalty import LoyaltyRequest, Member
 from domain.models import Booking, CaseResult, Scenario
 from ports import (AssessmentReader, BookingSink, BuiltBatch, FlowPolicy,
                    LoyaltyDirectory, Publisher, RunStore, ScenarioBuilder)
@@ -104,6 +105,14 @@ class SeedPack:
     #: needs none, and a run without this seeds those cases and says plainly that the wallet
     #: cases went out without a member.
     loyalty: LoyaltyDirectory | None = None
+    #: give every case a member, not only the ones whose spec asks for one: a case with no loyalty
+    #: block gets the default request (an open wallet, E50K), so every seeded booking can reach a
+    #: wallet. Only meaningful with `loyalty`.
+    wallet_for_all: bool = False
+    #: called before every batch of a batched run; False stops the run there. The CLI passes the AWS
+    #: sign-in check: a 267-case seed outlives an 8-hour SSO session, and the expiry used to land
+    #: mid-batch (published, half the wallets attached, no pool).
+    before_batch: Callable[[], bool] | None = None
     env: str = "int"
     log: object = field(default=print)
 
@@ -134,7 +143,7 @@ class SeedPack:
         # 1. MINT, before the booking is built. The member's name is decided here because the
         #    booking has to carry the same one: the wallet lookup disambiguates profiles by
         #    name, and a tie falls back to the first profile it finds.
-        members_by_case = self._mint(runnable, say)
+        members_by_case = self._mint(runnable, say, dry_run=dry_run)
 
         batch = self.builder.build(runnable, env=self.env, run_day=run_day,
                                    spec_set=spec_set)
@@ -186,6 +195,12 @@ class SeedPack:
         # the tags because only it knows what state its cases are in.
         pool = ""
         if self.sink is not None:
+            # each booking's own inbox, where the run gave it one; passed only then, so a sink
+            # written before per-case inboxes keeps working
+            own = (self.publisher.emails(batch, identity=identity, cases=cases)
+                   if hasattr(self.publisher, "emails") else {})
+            own_phones = (self.publisher.phones(batch, identity=identity, cases=cases)
+                          if own and hasattr(self.publisher, "phones") else {})
             by_case = {s.case_id: s for s in runnable}
             tags = {b.case_id: self.policy.tags(by_case[b.case_id])
                     for b in batch.bookings if b.case_id in by_case}
@@ -195,7 +210,9 @@ class SeedPack:
                 names=self.publisher.identities(batch, identity=identity, cases=cases,
                                                 force_names=forced),
                 aeroplan={case: m[0].number for case, m in members_by_case.items() if m},
-                email=getattr(identity, "email", "") or "")
+                email=getattr(identity, "email", "") or "",
+                **({"emails": own} if own else {}),
+                **({"phones": own_phones} if own_phones else {}))
         return PackOutcome(label=label, built=len(batch.bookings), pool_path=pool,
                            members=members,
                            build_failures=tuple(str(f.get("id")) for f in
@@ -292,6 +309,10 @@ class SeedPack:
         built = published = 0
         results, refused, failures, pools = [], [], [], []
         for i, chunk in enumerate(chunks, 1):
+            if self.before_batch is not None and not self.before_batch():
+                say(f"[pack] stopped before batch {i} of {len(chunks)}: the pre-batch check failed "
+                    f"(AWS sign-in?); batches 1-{i - 1} are complete")
+                break
             say(f"[pack] === batch {i} of {len(chunks)}: {len(chunk)} case(s)")
             out = self.run(chunk, label=f"{label}-b{i:02d}", **kw)
             built += out.built
@@ -310,10 +331,20 @@ class SeedPack:
 
     # ---------------------------------------------------------------- loyalty
 
-    def _mint(self, scenarios, say) -> dict[str, tuple[Member, ...]]:
-        """Members for the cases that ask for one, before anything is built."""
-        wanting = [s for s in scenarios if s.wants_loyalty]
+    def _mint(self, scenarios, say, *, dry_run: bool = False) -> dict[str, tuple[Member, ...]]:
+        """Members for the cases that ask for one (every case, with `wallet_for_all`), before
+        anything is built. A dry run mints nothing: a member is a real ACCP profile, and one minted
+        for a booking that is never published is an orphan nobody cleans up."""
+        if self.wallet_for_all and self.loyalty is not None:
+            wanting = [s if s.wants_loyalty else replace(s, loyalty=LoyaltyRequest())
+                       for s in scenarios]
+        else:
+            wanting = [s for s in scenarios if s.wants_loyalty]
         if not wanting:
+            return {}
+        if dry_run and self.loyalty is not None:
+            say(f"[loyalty] dry run: would mint a member for {len(wanting)} case(s); "
+                f"none minted")
             return {}
         if self.loyalty is None:
             # not passed over silently: a wallet case without a member still produces a booking and

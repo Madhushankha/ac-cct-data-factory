@@ -29,6 +29,10 @@ export interface Booking {
    */
   aeroplan?: string;
   note?: string;
+  /** the booking's contact address, when the seeder gave this booking its own inbox */
+  email?: string;
+  /** how to get THIS booking's code; overrides the pool's `otp` (a per-booking inbox, `own: true`) */
+  otp?: OtpProvider;
 }
 
 export interface Pool {
@@ -98,8 +102,9 @@ export type BookingSpec =
   | { pnr: string; first?: string; last?: string; pool?: string }
   | { pool?: string; pick: 'next-unused' | 'any'; need?: string[]; avoid?: string[]; allowUsed?: boolean };
 
-function full(poolName: string, pool: Pool, b: Booking): PickedBooking {
-  return { ...b, first: b.first ?? pool.first ?? '', last: b.last ?? pool.last ?? '', pool: poolName, otp: pool.otp };
+export function full(poolName: string, pool: Pool, b: Booking): PickedBooking {
+  return { ...b, first: b.first ?? pool.first ?? '', last: b.last ?? pool.last ?? '', pool: poolName,
+           otp: b.otp ?? pool.otp };
 }
 
 /**

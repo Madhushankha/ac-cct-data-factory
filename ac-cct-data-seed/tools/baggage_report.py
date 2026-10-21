@@ -40,6 +40,7 @@ sys.path.insert(0, str(ROOT))
 
 from tools.report import (CSS, FILTER_JS, esc, file_prefix, owner_tag,      # noqa: E402
                           passenger)
+from tools.booking_identity import cell, identities, lookup                   # noqa: E402
 
 #: the bag facts derivable from a Trip bag row, and therefore comparable
 COMPARED = ("bagCount", "ahlCount", "isAhlPresent", "isClosedAhlPresent",
@@ -191,7 +192,7 @@ def cards(records: list[dict], agreed: int, codes: collections.Counter) -> str:
 
 
 def seeded_page(records: list[dict], summary: dict, label: str, env: str,
-                spec_by_id: dict[str, dict]) -> str:
+                spec_by_id: dict[str, dict], ids: dict[str, dict] | None = None) -> str:
     cols = ["case", "what it tests", "shape", "PNR", "pnrId", "passenger",
             "flight", "route", "bag facts", "engine answered"]
     head = "".join(f"<th>{esc(c)}</th>" for c in cols)
@@ -223,7 +224,8 @@ def seeded_page(records: list[dict], summary: dict, label: str, env: str,
             f"<td class=mono>{esc(want.get('bagEventShape'))}</td>",
             f"<td class=mono>{esc(record.get('locator'))}</td>",
             f"<td class=mono>{esc(record.get('pnrId'))}</td>",
-            f"<td>{esc(passenger(record))}</td>",
+            # as published (tools/booking_identity.py); the engine's answer only holds the name
+            f"<td>{cell(lookup(ids or {}, record), passenger(record))}</td>",
             f"<td class=mono>{esc(record.get('flight'))}</td>",
             f"<td class=mono>{esc(record.get('route'))}</td>",
             f"<td class=mono>{facts}</td>",
@@ -295,11 +297,12 @@ def main(argv: list[str] | None = None) -> int:
     label = summary.get("label") or run.name
     env = summary.get("env") or run.parent.name
     spec_by_id = specs()
+    ids = identities(records, label=label, env=env, runs_dir=run.parent)
 
     out = pathlib.Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     prefix = file_prefix(out, when=str(summary.get("written_at") or ""), owner=(args.owner or owner_tag(env)))
-    pages = {f"{prefix}-seeded.html": seeded_page(records, summary, label, env, spec_by_id),
+    pages = {f"{prefix}-seeded.html": seeded_page(records, summary, label, env, spec_by_id, ids),
              f"{prefix}-verdicts.html": verdict_page(records, label, env, spec_by_id)}
     for name, text in pages.items():
         (out / name).write_text(text, encoding="utf-8")

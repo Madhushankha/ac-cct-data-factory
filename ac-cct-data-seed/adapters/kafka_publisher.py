@@ -33,6 +33,18 @@ from ports import BuiltBatch
 
 #: the seed pool's anonymised contacts, which no tester can read
 _SYNTH_EMAIL = re.compile(r"[\w.+-]+@[\w.-]*synth\.test")
+#: the SSR contact elements a booking's history carries: CTCE (e-mail) and CTCM (mobile). The builder
+#: fills their text with "SYNTHETIC TEXT", and the chat reads CTCE as "the e-mail on file" -- it offered
+#: `SY***` for the OTP on every booking that has one (FD_TC_002/003/004/014/015/016/030, BAT 2026-10-21).
+#: Bounded and inside one SSR object: `"code":"CTCE"` ... `"text":"SYNTHETIC TEXT"` without leaving it.
+_SSR_CONTACT = re.compile(r'("code"\s*:\s*"(CTCE|CTCM)"(?:(?!"code"\s*:\s*"[A-Z]{4}")[^\]]){0,600}?"text"\s*:\s*")SYNTHETIC TEXT(")')
+
+
+def ssr_email(email: str) -> str:
+    """IATA CTCE free text: upper case, `@` written as `//`."""
+    return email.upper().replace("@", "//")
+
+
 _PHONE_FIELD = re.compile(r'("number"\s*:\s*")(\+?[0-9][0-9 ()-]{5,})(")')
 #: `"id":"YULAC08AA"` inside an `office` object, in both shapes the builder emits
 _OFFICE = re.compile(r'("office"\s*:\s*\{[^{}]*?"id"\s*:\s*")([A-Z0-9]{6,12})(")')
@@ -63,6 +75,42 @@ def case_surname(case_id: str, base: str = "") -> str:
     return f"{stem}{pack}{token}"
 
 
+#: the private Mailinator domain: any inbox name on it exists without being created
+MAILINATOR_DOMAIN = "ae-qa1-aircanada.mailinator.com"
+
+
+#: every per-booking inbox starts with the owner's name, so the team can tell whose they are
+INBOX_PREFIX = "lahiru"
+
+
+def case_inbox(case_id: str, tag: str, domain: str = MAILINATOR_DOMAIN,
+               prefix: str = INBOX_PREFIX) -> str:
+    """A Mailinator address only this case's booking uses: BAG_PO_001 + 1020T1531 ->
+    lahiru-bag-po-001-1020t1531@ae-qa1-aircanada.mailinator.com.
+
+    One shared inbox makes a run fetch codes one at a time, 70 s apart, and tell mail apart by
+    first name -- which twelve baggage cases share. An inbox per booking removes both: whatever
+    lands in it is that booking's OTP, eligibility or payment mail.
+    """
+    slug = "-".join(p for p in _re_slug.split(f"{prefix}-{case_id}-{tag}".lower()) if p)
+    return f"{slug[:60].strip('-')}@{domain}"
+
+
+_re_slug = re.compile(r"[^a-z0-9]+")
+
+
+def case_phone(case_id: str, tag: str) -> str:
+    """A contact phone only this case's booking uses: +1 555 followed by 7 digits from the case and run.
+
+    A shared e-mail was not the only thing merging bookings into one customer profile: with its own
+    inbox, FD_TC_001's member still landed on the profile 68 baggage bookings share, because they all
+    carried +123456789 too. 555 numbers are fictional, so nobody real is ever texted.
+    """
+    import hashlib
+    digits = int(hashlib.sha256(f"{case_id}|{tag}".encode()).hexdigest(), 16) % 10_000_000
+    return f"+1555{digits:07d}"
+
+
 @dataclass(frozen=True, slots=True)
 class Sent:
     """Satisfies `ports.PublishResult`."""
@@ -80,6 +128,9 @@ class Identity:
     first_name: str | None = None
     last_name: str | None = None
     unique_name: bool = False
+    #: when set, every booking gets its own Mailinator inbox, `case_inbox(case, inbox_tag)`, in place
+    #: of `email`. The tag (the run's stamp) keeps a reseed from sharing an inbox with the last run.
+    inbox_tag: str | None = None
 
     @property
     def rewrites_anything(self) -> bool:
@@ -135,8 +186,18 @@ class KafkaPublisher:
         # always say which contact is going out, not only when something was overridden. The batch
         # file on disk keeps the builder's synthetic address -- the rewrite happens per message on
         # the way out -- so a reader checking that file is misled unless the log states the truth.
-        self.log(f"[publish] contact -> {identity.email or self._env_def().contact_email}; "
-                 f"{len(renames)} booking(s) renamed")
+        emails = self.emails(batch, identity=identity, cases=cases)
+        # with an inbox per booking, the phone is per booking too: both are what the profile
+        # service matches a traveller on
+        phones = self.phones(batch, identity=identity, cases=cases)
+        if emails:
+            sample = next(iter(emails.values()))
+            self.log(f"[publish] contact -> one inbox and phone per booking ({len(emails)}, e.g. "
+                     f"{sample} {next(iter(phones.values()), identity.phone or '')}); "
+                     f"{len(renames)} booking(s) renamed")
+        else:
+            self.log(f"[publish] contact -> {identity.email or self._env_def().contact_email}; "
+                     f"{len(renames)} booking(s) renamed")
         if dry_run:
             return Sent(sent=0)
 
@@ -148,7 +209,8 @@ class KafkaPublisher:
                                                payloads):
                 text = body.decode("utf-8", "replace")
                 text = self._rewrite(text, identity, renames.get(row.get("booking")),
-                                     (offices or {}).get(row.get("booking")))
+                                     (offices or {}).get(row.get("booking")),
+                                     emails.get(row.get("booking")), phones.get(row.get("booking")))
                 try:
                     md = producer.send(topic, value=text.encode(),
                                        key=key.encode() if key else None).get(timeout=60)
@@ -181,6 +243,30 @@ class KafkaPublisher:
                 continue
             out[booking] = renames[booking][1] if booking in renames else before
         return out
+
+    def emails(self, batch: BuiltBatch, *, identity: Identity | None = None,
+               cases: dict[str, str] | None = None) -> dict[str, str]:
+        """pnrId -> the booking's own contact address, when `identity.inbox_tag` asks for one.
+        Empty otherwise: every booking then carries the one shared contact."""
+        identity = identity or Identity()
+        if not identity.inbox_tag:
+            return {}
+        cases = cases or {}
+        rows = list(batch.rows()) if hasattr(batch, "rows") else []
+        return {b: case_inbox(cases.get(b, b), identity.inbox_tag)
+                for b in sorted({r.get("booking") for r in rows if r.get("booking")})
+                if any(self._name_of(rows, b))}
+
+    def phones(self, batch: BuiltBatch, *, identity: Identity | None = None,
+               cases: dict[str, str] | None = None) -> dict[str, str]:
+        """pnrId -> the booking's own contact phone, alongside its own inbox. An explicit `--phone`
+        wins: whoever passed one wants that number on every booking."""
+        identity = identity or Identity()
+        if identity.phone:
+            return {}
+        cases = cases or {}
+        return {b: case_phone(cases.get(b, b), identity.inbox_tag or "")
+                for b in self.emails(batch, identity=identity, cases=cases)}
 
     # ------------------------------------------------------------ internals
 
@@ -245,16 +331,25 @@ class KafkaPublisher:
 
     def _rewrite(self, text: str, identity: Identity,
                  rename: tuple[tuple[str, str], tuple[str, str]] | None,
-                 office_id: str | None = None) -> str:
+                 office_id: str | None = None, own_email: str | None = None,
+                 own_phone: str | None = None) -> str:
         env = self._env_def()
         # the environment's contact is the DEFAULT, not a reward for overriding something else.
         # Guarding it behind `rewrites_anything` meant a plain `cli seed` published the builder's
         # synthetic `synth-*@synth.test` addresses, and mail sent to those can never be read: the
         # suite fetches from the mailinator box, so a booking that does not carry it is unusable.
-        email = identity.email or env.contact_email
-        phone = identity.phone or env.contact_phone
+        email = own_email or identity.email or env.contact_email
+        phone = own_phone or identity.phone or env.contact_phone
         if email:
             text = _SYNTH_EMAIL.sub(email, text)
+        if email or phone:
+            def _ssr(m: re.Match) -> str:
+                if m.group(2) == "CTCE" and email:
+                    return m.group(1) + ssr_email(email) + m.group(3)
+                if m.group(2) == "CTCM" and phone:
+                    return m.group(1) + re.sub(r"\D", "", phone) + m.group(3)
+                return m.group(0)
+            text = _SSR_CONTACT.sub(_ssr, text)
         if phone:
             text = _PHONE_FIELD.sub(lambda m: m.group(1) + phone + m.group(3), text)
         if identity.dob:

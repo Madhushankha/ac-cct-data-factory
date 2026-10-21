@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { api, Env, ENVS, Job, SetInfo } from '../api';
-import { Badge, Confirm, ErrorBox, Link, Loading, STATUS_KIND, useLoad, useToast, go } from '../ui';
+import { api, Env, ENVS, Identity, Job, SetInfo } from '../api';
+import { Badge, Confirm, ErrorBox, Link, Loading, SET_STATE_TEXT, STATUS_KIND, useLoad, useToast, go } from '../ui';
 
 interface Form {
   set: string; env: Env; limit: number; only: string; part: string; skipSeeded: boolean; label: string; runDay: string;
   readBatch: number; batchSize: number; settle: number; email: string; phone: string; firstName: string; lastName: string;
-  dob: string; wallet: boolean; pool: boolean; uniqueName: boolean;
+  dob: string; wallet: boolean; pool: boolean; uniqueName: boolean; inboxPerCase: boolean;
 }
 
 const START: Form = {
   set: '', env: 'int', limit: 0, only: '', part: '', skipSeeded: true, label: '', runDay: '', readBatch: 100,
-  batchSize: 0, settle: 90, email: '', phone: '', firstName: '', lastName: '', dob: '', wallet: false, pool: true, uniqueName: false,
+  batchSize: 0, settle: 90, email: '', phone: '', firstName: '', lastName: '', dob: '', wallet: true, pool: true, uniqueName: false, inboxPerCase: false,
 };
 
 export function SeedPage({ query }: { query: URLSearchParams }) {
@@ -21,6 +21,19 @@ export function SeedPage({ query }: { query: URLSearchParams }) {
   const [advanced, setAdvanced] = useState(false);
   const toast = useToast();
   useEffect(() => { setF(x => ({ ...x, set: query.get('set') || x.set, only: query.get('only') ?? x.only })); }, [query.toString()]); // eslint-disable-line
+  // choosing a set with a saved identity fills the form's identity from it
+  const [identityFrom, setIdentityFrom] = useState('');
+  useEffect(() => {
+    if (!f.set) { setIdentityFrom(''); return; }
+    let live = true;
+    api.get<Identity>(`/api/sets/${f.set}/identity`).then(id => {
+      if (!live) return;
+      const any = Object.values(id).some(Boolean);
+      setIdentityFrom(any ? f.set : '');
+      if (any) { setF(x => ({ ...x, ...id })); setAdvanced(true); }
+    }).catch(() => live && setIdentityFrom(''));
+    return () => { live = false; };
+  }, [f.set]);
 
   if (sets.error) return <div className="page"><ErrorBox error={sets.error} /></div>;
   if (!sets.data) return <Loading />;
@@ -55,7 +68,7 @@ export function SeedPage({ query }: { query: URLSearchParams }) {
           <label className="field">Set
             <select value={f.set} onChange={e => put('set', e.target.value)}>
               <option value="">Choose…</option>
-              {sets.data.sets.map(s => <option key={s.name} value={s.name} disabled={!s.count}>{s.name} ({s.count}){s.state === 'blocked' ? ' · no verdict' : ''}</option>)}
+              {sets.data.sets.map(s => <option key={s.name} value={s.name} disabled={!s.count}>{s.name} ({s.count}){s.state === 'no-verdict' ? ' · seeds, no verdict' : s.state === 'blocked' ? ' · blocked' : ''}</option>)}
             </select>
           </label>
           <label className="field">Environment
@@ -63,7 +76,10 @@ export function SeedPage({ query }: { query: URLSearchParams }) {
           </label>
           <label className="field">Run label <input placeholder="default: set + time" value={f.label} onChange={e => put('label', e.target.value)} /></label>
         </div>
-        {info && <div className="row wrap"><Badge kind={STATUS_KIND[info.state]}>{info.state}</Badge>{info.state === 'blocked' && <span className="muted small">{info.needs[0]}</span>} <Link to={`/sets/${info.name}`}>Pick cases in the set</Link></div>}
+        {info && <div className="row wrap"><Badge kind={STATUS_KIND[info.state]}>{SET_STATE_TEXT[info.state] || info.state}</Badge> <Link to={`/sets/${info.name}`}>Pick cases in the set</Link></div>}
+        {info && (info.state === 'no-verdict' || info.state === 'blocked') && (
+          <div className="note warn small">{info.state === 'blocked' ? 'This set cannot be seeded until the flow has:' : 'This set seeds, but no verdict is claimed until the flow has:'}
+            <ul>{(info.state === 'blocked' ? info.blocks : info.needs).map(n => <li key={n}>{n}</li>)}</ul></div>)}
         <label className="field">Only these case ids (comma or space separated; empty means the whole set)
           <textarea rows={2} value={f.only} onChange={e => put('only', e.target.value)} placeholder="FD_TC_001, FD_TC_118" />
         </label>
@@ -75,7 +91,8 @@ export function SeedPage({ query }: { query: URLSearchParams }) {
         <div className="checks">
           <label className="inline"><input type="checkbox" checked={f.skipSeeded} onChange={e => put('skipSeeded', e.target.checked)} /> Skip cases that already have a booking in {f.env}</label>
           <label className="inline"><input type="checkbox" checked={f.pool} onChange={e => put('pool', e.target.checked)} /> Hand the bookings to automation as a pool</label>
-          <label className="inline"><input type="checkbox" checked={f.wallet} onChange={e => put('wallet', e.target.checked)} /> Mint an AC Wallet / Aeroplan member where a case asks (needs the int-cce AWS profile)</label>
+          <label className="inline"><input type="checkbox" checked={f.wallet} onChange={e => put('wallet', e.target.checked)} /> Mint an AC Wallet / Aeroplan member for every case (an open wallet where the spec asks for none; uses the int-cce AWS profile). The booking's surname becomes the member's.</label>
+          <label className="inline"><input type="checkbox" checked={f.inboxPerCase} onChange={e => put('inboxPerCase', e.target.checked)} /> Give each booking its own Mailinator inbox (overrides the contact e-mail; automation then gets codes in parallel)</label>
           <label className="inline"><input type="checkbox" checked={f.uniqueName} onChange={e => put('uniqueName', e.target.checked)} /> Give each case its own surname</label>
         </div>
       </section>
@@ -84,6 +101,7 @@ export function SeedPage({ query }: { query: URLSearchParams }) {
         <button className="ghost" onClick={() => setAdvanced(a => !a)}>{advanced ? '▾' : '▸'} Customer identity and tuning</button>
         {advanced && (
           <>
+            {identityFrom && <p className="muted small">Filled from the identity saved for <Link to={`/sets/${identityFrom}`}>{identityFrom}</Link>. Changes here apply to this run only.</p>}
             <div className="grid3">
               <label className="field">Contact e-mail <input value={f.email} onChange={e => put('email', e.target.value)} /></label>
               <label className="field">Contact phone <input value={f.phone} onChange={e => put('phone', e.target.value)} /></label>

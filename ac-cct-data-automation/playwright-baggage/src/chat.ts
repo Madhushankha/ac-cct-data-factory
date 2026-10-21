@@ -1,7 +1,7 @@
 // Driving the Ask AC widget (guide section 4). Every click and typed text goes through the guards.
 import { expect, type Locator, type Page } from '@playwright/test';
 import { assertAllowed, type StopKind } from './guards';
-import { CHAT_URL } from './config';
+import { CHAT_URL, ON_BAT } from './config';
 import { readMessages, sessionId, type Message } from './transcript';
 
 export const BUSY = /Thinking|Checking our systems|Checking your baggage|Opening your case|Sending your verification|Checking your code|Confirming your reimbursement|Réflexion|Vérification|…$/;
@@ -55,7 +55,8 @@ export class ChatPage {
    */
   async open(lang: Lang = 'English', opts: { requireGreeting?: boolean } = {}): Promise<void> {
     this.lang = lang;
-    await this.page.goto(CHAT_URL);
+    // domcontentloaded: the uat2 (BAT) page's ad and tracking frames can hold the load event for ever
+    await this.page.goto(CHAT_URL, { waitUntil: 'domcontentloaded', timeout: 120_000 });
     // the hosted preview has a password screen before it loads the widget
     const pass = this.page.locator('#password');
     if (await pass.isVisible({ timeout: 3000 }).catch(() => false)) {
@@ -63,7 +64,21 @@ export class ChatPage {
       await pass.fill(process.env.CHAT_PASSWORD);
       await pass.press('Enter');
     }
-    await this.page.getByRole('button', { name: 'Open chat' }).click({ timeout: 60_000 });
+    // the uat2 (BAT) site shows a cookie banner over the launcher: keep only the essential cookies
+    // it renders seconds after the page: wait for it (isVisible does not wait), and only where it exists
+    const prefs = this.page.getByRole('button', { name: 'Manage preferences' });
+    const launcher = this.page.getByRole('button', { name: 'Open chat' });
+    // under load the banner can arrive after the launcher and cover it: keep dismissing and retrying for 2 min
+    const until = Date.now() + 120_000;
+    for (;;) {
+      if (ON_BAT && await prefs.isVisible().catch(() => false)) {
+        await prefs.click({ timeout: 10_000 }).catch(() => {});
+        await this.page.getByRole('button', { name: 'Confirm My Choices' }).click({ timeout: 10_000 }).catch(() => {});
+      }
+      const opened = await launcher.click({ timeout: ON_BAT ? 10_000 : 60_000 }).then(() => true, () => false);
+      if (opened) break;
+      if (Date.now() > until) { await launcher.click({ timeout: 5000 }); break; }   // throws with Playwright's reason
+    }
     // the privacy/consent notice is a screen before the chat on INT: keep its words for the checkpoints
     const agree = this.btn(lang === 'English' ? 'I agree' : "J'accepte");
     await agree.waitFor({ state: 'visible', timeout: 60_000 }).catch(() => {});

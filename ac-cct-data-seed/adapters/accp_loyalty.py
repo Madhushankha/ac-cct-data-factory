@@ -54,6 +54,15 @@ class AccpLoyaltyDirectory:
     """Mints and attaches members through agentic-qa. Satisfies `ports.LoyaltyDirectory`."""
     env_name: str = "int"
     log: Any = print
+    #: case id -> (email, phone) for the member's profile. Set by the CLI when each booking gets its
+    #: own inbox: the profile then carries the SAME inbox and phone as its booking. With the shared
+    #: default, BAT's profile matching handed some passengers another profile and the chat offered
+    #: its contact (`SY***`, a synth.test address) for the OTP -- FD cloud run, 2026-10-21.
+    contact_for: Any = None
+    #: one first name for every member (the CLI's --first-name). BAT links passengers named like its
+    #: old synthetic profiles (Catherine, Jean-Pierre, Nathalie) to those profiles and offers their
+    #: `SY***` e-mail for the OTP; a reseed under another first name avoids it.
+    first_name: str | None = None
     #: set once, so a batch of cases shares one collision check against ACCP and the database
     _checks: tuple = field(default=(), repr=False)
 
@@ -82,10 +91,11 @@ class AccpLoyaltyDirectory:
         first_names = [p.first_name or "Test" for p in scenario.passengers] or ["Test"]
         out: list[Member] = []
         for i, one in enumerate(wanted):
-            px_first = first_names[i] if i < len(first_names) else first_names[0]
+            px_first = self.first_name or (first_names[i] if i < len(first_names) else first_names[0])
+            own = self.contact_for(scenario.case_id) if callable(self.contact_for) else None
             raw = profile.mint_member(first=px_first, last="Member",
-                                      email=self._contact_email(scenario),
-                                      phone="+123456789",
+                                      email=(own or (None, None))[0] or self._contact_email(scenario),
+                                      phone=(own or (None, None))[1] or "+123456789",
                                       taken=number_taken, name_taken=name_taken)
             out.append(Member(number=raw["ff"], first=raw["first"], last=raw["last"],
                               email=raw.get("email", ""), tier=one.tier,

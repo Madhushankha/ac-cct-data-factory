@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
-import { api, CaseRow, Env, ENVS, SetInfo } from '../api';
-import { Badge, Confirm, download, Empty, ErrorBox, Link, Loading, Modal, Prompt, STATUS_KIND, useLoad, useToast, go } from '../ui';
+import { api, CaseRow, Env, ENVS, Identity, IDENTITY_FIELDS, SetInfo } from '../api';
+import { Badge, Confirm, download, Empty, ErrorBox, Link, Loading, Modal, Prompt, SET_STATE_TEXT, STATUS_KIND, useLoad, useToast, go } from '../ui';
 
 export function SetView({ name }: { name: string }) {
   const [env, setEnv] = useState<Env>('int');
@@ -40,7 +40,7 @@ export function SetView({ name }: { name: string }) {
     <div className="page">
       <div className="crumbs"><Link to="/sets">Sets</Link> / {name}</div>
       <div className="page-head">
-        <h1>{info?.label || name} {info && <Badge kind={STATUS_KIND[info.state]}>{info.state}</Badge>}</h1>
+        <h1>{info?.label || name} {info && <Badge kind={STATUS_KIND[info.state]}>{SET_STATE_TEXT[info.state] || info.state}</Badge>}</h1>
         <div className="row wrap">
           <button className="primary" onClick={() => go(`/case/new?set=${name}`)}>New case</button>
           <button onClick={() => setDialog('import')}>Import JSON</button>
@@ -50,7 +50,14 @@ export function SetView({ name }: { name: string }) {
           <button className="ghost danger-text" onClick={() => setDialog('archive')}>Archive set</button>
         </div>
       </div>
-      {info?.state === 'blocked' && <div className="note warn">This flow seeds bookings but cannot claim a verdict yet: {info.needs.join(' ')}</div>}
+      {info?.state === 'no-verdict' && <div className="note warn">This set seeds bookings, but the flow cannot claim a verdict on them yet. It still needs:
+        <ul>{info.needs.map(n => <li key={n}>{n}</li>)}</ul></div>}
+      {info?.state === 'blocked' && <div className="note warn">This set cannot be seeded until the flow has:
+        <ul>{info.blocks.map(n => <li key={n}>{n}</li>)}</ul>
+        {info.needs.length > info.blocks.length && <>Before it can claim a verdict it also needs:
+          <ul>{info.needs.filter(n => !info.blocks.includes(n)).map(n => <li key={n}>{n}</li>)}</ul></>}</div>}
+
+      <IdentityCard set={name} />
 
       <div className="row wrap toolbar">
         <input className="search" placeholder="Filter by id, summary, regime or system code" value={filter} onChange={e => setFilter(e.target.value)} />
@@ -137,6 +144,44 @@ export function SetView({ name }: { name: string }) {
         </Modal>
       )}
     </div>
+  );
+}
+
+/** The contact details and name this set is seeded with unless the Seed form says otherwise. */
+function IdentityCard({ set }: { set: string }) {
+  const saved = useLoad(() => api.get<Identity>(`/api/sets/${set}/identity`), [set]);
+  const [open, setOpen] = useState(false);
+  const [f, setF] = useState<Identity | null>(null);
+  const [err, setErr] = useState('');
+  const toast = useToast();
+  const value = f || saved.data;
+  const summary = saved.data && IDENTITY_FIELDS.filter(([k]) => saved.data![k]).map(([k]) => saved.data![k]).join(' · ');
+  return (
+    <section className="card">
+      <div className="row between wrap">
+        <button className="ghost" onClick={() => setOpen(o => !o)}>{open ? '▾' : '▸'} Customer identity for this set</button>
+        <span className="muted small">{summary || 'none saved: the Seed form uses its own defaults'}</span>
+      </div>
+      {open && value && (
+        <>
+          <p className="muted small">Saved in <code>spec-attic/identities.json</code> and filled into the Seed form when this set is chosen. Leave a field blank to use the default.</p>
+          <div className="grid3">
+            {IDENTITY_FIELDS.map(([k, label]) => (
+              <label key={k} className="field">{label}
+                <input value={value[k]} placeholder={k === 'dob' ? 'YYYY-MM-DD' : ''} onChange={e => setF({ ...value, [k]: e.target.value })} /></label>
+            ))}
+          </div>
+          <ErrorBox error={err} />
+          <div className="row end">
+            <button className="ghost" disabled={!f} onClick={() => { setF(null); setErr(''); }}>Undo changes</button>
+            <button className="primary" disabled={!f} onClick={async () => {
+              try { await api.put(`/api/sets/${set}/identity`, f); setF(null); setErr(''); saved.reload(); toast('Identity saved'); }
+              catch (e: any) { setErr(e.message); }
+            }}>Save identity</button>
+          </div>
+        </>
+      )}
+    </section>
   );
 }
 

@@ -1,5 +1,5 @@
 import { api, Job, SetInfo } from '../api';
-import { Badge, ErrorBox, Link, Loading, STATUS_KIND, STATUS_TEXT, useInterval, useLoad, useToast, when, go } from '../ui';
+import { Badge, ErrorBox, Link, Loading, SET_STATE_TEXT, STATUS_KIND, STATUS_TEXT, useInterval, useLoad, useToast, when, go } from '../ui';
 
 interface Overview {
   root: string; sets: SetInfo[];
@@ -61,7 +61,7 @@ export function Dashboard() {
                 <Link key={s.name} to={`/sets/${s.name}`} className="set-line">
                   <span>{s.phase.toUpperCase()} {s.purpose}</span>
                   <span className="muted">{s.count} cases</span>
-                  <Badge kind={STATUS_KIND[s.state]}>{s.state}</Badge>
+                  <Badge kind={STATUS_KIND[s.state]}>{SET_STATE_TEXT[s.state] || s.state}</Badge>
                 </Link>
               ))}
               {!byFlow[f.id] && <div className="muted small">no sets yet</div>}

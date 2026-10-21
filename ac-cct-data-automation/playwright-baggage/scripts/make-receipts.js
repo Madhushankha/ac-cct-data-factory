@@ -22,4 +22,13 @@ const dir = path.join(__dirname, '..', 'receipts');
 fs.mkdirSync(dir, { recursive: true });
 fs.writeFileSync(path.join(dir, 'toiletries-receipt.pdf'), pdf(['TEST RECEIPT - QA ONLY', 'Pharmacy YYZ Terminal 1', 'Date: 2026-10-05', 'Toothbrush 6.99', 'Toothpaste 5.49', 'Deodorant 8.99', 'Total CAD 21.47']));
 fs.writeFileSync(path.join(dir, 'clothing-receipt.pdf'), pdf(['TEST RECEIPT - QA ONLY', 'Clothing store Toronto', 'Date: 2026-10-05', 'Shirt 80.00', 'Total CAD 80.00']));
+// standards of care (SOC): a night stranded at YYZ, as SOC_UAT_046 states it -- hotel $185, meals $52,
+// taxi $60, essentials $28, all CAD. Dated the day of the seeded disruption; the flow's caps are checked
+// against these, so the amounts are the test's, not round numbers.
+const soc = path.join(dir, 'soc');
+fs.mkdirSync(soc, { recursive: true });
+fs.writeFileSync(path.join(soc, 'hotel-receipt.pdf'), pdf(['TEST RECEIPT - QA ONLY', 'Airport hotel, Toronto Pearson (YYZ)', 'Date: 2026-10-08', '1 night, room only 185.00', 'Total CAD 185.00']));
+fs.writeFileSync(path.join(soc, 'meals-receipt.pdf'), pdf(['TEST RECEIPT - QA ONLY', 'Restaurant, YYZ Terminal 1', 'Date: 2026-10-08', 'Dinner 31.50', 'Breakfast 20.50', 'Total CAD 52.00']));
+fs.writeFileSync(path.join(soc, 'taxi-receipt.pdf'), pdf(['TEST RECEIPT - QA ONLY', 'Taxi, YYZ to airport hotel and back', 'Date: 2026-10-08', 'Fares 60.00', 'Total CAD 60.00']));
+fs.writeFileSync(path.join(soc, 'essentials-receipt.pdf'), pdf(['TEST RECEIPT - QA ONLY', 'Pharmacy YYZ Terminal 1', 'Date: 2026-10-08', 'Toiletries kit 28.00', 'Total CAD 28.00']));
 console.log('receipts/ written');

@@ -70,12 +70,18 @@ class SpecStore:
                 policy = registry.for_set(s.name)
                 needs = list(policy.needs)
                 label = getattr(policy, "label", policy.flow_id)
+                # only these stop a case being built and published; the rest of `needs` stop the
+                # flow claiming a verdict, and such a set still seeds (see flows/not_ready.py)
+                blocks = getattr(policy, "blocks_seeding", None)
+                blocks = needs if blocks is None else list(blocks)
             except Exception as ex:                                         # noqa: BLE001
                 needs, label = [f"no flow policy: {ex}"], s.flow
-            state = ("empty" if not s.count else "runnable" if not needs else "blocked")
+                blocks = needs
+            state = ("empty" if not s.count else "runnable" if not needs
+                     else "blocked" if blocks else "no-verdict")
             out.append({"name": s.name, "flow": s.flow, "phase": s.phase, "purpose": s.purpose,
                         "label": s.label, "flowLabel": label, "count": s.count,
-                        "state": state, "needs": needs,
+                        "state": state, "needs": needs, "blocks": blocks,
                         "deleted": self._count(s.path / SUPERSEDED)})
         return out
 
@@ -136,6 +142,42 @@ class SpecStore:
             raise SpecError(f"{s.flow}/{s.phase}/{purpose} already exists")
         shutil.move(str(s.path), str(target))
         return f"{s.flow}/{s.phase}/{purpose}"
+
+    # ------------------------------------------------------------------ identities
+
+    IDENTITY_FIELDS = ("email", "phone", "firstName", "lastName", "dob")
+
+    @property
+    def identities_file(self) -> pathlib.Path:
+        # in the attic, not the tree: the builder would build any JSON under spec/ as a case
+        return self.attic / "identities.json"
+
+    def _identities(self) -> dict[str, dict[str, str]]:
+        try:
+            return json.loads(self.identities_file.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return {}
+
+    def identity(self, name: str) -> dict[str, str]:
+        """The contact details and name a set is seeded with by default; blanks where none is saved."""
+        saved = self._identities().get(name, {})
+        return {k: str(saved.get(k, "")) for k in self.IDENTITY_FIELDS}
+
+    def save_identity(self, name: str, values: dict[str, str]) -> dict[str, str]:
+        self.source.set_named(name)                          # KeyError -> 404 on an unknown set
+        clean = {k: str(values.get(k) or "").strip() for k in self.IDENTITY_FIELDS}
+        if clean["dob"] and not re.fullmatch(r"\d{4}[-/]\d{2}[-/]\d{2}", clean["dob"]):
+            raise SpecError("date of birth must look like YYYY-MM-DD")
+        if clean["email"] and not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", clean["email"]):
+            raise SpecError(f"{clean['email']!r} is not an e-mail address")
+        every = self._identities()
+        if any(clean.values()):
+            every[name] = clean
+        else:
+            every.pop(name, None)
+        self.identities_file.parent.mkdir(parents=True, exist_ok=True)
+        _write(self.identities_file, every)
+        return clean
 
     # ------------------------------------------------------------------ cases
 

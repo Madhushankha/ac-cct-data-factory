@@ -6,8 +6,14 @@ export const ENVS: Env[] = ['int', 'crt', 'bat'];
 
 export interface SetInfo {
   name: string; flow: string; phase: string; purpose: string; label: string; flowLabel: string;
-  count: number; state: 'runnable' | 'blocked' | 'empty'; needs: string[]; deleted: number;
+  count: number; state: 'runnable' | 'no-verdict' | 'blocked' | 'empty'; needs: string[]; blocks: string[];
+  deleted: number;
 }
+export interface Identity { email: string; phone: string; firstName: string; lastName: string; dob: string }
+export const IDENTITY_FIELDS: [keyof Identity, string][] = [
+  ['email', 'Contact e-mail'], ['phone', 'Contact phone'], ['dob', 'Date of birth'],
+  ['firstName', 'First name (every passenger)'], ['lastName', 'Last name (every passenger)'],
+];
 export interface CaseRow {
   id: string; family?: string; summary?: string; passengers?: number; segments?: number;
   flights?: string; bookings?: number; regime?: string; eligibility?: string; systemCode?: string;

@@ -292,11 +292,15 @@ export class Run {
     const code = await getOtp(this.chat, { firstName: b.first, booking: b.pnr, provider: b.otp });
     this.r.otpCodes++;
     const field = this.chat.root().getByLabel(/Verification code|Code de vérification/i).filter({ visible: true }).last();
-    await expect(field).toBeVisible({ timeout: 60_000 });
-    await typeInto(field, code);
-    await this.chat.tap(L.submit, { settle: false });
+    // the stable page shows a code field; the main INT page asks "What's the code?" and takes it in the chat
+    if (await field.waitFor({ state: 'visible', timeout: 15_000 }).then(() => true, () => false)) {
+      await typeInto(field, code);
+      await this.chat.tap(L.submit, { settle: false });
+    } else {
+      await this.chat.say(code);
+    }
     this.chat.lastAction = 'entered the verification code';
-    const ok = /You're verified|You are verified|vérifié/i;
+    const ok = /You're verified|You are verified|verification was successful|successfully verified|vérifié/i;
     const bad = /doesn't match|didn't match|does not match|ne correspond pas/i;
     await expect(this.chat.root()).toContainText(new RegExp(`${ok.source}|${bad.source}`, 'i'), { timeout: 60_000 });
     await settle(this.chat.root(), 3000);

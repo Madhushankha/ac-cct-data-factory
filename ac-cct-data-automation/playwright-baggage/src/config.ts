@@ -1,6 +1,7 @@
 // Paths and settings shared by the suite, the OTP broker and the scripts.
 import fs from 'node:fs';
 import path from 'node:path';
+import { ENVS, envSettings } from './envs';
 import { CHAT_HOST_DIR } from './external';
 
 export const ROOT = path.resolve(__dirname, '..');
@@ -24,15 +25,37 @@ export const CHAT_PORT = Number(process.env.CHAT_PORT || 8765);
 export const BASE_URL = process.env.BASE_URL || `http://localhost:${CHAT_PORT}`;
 
 /**
- * The chat page under test. Default: the hosted INT stable preview, whose widget calls the same INT
- * gateway (rg9r0wtonl, cmp-v2.ac-cct-int) the agentic-qa seed and agent runs use. CHAT_URL=local uses the
- * public-qa copy served by scripts/serve.js instead (its widget calls bcnxq39777).
- * The stable page has a password screen; CHAT_PASSWORD (in .env) is typed into it.
+ * The chat page under test. Default: the main INT page (INT_URL below). CHAT_URL=stable uses the hosted
+ * INT stable preview, whose widget calls the same INT gateway (rg9r0wtonl, cmp-v2.ac-cct-int) the
+ * agentic-qa seed and agent runs use; it has a password screen, and CHAT_PASSWORD (in .env) is typed into it.
+ * CHAT_URL=local uses the public-qa copy served by scripts/serve.js instead (its widget calls bcnxq39777).
  */
 export const STABLE_URL = 'https://cct-chat-stable.ac-cct-int.cloud.aircanada.com/';
-export const CHAT_URL = !process.env.CHAT_URL ? STABLE_URL
+/** The env this run targets (ENV=int|bat, see src/envs.ts): chat page, AWS profiles, dashboard, IDV. */
+export const ENV = envSettings();
+export const INT_URL = ENVS.int.chatUrl;
+/**
+ * The BAT chat (2026-10-21, by request): the uat2 site's trips page, which carries the chat widget. The site
+ * sits behind HTTP Basic auth; UAT2_USER and UAT2_PASS in .env (typed there by the owner) are sent as the
+ * browser's credentials and never written anywhere else.
+ */
+export const BAT_URL = ENVS.bat.chatUrl;
+export const CHAT_URL = !process.env.CHAT_URL || process.env.CHAT_URL === 'int' || process.env.CHAT_URL === 'bat'
+  ? ENVS[process.env.CHAT_URL === 'bat' ? 'bat' : ENV.name].chatUrl
+  : process.env.CHAT_URL === 'stable' ? STABLE_URL
   : process.env.CHAT_URL === 'local' ? `${BASE_URL}/index.html` : process.env.CHAT_URL;
 export const LOCAL_CHAT = CHAT_URL.startsWith(BASE_URL);
+export const ON_BAT = CHAT_URL === BAT_URL;
+/** Basic-auth credentials for the page, read from the .env variables the env names (values never logged). */
+const auth = ENVS[ON_BAT ? 'bat' : ENV.name].basicAuth;
+export const HTTP_CREDENTIALS = auth && process.env[auth.user] && process.env[auth.pass]
+  ? { username: process.env[auth.user]!, password: process.env[auth.pass]! } : undefined;
+/**
+ * BAT's identity check passes by itself once the link is opened: open the Verify link, close it, then wait
+ * for and click the chat's "Done" button (by request, 2026-10-21). PERSONA_MODE=done or =link overrides it.
+ */
+export const PERSONA_DONE = (process.env.PERSONA_MODE
+  || (ENVS[ON_BAT ? 'bat' : ENV.name].idv === 'link-then-done-button' ? 'done' : 'link')) === 'done';
 
 export const SCENARIO_DIR = path.join(ROOT, 'scenarios');
 export const DATA_DIR = path.join(ROOT, 'data');
@@ -48,7 +71,7 @@ export const OTP = {
   /** How long a manual-provider run waits for a person to drop the code in state/otp-inbox/<PNR>.txt. */
   manualWaitMs: Number(process.env.OTP_MANUAL_WAIT_MS || 10 * 60_000),
   maxPerBookingPerDay: Number(process.env.OTP_MAX_PER_DAY || 5),
-  mailinatorDomain: process.env.MAILINATOR_DOMAIN || 'ae-qa1-aircanada.mailinator.com',
+  mailinatorDomain: process.env.MAILINATOR_DOMAIN || ENV.mailinator.domain,
   mailinatorInbox: process.env.MAILINATOR_INBOX || 'lahiru',
   secretId: process.env.MAILINATOR_SECRET_ID || 'cct-qa/mailinator-token',
   secretRegion: process.env.MAILINATOR_SECRET_REGION || 'ca-central-1',

@@ -209,8 +209,11 @@ class BookingSink(Protocol):
                  tags: dict[str, tuple[str, ...]] | None = None,
                  names: dict[str, tuple[str, str]] | None = None,
                  aeroplan: dict[str, str] | None = None,
-                 dataset: str = "", email: str = "") -> str:
-        """Write the pool. Returns where it landed."""
+                 dataset: str = "", email: str = "",
+                 emails: dict[str, str] | None = None,
+                 phones: dict[str, str] | None = None) -> str:
+        """Write the pool. Returns where it landed. `emails` / `phones` map pnrId to a booking's own
+        inbox and phone."""
 
 
 @runtime_checkable
