@@ -15,7 +15,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { expect, type Page, type TestInfo } from '@playwright/test';
-import { BedrockRuntimeClient, ConverseCommand, type ContentBlock, type Tool } from '@aws-sdk/client-bedrock-runtime';
+import { BedrockRuntimeClient, ConverseCommand, type ContentBlock, type ConverseCommandOutput, type Tool } from '@aws-sdk/client-bedrock-runtime';
+import { NodeHttpHandler } from '@smithy/node-http-handler';
 import { fromIni } from '@aws-sdk/credential-providers';
 import { TASK_ROLE } from './envs';
 import { settle, typeInto } from './chat';
@@ -95,8 +96,27 @@ const CHROME = /^(helpful|not helpful|minimize( chat)?|full screen|exit full scr
 let client: BedrockRuntimeClient | undefined;
 function bedrock(): BedrockRuntimeClient {
   // adaptive retry: backs off on Bedrock throttling when many chats run at once
-  client ??= new BedrockRuntimeClient({ region: REGION, credentials: TASK_ROLE ? undefined : fromIni({ profile: PROFILE }), maxAttempts: 8, retryMode: 'adaptive' });
+  // a call that never answers is cut at 2 minutes and retried: a hung socket held chats at "looking at the
+  // screen" until the 45-minute test limit (209 run, 2026-10-22)
+  client ??= new BedrockRuntimeClient({ region: REGION, credentials: TASK_ROLE ? undefined : fromIni({ profile: PROFILE }),
+    maxAttempts: 8, retryMode: 'adaptive',
+    requestHandler: new NodeHttpHandler({ connectionTimeout: 10_000, requestTimeout: 120_000 }) });
   return client;
+}
+
+/**
+ * One Converse call with a hard limit on the whole call (credentials, the adaptive retry's own waits and
+ * the request), tried 3 times. The socket timeout alone did not stop chats freezing at turn 1 "looking at
+ * the screen" for 30+ minutes (rerun of 42, 2026-10-22).
+ */
+async function converse(cmd: ConverseCommand, limitMs = 180_000): Promise<ConverseCommandOutput> {
+  let last: unknown;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      return await bedrock().send(cmd, { abortSignal: AbortSignal.timeout(limitMs) });
+    } catch (e) { last = e; }
+  }
+  throw last;
 }
 
 const num = (description: string) => ({ type: 'number', description });
@@ -258,7 +278,7 @@ export async function judgeTranscript(cps: Checkpoint[], messages: Message[], co
   const list = cps.map((c, n) => `${n + 1}. (${c.kind}${c.requirement ? ', ' + c.requirement : ''}) ${String(c.text || '').slice(0, 300)}`).join('\n');
   let items: { n: number; status: string; message: number | null; quote: string; reason: string }[] = [];
   try {
-    const res = await bedrock().send(new ConverseCommand({
+    const res = await converse(new ConverseCommand({
       modelId: MODEL,
       system: [{ text: 'You check a chat transcript against a test\'s expected assistant lines, in order. For each expected item: pass = the assistant (or widget) shows the same meaning/element (wording may differ; the test\'s sample names, booking reference, flight number, dates and masked email/phone may differ because the booking is seeded; amounts, currencies, outcomes and option labels must match; an alert/success/info box counts as shown); fail = the assistant reached that point but said/showed something different (give the difference); not_reached = the chat never got there. quote must be copied exactly from the matched message.' }],
       messages: [{ role: 'user', content: [{ text: `Expected items:\n${list}\n\nTranscript (numbered messages):\n${pre}${transcript}` }] }],
@@ -538,8 +558,13 @@ export class GoalRun extends Run {
         const { c, el } = this.control(a.id);
         const text = String(a.text ?? '');
         assertAllowed({ fillLabel: c.label, type: text }, this.chat.allow);
-        if (/\d{8,}/.test(text.replace(/[\s-]/g, '')) && !/booking|reference/i.test(c.label))
+        // long numbers the test itself asks for (an existing case, an IATA or ticket number) are not card details
+        if (/\d{8,}/.test(text.replace(/[\s-]/g, '')) && !/booking|reference|case|iata|ticket/i.test(c.label))
           throw new SafetyStopError('forbidden-action', 'refused to type a long number (card or bank details)');
+        // a made-up code ("123456") only burns attempts: codes come from the inbox via get_email_code (FD_TC_002, 2026-10-22)
+        if (/verification code|code de vérification|one-time code/i.test(c.label)
+            || (/^\s*\d{6}\s*$/.test(text) && !/iata|ticket|flight|booking|reference|case|aeroplan|phone/i.test(c.label)))
+          throw new Error('never type a verification code yourself: use get_email_code, which reads the real code from the inbox');
         await typeInto(el, text);
         this.chat.lastAction = `typed "${text}" into ${c.label}`;
         return;
@@ -566,7 +591,10 @@ export class GoalRun extends Run {
         this.chat.lastAction = `chose "${now}" in ${c.label}`;
         return `chose "${now}" -- now click the form's Submit once`;
       }
-      case 'send_message': return this.chat.say(String(a.text ?? ''));
+      case 'send_message':
+        if (/^\s*\d{6}\s*$/.test(String(a.text ?? '')))
+          throw new Error('never send a verification code yourself: use get_email_code, which reads the real code from the inbox');
+        return this.chat.say(String(a.text ?? ''));
       case 'complete_persona': return this.persona();
       case 'get_email_code': return this.emailCode();
       case 'upload_files': {
@@ -812,7 +840,7 @@ export class GoalRun extends Run {
     await this.live();
     const content: ContentBlock[] = [{ text }];
     if (shot) content.unshift({ image: { format: 'jpeg', source: { bytes: new Uint8Array(shot) } } } as ContentBlock);
-    const res = await bedrock().send(new ConverseCommand({
+    const res = await converse(new ConverseCommand({
       modelId: MODEL,
       system: [{ text: sys }],
       messages: [{ role: 'user', content }],
@@ -842,7 +870,7 @@ export class GoalRun extends Run {
     await this.live();
     let v: { verdict: string; quote: string; reason: string } | undefined;
     try {
-      const res = await bedrock().send(new ConverseCommand({
+      const res = await converse(new ConverseCommand({
         modelId: MODEL,
         system: [{ text: 'You grade an airline chat assistant against a test case. Judge only what the ASSISTANT said. ' +
           'match = the assistant reached the expected step/outcome (same meaning, wording may differ); mismatch = it clearly went ' +

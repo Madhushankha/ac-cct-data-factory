@@ -23,8 +23,20 @@ fi
 aws s3 cp "$PLAN_S3" /app/data/plans/cloud-plan.json --only-show-errors || { echo "cannot read $PLAN_S3"; exit 2; }
 i="${SHARD%%/*}"
 export GOAL_PLAN=/app/data/plans/cloud-plan.json RUN_NAME="cloud-shard-$i" WORKERS="${WORKERS:-2}"
-npx playwright test --project=goal --shard="$SHARD" --reporter=list
+# live view while the chats run: every minute, each chat's live transcript and screenshot go to <RUN_S3>/shard-i/live/
+(
+  while sleep 60; do
+    d=$(ls -td out/*_cloud-shard-"$i"_* 2>/dev/null | head -1)
+    [ -n "$d" ] && aws s3 sync "$d" "${RUN_S3%/}/shard-$i/live/" --exclude "*" --include "transcripts/*.live.json" \
+      --include "screenshots/*_live.png" --only-show-errors || true
+  done
+) &
+live=$!
+# hard cap (MAX_RUN_MIN, default 180): a hung chat can never hold the task open; SIGINT lets Playwright
+# close the run and write its reports, so the evidence below still uploads
+timeout -s INT -k 120 "$(( ${MAX_RUN_MIN:-180} * 60 ))" npx playwright test --project=goal --shard="$SHARD" --reporter=list
 code=$?
+kill "$live" 2>/dev/null
 run_dir=$(ls -td out/*_cloud-shard-"$i"_* 2>/dev/null | head -1)
 if [ -n "$run_dir" ]; then
   npx tsx scripts/evidence.ts "$run_dir" >/dev/null 2>&1 || true
